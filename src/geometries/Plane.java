@@ -1,0 +1,71 @@
+package geometries;
+import primitives.*;
+
+
+/***
+ * Represents Plane with vector and 3D point.
+ */
+public class Plane implements Geometry {
+    Point3D q0;
+    Vector normal;
+
+    /***
+     * Make's Plane with 3D point and vector.
+     * @param q0 Start point of the Plane
+     * @param normal Vector of the Plane
+     */
+    public Plane(Point3D q0,Vector normal){
+        this.q0 = new Point3D(q0.getX(), q0.getY(), q0.getZ());
+        this.normal=new Vector(normal.getHead());
+    }
+
+    /***
+     * Create Plane from 3 points.
+     * From this points it will make a vector and start point
+     * @param point1 1st point
+     * @param point2 2nd point
+     * @param point3 3rd point
+     */
+    public Plane(Point3D point1,Point3D point2, Point3D point3){
+        q0=null;
+        normal=null;
+    }
+
+    /***
+     * This function returns the normal of the sphere? Null for now
+     * @param point A point3D object
+     * @return The normal vector?
+     */
+    @Override
+    public Vector getNormal(Point3D point) {
+        return null;
+    }
+
+    /***
+     * To string method
+     * @return Returns information about the plane's Point3D field and the Vector field
+     */
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "q0=" + q0 +
+                ", normal=" + normal +
+                '}';
+    }
+
+    /***
+     *
+     * @return The start point of the Plane
+     */
+    public Point3D getQ0() {
+        return q0;
+    }
+
+    /***
+     *
+     * @return The vector of the Plane
+     */
+    public Vector getNormal() {
+        return normal;
+    }
+}

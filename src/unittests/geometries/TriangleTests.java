@@ -1,6 +1,8 @@
 package unittests.geometries;
 
 import org.junit.Test;
+import primitives.Point3D;
+import primitives.Ray;
 
 import static org.junit.Assert.*;
 
@@ -12,9 +14,10 @@ import static org.junit.Assert.*;
 public class TriangleTests {
 
     /**
-     * Test method for {@link geometries.Triangle#getNormal(primitives.Point3D)}.
+     * Test method for {@link geometries.Triangle#Triangle(Point3D, Point3D, Point3D)}
      */
     @Test
-    public void testGetNormal() {
+    public void testConstaractor(){
+
     }
 }

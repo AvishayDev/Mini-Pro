@@ -82,9 +82,13 @@ public class Polygon implements Geometry {
 				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
 		}
 	}
-
+	/***
+	 * This function returns the normal of the Polygon? Null for now
+	 * @param point A point3D object
+	 * @return The normal vector?
+	 */
 	@Override
 	public Vector getNormal(Point3D point) {
-		return plane.getNormal();
+		return plane.normal;
 	}
 }

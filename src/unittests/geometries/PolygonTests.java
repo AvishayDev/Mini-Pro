@@ -70,7 +70,7 @@ public class PolygonTests {
             fail("Constructed a polygon with vertice on a side");
         } catch (IllegalArgumentException e) {}
 
-        // TC12: Colocated points
+        // TC12: Collocated points
         try {
             new Polygon(new Point3D(0, 0, 1), new Point3D(1, 0, 0),
                     new Point3D(0, 1, 0), new Point3D(0, 1, 0));

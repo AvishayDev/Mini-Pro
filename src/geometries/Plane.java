@@ -16,19 +16,21 @@ public class Plane implements Geometry {
      */
     public Plane(Point3D q0,Vector normal){
         this.q0 = new Point3D(q0.getX(), q0.getY(), q0.getZ());
-        this.normal=new Vector(normal.getHead());
+        this.normal= normal.normalized();
     }
 
     /***
      * Create Plane from 3 points.
-     * From this points it will make a vector and start point
+     * From this points it will make a normal vector and start point
      * @param point1 1st point
      * @param point2 2nd point
      * @param point3 3rd point
      */
     public Plane(Point3D point1,Point3D point2, Point3D point3){
-        q0=null;
-        normal=null;
+        q0=point1;
+        Vector vec1 = point2.subtract(point1);
+        Vector vec2 = point3.subtract(point1);
+        normal = new Vector(vec1.crossProduct(vec2).getHead()).normalize();
     }
 
     /***
@@ -38,7 +40,7 @@ public class Plane implements Geometry {
      */
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        return normal;
     }
 
     /***

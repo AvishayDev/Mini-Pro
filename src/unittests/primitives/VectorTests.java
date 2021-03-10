@@ -1,15 +1,27 @@
 package unittests.primitives;
 
 import org.junit.Test;
-import primitives.Point3D;
-import primitives.Vector;
-
-import static java.lang.System.out;
+import primitives.*;
 import static org.junit.Assert.*;
-import static primitives.Util.isZero;
+
+/**
+ * Unit tests for primitives.Vector class
+ * @author Avihai & Avishay
+ */
 
 public class VectorTests {
 
+    /**
+     * Test method for {@link primitives.Vector#Vector(Coordinate,Coordinate,Coordinate)}.
+     */
+    @Test
+    public void testConstructorCoordinate() {
+
+    }
+
+    /**
+     * Test method for {@link primitives.Vector#Vector(double,double,double)}.
+     */
     @Test
     public void add() {
         Vector v1 = new Vector(1, 2, 3);
@@ -30,9 +42,16 @@ public class VectorTests {
             v1.add(minus_v1);
             fail("add(vector) for opposite vectors does not throw an exception");
         } catch (Exception e) {}
+    public void testConstructorDouble() {
+
     }
 
+    /**
+     * Test method for {@link primitives.Vector#Vector(primitives.Point3D)}.
+     */
     @Test
+    public void testConstructorPoint3D() {
+
     public void subtract() {
 
         Vector v3 = new Vector(5, 7, 6);
@@ -54,7 +73,11 @@ public class VectorTests {
         } catch (Exception e) {}
     }
 
+    /**
+     * Test method for {@link primitives.Vector#add(Vector)}.
+     */
     @Test
+    public void testAdd() {
     public void scale() {
         Vector v1 = new Vector(1,2,3);
 
@@ -75,6 +98,9 @@ public class VectorTests {
         } catch (Exception e) {}
     }
 
+    /**
+     * Test method for {@link primitives.Vector#subtract(Vector)}.
+     */
     @Test
     public void crossProduct() {
         Vector v1 = new Vector(1, 2, 3);
@@ -100,10 +126,16 @@ public class VectorTests {
 
     }
 
+    /**
+     * Test method for {@link primitives.Vector#scale(double)}.
+     */
     @Test
     public void dotProduct() {
     }
 
+    /**
+     * Test method for {@link primitives.Vector#crossProduct(Vector)}.
+     */
     @Test
     public void lengthSquared() {
         // test lengthSquared...
@@ -111,17 +143,43 @@ public class VectorTests {
         assertTrue("ERROR: lengthSquared() wrong value", !isZero(v1.lengthSquared() - 14));
     }
 
+    /**
+     * Test method for {@link primitives.Vector#dotProduct(Vector)}.
+     */
     @Test
     public void length() {
         // test length...
         assertTrue("ERROR: length() wrong value", isZero(new Vector(0, 3, 4).length() - 5));
     }
 
+    /**
+     * Test method for {@link Vector#lengthSquared()}
+     */
     @Test
     public void normalize() {
     }
 
+    /**
+     * Test method for {@link Vector#length()}.
+     */
     @Test
-    public void normalized() {
+    public void testLength() {
     }
+
+    /**
+     * Test method for {@link Vector#normalize()}
+     */
+    @Test
+    public void testNormalize() {
+    }
+
+    /**
+     * Test method for {@link Vector#normalized()}
+     */
+    @Test
+    public void testNormalized() {
+    }
+
+
+
 }

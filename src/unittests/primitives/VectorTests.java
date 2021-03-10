@@ -3,6 +3,7 @@ package unittests.primitives;
 import org.junit.Test;
 import primitives.*;
 import static org.junit.Assert.*;
+import static primitives.Util.*;
 
 /**
  * Unit tests for primitives.Vector class
@@ -23,10 +24,26 @@ public class VectorTests {
      * Test method for {@link primitives.Vector#Vector(double,double,double)}.
      */
     @Test
-    public void add() {
+    public void testConstructorDouble() {
+
+    }
+
+    /**
+     * Test method for {@link primitives.Vector#Vector(primitives.Point3D)}.
+     */
+    @Test
+    public void testConstructorPoint3D() {
+
+    }
+
+    /**
+     * Test method for {@link primitives.Vector#add(Vector)}.
+     */
+    @Test
+    public void testAdd() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(4, 5, 3);
-        Vector minus_v1= new Vector(-1,-2,-3);
+        Vector minus_v1 = new Vector(-1, -2, -3);
 
         // ============ Equivalence Partitions Tests ==============
         Vector v3 = new Vector(5, 7, 6);
@@ -41,18 +58,15 @@ public class VectorTests {
         try {
             v1.add(minus_v1);
             fail("add(vector) for opposite vectors does not throw an exception");
-        } catch (Exception e) {}
-    public void testConstructorDouble() {
-
+        } catch (Exception e) {
+        }
     }
 
     /**
-     * Test method for {@link primitives.Vector#Vector(primitives.Point3D)}.
+     * Test method for {@link primitives.Vector#subtract(Vector)}.
      */
     @Test
-    public void testConstructorPoint3D() {
-
-    public void subtract() {
+    public void testSubtract() {
 
         Vector v3 = new Vector(5, 7, 6);
 
@@ -74,11 +88,10 @@ public class VectorTests {
     }
 
     /**
-     * Test method for {@link primitives.Vector#add(Vector)}.
+     * Test method for {@link primitives.Vector#scale(double)}.
      */
     @Test
-    public void testAdd() {
-    public void scale() {
+    public void testScale() {
         Vector v1 = new Vector(1,2,3);
 
         // ============ Equivalence Partitions Tests ==============
@@ -99,10 +112,10 @@ public class VectorTests {
     }
 
     /**
-     * Test method for {@link primitives.Vector#subtract(Vector)}.
+     * Test method for {@link primitives.Vector#crossProduct(Vector)}.
      */
     @Test
-    public void crossProduct() {
+    public void testCrossProduct() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
 
@@ -127,36 +140,20 @@ public class VectorTests {
     }
 
     /**
-     * Test method for {@link primitives.Vector#scale(double)}.
-     */
-    @Test
-    public void dotProduct() {
-    }
-
-    /**
-     * Test method for {@link primitives.Vector#crossProduct(Vector)}.
-     */
-    @Test
-    public void lengthSquared() {
-        // test lengthSquared...
-        Vector v1 = new Vector(1, 2, 3);
-        assertTrue("ERROR: lengthSquared() wrong value", !isZero(v1.lengthSquared() - 14));
-    }
-
-    /**
      * Test method for {@link primitives.Vector#dotProduct(Vector)}.
      */
     @Test
-    public void length() {
-        // test length...
-        assertTrue("ERROR: length() wrong value", isZero(new Vector(0, 3, 4).length() - 5));
+    public void testDotProduct() {
     }
 
     /**
      * Test method for {@link Vector#lengthSquared()}
      */
     @Test
-    public void normalize() {
+    public void testLengthSquared() {
+        // test lengthSquared...
+        Vector v1 = new Vector(1, 2, 3);
+        assertFalse("ERROR: lengthSquared() wrong value", isZero(v1.lengthSquared() - 14));
     }
 
     /**
@@ -164,13 +161,8 @@ public class VectorTests {
      */
     @Test
     public void testLength() {
-    }
-
-    /**
-     * Test method for {@link Vector#normalize()}
-     */
-    @Test
-    public void testNormalize() {
+        // test length...
+        assertTrue("ERROR: length() wrong value", isZero(new Vector(0, 3, 4).length() - 5));
     }
 
     /**
@@ -180,6 +172,11 @@ public class VectorTests {
     public void testNormalized() {
     }
 
-
+    /**
+     * Test method for {@link Vector#normalize()}
+     */
+    @Test
+    public void testNormalize() {
+    }
 
 }

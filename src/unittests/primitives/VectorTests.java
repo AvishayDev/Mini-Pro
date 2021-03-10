@@ -2,6 +2,8 @@ package unittests.primitives;
 
 import org.junit.Test;
 import primitives.*;
+
+import static java.lang.System.out;
 import static org.junit.Assert.*;
 import static primitives.Util.*;
 
@@ -17,7 +19,13 @@ public class VectorTests {
      */
     @Test
     public void testConstructorCoordinate() {
+        Coordinate zero = new Coordinate(0); // Coordinate at 0 location
 
+        // Checking that zero vector can't be created
+        try { // test zero vector
+            new Vector(zero, zero, zero);
+            fail("ERROR: zero vector does not throw an exception when coordinates constructor is used");
+        } catch (Exception e) {}
     }
 
     /**
@@ -26,6 +34,12 @@ public class VectorTests {
     @Test
     public void testConstructorDouble() {
 
+        // Checking that zero vector can't be created
+        try { // test zero vector
+            new Vector(0, 0, 0);
+            fail("ERROR: zero vector does not throw an exception when doubles constructor is used");
+        } catch (Exception e) {}
+
     }
 
     /**
@@ -33,7 +47,13 @@ public class VectorTests {
      */
     @Test
     public void testConstructorPoint3D() {
+        Point3D point3DZero = new Point3D(0, 0, 0); // Point3D at the location (0,0,0)
 
+        // Checking that zero vector can't be created
+        try { // test zero vector
+            new Vector(point3DZero);
+            fail("ERROR: zero vector does not throw an exception when Point3D constructor is used");
+        } catch (Exception e) {}
     }
 
     /**
@@ -144,6 +164,14 @@ public class VectorTests {
      */
     @Test
     public void testDotProduct() {
+        Vector v1 = new Vector(1, 2, 3);
+        Vector v2 = new Vector(-2, -4, -6);
+        Vector v3 = new Vector(0, 3, -2);
+
+        // test dotProduct() between orthogonal vectors should be zero
+        assertFalse("ERROR: dotProduct() for orthogonal vectors is not zero", isZero(v1.dotProduct(v3)));
+        // test Dot-Product values are correct
+        assertFalse("ERROR: dotProduct() wrong value", isZero(v1.dotProduct(v2)+28));
     }
 
     /**
@@ -151,8 +179,9 @@ public class VectorTests {
      */
     @Test
     public void testLengthSquared() {
-        // test lengthSquared...
         Vector v1 = new Vector(1, 2, 3);
+
+        // test lengthSquared returns accurate value
         assertFalse("ERROR: lengthSquared() wrong value", isZero(v1.lengthSquared() - 14));
     }
 
@@ -161,15 +190,9 @@ public class VectorTests {
      */
     @Test
     public void testLength() {
-        // test length...
-        assertTrue("ERROR: length() wrong value", isZero(new Vector(0, 3, 4).length() - 5));
-    }
 
-    /**
-     * Test method for {@link Vector#normalized()}
-     */
-    @Test
-    public void testNormalized() {
+        // test length returns accurate value
+        assertTrue("ERROR: length() wrong value", isZero(new Vector(0, 3, 4).length() - 5));
     }
 
     /**
@@ -177,6 +200,34 @@ public class VectorTests {
      */
     @Test
     public void testNormalize() {
+        Vector v = new Vector(1, 2, 3);
+        Vector vCopy = new Vector(v.getHead());
+
+        // ============ Equivalence Partitions Tests ==============
+        Vector vCopyNormalize = vCopy.normalize();
+
+        // Test that normalize() doesn't create a new vector, but changes the vector itself
+        assertEquals("ERROR: normalize() function creates a new vector", vCopy, vCopyNormalize);
+        // Test that the returned value is indeed the unit vector
+        assertFalse("ERROR: normalize() result is not a unit vector", isZero(vCopyNormalize.length() - 1));
     }
+
+    /**
+     * Test method for {@link Vector#normalized()}
+     */
+    @Test
+    public void testNormalized() {
+        Vector v = new Vector(1, 2, 3);
+
+        // ============ Not Equivalence Partitions Tests ==============
+        Vector u = v.normalized();
+
+        // Test that the returned value is indeed the unit vector
+        assertFalse("ERROR: normalized() result is not a unit vector", isZero(u.length() - 1));
+        // Test that normalized() method creates a new vector, and doesn't change the vector itself
+        assertNotEquals("ERROR: normalized() function does not create a new vector", u, v);
+    }
+
+
 
 }

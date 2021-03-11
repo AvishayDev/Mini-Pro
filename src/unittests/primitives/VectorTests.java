@@ -221,9 +221,8 @@ public class VectorTests {
 
         // ============ Not Equivalence Partitions Tests ==============
         Vector u = v.normalized();
-
         // Test that the returned value is indeed the unit vector
-        assertFalse("ERROR: normalized() result is not a unit vector", isZero(u.length() - 1));
+        assertTrue("ERROR: normalized() result is not a unit vector", isZero(u.length() - 1.0));
         // Test that normalized() method creates a new vector, and doesn't change the vector itself
         assertNotEquals("ERROR: normalized() function does not create a new vector", u, v);
     }

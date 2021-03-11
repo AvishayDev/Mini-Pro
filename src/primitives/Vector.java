@@ -47,9 +47,9 @@ public class Vector {
      * @return  The sum of the two vectors
      */
     public Vector add(Vector vec){
-        return new Vector(this.head.x.coord+vec.head.x.coord,
-                        this.head.y.coord+vec.head.y.coord,
-                    this.head.z.coord+vec.head.z.coord);
+        return new Vector(this.head.getX()+vec.head.getX(),
+                        this.head.getY()+vec.head.getY(),
+                    this.head.getZ()+vec.head.getZ());
     }
 
     /***
@@ -58,9 +58,9 @@ public class Vector {
      * @return The subtraction of the 2 vectors
      */
     public Vector subtract(Vector vec){
-        return new Vector(this.head.x.coord-vec.head.x.coord,
-                this.head.y.coord-vec.head.y.coord,
-                this.head.z.coord-vec.head.z.coord);
+        return new Vector(this.head.getX()-vec.head.getX(),
+                this.head.getY()-vec.head.getY(),
+                this.head.getZ()-vec.head.getZ());
     }
 
     /***
@@ -69,9 +69,9 @@ public class Vector {
      * @return The scaled vector
      */
     public Vector scale(double Num){
-        return new Vector(this.head.x.coord*Num,
-                this.head.y.coord*Num,
-                this.head.z.coord*Num);
+        return new Vector(this.head.getX()*Num,
+                this.head.getY()*Num,
+                this.head.getZ()*Num);
     }
 
     /***
@@ -80,9 +80,9 @@ public class Vector {
      * @return The result of the cross product action.
      */
     public Vector crossProduct(Vector vec){
-        return new Vector((this.head.y.coord*vec.head.z.coord)-(this.head.z.coord*vec.head.y.coord),
-                (this.head.z.coord*vec.head.x.coord)-(this.head.x.coord*vec.head.z.coord),
-                (this.head.x.coord*vec.head.y.coord)-(this.head.y.coord*vec.head.x.coord));
+        return new Vector((this.head.getY()*vec.head.getZ())-(this.head.getZ()*vec.head.getY()),
+                (this.head.getZ()*vec.head.getX())-(this.head.getX()*vec.head.getZ()),
+                (this.head.getX()*vec.head.getY())-(this.head.getY()*vec.head.getX()));
     }
 
     /***
@@ -91,9 +91,9 @@ public class Vector {
      * @return The result of the dot product action.
      */
     public double dotProduct(Vector vec){
-       return (this.head.x.coord*vec.head.x.coord)+
-               (this.head.y.coord*vec.head.y.coord)+
-               (this.head.z.coord*vec.head.z.coord);
+       return (this.head.getX()*vec.head.getX())+
+               (this.head.getY()*vec.head.getY())+
+               (this.head.getZ()*vec.head.getZ());
     }
 
     /***

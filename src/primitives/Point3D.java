@@ -111,24 +111,24 @@ public class Point3D {
      * Getter for the x coordinate field of the point3D
      * @return The x coordinate
      */
-    public Coordinate getX() {
-        return x;
+    public double getX() {
+        return x.coord;
     }
 
     /***
      * Getter for the y coordinate field of the point3D
      * @return The y coordinate
      */
-    public Coordinate getY() {
-        return y;
+    public double getY() {
+        return y.coord;
     }
 
     /***
      * Getter for the z coordinate field of the point3D
      * @return The z coordinate
      */
-    public Coordinate getZ() {
-        return z;
+    public double getZ() {
+        return z.coord;
     }
 
     /***

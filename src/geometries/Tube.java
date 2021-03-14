@@ -17,6 +17,8 @@ public class Tube implements Geometry{
      */
     public Tube(Ray axisRay, double radius) {
         this.axisRay = new Ray(axisRay.getDir(), axisRay.getP0());
+        if(Util.isZero(radius) || radius < 0)
+            throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
     }
 
@@ -30,6 +32,8 @@ public class Tube implements Geometry{
      */
     public Tube(Vector vec , Point3D point, double radius){
         this.axisRay = new Ray(vec,point);
+        if(Util.isZero(radius) || radius < 0)
+            throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
     }
 

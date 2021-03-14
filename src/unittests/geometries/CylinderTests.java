@@ -1,5 +1,6 @@
 package unittests.geometries;
 
+import geometries.Sphere;
 import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
@@ -36,5 +37,11 @@ public class CylinderTests {
      */
     @Test
     public void testGetNormal() {
+        Sphere sphere = new Sphere(new Point3D(0,0,0),2);
+        Point3D point1 = new Point3D(0,0,2);
+        Vector vec1 = new Vector(0,0,1);
+
+        assertEquals("Normal value not valid",vec1,new Vector(point1.subtract(sphere.getCenter()).getHead()).normalize());
+
     }
 }

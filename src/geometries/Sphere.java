@@ -17,6 +17,8 @@ public class Sphere implements Geometry{
      */
     public Sphere(Point3D center, double radius) {
         this.center = new Point3D(center.getX(), center.getY(), center.getZ());
+        if(Util.isZero(radius) || radius < 0)
+            throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
     }
 
@@ -30,6 +32,8 @@ public class Sphere implements Geometry{
      */
     public Sphere(Coordinate x,Coordinate y,Coordinate z, double radius){
         this.center = new Point3D(x,y,z);
+        if(Util.isZero(radius) || radius < 0)
+            throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius=radius;
     }
 
@@ -40,7 +44,8 @@ public class Sphere implements Geometry{
      */
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+
+        return new Vector(point.subtract(this.center).getHead()).normalize();
     }
 
     /***

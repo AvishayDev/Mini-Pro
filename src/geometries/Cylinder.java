@@ -16,6 +16,8 @@ public class Cylinder extends Tube{
      */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
+        if(Util.isZero(height) || height < 0)
+            throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
     }
 
@@ -29,6 +31,8 @@ public class Cylinder extends Tube{
      */
     public Cylinder(Vector vec, Point3D point, double radius, double height) {
         super(vec, point, radius);
+        if(Util.isZero(height) || height < 0)
+            throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
     }
 

@@ -38,6 +38,8 @@ public class Vector {
      * @param point The vector's head
      */
     public Vector(Point3D point) {
+        if(point.equals(Point3D.ZERO))
+            throw new IllegalArgumentException("Please Don't Choose The 0 Vector!");
         head=new Point3D(point.x, point.y, point.z);
     }
 

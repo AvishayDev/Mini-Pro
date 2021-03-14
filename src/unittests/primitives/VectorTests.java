@@ -3,7 +3,6 @@ package unittests.primitives;
 import org.junit.Test;
 import primitives.*;
 
-import static java.lang.System.out;
 import static org.junit.Assert.*;
 import static primitives.Util.*;
 
@@ -121,7 +120,7 @@ public class VectorTests {
         // Test that scaling vectors works properly
         assertEquals("scale(double) method doesn't work properly", v1.scale(-1), v2);
         assertEquals("scale(double) method doesn't work properly", v1.scale(3), v3);
-        assertNotEquals("scale(double) method doesn't work properly", v1.scale(0), v1);
+        assertNotEquals("scale(double) method doesn't work properly", v1.scale(2), v1);
 
         // =============== Boundary Values Tests ==================
         // test zero vector from scaling by 0
@@ -169,9 +168,9 @@ public class VectorTests {
         Vector v3 = new Vector(0, 3, -2);
 
         // test dotProduct() between orthogonal vectors should be zero
-        assertFalse("ERROR: dotProduct() for orthogonal vectors is not zero", isZero(v1.dotProduct(v3)));
+        assertTrue("ERROR: dotProduct() for orthogonal vectors is not zero", isZero(v1.dotProduct(v3)));
         // test Dot-Product values are correct
-        assertFalse("ERROR: dotProduct() wrong value", isZero(v1.dotProduct(v2)+28));
+        assertTrue("ERROR: dotProduct() wrong value", isZero(v1.dotProduct(v2)+28));
     }
 
     /**
@@ -182,7 +181,7 @@ public class VectorTests {
         Vector v1 = new Vector(1, 2, 3);
 
         // test lengthSquared returns accurate value
-        assertFalse("ERROR: lengthSquared() wrong value", isZero(v1.lengthSquared() - 14));
+        assertTrue("ERROR: lengthSquared() wrong value", isZero(v1.lengthSquared() - 14));
     }
 
     /**
@@ -209,7 +208,7 @@ public class VectorTests {
         // Test that normalize() doesn't create a new vector, but changes the vector itself
         assertEquals("ERROR: normalize() function creates a new vector", vCopy, vCopyNormalize);
         // Test that the returned value is indeed the unit vector
-        assertFalse("ERROR: normalize() result is not a unit vector", isZero(vCopyNormalize.length() - 1));
+        assertTrue("ERROR: normalize() result is not a unit vector", isZero(vCopyNormalize.length() - 1));
     }
 
     /**

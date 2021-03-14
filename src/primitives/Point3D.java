@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 /***
  * Represents 3D point with 3 Coordinates,
  * and have basic functions on the point.

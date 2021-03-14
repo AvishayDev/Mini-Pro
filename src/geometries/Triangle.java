@@ -32,5 +32,4 @@ public class Triangle extends Polygon{
                 ", plane=" + plane +
                 '}';
     }
-
 }

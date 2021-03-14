@@ -28,6 +28,7 @@ public class TubeTests {
      */
     @Test
     public void testGetNormal() {
+
         // ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple single test here
         Tube tube = new Tube(new Vector(1,0,0), new Point3D(0,0,0), 1);

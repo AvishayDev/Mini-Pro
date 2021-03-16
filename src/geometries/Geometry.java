@@ -1,7 +1,7 @@
 package geometries;
 import primitives.*;
 
-public interface Geometry {
+public interface Geometry extends Intersectable {
 
     Vector getNormal(Point3D point);
 }

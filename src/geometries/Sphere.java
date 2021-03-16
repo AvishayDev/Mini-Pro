@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 /***
  * Represents Sphere with 3D point and radius.
  */
@@ -74,5 +76,10 @@ public class Sphere implements Geometry{
      */
     public double getRadius() {
         return radius;
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

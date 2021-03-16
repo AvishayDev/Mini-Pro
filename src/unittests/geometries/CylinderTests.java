@@ -40,4 +40,9 @@ public class CylinderTests {
         // TC01: There is a simple single test here
 
     }
+
+    @Test
+    public void testFindIntersectionPoint(){
+
+    }
 }

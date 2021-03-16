@@ -47,4 +47,9 @@ public class SphereTests {
 
 
     }
+
+    @Test
+    public void testFindIntersectionPoint(){
+
+    }
 }

@@ -42,4 +42,9 @@ public class PlaneTests {
         assertEquals("Bad normal to plane", normal, plane.getNormal());
         assertEquals("Bad normal to plane", normal, plane.getNormal(new Point3D(-1,1,2)));
     }
+
+    @Test
+    public void testFindIntersectionPoint(){
+
+    }
 }

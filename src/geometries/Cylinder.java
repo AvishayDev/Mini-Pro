@@ -1,6 +1,8 @@
 package geometries;
 import primitives.*;
 
+import java.util.List;
+
 
 /***
  * Represents Cylinder with vector ,3D point and height.
@@ -58,6 +60,11 @@ public class Cylinder extends Tube{
                 ", axisRay=" + axisRay +
                 ", radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 
     /***

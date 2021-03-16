@@ -36,4 +36,9 @@ public class TriangleTests {
 
         assertEquals("Bad normal to triangle", normal, triangle.getNormal(new Point3D(-1,1,2)));
     }
+
+    @Test
+    public void testFindIntersectionPoint(){
+
+    }
 }

@@ -46,7 +46,17 @@ public class Cylinder extends Tube{
      */
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+
+         Vector vec1 = point.subtract(axisRay.getP0());
+         double t = axisRay.getDir().dotProduct(vec1);
+          if(Util.isZero(t)||t == height){
+              //the point in the base or in the side of the base
+              return axisRay.getDir();
+          }
+          else
+              //the point on the side of the Cylinder
+               return super.getNormal(point);
+          }
     }
 
     /***

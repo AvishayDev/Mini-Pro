@@ -1,5 +1,6 @@
 package unittests.geometries;
 
+import geometries.Cylinder;
 import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
@@ -38,7 +39,13 @@ public class CylinderTests {
     public void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple single test here
-
+        Cylinder cylinder =new Cylinder(new Vector(1,0,1),new Point3D(0,0,1),1,2);
+        Point3D pointOnUpBase=new Point3D(2,0.5,1);
+        Point3D pointOnDownBase=new Point3D(0,0.5,1);
+        Point3D pointOnCylinder =new Point3D(1,1,1);
+        assertEquals("Can't Calc Up Base",cylinder.getAxisRay().getDir(),cylinder.getNormal(pointOnUpBase));
+        assertEquals("Can't Calc Down Base",cylinder.getAxisRay().getDir(),cylinder.getNormal(pointOnDownBase));
+        assertEquals("Can't Calc Down Base",new Vector(new Point3D(0,1,0)),cylinder.getNormal(pointOnCylinder));
     }
 
     @Test

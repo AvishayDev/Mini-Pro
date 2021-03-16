@@ -44,6 +44,18 @@ public class Vector {
     }
 
     /***
+     * this function take this vector and move it to the
+     * point place NOT CHANGE THE VECTOR
+     * @param point point to add for the vector
+     * @return new vector with the add of the point
+     */
+    public Vector add(Point3D point){
+        return new Vector(this.head.getX()+point.getX()
+                ,this.head.getY()+point.getY()
+                ,this.head.getZ()+point.getZ());
+    }
+
+    /***
      * This function sums up between the current vector and the received vector
      * @param vec The vector which we want to add to the current vector
      * @return  The sum of the two vectors

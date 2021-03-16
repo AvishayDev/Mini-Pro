@@ -77,4 +77,16 @@ public class Plane implements Geometry {
     public List<Point3D> findIntersections(Ray ray) {
         return null;
     }
+
+    /***
+     * check if the point on the plane
+     * @param point point to check if on the plane
+     * @return true if so and false if not
+     */
+    public boolean pointOnPlane(Point3D point){
+        Vector vec =point.subtract(q0);
+        if(Util.isZero(vec.dotProduct(normal)))
+            return true;
+        return false;
+    }
 }

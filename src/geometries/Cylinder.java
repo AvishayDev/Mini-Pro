@@ -57,7 +57,7 @@ public class Cylinder extends Tube{
               //the point on the side of the Cylinder
                return super.getNormal(point);
           }
-    }
+
 
     /***
      * To string function

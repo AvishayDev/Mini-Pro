@@ -129,11 +129,5 @@ public class Point3D {
         return z.coord;
     }
 
-    /***
-     * Getter for the static field ZERO of the point3D
-     * @return The zero Point3D
-     *
-    public static Point3D getZERO() {
-        return ZERO;
-    }*/
+
 }

@@ -48,8 +48,11 @@ public class Cylinder extends Tube{
     public Vector getNormal(Point3D point) {
 
          Vector vec1 = point.subtract(axisRay.getP0());
-         double t = axisRay.getDir().dotProduct(vec1);
-          if(Util.isZero(t)||t == height){
+         double t = Math.abs(axisRay.getDir().dotProduct(vec1));
+        /**
+         * if t equals to 0 or in the length of height its means the point on the bases
+         */
+        if(Util.isZero(t)|| Util.isZero(t-height)){
               //the point in the base or in the side of the base
               return axisRay.getDir();
           }

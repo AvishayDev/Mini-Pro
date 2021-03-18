@@ -33,6 +33,14 @@ public class Ray {
     }
 
     /***
+     * calculate the place of point from p0 by t scale
+     * @param t the scale to v
+     * @return the point multiply by t from p0 in the angle of dir
+     */
+    public Point3D getPoint(double t){
+        return p0.add(dir.scale(t));
+    }
+    /***
      * Getter for the Point3D field of the ray
      * @return The p0 variable
      */

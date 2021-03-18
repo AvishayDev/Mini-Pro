@@ -64,6 +64,12 @@ public class Tube implements Geometry{
                 ", radius=" + radius +
                 '}';
     }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
+    }
+
     /***
      * Getter for the tube's axis ray
      * @return The axisRay variable
@@ -79,8 +85,8 @@ public class Tube implements Geometry{
         return radius;
     }
 
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        return null;
-    }
+
+    //public Point3D getP0(){ return axisRay.getP0(); }
+    //public Vector getDir(){ return axisRay.getDir(); }
+
 }

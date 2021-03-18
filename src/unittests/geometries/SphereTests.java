@@ -4,7 +4,12 @@ import geometries.Sphere;
 import org.junit.Test;
 import primitives.Coordinate;
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -50,6 +55,15 @@ public class SphereTests {
 
     @Test
     public void testFindIntersectionPoint(){
+        // Test 1 : Ray from the outside of the sphere, should hit it twice
+        Sphere sphere1 = new Sphere(new Point3D(1,1,1), 1);
+        Ray ray1 = new Ray(new Vector(1,0,2) , new Point3D(0,1,0));
+        List<Point3D> list1 = new ArrayList<Point3D>();
+        list1.add(new Point3D(0.2,1,0.4)); list1.add(new Point3D(1,1,2));
+        assertEquals("Two intersection points doesn't return proper value", list1, sphere1.findIntersections(ray1));
+
+
+
 
     }
 }

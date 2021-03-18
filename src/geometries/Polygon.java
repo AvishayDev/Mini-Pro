@@ -92,6 +92,7 @@ public class Polygon implements Geometry {
 		return plane.normal;
 	}
 
+
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
 		return null;

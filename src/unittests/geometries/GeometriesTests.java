@@ -8,5 +8,6 @@ public class GeometriesTests {
 
     @Test
     public void findIntersections() {
+
     }
 }

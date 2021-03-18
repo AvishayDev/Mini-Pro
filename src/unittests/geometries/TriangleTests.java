@@ -16,13 +16,6 @@ import static org.junit.Assert.*;
  */
 public class TriangleTests {
 
-    /**
-     * Test method for {@link geometries.Triangle#Triangle(Point3D, Point3D, Point3D)}
-     */
-    @Test
-    public void testConstructor(){
-
-    }
 
     /**
      * Test method for {@link geometries.Triangle#getNormal(primitives.Point3D)}.

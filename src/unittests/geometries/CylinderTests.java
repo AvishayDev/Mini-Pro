@@ -14,24 +14,6 @@ import static org.junit.Assert.*;
  */
 public class CylinderTests {
 
-
-    /**
-     * Test method for {@link geometries.Cylinder#Cylinder(Ray, double, double)}
-     */
-    @Test
-    public void testConstaractorRay(){
-
-
-    }
-
-    /**
-     * Test method for {@link geometries.Cylinder#Cylinder(Vector, Point3D, double, double)}
-     */
-    @Test
-    public void testConstaractorVector(){
-
-    }
-
     /**
      * Test method for {@link geometries.Cylinder#getNormal(primitives.Point3D)}.
      */

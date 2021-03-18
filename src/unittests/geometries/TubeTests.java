@@ -15,13 +15,6 @@ import static org.junit.Assert.*;
  */
 public class TubeTests {
 
-    /**
-     * Test method for {@link geometries.Tube#Tube(Ray, double)}
-     */
-    @Test
-    public void testConstaractor(){
-
-    }
 
     /**
      * Test method for {@link geometries.Tube#getNormal(primitives.Point3D)}.

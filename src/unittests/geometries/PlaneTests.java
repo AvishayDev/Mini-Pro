@@ -4,6 +4,8 @@ import geometries.Plane;
 import org.junit.Test;
 import primitives.*;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -38,14 +40,19 @@ public class PlaneTests {
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Ray intersects the plane
-        Ray ray1 = new Ray(new Vector(0,-0.5d,1),new Point3D(0,-0.5d,0));
+        Ray rayCheck = new Ray(new Vector(0,-0.5d,Math.sqrt(3/4)),new Point3D(0,-0.5d,0));
+        Point3D pointCheck =new Point3D(0,-0.68,0.32);
+        //point check
+        assertEquals("Ray intersects the plane dont work", pointCheck,plane.findIntersections(rayCheck).get(0));
+        //num of points check
+        assertEquals("Ray intersects the plane dont work", 1,plane.findIntersections(rayCheck).size());
 
-        /**
-         * check for number
-         * check for point
-         */
         // TC02: Ray does not intersect the plane
-
+        rayCheck =new Ray(new Vector(0,0,1),new Point3D(0,-2,0));
+        //point check
+        assertEquals("Ray intersects the plane dont work", null,plane.findIntersections(rayCheck));
+        //num of points check
+        assertEquals("Ray intersects the plane dont work", 0 ,plane.findIntersections(rayCheck).size());
 
         // =============== Boundary Values Tests ==================
 

@@ -7,7 +7,7 @@ import java.util.List;
 /***
  * Represents Cylinder with vector ,3D point and height.
  */
-public class Cylinder extends Tube{
+public class Cylinder extends Tube {
     double height;
 
     /***
@@ -18,7 +18,7 @@ public class Cylinder extends Tube{
      */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
-        if(Util.isZero(height) || height < 0)
+        if (Util.isZero(height) || height < 0)
             throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
     }
@@ -33,7 +33,7 @@ public class Cylinder extends Tube{
      */
     public Cylinder(Vector vec, Point3D point, double radius, double height) {
         super(vec, point, radius);
-        if(Util.isZero(height) || height < 0)
+        if (Util.alignZero(height) <= 0)
             throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
     }
@@ -46,20 +46,25 @@ public class Cylinder extends Tube{
      */
     @Override
     public Vector getNormal(Point3D point) {
-
-         Vector vec1 = point.subtract(axisRay.getP0());
-         double t = Math.abs(axisRay.getDir().dotProduct(vec1));
+        Vector vec1;
+        try {
+            vec1 = point.subtract(axisRay.getP0());
+        } catch (IllegalArgumentException e) {//if catch it means the point on the center
+            return axisRay.getDir();
+        }
+        double t = Math.abs(axisRay.getDir().dotProduct(vec1));
         /**
          * if t equals to 0 or in the length of height its means the point on the bases
          */
-        if(Util.isZero(t)|| Util.isZero(t-height)){
-              //the point in the base or in the side of the base
-              return axisRay.getDir();
-          }
-          else
-              //the point on the side of the Cylinder
-               return super.getNormal(point);
-          }
+        if (Util.isZero(t) || Util.isZero(t - height)) {
+            //the point in the base or in the side of the base
+            return axisRay.getDir();
+        } else
+            //the point on the side of the Cylinder
+            return super.getNormal(point);
+
+
+    }
 
 
     /***

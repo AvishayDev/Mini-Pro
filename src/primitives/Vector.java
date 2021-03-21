@@ -5,6 +5,7 @@ package primitives;
  * and have basic functions on the vector.
  */
 public class Vector {
+
     Point3D head;
 
     /***
@@ -131,7 +132,8 @@ public class Vector {
      * @return The current vector, but now normalized
      */
     public Vector normalize(){
-      this.head = scale(1/length()).head;
+        double size = length();
+        this.head = new Point3D(head.getX()/size,head.getY()/size,head.getZ()/size );
       return this;
     }
 

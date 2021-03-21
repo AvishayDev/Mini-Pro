@@ -20,7 +20,6 @@ public class CylinderTests {
     @Test
     public void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: There is a simple single test here
         Cylinder cylinder =new Cylinder(new Vector(1,0,0),new Point3D(0,0,1),1,2);
         Point3D pointOnUpBase=new Point3D(2,0.5,1);
         Point3D pointOnDownBase=new Point3D(0,0.5,1);
@@ -38,10 +37,19 @@ public class CylinderTests {
 
         //TC04: check for right choose of vector at up base and side
         assertEquals("Don't Choose UP correct vector",cylinder.getAxisRay().getDir(),cylinder.getNormal(pointOnUpBase));
-        //TC04: check for right choose of vector at down base and side
+        //TC05: check for right choose of vector at down base and side
         assertEquals("Don't Choose DOWN correct vector",cylinder.getAxisRay().getDir(),cylinder.getNormal(pointOnDownBase));
+        //TC05: point on up base
+        pointOnUpBase = cylinder.getAxisRay().getP0();
+        assertEquals("cant find normal for up center base",cylinder.getAxisRay().getDir(),cylinder.getNormal(pointOnUpBase));
+        //TC06: point on down base
+        pointOnDownBase = new Point3D(2,0,1);
+        assertEquals("cant find normal for up center base",cylinder.getAxisRay().getDir(),cylinder.getNormal(pointOnDownBase));
     }
 
+    /**
+     * Test method for {@link geometries.Cylinder#findIntersections(primitives.Ray)}.
+     */
     @Test
     public void testFindIntersectionPoint(){
 

@@ -30,6 +30,9 @@ public class TriangleTests {
         assertEquals("Bad normal to triangle", normal, triangle.getNormal(new Point3D(-1,1,2)));
     }
 
+    /**
+     * Test method for {@link geometries.Triangle#findIntersections(primitives.Ray)}.
+     */
     @Test
     public void testFindIntersectionPoint(){
 

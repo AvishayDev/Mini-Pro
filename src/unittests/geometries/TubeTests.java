@@ -33,12 +33,14 @@ public class TubeTests {
         assertEquals("Bad normal to tube", normal, tube.getNormal(P));
         // =============== Boundary Values Tests ==================
 
-        try{
-            tube.getNormal(new Point3D(0,1,0));
-            fail("The point is Perpendicular to the central axis");
-        }catch (IllegalArgumentException e) {}
+        O =new Point3D(0,1,0);
+
+        assertEquals(" t==0 dont work",new Vector(0,1,0),tube.getNormal(O) );
     }
 
+    /**
+     * Test method for {@link geometries.Tube#findIntersections(primitives.Ray)}.
+     */
     @Test
     public void testFindIntersectionPoint(){
 

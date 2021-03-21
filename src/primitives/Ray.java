@@ -6,8 +6,8 @@ import java.util.Objects;
  * Represents Ray with vector and 3D point.
  */
 public class Ray {
-    Point3D p0;
-    Vector dir;
+    private final Point3D p0;
+    private final Vector dir;
 
     /***
      * Make's a Ray using vector and 3D point
@@ -16,7 +16,7 @@ public class Ray {
      */
     public Ray(Vector vec, Point3D point){
         dir = vec.normalized();
-        p0 = new Point3D(point.x, point.y, point.z);
+        p0 = point;
     }
 
     /***

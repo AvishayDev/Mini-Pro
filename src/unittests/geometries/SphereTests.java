@@ -55,18 +55,38 @@ public class SphereTests {
         assertEquals("Ray crosses sphere", List.of(p1, p2), result);
 
         // TC03: Ray starts inside the sphere (1 point)
+        Point3D p3 = new Point3D(1.13, 0.33, 0.93);
+        result = sphere.findIntersections(new Ray(new Vector(2, 5, 6.5),new Point3D(1, 0, 0.5)));
+        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Ray crosses sphere", List.of(p3), result);
 
         // TC04: Ray starts after the sphere (0 points)
-
+        assertEquals("Ray's line out of sphere", null,
+                sphere.findIntersections(new Ray(new Vector(5, 3, 1),new Point3D(1, 2, 2))));
 
         // =============== Boundary Values Tests ==================
 
         // **** Group: Ray's line crosses the sphere (but not the center)
         // TC11: Ray starts at sphere and goes inside (1 points)
+        Point3D p4 = new Point3D(1,0.8,0.6);
+        result = sphere.findIntersections(new Ray(new Vector(0, 1, 2),new Point3D(1, 0, -1)));
+        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Ray crosses sphere", List.of(p4), result);
+
         // TC12: Ray starts at sphere and goes outside (0 points)
+        assertEquals("Ray's line out of sphere", null,
+                sphere.findIntersections(new Ray(new Vector(0, -1, -2),new Point3D(1, 0, -1))));
 
         // **** Group: Ray's line goes through the center
         // TC13: Ray starts before the sphere (2 points)
+        Point3D p5 = new Point3D(1, 0, -1);
+        Point3D p6 = new Point3D(1, 0, 1);
+        result = sphere.findIntersections(new Ray(new Vector(0, 0, -3),new Point3D(1, 0, 3)));
+        assertEquals("Wrong number of points", 2, result.size());
+        if (result.get(0).getZ() > result.get(1).getZ())
+            result = List.of(result.get(1), result.get(0));
+        assertEquals("Ray crosses sphere", List.of(p5, p6), result);
+
         // TC14: Ray starts at sphere and goes inside (1 points)
         // TC15: Ray starts inside (1 points)
         // TC16: Ray starts at the center (1 points)

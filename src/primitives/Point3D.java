@@ -9,7 +9,9 @@ public class Point3D {
     final Coordinate y;
     final Coordinate z;
 
-
+    /***
+     * This point is the center of our coordinate system
+     */
     final public static Point3D ZERO=new Point3D(0,0,0);
 
     /***

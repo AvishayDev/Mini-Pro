@@ -29,7 +29,7 @@ public class Geometries implements Intersectable{
      * @param geometries all the geometries
      */
     public Geometries(Intersectable... geometries){
-        this.geometries = new LinkedList<Intersectable>(Arrays.asList(geometries.clone()));
+        this.geometries = List.of(geometries);
     }
 
     /***
@@ -47,8 +47,13 @@ public class Geometries implements Intersectable{
      * @return List of all the points
      */
     public List<Point3D> findIntersections(Ray ray) {
-        if(geometries == null)
+        if(geometries.size() == 0)
             return null;
+
+        //sum the points by func findIntersections of each element
+
+        //geometries.sort(Ray.getPoint);
+        //      ^dont forget^
         return new ArrayList<Point3D>();
     }
 }

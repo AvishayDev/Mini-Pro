@@ -25,6 +25,7 @@ public class GeometriesTests {
                 new Triangle(new Point3D(0,0,1),new Point3D(-1,0,0),new Point3D(0,-1,0)),
                 new Sphere(new Point3D(0,0,1),1));
         Ray rayCheck;
+
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: the ray cross some of the geometries
@@ -48,6 +49,7 @@ public class GeometriesTests {
         assertEquals("Ray dosent cross geometries dosent work", null ,geometries.findIntersections(rayCheck));
 
         //TC13: Ray cross only one geometry
+        //ray cross sphere
         rayCheck = new Ray(new Vector(0,0,1),new Point3D(0,0,1.5d));
         assertEquals("Ray cross only one geometry dosent work", new Point3D(0,0,2) ,geometries.findIntersections(rayCheck).get(0));
 

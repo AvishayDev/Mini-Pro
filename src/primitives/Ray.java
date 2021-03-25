@@ -38,6 +38,7 @@ public class Ray {
      * @return the point multiply by t from p0 in the angle of dir
      */
     public Point3D getPoint(double t){
+
         return p0.add(dir.scale(t));
     }
     /***

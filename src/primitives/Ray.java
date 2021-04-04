@@ -41,6 +41,15 @@ public class Ray {
 
         return p0.add(dir.scale(t));
     }
+
+    /***
+     * calculate the t for the point on the ray
+     * @param point the point on the ray
+     * @return
+     */
+    public double getT(Point3D point){
+        return point.subtract(p0).length();
+    }
     /***
      * Getter for the Point3D field of the ray
      * @return The p0 variable

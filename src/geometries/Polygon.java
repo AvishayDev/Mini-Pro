@@ -1,5 +1,6 @@
 package geometries;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import primitives.*;
@@ -96,12 +97,36 @@ public class Polygon implements Geometry {
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
 
-		//when try to make v if one of them is the ZERO VECTOR
-		//it mean the p0 on vertex => null
+		//check if the point on the plane
+		if(plane.findIntersections(ray) == null)
+			//when try to make v if one of them is the ZERO VECTOR
+			//it mean the p0 on vertex => null
 
-		//when try to make N if one of them is same as normal vector
-		//it mean the p0 on the plane =>null
+			//when try to make N if one of them is same as normal vector
+			//it mean the p0 on the plane => null
+			return null;
 
-		return null;
+		Vector vec1 = vertices.get(0).subtract(ray.getP0());
+		Vector vec2 = vertices.get(1).subtract(ray.getP0());;
+		Vector N1 = vec1.crossProduct(vec2);
+		double sign = Util.alignZero(N1.dotProduct(ray.getDir()));
+		Vector Ni;
+		double signI;
+		for (int i = 2; i < vertices.size(); i++ ){
+			vec1 = vertices.get(i).subtract(ray.getP0());
+			Ni = vec2.crossProduct(vec1);
+			vec2 = vec1.scale(1);
+			signI = Util.alignZero(ray.getDir().dotProduct(Ni));
+			if(sign*signI <=0)
+				//its mean the sign is different or zero
+				return null;
+		}
+		Ni = vec2.crossProduct(vertices.get(0).subtract(ray.getP0()));
+		signI = Util.alignZero(Ni.dotProduct(ray.getDir()));
+		if(sign*signI <=0)
+			//its mean the sign is different or zero
+			return null;
+
+		return plane.findIntersections(ray);
 	}
 }

@@ -47,13 +47,22 @@ public class Geometries implements Intersectable{
      * @return List of all the points
      */
     public List<Point3D> findIntersections(Ray ray) {
+
         if(geometries.size() == 0)
+            //if geometries is empty so no intersection => null
             return null;
+        List<Point3D> saveList;
+        List<Point3D> returnList = new LinkedList<Point3D>();
+        for (int i = 0; i< geometries.size(); i++){
+            saveList = geometries.get(i).findIntersections(ray);
+            if(saveList != null)
+                returnList.addAll(saveList);
+        }
 
-        //sum the points by func findIntersections of each element
-
+        if(returnList.isEmpty())
+            return null;
+        return returnList;
         //geometries.sort(Ray.getPoint);
         //      ^dont forget^
-        return List.of();
     }
 }

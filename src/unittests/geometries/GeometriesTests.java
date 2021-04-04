@@ -21,7 +21,7 @@ public class GeometriesTests {
     public void findIntersections() {
         //list of geometries (meanwhile without bonus)
         //Plane, Sphere, Triangle
-        Geometries geometries = new Geometries(new Plane(new Point3D(-1/3d,-1/3d,1/3),new Vector(-1,-1,1)),
+        Geometries geometries = new Geometries(new Plane(new Point3D(-1/3d,-1/3d,1/3d),new Vector(-1,-1,1)),
                 new Triangle(new Point3D(0,0,1),new Point3D(-1,0,0),new Point3D(0,-1,0)),
                 new Sphere(new Point3D(0,0,1),1));
         Ray rayCheck;
@@ -56,7 +56,7 @@ public class GeometriesTests {
         //TC14: Ray cross all geometries
         rayCheck = new Ray(new Vector(-1,-1,0),new Point3D(-0.2d,-0.2d,0.5d));
         //check points
-        assertEquals("POINTS Ray cross all geometries dosent work", List.of(new Point3D(-0.25d,-0.25d,0.5d),new Point3D(-0.25d,-0.25d,0.5d),new Point3D(-0.61d,-0.61d,0.5d)) ,geometries.findIntersections(rayCheck));
+        assertEquals("POINTS Ray cross all geometries dosent work", List.of(new Point3D(-0.25d,-0.25d,0.5d),new Point3D(-0.25d,-0.25d,0.5d),new Point3D(-0.6123724356957945d,-0.6123724356957945d,0.5d)) ,geometries.findIntersections(rayCheck));
         //check num of points
         assertEquals("NUM Ray cross all geometries dosent work", 3 ,geometries.findIntersections(rayCheck).size());
 

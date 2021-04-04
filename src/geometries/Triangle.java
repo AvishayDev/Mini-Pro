@@ -38,18 +38,6 @@ public class Triangle extends Polygon{
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-       //if all the dot-prodoct(v,N) are +/- the ray in the Paramida
-        //else the ray dont cross the Triangle
-
-
-        /***
-         * 1) חישוב וקטורים
-         * 2) חישוב נורמלים
-         * 3) חישוב סימני dot-prodoct
-         * 4) אם קיבלנו 0 באחד הסימנים אז אנחנו על הצלע או בקודקוד
-         *  אם קיבלנו 2 אפסים אז זה נמצא על שני צלעות אז זה בעצם על הקודקוד המשותף שלהם
-         *  צריך לבדוק - יכול להיות 0 גם על המשכי הצלעות!
-         */
-        return null;
+        return super.findIntersections(ray);
     }
 }

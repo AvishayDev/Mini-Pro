@@ -18,9 +18,12 @@ public final class Main {
      */
     public static void main(String[] args) {
 
-        Vector vec1 = new Point3D(-1,0,0).subtract(new Point3D(0,0,1));
-        Vector vec2 = new Point3D(0,-1,0).subtract(new Point3D(0,0,1));
-        Vector vec3 =vec1.crossProduct(vec2);
+        try{
+        double t = 1/0;}
+        catch (Exception e){}
+        Vector vec1 = new Point3D(1,1,1).subtract(new Point3D(0,0,1));
+        Vector vec2 = new Point3D(0,-1,1).subtract(new Point3D(0,0,1));
+        Vector vec3 =vec1.crossProduct(vec1);
 
         try { // test zero vector
             new Vector(0, 0, 0);

@@ -95,6 +95,13 @@ public class Polygon implements Geometry {
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
+
+		//when try to make v if one of them is the ZERO VECTOR
+		//it mean the p0 on vertex => null
+
+		//when try to make N if one of them is same as normal vector
+		//it mean the p0 on the plane =>null
+
 		return null;
 	}
 }

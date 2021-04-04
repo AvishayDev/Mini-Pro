@@ -20,7 +20,7 @@ public class Geometries implements Intersectable{
      * create EMPTY list of geometries
      */
     public Geometries(){
-        geometries =new ArrayList<Intersectable>();
+        geometries =new LinkedList<Intersectable>();
     }
 
     /***
@@ -54,6 +54,6 @@ public class Geometries implements Intersectable{
 
         //geometries.sort(Ray.getPoint);
         //      ^dont forget^
-        return new ArrayList<Point3D>();
+        return List.of();
     }
 }

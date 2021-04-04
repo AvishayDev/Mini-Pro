@@ -75,7 +75,27 @@ public class Plane implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        return null;
+        Vector u;
+        double t;
+        try{
+            u = q0.subtract(ray.getP0());
+            t = normal.dotProduct(u)/normal.dotProduct(ray.getDir());
+        }catch (Exception e){
+            //its mean p0==q0 => no intersections
+            //if normal.dotProduct(ray.getDir()) == 0 it mean the dir is
+            //parallel to the plane => no intersections
+            return null;
+        }
+
+
+        if(Util.alignZero(t) <= 0)
+            //if t==0 its mean p0 on the plane
+            //and if t<0 its mean p0 is over the plane
+            return null;
+
+        //if pass all of this, there is intersection in the plane
+        return List.of(ray.getPoint(t));
+
     }
 
     /***

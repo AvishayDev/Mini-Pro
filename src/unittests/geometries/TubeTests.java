@@ -91,14 +91,12 @@ public class TubeTests {
         rayCheck = new Ray(new Vector(0,-0.5d,-0.5d),new Point3D(0,-0.5d,-0.5d));
         assertEquals("TC1-5: Ray starts inside and continuation intersect p0", List.of(new Point3D(0,-1,-1)),tube.findIntersections(rayCheck));
 
-
-
         // TC1-7: Ray starts at tube and goes outside and continuation intersect p0 not orthogonal
-        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-1,0,0));
-        assertEquals("Ray starts at tube and goes outside and continuation intersect p0", null,tube.findIntersections(rayCheck));
+        rayCheck = new Ray(new Vector(0,1,1),new Point3D(0,1,1));
+        assertEquals("TC1-7: Ray starts at tube and goes outside and continuation intersect p0", null,tube.findIntersections(rayCheck));
 
         // TC1-8: Ray starts after tube and continuation intersect p0 not orthogonal
-        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-1.5d,0,0));
+        rayCheck = new Ray(new Vector(0,1,1),new Point3D(0,2,2));
         assertEquals("TC1-8: Ray starts after tube and continuation intersect p0", null,tube.findIntersections(rayCheck));
 
         // TC1-9: Ray starts before the tangent point not orthogonal

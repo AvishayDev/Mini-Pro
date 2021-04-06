@@ -119,49 +119,49 @@ public class TubeTests {
 
         // TC1-14: ray parallel to axisRay in tube start on same level as p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(0.5,0,0));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-14: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-15: ray parallel to axisRay in tube start down level of p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(0.5,0,-1));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-15: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-16: ray parallel to axisRay on tube start above level of p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(1,0,1));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-16: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-17: ray parallel to axisRay on tube start on same level as p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(1,0,0));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-17: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-18: ray parallel to axisRay on tube start down level of p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(1,0,-1));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-18: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-19: ray parallel to axisRay outside the tube start above level of p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(2,0,1));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-19: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-20: ray parallel to axisRay outside the tube start on same level as p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(2,0,0));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-20: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-21: ray parallel to axisRay outside the tube start down level of p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(2,0,-1));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-21: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-27: ray parallel to axisRay in tube start above p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(0,0,1));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-27: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-28: ray parallel to axisRay in tube start down p0 (expected no points)
         rayCheck = new Ray(new Vector(0,0,1), new Point3D(0,0,-1));
-        assertEquals("TC1-13: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
+        assertEquals("TC1-28: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // ************** start on p0 **************
 
         // TC1-22: ray start on p0 not parallel not orthogonal to axisRay (expected one point)
         rayCheck = new Ray(new Vector(1,1,1),new Point3D(0,0,0));
-        assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(0.71d,0.71d,0.71d)),tube.findIntersections(rayCheck));
+        assertEquals("TC1-22: ray start on p0 not parallel not orthogonal to axisRay intersect the Tube once", List.of(new Point3D(0.71d,0.71d,0.71d)),tube.findIntersections(rayCheck));
 
         // TC1-23: ray start on p0 orthogonal to axisRay (expected one point)
         rayCheck = new Ray(new Vector(1,0,0),new Point3D(0,0,0));
@@ -169,11 +169,11 @@ public class TubeTests {
 
         // TC1-24: ray start on p0 parallel to axisRay (expected no points)
         rayCheck = new Ray(new Vector(0,0,1),new Point3D(0,0,0));
-        assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(1,0,0)),tube.findIntersections(rayCheck));
+        assertEquals("TC1-24: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // TC1-25: ray start on p0 parallel to axisRay negative direction
         rayCheck = new Ray(new Vector(0,0,-1),new Point3D(0,0,0));
-        assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(1,0,0)),tube.findIntersections(rayCheck));
+        assertEquals("TC1-25: the ray not intersect the Tube and parallel to axisRay", null,tube.findIntersections(rayCheck));
 
         // ************** orthogonal to axisRay **************
 
@@ -200,15 +200,41 @@ public class TubeTests {
 
 
         // ------ goes inside -------
-        // TC1-26: ray start on tube orthogonal to axisRay above level of p0 intersect axisRay
-        // TC1-29: ray start on tube orthogonal to axisRay intersect p0
-        // TC1-30: ray start on tube orthogonal to axisRay down level of p0 intersect axisRay
-        // TC1-31: ray start in tube orthogonal to axisRay above level of p0 intersect axisRay
-        // TC1-32: ray start in tube orthogonal to axisRay intersect p0
-        // TC1-33: ray start in tube orthogonal to axisRay down level of p0 intersect axisRay
-        // TC1-34: ray start outside the tube orthogonal to axisRay above level of p0 intersect axisRay
-        // TC1-35: ray start outside the tube orthogonal to axisRay intersect p0
-        // TC1-36: ray start outside the tube orthogonal to axisRay down level of p0 intersect axisRay
+        // TC1-26: ray start on tube orthogonal to axisRay above level of p0 intersect axisRay (expected 1 point)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(1,0,1));
+        assertEquals("TC1-26: the ray intersect once with the Tube and orthogonal to axisRay", List.of(new Point3D(-1,0,1)),tube.findIntersections(rayCheck));
+
+        // TC1-29: ray start on tube orthogonal to axisRay intersect p0 (expected 1 point)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(1,0,0));
+        assertEquals("TC1-29: the ray intersect once with the Tube and orthogonal to axisRay", List.of(new Point3D(-1,0,0)),tube.findIntersections(rayCheck));
+
+        // TC1-30: ray start on tube orthogonal to axisRay down level of p0 intersect axisRay (expected 1 point)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(1,0,-1));
+        assertEquals("TC1-30: the ray intersect once with the Tube and orthogonal to axisRay", List.of(new Point3D(-1,0,-1)),tube.findIntersections(rayCheck));
+
+        // TC1-31: ray start in tube orthogonal to axisRay above level of p0 intersect axisRay (expected 1 point)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(0.5,0,1));
+        assertEquals("TC1-31: the ray intersect once with the Tube and orthogonal to axisRay", List.of(new Point3D(-1,0,1)),tube.findIntersections(rayCheck));
+
+        // TC1-32: ray start in tube orthogonal to axisRay intersect p0 (expected 1 point)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(0.5,0,0));
+        assertEquals("TC1-32: the ray intersect once with the Tube and orthogonal to axisRay", List.of(new Point3D(-1,0,0)),tube.findIntersections(rayCheck));
+
+        // TC1-33: ray start in tube orthogonal to axisRay down level of p0 intersect axisRay (expected 1 point)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(1,0,-1));
+        assertEquals("TC1-33: the ray intersect once with the Tube and orthogonal to axisRay", List.of(new Point3D(-1,0,-1)),tube.findIntersections(rayCheck));
+
+        // TC1-34: ray start outside the tube orthogonal to axisRay above level of p0 intersect axisRay (expected 2 points)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(2,0,1));
+        assertEquals("TC1-34: the ray intersect twice with the Tube and orthogonal to axisRay", List.of(new Point3D(1,0,1) ,new Point3D(-1,0,1)),tube.findIntersections(rayCheck));
+
+        // TC1-35: ray start outside the tube orthogonal to axisRay intersect p0 (expected 2 points)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(2,0,0));
+        assertEquals("TC1-35: the ray intersect twice with the Tube and orthogonal to axisRay", List.of(new Point3D(1,0,0) ,new Point3D(-1,0,0)),tube.findIntersections(rayCheck));
+
+        // TC1-36: ray start outside the tube orthogonal to axisRay down level of p0 intersect axisRay (expected 2 points)
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(2,0,-1));
+        assertEquals("TC1-36: the ray intersect twice with the Tube and orthogonal to axisRay", List.of(new Point3D(1,0,-1) ,new Point3D(-1,0,-1)),tube.findIntersections(rayCheck));
 
         // ------ goes outside -------
         // TC1-37: ray start on tube orthogonal to axisRay above level of p0 continuation intersect axisRay

@@ -50,23 +50,23 @@ public class TubeTests {
         Ray rayCheck;
         // ============ Equivalence Partitions Tests ==============
 
-        // TC01: the ray intersect the Tube twice
+        // TC0-1: the ray intersect the Tube twice
 
         rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,2,0));
         assertEquals("TC01: the ray intersect the Tube twice", List.of(new Point3D(0,1,0.5d),new Point3D(0,-1,1.5d)),tube.findIntersections(rayCheck));
 
-        // TC02: the ray intersect the Tube once
+        // TC0-2: the ray intersect the Tube once
 
         rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,0,1));
         assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(0,-1,1.5d)),tube.findIntersections(rayCheck));
 
-        // TC03: the ray not intersect the Tube
+        // TC0-3: the ray not intersect the Tube
         rayCheck = new Ray(new Vector(0,-1,1),new Point3D(0,-2,0));
         assertEquals("TC03: the ray not intersect the Tube", null,tube.findIntersections(rayCheck));
 
-        // TC04: the ray not intersect the Tube but continuation intersect
+        // TC0-4: the ray not intersect the Tube but continuation intersect
         rayCheck = new Ray(new Vector(0,1,1),new Point3D(0,2,0));
-        assertEquals("TC03: the ray not intersect the Tube", null,tube.findIntersections(rayCheck));
+        assertEquals("TC0-4: the ray not intersect the Tube but continuation intersect", null,tube.findIntersections(rayCheck));
 
 
         // =============== Boundary Values Tests ==================
@@ -79,9 +79,9 @@ public class TubeTests {
         // TC1-6: Ray starts at the center
         // TC1-7: Ray starts at tube and goes outside
         // TC1-8: Ray starts after tube
-        // TC1-9: Ray starts before the tangent point
-        // TC1-10: Ray starts at the tangent point
-        // TC1-11: Ray starts after the tangent point
+        // TC1-9: Ray starts before the tangent point not orthogonal
+        // TC1-10: Ray starts at the tangent point not orthogonal
+        // TC1-11: Ray starts after the tangent point not orthogonal
         // TC1-12: Ray's line is outside, ray is orthogonal to ray start to tube's center line
 
         // ************** parallel to axisRay **************
@@ -118,6 +118,10 @@ public class TubeTests {
         // TC1-36: ray start outside the tube orthogonal to axisRay down level of p0
         // TC1-37: ray start in tube orthogonal to axisRay above p0
         // TC1-38: ray start in tube orthogonal to axisRay down p0
+        // TC1-39: Ray starts before the tangent point orthogonal
+        // TC1-40: Ray starts at the tangent point orthogonal
+        // TC1-41: Ray starts after the tangent point orthogonal
+
 
 
     }

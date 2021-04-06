@@ -51,12 +51,10 @@ public class TubeTests {
         // ============ Equivalence Partitions Tests ==============
 
         // TC0-1: the ray intersect the Tube twice
-
         rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,2,0));
         assertEquals("TC01: the ray intersect the Tube twice", List.of(new Point3D(0,1,0.5d),new Point3D(0,-1,1.5d)),tube.findIntersections(rayCheck));
 
         // TC0-2: the ray intersect the Tube once
-
         rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,0,1));
         assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(0,-1,1.5d)),tube.findIntersections(rayCheck));
 
@@ -161,13 +159,21 @@ public class TubeTests {
 
         // ************** start on p0 **************
 
-        // TC1-22: ray start on p0 not parallel not orthogonal to axisRay
-        // TC1-23: ray start on p0 orthogonal to axisRay
-        // TC1-24: ray start on p0 parallel to axisRay
+        // TC1-22: ray start on p0 not parallel not orthogonal to axisRay (expected one point)
+        rayCheck = new Ray(new Vector(1,1,1),new Point3D(0,0,0));
+        assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(0.71d,0.71d,0.71d)),tube.findIntersections(rayCheck));
+
+        // TC1-23: ray start on p0 orthogonal to axisRay (expected one point)
+        rayCheck = new Ray(new Vector(1,0,0),new Point3D(0,0,0));
+        assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(1,0,0)),tube.findIntersections(rayCheck));
+
+        // TC1-24: ray start on p0 parallel to axisRay (expected no points)
+        rayCheck = new Ray(new Vector(0,0,1),new Point3D(0,0,0));
+        assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(1,0,0)),tube.findIntersections(rayCheck));
+
         // TC1-25: ray start on p0 parallel to axisRay negative direction
         rayCheck = new Ray(new Vector(0,0,-1),new Point3D(0,0,0));
         assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(1,0,0)),tube.findIntersections(rayCheck));
-
 
         // ************** orthogonal to axisRay **************
 

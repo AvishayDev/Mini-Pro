@@ -71,18 +71,49 @@ public class TubeTests {
 
         // =============== Boundary Values Tests ==================
 
-        // TC1-1: Ray starts at tube and goes inside
-        // TC1-2: Ray starts at tube and goes outside
-        // TC1-3: Ray starts before the tube
-        // TC1-4: Ray starts at tube and goes inside
-        // TC1-5: Ray starts inside
-        // TC1-6: Ray starts at the center
-        // TC1-7: Ray starts at tube and goes outside
-        // TC1-8: Ray starts after tube
+        // TC1-1: Ray starts at tube and goes inside not orthogonal
+        rayCheck = new Ray(new Vector(-1,-1,-1),new Point3D(0,1,1));
+        assertEquals("TC1-1: Ray starts at tube and goes inside", List.of(new Point3D(-1,0,0)),tube.findIntersections(rayCheck));
+
+        // TC1-2: Ray starts at tube and goes outside not orthogonal
+        rayCheck = new Ray(new Vector(0,1,-1),new Point3D(0,1,1));
+        assertEquals("TC1-2: Ray starts at tube and goes outside", null,tube.findIntersections(rayCheck));
+
+        // TC1-3: Ray starts before the tube intersect p0 not orthogonal
+        rayCheck = new Ray(new Vector(0,-2,-2),new Point3D(0,2,2));
+        assertEquals("TC1-3: Ray starts before the tube intersect p0", List.of(new Point3D(0,-1,-1),new Point3D(0,1,1)),tube.findIntersections(rayCheck));
+
+        // TC1-4: Ray starts at tube and goes inside intersect p0 not orthogonal
+        rayCheck = new Ray(new Vector(0,-1,-1),new Point3D(0,1,1));
+        assertEquals("TC1-4: Ray starts at tube and goes inside intersect p0", List.of(new Point3D(0,-1,-1)),tube.findIntersections(rayCheck));
+
+        // TC1-5: Ray starts inside and continuation intersect p0 not orthogonal
+        rayCheck = new Ray(new Vector(0,-0.5d,-0.5d),new Point3D(0,-0.5d,-0.5d));
+        assertEquals("TC1-5: Ray starts inside and continuation intersect p0", List.of(new Point3D(0,-1,-1)),tube.findIntersections(rayCheck));
+
+
+
+        // TC1-7: Ray starts at tube and goes outside and continuation intersect p0 not orthogonal
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-1,0,0));
+        assertEquals("Ray starts at tube and goes outside and continuation intersect p0", null,tube.findIntersections(rayCheck));
+
+        // TC1-8: Ray starts after tube and continuation intersect p0 not orthogonal
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-1.5d,0,0));
+        assertEquals("TC1-8: Ray starts after tube and continuation intersect p0", null,tube.findIntersections(rayCheck));
+
         // TC1-9: Ray starts before the tangent point not orthogonal
+        rayCheck = new Ray(new Vector(0,2,3),new Point3D(-1,-1,-1));
+        assertEquals("TC1-9: Ray starts before the tangent point not orthogonal", null,tube.findIntersections(rayCheck));
+
         // TC1-10: Ray starts at the tangent point not orthogonal
+        rayCheck = new Ray(new Vector(0,1,2),new Point3D(-1,0,0));
+        assertEquals("TC1-10: Ray starts at the tangent point not orthogonal", null,tube.findIntersections(rayCheck));
+
         // TC1-11: Ray starts after the tangent point not orthogonal
-        // TC1-12: Ray's line is outside, ray is orthogonal to ray start to tube's center line
+        rayCheck = new Ray(new Vector(0,0.5d,1.5d),new Point3D(-1,0.5,0.5));
+        assertEquals("TC1-11: Ray starts after the tangent point not orthogonal", null,tube.findIntersections(rayCheck));
+
+        // TC1-12: Ray starts outside tube and p0 orthogonal to q0 not orthogonal to tube
 
         // ************** parallel to axisRay **************
 
@@ -107,20 +138,33 @@ public class TubeTests {
 
         // ************** orthogonal to axisRay **************
 
-        // TC1-26: ray start on tube orthogonal to axisRay above level of p0
-        // TC1-29: ray start on tube orthogonal to axisRay same level as p0
-        // TC1-30: ray start on tube orthogonal to axisRay down level of p0
-        // TC1-31: ray start in tube orthogonal to axisRay above level of p0
-        // TC1-32: ray start in tube orthogonal to axisRay same level as p0
-        // TC1-33: ray start in tube orthogonal to axisRay down level of p0
-        // TC1-34: ray start outside the tube orthogonal to axisRay above level of p0
-        // TC1-35: ray start outside the tube orthogonal to axisRay same level as p0
-        // TC1-36: ray start outside the tube orthogonal to axisRay down level of p0
-        // TC1-37: ray start in tube orthogonal to axisRay above p0
-        // TC1-38: ray start in tube orthogonal to axisRay down p0
-        // TC1-39: Ray starts before the tangent point orthogonal
-        // TC1-40: Ray starts at the tangent point orthogonal
-        // TC1-41: Ray starts after the tangent point orthogonal
+        // ------ goes inside -------
+        // TC1-26: ray start on tube orthogonal to axisRay above level of p0 intersect axisRay
+        // TC1-29: ray start on tube orthogonal to axisRay intersect p0
+        // TC1-30: ray start on tube orthogonal to axisRay down level of p0 intersect axisRay
+        // TC1-31: ray start in tube orthogonal to axisRay above level of p0 intersect axisRay
+        // TC1-32: ray start in tube orthogonal to axisRay intersect p0
+        // TC1-33: ray start in tube orthogonal to axisRay down level of p0 intersect axisRay
+        // TC1-34: ray start outside the tube orthogonal to axisRay above level of p0 intersect axisRay
+        // TC1-35: ray start outside the tube orthogonal to axisRay intersect p0
+        // TC1-36: ray start outside the tube orthogonal to axisRay down level of p0 intersect axisRay
+
+        // ------ goes outside -------
+        // TC1-37: ray start on tube orthogonal to axisRay above level of p0 continuation intersect axisRay
+        // TC1-38: ray start on tube orthogonal to axisRay continuation intersect p0
+        // TC1-39: ray start on tube orthogonal to axisRay down level of p0 continuation intersect axisRay
+        // TC1-40: ray start in tube orthogonal to axisRay above level of p0 continuation intersect axisRay
+        // TC1-41: ray start in tube orthogonal to axisRay continuation intersect p0
+        // TC1-42: ray start in tube orthogonal to axisRay down level of p0 continuation intersect axisRay
+        // TC1-43: ray start outside the tube orthogonal to axisRay above level of p0 continuation intersect axisRay
+        // TC1-44: ray start outside the tube orthogonal to axisRay continuation intersect p0
+        // TC1-45: ray start outside the tube orthogonal to axisRay down level of p0 continuation intersect axisRay
+
+        // TC1-46: ray start in tube orthogonal to axisRay above p0
+        // TC1-47: ray start in tube orthogonal to axisRay down p0
+        // TC1-48: Ray starts before the tangent point orthogonal to axisRay
+        // TC1-49: Ray starts at the tangent point orthogonal to axisRay
+        // TC1-50: Ray starts after the tangent point orthogonal to axisRay
 
 
 

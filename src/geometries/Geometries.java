@@ -59,10 +59,11 @@ public class Geometries implements Intersectable{
                 returnList.addAll(saveList);
         }
 
+
         if(returnList.isEmpty())
             return null;
+        returnList.sort(Comparator.comparingDouble(ray::getT));
         return returnList;
-        //geometries.sort(Ray.getPoint);
-        //      ^dont forget^
+
     }
 }

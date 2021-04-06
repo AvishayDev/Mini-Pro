@@ -177,6 +177,28 @@ public class TubeTests {
 
         // ************** orthogonal to axisRay **************
 
+
+        // TC1-46: ray start in tube orthogonal to axisRay above p0
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(0,0,1));
+        assertEquals("TC1-46: ray start in tube orthogonal to axisRay above p0", List.of(new Point3D(-1,0,1)),tube.findIntersections(rayCheck));
+
+        // TC1-47: ray start in tube orthogonal to axisRay down p0
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(0,0,-1));
+        assertEquals("ray start in tube orthogonal to axisRay down p0", List.of(new Point3D(-1,0,-1)),tube.findIntersections(rayCheck));
+
+        // TC1-48: Ray starts before the tangent point orthogonal to axisRay
+        rayCheck = new Ray(new Vector(1,0,0),new Point3D(-1,1,0));
+        assertEquals("TC1-48: Ray starts before the tangent point orthogonal to axisRay", null ,tube.findIntersections(rayCheck));
+
+        // TC1-49: Ray starts at the tangent point orthogonal to axisRay
+        rayCheck = new Ray(new Vector(1,0,0),new Point3D(0,1,0));
+        assertEquals("TC1-49: Ray starts at the tangent point orthogonal to axisRay", null ,tube.findIntersections(rayCheck));
+
+        // TC1-50: Ray starts after the tangent point orthogonal to axisRay
+        rayCheck = new Ray(new Vector(1,0,0),new Point3D(1,1,0));
+        assertEquals("TC1-50: Ray starts after the tangent point orthogonal to axisRay", null ,tube.findIntersections(rayCheck));
+
+
         // ------ goes inside -------
         // TC1-26: ray start on tube orthogonal to axisRay above level of p0 intersect axisRay
         // TC1-29: ray start on tube orthogonal to axisRay intersect p0
@@ -190,20 +212,41 @@ public class TubeTests {
 
         // ------ goes outside -------
         // TC1-37: ray start on tube orthogonal to axisRay above level of p0 continuation intersect axisRay
-        // TC1-38: ray start on tube orthogonal to axisRay continuation intersect p0
-        // TC1-39: ray start on tube orthogonal to axisRay down level of p0 continuation intersect axisRay
-        // TC1-40: ray start in tube orthogonal to axisRay above level of p0 continuation intersect axisRay
-        // TC1-41: ray start in tube orthogonal to axisRay continuation intersect p0
-        // TC1-42: ray start in tube orthogonal to axisRay down level of p0 continuation intersect axisRay
-        // TC1-43: ray start outside the tube orthogonal to axisRay above level of p0 continuation intersect axisRay
-        // TC1-44: ray start outside the tube orthogonal to axisRay continuation intersect p0
-        // TC1-45: ray start outside the tube orthogonal to axisRay down level of p0 continuation intersect axisRay
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(1,0,1));
+        assertEquals("TC1-37: ray start on tube orthogonal to axisRay above level of p0 continuation intersect axisRay", List.of(new Point3D(-1,0,1)),tube.findIntersections(rayCheck));
 
-        // TC1-46: ray start in tube orthogonal to axisRay above p0
-        // TC1-47: ray start in tube orthogonal to axisRay down p0
-        // TC1-48: Ray starts before the tangent point orthogonal to axisRay
-        // TC1-49: Ray starts at the tangent point orthogonal to axisRay
-        // TC1-50: Ray starts after the tangent point orthogonal to axisRay
+        // TC1-38: ray start on tube orthogonal to axisRay continuation intersect p0
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(1,0,0));
+        assertEquals("TC1-38: ray start on tube orthogonal to axisRay continuation intersect p0", List.of(new Point3D(-1,0,0)),tube.findIntersections(rayCheck));
+
+        // TC1-39: ray start on tube orthogonal to axisRay down level of p0 continuation intersect axisRay
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(1,0,-1));
+        assertEquals("TC1-39: ray start on tube orthogonal to axisRay down level of p0 continuation intersect axisRay", List.of(new Point3D(-1,0,-1)),tube.findIntersections(rayCheck));
+
+        // TC1-40: ray start in tube orthogonal to axisRay above level of p0 continuation intersect axisRay
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-0.5d,0,1));
+        assertEquals("TC1-40: ray start in tube orthogonal to axisRay above level of p0 continuation intersect axisRay", List.of(new Point3D(-1,0,1)),tube.findIntersections(rayCheck));
+
+        // TC1-41: ray start in tube orthogonal to axisRay continuation intersect p0
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-0.5d,0,0));
+        assertEquals("TC1-41: ray start in tube orthogonal to axisRay continuation intersect p0", List.of(new Point3D(-1,0,0)),tube.findIntersections(rayCheck));
+
+        // TC1-42: ray start in tube orthogonal to axisRay down level of p0 continuation intersect axisRay
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-0.5d,0,-1));
+        assertEquals("TC1-42: ray start in tube orthogonal to axisRay down level of p0 continuation intersect axisRay", List.of(new Point3D(-1,0,-1)),tube.findIntersections(rayCheck));
+
+        // TC1-43: ray start outside the tube orthogonal to axisRay above level of p0 continuation intersect axisRay
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-1.5d,0,1));
+        assertEquals("TC1-43: ray start outside the tube orthogonal to axisRay above level of p0 continuation intersect axisRay", null ,tube.findIntersections(rayCheck));
+
+        // TC1-44: ray start outside the tube orthogonal to axisRay continuation intersect p0
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-1.5d,0,0));
+        assertEquals("TC1-44: ray start outside the tube orthogonal to axisRay continuation intersect p0", null ,tube.findIntersections(rayCheck));
+
+        // TC1-45: ray start outside the tube orthogonal to axisRay down level of p0 continuation intersect axisRay
+        rayCheck = new Ray(new Vector(-1,0,0),new Point3D(-1.5d,0,-1));
+        assertEquals("TC1-45: ray start outside the tube orthogonal to axisRay down level of p0 continuation intersect axisRay", null ,tube.findIntersections(rayCheck));
+
 
 
 

@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
  * 
@@ -45,7 +47,9 @@ public abstract class Util {
     public static double alignZero(double number) {
         return getExp(number) < ACCURACY ? 0.0 : number;
     }
-    
+
+
+
 	/**
 	 * Check whether two numbers have the same sign
 	 * 

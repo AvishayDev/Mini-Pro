@@ -18,6 +18,10 @@ public final class Main {
      */
     public static void main(String[] args) {
 
+
+
+        double num = Util.alignZero(0.0000000000001d);
+
         try{
         double t = 1/0;}
         catch (Exception e){}

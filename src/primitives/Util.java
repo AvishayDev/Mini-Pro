@@ -25,9 +25,18 @@ public abstract class Util {
         // 2. Shift all 52 bits to the right (removing mantissa)
         // 3. Zero the sign of number bit by mask 0x7FF
         // 4. "De-normalize" the exponent by subtracting 1023
-        return (int)((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL) - 1023;
+		return (int)((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL) - 1023;
+
     }
 
+	private static int getExpNum(double num) {
+		// 1. doubleToRawLongBits: "convert" the stored number to set of bits
+		// 2. Shift all 52 bits to the right (removing mantissa)
+		// 3. Zero the sign of number bit by mask 0x7FF
+		// 4. "De-normalize" the exponent by subtracting 1023
+		return (int)((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL) - 1064;
+
+	}
     /**
      * Checks whether the number is [almost] zero
      * 
@@ -48,7 +57,22 @@ public abstract class Util {
         return getExp(number) < ACCURACY ? 0.0 : number;
     }
 
+	public static double alignNumber(double number) {
+		return getExpNum(number) < ACCURACY ? roundAvoid(number,1) : number;
+	}
 
+	/**
+	 * Aligns the number to num of places
+	 * after the zero if it is almost there
+	 *
+	 * @param value the value of the number
+	 * @param places places after the zero
+	 * @return the number round
+	 */
+	public static double roundAvoid(double value, int places) {
+		double scale = Math.pow(10, places);
+		return Math.round(value * scale) / scale;
+	}
 
 	/**
 	 * Check whether two numbers have the same sign

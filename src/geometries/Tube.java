@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /***
@@ -157,12 +158,24 @@ public class Tube implements Geometry{
             return null;
         }
         determinate =Math.sqrt(determinate);
-        if (Util.alignZero(determinate)>0){
-            //its mean two intersections
-            return List.of(ray.getPoint((-B+determinate)/(2*A)),ray.getPoint((-B-determinate)/(2*A)));
-        }
-        //if pass all its mean only one intersection
-        return List.of(ray.getPoint(-B/2*A));
+        if (Util.alignZero(determinate) == 0){
+            //its mean only one intersection
+            return List.of(ray.getPoint(-B/2*A));
+            }
+        //if pass all its mean two intersections
+
+        List<Point3D> list = new LinkedList<Point3D>();
+        double t1 = (-B+determinate)/(2d*A);
+        double t2 = (-B-determinate)/(2d*A);
+        if(Util.alignZero(t1) > 0)
+            //so we want to take t1
+            list.add(ray.getPoint(t1));
+
+        if (Util.alignZero(t2) > 0)
+            //so we want to take t2
+            list.add(ray.getPoint(t2));
+
+        return list.isEmpty() ? null : list;
 
     }
 

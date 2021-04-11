@@ -52,7 +52,7 @@ public class TubeTests {
 
         // TC0-1: the ray intersect the Tube twice
         rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,2,0));
-        assertEquals("TC01: the ray intersect the Tube twice", List.of(new Point3D(0,1,0.5d),new Point3D(0,-1,1.5d)),tube.findIntersections(rayCheck));
+        assertEquals("TC01: the ray intersect the Tube twice", List.of(new Point3D(0,-1,1.5d),new Point3D(0,1,0.5d)),tube.findIntersections(rayCheck));
 
         // TC0-2: the ray intersect the Tube once
         rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,0,1));

@@ -18,9 +18,13 @@ public final class Main {
      */
     public static void main(String[] args) {
 
+        double num = 0.79999999999999999d;
+        for (int i =0; i<10; i++){
+            Util.alignNumber(num);
+            num -=0.1;
+        }
 
 
-        double num = Util.alignZero(0.0000000000001d);
 
         try{
         double t = 1/0;}

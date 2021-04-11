@@ -101,7 +101,7 @@ public class Tube implements Geometry{
             // so we take only the vector of the ray
             vecA = ray.getDir();
         }
-        A = Util.alignZero(vecA.lengthSquared()); //vecA^2
+        A = Util.alignNumber(vecA.lengthSquared()); //vecA^2
 
         // ------ Calc of C --------
 
@@ -136,16 +136,21 @@ public class Tube implements Geometry{
             }
         }
         //(pointC)^2 - r^2
-        C =Util.alignZero(pointC.distanceSquared(Point3D.ZERO) - (radius*radius));
+        C =Util.alignNumber(pointC.distanceSquared(Point3D.ZERO) - (radius*radius));
 
         // ------ Calc of B --------
 
         // calc the equation B = 2*(v - (v,va)va, DeltaP -(DeltaP,va)va)
-        B = Util.alignZero(vecA.dotProduct(pointC.subtract(Point3D.ZERO))*2);
-
+        try {
+            B = Util.alignNumber(vecA.dotProduct(pointC.subtract(Point3D.ZERO)) * 2);
+        }catch (IllegalArgumentException e){
+            //if catch so pointC is (0,0,0)
+            //its mean B = 0
+            B = 0;
+        }
 
         //calc Determinante
-        double determinate = Util.alignZero((B*B)- (4d*A*C));
+        double determinate = Util.alignNumber((B*B)- (4d*A*C));
 
         if(Util.alignZero(determinate)<0){
             //its mean no intersections so

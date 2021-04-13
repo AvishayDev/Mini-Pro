@@ -26,9 +26,8 @@ public abstract class Util {
         // 2. Shift all 52 bits to the right (removing mantissa)
         // 3. Zero the sign of number bit by mask 0x7FF
         // 4. "De-normalize" the exponent by subtracting 1023
-		int number =  (int)((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL );
-		number -= 1023;
-		return number;
+		return (int)((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL ) - 1023;
+
 
     }
 
@@ -60,11 +59,11 @@ public abstract class Util {
 	 * @return the number round
 	 */
 	public static double alignNumber(double num) {
-
-    	double num1 = Math.round(num * 10d) / 10d;
-    	return alignZero(num1-num) == 0 ? num1 : num;
+    	double num1 = (Math.round(num * 10d) / 10d);
+		return getExp(num1-num) < ACCURACY ? num1 : num;
 
     }
+
 
 
 	private static double roundAvoid(double value, int places) {

@@ -94,11 +94,11 @@ public class Tube implements Geometry{
         } catch (IllegalArgumentException e) {
             //
             if(Flag){
-                //if true its mean the Exception came from the final calc
+                //if true, its mean the Exception came from the final calc
                 //  so the ray and the axisRay is parallel
                 return null;
             }
-            // if not, so the exception came from calc (v,va)va
+            // if not, so the Exception came from calc (v,va)va
             // so we take only the vector of the ray
             vecA = ray.getDir();
         }
@@ -129,7 +129,7 @@ public class Tube implements Geometry{
                 // (DeltaP,va)va . so we take only deltaP for the calc:
                 pointC = deltaP.getHead();
             }else {
-                // if true its mean the Exception came from DeltaP
+                // if true, its mean the Exception came from DeltaP
                 // and if (DeltaP == Zero Vector)
                 // so (DeltaP,va)va == Zero Vector!
                 // so we take the Zero point for the calculations
@@ -157,12 +157,14 @@ public class Tube implements Geometry{
             //its mean no intersections so
             return null;
         }
+
         determinate =Math.sqrt(determinate);
         if (Util.alignZero(determinate) == 0){
             //its mean only one intersection
-            return List.of(ray.getPoint(-B/2*A));
+            return null;
             }
         //if pass all its mean two intersections
+
 
         List<Point3D> list = new LinkedList<Point3D>();
         double t1 = (-B+determinate)/(2d*A);

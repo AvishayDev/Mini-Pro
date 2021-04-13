@@ -18,25 +18,20 @@ public final class Main {
      */
     public static void main(String[] args) {
 
-        double num = 0.79999999999999999d;
-        for (int i =0; i<10; i++){
-            Util.alignNumber(num);
-            num -=0.1;
-        }
+
+
+        Vector u = new Vector(-1,-7,7);
+        Vector w = new Vector(2,4,-8);
+        u.normalize();
+        double num1 = u.dotProduct(w);
+        num1 = num1*num1;
+        double num2 = w.dotProduct(w);
+        num2 = num2 - num1;
+        num2 = num2 * u.dotProduct(u);
+        num2 = 0;
 
 
 
-        try{
-        double t = 1/0;}
-        catch (Exception e){}
-        Vector vec1 = new Point3D(1,1,1).subtract(new Point3D(0,0,1));
-        Vector vec2 = new Point3D(0,-1,1).subtract(new Point3D(0,0,1));
-        Vector vec3 =vec1.crossProduct(vec1);
-
-        try { // test zero vector
-            new Vector(0, 0, 0);
-            out.println("ERROR: zero vector does not throw an exception");
-        } catch (Exception e) {}
 
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
@@ -73,9 +68,6 @@ public final class Main {
             out.println("ERROR: normalize() function creates a new vector");
         if (!isZero(vCopyNormalize.length() - 1))
             out.println("ERROR: normalize() result is not a unit vector");
-        Vector u = v.normalized();
-        if (u == v)
-            out.println("ERROR: normalized() function does not create a new vector");
 
         // Test operations with points and vectors
         Point3D p1 = new Point3D(1, 2, 3); 

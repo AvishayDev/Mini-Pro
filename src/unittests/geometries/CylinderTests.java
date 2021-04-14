@@ -100,9 +100,38 @@ public class CylinderTests {
         // =============== Boundary Values Tests ==================
 
 
-        // ************ Base Checking *************
+        //TC1-1: ray start on p0 intersect body
+        //TC1-2: ray start on p0 intersect upper base
+        //TC1-3: ray start on p0 intersect upper base parallel to axisRay
+        //TC1-13: ray start on p0 not intersect
+        //TC1-14: ray start on p0 not intersect parallel to axisRay
+        //TC1-21: ray start on p0 orthogonal to axisRay
 
-        //TC1-1: ray start on p0 
+
+        //TC1-4: ray start on down base intersect upper base
+        //TC1-5: ray start on down base intersect body
+        //TC1-6: ray start on down base intersect upper base parallel to axisRay
+        //TC1-15: ray start on down base not intersect
+        //TC1-16: ray start on down base not intersect parallel to axisRay
+        //TC1-22: ray start on down base orthogonal to axisRay
+
+
+        //TC1-7: ray start on p1 intersect body
+        //TC1-8: ray start on p1 intersect down base
+        //TC1-9: ray start on p1 intersect down base parallel to axisRay
+        //TC1-17: ray start on p1 not intersect
+        //TC1-18: ray start on p1 not intersect parallel to axisRay
+        //TC1-23: ray start on p1 orthogonal to axisRay
+
+
+        //TC1-10: ray start on upper base intersect down base
+        //TC1-11: ray start on upper base intersect body
+        //TC1-12: ray start on upper base intersect down base parallel to axisRay
+        //TC1-19: ray start on upper base not intersect
+        //TC1-20: ray start on upper base not intersect parallel to axisRay
+        //TC1-24: ray start on upper base orthogonal to axisRay
+
+
 
 
 

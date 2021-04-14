@@ -160,11 +160,12 @@ public class Tube implements Geometry{
 
         determinate =Math.sqrt(determinate);
         if (Util.alignZero(determinate) == 0){
-            //its mean only one intersection
+            //its mean there is only one intersection by
+            //tangent point
             return null;
             }
-        //if pass all its mean two intersections
 
+        //if pass all its mean two intersections
 
         List<Point3D> list = new LinkedList<Point3D>();
         double t1 = (-B+determinate)/(2d*A);

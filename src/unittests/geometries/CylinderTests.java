@@ -6,6 +6,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -52,6 +54,47 @@ public class CylinderTests {
      */
     @Test
     public void testFindIntersectionPoint(){
+
+        Cylinder cylinder= new Cylinder(new Vector(0,0,2),new Point3D(0,0,0),1,2);
+        Ray rayCheck;
+
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC0-1: the ray intersect the Cylinder twice on body
+        rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,2,0));
+        assertEquals("TC01: the ray intersect the Tube twice", List.of(new Point3D(0,-1,1.5d),new Point3D(0,1,0.5d)),cylinder.findIntersections(rayCheck));
+
+        //TC0-5: the ray intersect the Cylinder once in the body and once in the base
+
+        //TC0-6: the ray intersect the Cylinder twice in bases
+
+        // TC0-2: the ray intersect the Cylinder once in body
+        rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,0,1));
+        assertEquals("TC02: the ray intersect the Tube once", List.of(new Point3D(0,-1,1.5d)),cylinder.findIntersections(rayCheck));
+
+        //TC0-7: the ray intersect the Cylinder one in upper base
+
+        //TC0-8: the ray intersect the Cylinder one in down base
+
+        // TC0-3: the ray not intersect the Cylinder side by body
+        rayCheck = new Ray(new Vector(0,-1,1),new Point3D(0,-2,0));
+        assertEquals("TC03: the ray not intersect the Tube", null,cylinder.findIntersections(rayCheck));
+
+        // TC0-9: the ray not intersect the Cylinder above the base
+
+        // TC0-4: the ray not intersect the Cylinder but continuation intersect
+        rayCheck = new Ray(new Vector(0,1,1),new Point3D(0,2,1.5d));
+        assertEquals("TC0-4: the ray not intersect the Tube but continuation intersect", null,cylinder.findIntersections(rayCheck));
+
+
+        // =============== Boundary Values Tests ==================
+
+
+        // ************ Base Checking *************
+
+        //TC1-1: ray start on p0 
+
+
 
     }
 }

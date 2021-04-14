@@ -177,7 +177,6 @@ public class TubeTests {
 
         // ************** orthogonal to axisRay **************
 
-
         // TC1-46: ray start in tube orthogonal to axisRay above p0
         rayCheck = new Ray(new Vector(-1,0,0),new Point3D(0,0,1));
         assertEquals("TC1-46: ray start in tube orthogonal to axisRay above p0", List.of(new Point3D(-1,0,1)),tube.findIntersections(rayCheck));

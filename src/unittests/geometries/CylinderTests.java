@@ -141,17 +141,28 @@ public class CylinderTests {
 
 
         //TC1-10: ray start on upper base intersect down base
+        rayCheck = new Ray(new Vector(0,-0.5,-2),new Point3D(0,0.5d,2));
+        assertEquals("TC1-10: the ray intersect the Cylinder once in lower base", List.of(new Point3D(0,0,0)), cylinder.findIntersections(rayCheck));
+
         //TC1-11: ray start on upper base intersect body
+        rayCheck = new Ray(new Vector(0,0.5,-1),new Point3D(0,0.5d,2));
+        assertEquals("TC1-11: the ray intersect the Cylinder once in body", List.of(new Point3D(0,1,1)), cylinder.findIntersections(rayCheck));
+
         //TC1-12: ray start on upper base intersect down base parallel to axisRay
+        rayCheck = new Ray(new Vector(0,0,-2),new Point3D(0,0.5,2));
+        assertEquals("TC1-12: the ray intersect the Cylinder once in lower base, parallel to axisRay", List.of(new Point3D(0,0.5d,0)), cylinder.findIntersections(rayCheck));
+
         //TC1-19: ray start on upper base not intersect
+        rayCheck = new Ray(new Vector(0,0.5d,1),new Point3D(0,0.5d,2));
+        assertEquals("TC0-19: the ray not intersect the Cylinder", null,cylinder.findIntersections(rayCheck));
+
         //TC1-20: ray start on upper base not intersect parallel to axisRay
+        rayCheck = new Ray(new Vector(0,0,1),new Point3D(0,0.5d,2));
+        assertEquals("TC0-15: the ray not intersect the Cylinder, parallel to axisRay", null,cylinder.findIntersections(rayCheck));
+
         //TC1-24: ray start on upper base orthogonal to axisRay
-
-
-
-
-
-
+        rayCheck = new Ray(new Vector(0,0.5,0),new Point3D(0,0.5d,2));
+        assertEquals("TC1-22: ray start on upper base orthogonal to axisRay", List.of(new Point3D(0,1,2)), cylinder.findIntersections(rayCheck));
 
     }
 }

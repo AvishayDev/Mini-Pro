@@ -82,7 +82,22 @@ public class Cylinder extends Tube {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        return null;
+
+    List<Point3D> points = super.findIntersections(ray);
+
+    if(points == null){
+        //dont intersect body check for bases
+    } else if(points.size() == 1){
+        //intersect body once check for inside cylinder and
+        // intersection for bases
+    }else{
+        //its mean 2 intersections check for inside cylinder
+    }
+
+    // (Va,p) + (Va,-p1) = -(Va,v)*t
+
+    return null;
+
     }
 
     /***

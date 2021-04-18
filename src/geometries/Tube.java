@@ -69,10 +69,10 @@ public class Tube implements Geometry{
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 
-        // v = ray.getDir()
-        //va = axisRay.detDir()
-        // p = ray.getP0()
-        // pa = axisRay.getP0()
+        Vector v = ray.getDir();
+        Vector va = axisRay.getDir();
+        Point3D p = ray.getP0();
+        Point3D pa = axisRay.getP0();
 
         Vector deltaP = null;
         Vector vecA;
@@ -86,10 +86,10 @@ public class Tube implements Geometry{
         try{ //calc the equation A = ( v - (v,va)va )^2
 
             //calc (v,va)va
-            vecA = axisRay.getDir().scale(ray.getDir().dotProduct(axisRay.getDir()));
+            vecA = va.scale(v.dotProduct(va));
             //calc the final equation
             Flag =true;
-            vecA = ray.getDir().subtract(vecA);
+            vecA = v.subtract(vecA);
 
         } catch (IllegalArgumentException e) {
             //
@@ -100,7 +100,7 @@ public class Tube implements Geometry{
             }
             // if not, so the Exception came from calc (v,va)va
             // so we take only the vector of the ray
-            vecA = ray.getDir();
+            vecA = v;
         }
         A = Util.alignNumber(vecA.lengthSquared()); //vecA^2
 
@@ -111,10 +111,10 @@ public class Tube implements Geometry{
         Point3D pointC;
         try{ //calc the equation C = ( DeltaP - (DeltaP,va)va )^2 - r^2
             //calc DeltaP
-            deltaP = ray.getP0().subtract(axisRay.getP0());
+            deltaP = p.subtract(pa);
             // calc (DeltaP,va)va
             Flag = true;
-            vecC = axisRay.getDir().scale(deltaP.dotProduct(axisRay.getDir()));
+            vecC = va.scale(deltaP.dotProduct(va));
             // calc the final equation
             Flag2 = true;
             pointC = deltaP.subtract(vecC).getHead();

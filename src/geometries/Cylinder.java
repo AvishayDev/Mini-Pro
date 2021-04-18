@@ -1,6 +1,7 @@
 package geometries;
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -83,20 +84,69 @@ public class Cylinder extends Tube {
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 
-    List<Point3D> points = super.findIntersections(ray);
+        List<Point3D> points = super.findIntersections(ray);
 
-    if(points == null){
-        //dont intersect body check for bases
-    } else if(points.size() == 1){
-        //intersect body once check for inside cylinder and
-        // intersection for bases
-    }else{
-        //its mean 2 intersections check for inside cylinder
-    }
+        //p1 = axisRay.getP0
+        //p2 = same as p1 but in upper base
 
-    // (Va,p) + (Va,-p1) = -(Va,v)*t
+        boolean basesCheck = false;
+        boolean insideCheck = false;
+        Point3D p1 = axisRay.getP0();
+        Point3D p2 = p1.add(axisRay.getDir().scale(height));
+        Vector v = ray.getDir();
+        Vector va = axisRay.getDir();
+        Point3D p = ray.getP0();
 
-    return null;
+        if(points == null){
+            //dont intersect body check for bases
+            points = new LinkedList<Point3D>();
+            basesCheck =true;
+        } else {
+            //intersect body once or twice check for inside cylinder and
+            // intersection for bases
+                basesCheck =true;
+                insideCheck = true;
+        }
+
+        if(insideCheck){
+            //its mean 1 or 2 body intersections so check if they in the cyliner:
+            for(Point3D point : points){
+                if(va.dotProduct(point.subtract(p1))<=0 && va.dotProduct(point.subtract(p2))>=0)
+                    // its mean the point outside the cyliner and maybe in base and body intersection
+                    // so remove from list
+                    points.remove(point);
+
+            }
+        }
+
+        if(basesCheck){
+            // (Va,p) + (Va,-p1) = -(Va,v)*t1 ,
+            // (Va,p) + (Va,-p2) = -(Va,v)*t2 => equations for bases intersections
+            // -(Va,v)
+            double dotProV = -1*va.dotProduct(v);
+            if(Util.isZero(dotProV))
+                //its mean we dosent have t so ray dosent intersect bases!
+                return points;
+
+            // (Va,p)
+            double dotProP = va.dotProduct(p.subtract(Point3D.ZERO));
+            //calc t1,t2
+            double t1 = Util.alignNumber((dotProP + va.dotProduct(Point3D.ZERO.subtract(p1)))/dotProV);
+            double t2 = Util.alignNumber((dotProP + va.dotProduct(Point3D.ZERO.subtract(p2)))/dotProV);
+
+            Point3D q =ray.getPoint(t1);
+            if(t1 > 0 && q.subtract(p1).lengthSquared() < (radius*radius))
+                points.add(q);
+
+            q = ray.getPoint(t2);
+            if(t2 > 0 && q.subtract(p2).lengthSquared() < (radius*radius))
+                points.add(q);
+
+
+
+        }
+
+        return points.isEmpty() ? null : points;
 
     }
 

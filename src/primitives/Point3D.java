@@ -1,5 +1,7 @@
 package primitives;
 
+import java.awt.*;
+
 /***
  * Represents 3D point with 3 Coordinates,
  * and have basic functions on the point.
@@ -78,6 +80,10 @@ public class Point3D {
      */
     public double distance(Point3D point){
         return Math.sqrt(distanceSquared(point));
+    }
+
+    public Point3D scale(double t){
+        return new Point3D(this.getX()*t,this.getY()*t,this.getZ()*t);
     }
 
     /***

@@ -66,7 +66,7 @@ public class CylinderTests {
 
         //TC0-5: the ray intersect the Cylinder once in the body and once in the base
         rayCheck = new Ray(new Vector(0,-2,1), new Point3D(0,2,1));
-        assertEquals("TC05: the ray intersect the Cylinder twice", List.of(new Point3D(0,1,1.5), new Point3D(0,0,2)),cylinder.findIntersections(rayCheck) );
+        assertEquals("TC05: the ray intersect the Cylinder twice", List.of(new Point3D(0,0,2),new Point3D(0,1,1.5)),cylinder.findIntersections(rayCheck) );
 
         //TC0-6: the ray intersect the Cylinder twice in bases (not parallel to axis)
         rayCheck = new Ray(new Vector(0,1,3), new Point3D(0,-1,-1));

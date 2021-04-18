@@ -102,46 +102,76 @@ public class Cylinder extends Tube {
             points = new LinkedList<Point3D>();
             basesCheck =true;
         } else {
-            //intersect body once or twice check for inside cylinder and
-            // intersection for bases
-                basesCheck =true;
-                insideCheck = true;
+            //if there is one or two intersections check everything
+            insideCheck =true;
+            basesCheck =true;
         }
 
         if(insideCheck){
             //its mean 1 or 2 body intersections so check if they in the cyliner:
             for(Point3D point : points){
-                if(va.dotProduct(point.subtract(p1))<=0 && va.dotProduct(point.subtract(p2))>=0)
+                //"point" is a point on the cylinder body so it cant be equal to p1 or p2
+                //because they placed in the bases so, no worry about Zero vector
+                if(va.dotProduct(point.subtract(p1))<=0 && va.dotProduct(point.subtract(p2))>=0) {
                     // its mean the point outside the cyliner and maybe in base and body intersection
                     // so remove from list
                     points.remove(point);
-
+                }
             }
         }
 
         if(basesCheck){
             // (Va,p) + (Va,-p1) = -(Va,v)*t1 ,
             // (Va,p) + (Va,-p2) = -(Va,v)*t2 => equations for bases intersections
-            // -(Va,v)
+            // calc -(Va,v)
             double dotProV = -1*va.dotProduct(v);
             if(Util.isZero(dotProV))
                 //its mean we dosent have t so ray dosent intersect bases!
                 return points;
+            // calc (Va,p)
+            double dotProP = 0;
+            try{
+                dotProP = va.dotProduct(p.subtract(Point3D.ZERO));
+            }catch(IllegalArgumentException e){
+                //if catch its mean p ==(0,0,0) so dotProP is equals to Zero
+                //dont do noting..
+            }
 
-            // (Va,p)
-            double dotProP = va.dotProduct(p.subtract(Point3D.ZERO));
             //calc t1,t2
-            double t1 = Util.alignNumber((dotProP + va.dotProduct(Point3D.ZERO.subtract(p1)))/dotProV);
-            double t2 = Util.alignNumber((dotProP + va.dotProduct(Point3D.ZERO.subtract(p2)))/dotProV);
+            double t1 = 0;
+            double t2 = 0;
+            try{
+                t1 = Util.alignNumber((dotProP + va.dotProduct(Point3D.ZERO.subtract(p1)))/dotProV);
+            }catch(IllegalArgumentException e){
+              //if catch its mean p1 == (0,0,0) so calc va.dotProduct(Point3D.ZERO.subtract(p1)) as 0
+                t1 = Util.alignNumber((dotProP + 0)/dotProV);
+            }
 
-            Point3D q =ray.getPoint(t1);
-            if(t1 > 0 && q.subtract(p1).lengthSquared() < (radius*radius))
-                points.add(q);
+            try{
+                t2 = Util.alignNumber((dotProP + va.dotProduct(Point3D.ZERO.subtract(p2)))/dotProV);
+            }catch(IllegalArgumentException e){
+                //if catch its mean p2 == (0,0,0) so calc va.dotProduct(Point3D.ZERO.subtract(p1)) as 0
+                t2 = Util.alignNumber((dotProP + 0)/dotProV);
+            }
 
-            q = ray.getPoint(t2);
-            if(t2 > 0 && q.subtract(p2).lengthSquared() < (radius*radius))
-                points.add(q);
+            //calc points place
+            Point3D q;
+            try {
+                q = ray.getPoint(t1);
+                if (t1 > 0 && q.distanceSquared(p1) < (radius * radius))
+                    points.add(q);
+            }catch(IllegalArgumentException e){
+                //if catch so t1==0 dont take the point
+            }
 
+            try{
+                q = ray.getPoint(t2);
+                if (t2 > 0 && q.distanceSquared(p2) < (radius * radius))
+                    points.add(q);
+
+            }catch (IllegalArgumentException e){
+                //if catch so t2==0 dont take the point
+            }
 
 
         }

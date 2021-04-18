@@ -209,15 +209,15 @@ public class CylinderTests {
 
         //TC1-25: ray intersect 2 intersections of body and base
         rayCheck = new Ray(new Vector(0,-3,3),new Point3D(0,2,-1));
-        assertEquals("TC1-25: ray intersect 2 intersections of body and base", List.of(new Point3D(0,1,0),new Point3D(0,-1,2)), cylinder.findIntersections(rayCheck));
+        assertEquals("TC1-25: ray intersect 2 intersections of body and base", null, cylinder.findIntersections(rayCheck));
 
         //TC1-26: ray intersect intersection of body and base and body
         rayCheck = new Ray(new Vector(0,-4,2),new Point3D(0,3,-1));
-        assertEquals("TC1-25: ray intersect 2 intersections of body and base", List.of(new Point3D(0,-1,1), new Point3D(0,1,0)), cylinder.findIntersections(rayCheck));
+        assertEquals("TC1-25: ray intersect 2 intersections of body and base", List.of(new Point3D(0,-1,1)), cylinder.findIntersections(rayCheck));
 
         //TC1-27: ray intersect intersection of body and base and base
         rayCheck = new Ray(new Vector(0,-3,4),new Point3D(0,2.5d,-2));
-        assertEquals("TC1-25: ray intersect 2 intersections of body and base", List.of(new Point3D(0,-0.5d,2), new Point3D(0,1,0)), cylinder.findIntersections(rayCheck));
+        assertEquals("TC1-25: ray intersect 2 intersections of body and base", List.of(new Point3D(0,-0.5d,2)), cylinder.findIntersections(rayCheck));
 
         //TC1-28: ray start on intersection of body and base not parallel not orthogonal to axisRay go outside
         rayCheck = new Ray(new Vector(0,1,2),new Point3D(0,1,0));
@@ -257,7 +257,7 @@ public class CylinderTests {
 
         //TC1-35: ray start in Cylinder and intersect intersection of body and base
         rayCheck = new Ray(new Vector(0,-1,1),new Point3D(0,0,1));
-        assertEquals("TC1-25: ray intersect 2 intersections of body and base", List.of(new Point3D(0,-1,2)), cylinder.findIntersections(rayCheck));
+        assertEquals("TC1-25: ray intersect 2 intersections of body and base", null, cylinder.findIntersections(rayCheck));
 
 
 

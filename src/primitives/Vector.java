@@ -111,6 +111,17 @@ public class Vector {
                (this.head.getZ()*vec.head.getZ());
     }
 
+
+    /***
+     * This function performs a dot product between the current vector and a received point
+     * @param point The received vector
+     * @return The result of the dot product action.
+     */
+    public double dotProduct(Point3D point){
+        return (this.head.getX()*point.getX())+
+                (this.head.getY()*point.getY())+
+                (this.head.getZ()*point.getZ());
+    }
     /***
      * This function returns the length squared of the current vector
      * @return The length squared value, type of double

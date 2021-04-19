@@ -142,13 +142,7 @@ public class Tube implements Geometry{
         // ------ Calc of B --------
 
         // calc the equation B = 2*(v - (v,va)va, DeltaP -(DeltaP,va)va)
-        try {
-            B = Util.alignNumber(vecA.dotProduct(pointC.subtract(Point3D.ZERO)) * 2);
-        }catch (IllegalArgumentException e){
-            //if catch so pointC is (0,0,0)
-            //its mean B = 0
-            B = 0;
-        }
+        B = Util.alignNumber(vecA.dotProduct(pointC) * 2);
 
         //calc Determinante
         double determinate = Util.alignNumber((B*B)- (4d*A*C));

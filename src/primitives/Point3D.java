@@ -72,6 +72,7 @@ public class Point3D {
 
     }
 
+
     /***
      * Calculate the distance between this point and the
      * get point
@@ -82,6 +83,11 @@ public class Point3D {
         return Math.sqrt(distanceSquared(point));
     }
 
+    /***
+     * This function returns a scaled version of the current point
+     * @param t The amount of scale we will increase/decrease the vector
+     * @return The scaled point
+     */
     public Point3D scale(double t){
         return new Point3D(this.getX()*t,this.getY()*t,this.getZ()*t);
     }

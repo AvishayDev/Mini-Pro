@@ -153,8 +153,7 @@ public class Vector {
      * @return The normalized version the current vector
      */
     public Vector normalized(){
-        Vector vec = new Vector(this.head);
-        return vec.normalize();
+        return new Vector(this.head).normalize();
     }
 
     /***

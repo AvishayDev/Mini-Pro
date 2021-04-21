@@ -8,7 +8,10 @@ import javax.naming.NoInitialContextException;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/***
+ * Camera is an object that has initial starting point, p0, and a virtual coordinate system of x,y,z
+ * It also contains the height and width of the View Plane, and the distance from the camera to it
+ */
 public class Camera {
 
     Point3D p0;
@@ -19,6 +22,13 @@ public class Camera {
     double height;
     double distance;
 
+    /***
+     * Constructor for Camera, that receives initial starting point, VectorTo (Z axis), VectorUp (Y axis)
+     * VectorRight (X axis) will be calculated inside the constructor
+     * @param p0 Initial starting point of the camera
+     * @param vTo Vector of emulated Z axis
+     * @param vUp Vector of emulated Y axis
+     */
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
 
         if(vUp.dotProduct(vTo) != 0)
@@ -27,7 +37,7 @@ public class Camera {
         this.p0 = p0;
         this.vUp = vUp.normalized();
         this.vTo = vTo.normalized();
-        this.vRight = vUp.crossProduct(vTo).normalized();
+        this.vRight = vUp.crossProduct(vTo).normalized(); // Vector of emulated X axis
 
     }
 
@@ -58,7 +68,7 @@ public class Camera {
 
         if(!Util.isZero(xJ))
             //use pC instead of pIJ
-            pC = pC.add(vRight.scale(-xJ));
+            pC = pC.add(vRight.scale(-xJ)); // Need another check later, different from presentation
         if(!Util.isZero(yI))
             pC = pC.add(vUp.scale(yI));
 
@@ -66,15 +76,26 @@ public class Camera {
     }
 
 
-
+    /***
+     * This method receives 2 doubles and inserts them as the camera's width and height values, as long as they're valid (bigger than 0).
+     * @param width The width of the View Plane
+     * @param height The height of the View Plane
+     * @return This camera, with the updated values. Not a clone.
+     */
     public Camera setViewPlaneSize(double width, double height){
         if(Util.alignZero(width) <= 0 || Util.alignZero(height) <=0)
             throw new IllegalArgumentException("ViewPlane size must be positive!");
+
         this.width = width;
         this.height = height;
         return this;
     }
 
+    /***
+     * This method receives a double and inserts it as the distance between the camera and the view plane
+     * @param distance The distance between the camera and the view plane
+     * @return This camera, with the updated values. Not a clone.
+     */
     public Camera setDistance(double distance){
         if(distance<=0)
             throw new IllegalArgumentException("ViewPlane distance must be positive!");
@@ -83,11 +104,13 @@ public class Camera {
     }
 
     /***
-     *
-     * @param nX
-     * @param nY
-     * @param geometry
-     * @return
+     * This method receives the amount of pixels in the view plane's X axis and Y axis, and a geometry, and returns a list of intersection points from
+     * rays out of the camera, through the view plane that hits the geometry object
+     * It will throw exception in case width or height of the camera are not initialized properly.
+     * @param nX The amount of pixels in X axis of the view plane
+     * @param nY The amount of pixels in Y axis of the view plane
+     * @param geometry The geometry that's being pictured in the camera
+     * @return A list of all the intersection points from the camera to the geometry
      */
     public List<Point3D> cameraRaysIntersect(int nX, int nY,Intersectable geometry) throws NoInitialContextException {
         List<Point3D> returnList = new LinkedList<Point3D>();

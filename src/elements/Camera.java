@@ -130,9 +130,10 @@ public class Camera {
     }
 
 
-    public void replaceCamera(Point3D point) {
+    public void replaceCameraPosition(Point3D point) {
         p0 = point;
     }
+
     public Point3D getP0() {
         return p0;
     }

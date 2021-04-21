@@ -81,11 +81,13 @@ public class CameraTests {
         //TC0-6: First Plane test case
         Plane plane = new Plane(new Point3D(0,0,-2),new Vector(0,0,-1));
         //TC0-7: Second Plane test case
-        plane = new Plane(new Point3D(0,0,-2),new Vector(0,0,-1));
+        plane = new Plane(new Point3D(0,0,-2),new Vector(0,2,1));
         //TC0-8: Third Plane test case
+        plane = new Plane(new Point3D(0,0,-3),new Vector(0,1,3));
         //TC0-9: First Triangle test case
+        Triangle triangle = new Triangle(new Point3D(0,1,-2),new Point3D(1,-1,-2), new Point3D(-1,-1,-2));
         //TC0-10: Second Triangle test case
-
+        triangle = new Triangle(new Point3D(0,20,-2),new Point3D(1,-1,-2), new Point3D(-1,-1,-2));
 
 
 

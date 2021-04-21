@@ -103,10 +103,13 @@ public class Camera {
                     returnList.addAll(points);
             }
 
-        return returnList.isEmpty() ? null : returnList;
+        return returnList;
     }
 
 
+    public void replaceCamera(Point3D point) {
+        p0 = point;
+    }
     public Point3D getP0() {
         return p0;
     }

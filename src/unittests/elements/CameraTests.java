@@ -1,10 +1,9 @@
 package unittests.elements;
 
-import elements.Camera;
 import org.junit.Test;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import elements.*;
+import primitives.*;
+import geometries.*;
 
 import javax.naming.NoInitialContextException;
 
@@ -59,7 +58,35 @@ public class CameraTests {
     }
 
     @Test
-    public void cameraRaysIntersect() {
+    public void cameraRaysIntersect() throws NoInitialContextException {
+        Camera camera = new Camera(new Point3D(0,0,0),new Vector(0,0,-1),new Vector(0,1,0)).setDistance(1).setViewPlaneSize(3,3);
+        Sphere sphere = new Sphere(new Point3D(0,0,-3),1);
+
+        //TC0-1: First test case Sphere r=1
+        assertEquals("TC0-1: First test case Sphere r=1", 2,
+                camera.cameraRaysIntersect(3,3,sphere).size());
+
+        //TC0-2: Second test case (r=2.5)
+        sphere = new Sphere(new Point3D(0,0,-2.5d),2.5d);
+        camera.replaceCamera(new Point3D(0,0,0.5));
+        assertEquals("TC0-2: Second test case (r=2.5)", 18,
+                camera.cameraRaysIntersect(3,3,sphere).size());
+
+        //TC0-3: Third test case (r=2)
+        sphere = new Sphere(new Point3D(0,0,-2d),2d);
+        //TC0-4: Fourth test case (r=4)
+        sphere = new Sphere(new Point3D(0,0,-1),4);
+        //TC0-5: Fifth test case (r=0.5)
+        sphere = new Sphere(new Point3D(0,0,1),0.5d);
+        //TC0-6: First Plane test case
+        Plane plane = new Plane(new Point3D(0,0,-2),new Vector(0,0,-1));
+        //TC0-7: Second Plane test case
+        plane = new Plane(new Point3D(0,0,-2),new Vector(0,0,-1));
+        //TC0-8: Third Plane test case
+        //TC0-9: First Triangle test case
+        //TC0-10: Second Triangle test case
+
+
 
 
     }

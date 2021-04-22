@@ -1,11 +1,12 @@
 package renderer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class ImageWriter {
     String projectPath;
     String imageName;
-    Image BufferedImage;
+    BufferedImage image;
     int nX;
     int nY;
 
@@ -15,14 +16,14 @@ public class ImageWriter {
      * @param i place form center pixel in y axis
      * @param color the color of the pixel
      */
-    public void writePixel(int j, int i, Color color){
+    public void writePixel(int j, int i, java.awt.Color color){
         return;
     }
 
     /***
      * create the image
      */
-    public void ToImage(){
-        return;
+    public void writeToImage(){
+        return ;
     }
 }

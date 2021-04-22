@@ -1,5 +1,6 @@
 package primitives;
 
+import java.util.List;
 import java.util.Objects;
 
 /***
@@ -30,6 +31,10 @@ public class Ray {
         if (o == null || getClass() != o.getClass()) return false;
         Ray ray = (Ray) o;
         return p0.equals(ray.p0) && dir.equals(ray.dir);
+    }
+
+    public Point3D findClosestPoint(List<Point3D> points){
+        return null;
     }
 
     /***

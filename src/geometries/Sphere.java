@@ -110,4 +110,8 @@ public class Sphere implements Geometry{
         //if pass all of this it mean p0 cross twice the sphere
         return List.of(ray.getPoint(t1),ray.getPoint(t2));
     }
+
+    public Color getEmission(){
+        return emission;
+    }
 }

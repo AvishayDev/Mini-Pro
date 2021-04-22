@@ -191,7 +191,9 @@ public class Tube implements Geometry{
         return radius;
     }
 
-
+    public Color getEmission(){
+        return emission;
+    }
     //public Point3D getP0(){ return axisRay.getP0(); }
     //public Vector getDir(){ return axisRay.getDir(); }
 

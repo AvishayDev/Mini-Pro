@@ -1,5 +1,6 @@
 package geometries;
 import primitives.*;
+import primitives.Color;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -176,5 +177,9 @@ public class Cylinder extends Tube {
      */
     public double getHeight() {
         return height;
+    }
+
+    public Color getEmission(){
+        return emission;
     }
 }

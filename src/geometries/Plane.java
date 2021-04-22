@@ -98,6 +98,10 @@ public class Plane implements Geometry {
 
     }
 
+    public Color getEmission(){
+        return emission;
+    }
+
     /***
      * check if the point on the plane
      * @param point point to check if on the plane

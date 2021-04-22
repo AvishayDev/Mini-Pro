@@ -4,10 +4,14 @@ import geometries.*;
 import primitives.*;
 import elements.*;
 
+import java.util.List;
+
 public class Scene {
 
-    private String name = null;
-    private Geometries geometries = null;
-    private Color background = Color.BLACK;
-    private AmbientLight ambient = new AmbientLight(Color.BLACK, 0);
+    String name = null;
+    Geometries geometries = null;
+    Color background = Color.BLACK;
+    AmbientLight ambient = new AmbientLight(Color.BLACK, 0);
+    List<LightSource> lights = null;
 }
+

@@ -129,4 +129,8 @@ public class Polygon implements Geometry {
 
 		return plane.findIntersections(ray);
 	}
+
+	public Color getEmission(){
+		return emission;
+	}
 }

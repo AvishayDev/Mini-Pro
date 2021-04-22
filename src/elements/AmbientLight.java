@@ -2,16 +2,14 @@ package elements;
 
 import primitives.Color;
 
-public class AmbientLight {
-
-
-    Color intensity;
+public class AmbientLight implements Light{
 
     public AmbientLight(Color intensity,double kA){
 
     }
 
-    public Color getIntensity(){
+    @Override
+    public Color getIntensity() {
         return null;
     }
 }

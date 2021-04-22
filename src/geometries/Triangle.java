@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -39,5 +40,9 @@ public class Triangle extends Polygon{
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         return super.findIntersections(ray);
+    }
+
+    public Color getEmission(){
+        return emission;
     }
 }

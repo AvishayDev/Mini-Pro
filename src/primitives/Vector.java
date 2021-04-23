@@ -188,4 +188,8 @@ public class Vector {
     public Point3D getHead() {
         return head;
     }
+
+    public double getX(){return this.head.getX();}
+    public double getY(){return this.head.getY();}
+    public double getZ(){return this.head.getZ();}
 }

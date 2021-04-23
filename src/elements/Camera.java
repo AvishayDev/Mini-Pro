@@ -1,8 +1,10 @@
 package elements;
 
 import geometries.Intersectable;
-import org.junit.runners.model.InitializationError;
-import primitives.*;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Util;
+import primitives.Vector;
 
 import javax.naming.NoInitialContextException;
 import java.util.LinkedList;
@@ -129,6 +131,29 @@ public class Camera {
         return returnList;
     }
 
+
+    public Camera changeAngle(double angle){
+
+
+        //for calc vRight new position
+        double coeff[][] = {{vRight.getX(),vRight.getY(),vRight.getZ(),Math.cos((angle*Math.PI)/180)},
+                {vUp.getX(),vUp.getY(),vUp.getZ(),Math.cos(((90-angle)*Math.PI)/180)},
+                {vTo.getX(),vTo.getY(),vTo.getZ(),0}};
+
+        Util.findSolution(coeff);
+
+        //for calc vUp new position
+        coeff = new double[][]{{vUp.getX(),vUp.getY(),vUp.getZ(),Math.cos((angle*Math.PI)/180)},
+                {vRight.getX(),vRight.getY(),vRight.getZ(),Math.cos(((90+angle)*Math.PI)/180)},
+                {vTo.getX(),vTo.getY(),vTo.getZ(),0}};
+
+        Util.findSolution(coeff);
+
+        //no changes for vTo
+
+
+        return this;
+    }
 
     public void replaceCameraPosition(Point3D point) {
         p0 = point;

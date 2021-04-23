@@ -113,4 +113,11 @@ public class CameraTests {
                 camera.cameraRaysIntersect(3,3,triangle).size());
 
     }
+    @Test
+    public void changeAngle(){
+        Camera camera = new Camera(new Point3D(0,0,0),new Vector(0,0,1), new Vector(0,1,0));
+
+        camera.changeAngle(30d);
+
+    }
 }

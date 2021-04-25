@@ -115,7 +115,7 @@ public class Camera {
      * @return A list of all the intersection points from the camera to the geometry
      */
     public List<Point3D> cameraRaysIntersect(int nX, int nY,Intersectable geometry) throws NoInitialContextException {
-        List<Point3D> returnList = new LinkedList<Point3D>();
+        List<Point3D> returnList = new LinkedList<>();
         List<Point3D> points;
 
         Ray rayCheck;
@@ -146,11 +146,11 @@ public class Camera {
         if (plane == null)  // This can happen if the user inserted null plane manually, or if he used the alternative method
             return this;
 
-        if(plane == "XY" || plane == "YX")
+        if(plane.equals("XY") || plane.equals("YX"))
             return changeAngleXY(angle);
-        if(plane =="XZ" || plane =="ZX")
+        if(plane.equals("XZ") || plane.equals("ZX"))
             return changeAngleXZ(angle);
-        if(plane == "YZ" || plane == "ZY")
+        if(plane.equals("YZ")|| plane.equals("ZY"))
             return changeAngleZY(angle);
 
         return this;

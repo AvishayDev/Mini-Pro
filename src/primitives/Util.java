@@ -32,7 +32,11 @@ public abstract class Util {
     }
 
 
-	// This functions finds the determinant of Matrix
+	/***
+	 * This functions finds the determinant of Matrix
+	 * @param mat Two-dimensional array of doubles that simulates a matrix
+	 * @return The double value of the determinant of the simulated matrix
+	 */
 	private static double determinantOfMatrix(double mat[][])
 	{
 		double ans;
@@ -42,8 +46,12 @@ public abstract class Util {
 		return ans;
 	}
 
-	// This function finds the solution of system of
-	// linear equations using cramer's rule
+	/***
+	 * This function finds the solution of system of linear equations using cramer's rule. Receives the coefficient values of the
+	 * linear equations in a form of simulated matrix and returns a Vector that contains the values of X,Y,Z that will solve the equations.
+	 * @param coeff mat Two-dimensional array of doubles that simulates a matrix, contains the coefficient values of the equations
+	 * @return Vector that contains the values of X,Y,Z that will solve the equations.
+	 */
 	public static Vector findSolution(double coeff[][])
 	{
 		// Matrix d using coeff as given in cramer's rule

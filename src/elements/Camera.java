@@ -112,7 +112,7 @@ public class Camera {
      * @param nX The amount of pixels in X axis of the view plane
      * @param nY The amount of pixels in Y axis of the view plane
      * @param geometry The geometry that's being pictured in the camera
-     * @return A list of all the intersection points from the camera to the geometry
+     * @return A list of all the intersection points from the camera to the geometry.
      */
     public List<Point3D> cameraRaysIntersect(int nX, int nY,Intersectable geometry) throws NoInitialContextException {
         List<Point3D> returnList = new LinkedList<>();
@@ -137,7 +137,7 @@ public class Camera {
      * @param point Point3D that will be the new position point of the camera
      * @param plane A string of the plane you want to change (XY, XZ, YZ, reverses will work too)
      * @param angle A double that will tell what's the angle you want to change the plane by
-     * @return  This camera with the updated values
+     * @return  This camera with the updated values.
      */
     public Camera changeAngleAndPosition(Point3D point,String plane,double angle){
         if(point != null)   // This can happen if the user inserted null point manually, or if he used the alternative method
@@ -160,7 +160,7 @@ public class Camera {
      * Alternative for the method above, in case the user don't want to change the position of the camera, only the angles.
      * @param plane A string of the plane you want to change (XY, XZ, YZ, reverses will work too)
      * @param angle A double that will tell what's the angle you want to change the plane by
-     * @return This camera with the updated values
+     * @return This camera with the updated values.
      */
     public Camera changeAngleAndPosition(String plane,double angle){
         return changeAngleAndPosition(null,plane,angle);
@@ -169,7 +169,7 @@ public class Camera {
     /***
      * Alternative for the method above, in case the user don't want to change the angles of the planes, only the position of the camera.
      * @param point Point3D that will be the new position point of the camera
-     * @return This camera with the updated values
+     * @return This camera with the updated values.
      */
     public Camera changeAngleAndPosition(Point3D point){
         return changeAngleAndPosition(point,null,0);
@@ -178,7 +178,7 @@ public class Camera {
     /***
      * This method serves changeAngleAndPosition, and it changes and angle of plane XY by a received number
      * @param angle The angle you want to tilt the plane XY
-     * @return This camera with the updated values
+     * @return This camera with the updated values.
      */
     private Camera changeAngleXY(double angle){
 
@@ -206,7 +206,7 @@ public class Camera {
     /***
      * This method serves changeAngleAndPosition, and it changes and angle of plane ZY by a received number
      * @param angle The angle you want to tilt the plane ZY
-     * @return This camera with the updated values
+     * @return This camera with the updated values.
      */
     private Camera changeAngleZY(double angle){
 
@@ -234,7 +234,7 @@ public class Camera {
     /***
      * This method serves changeAngleAndPosition, and it changes and angle of plane XZ by a received number
      * @param angle The angle you want to tilt the plane XZ
-     * @return This camera with the updated values
+     * @return This camera with the updated values.
      */
     private Camera changeAngleXZ(double angle){
 

@@ -131,32 +131,97 @@ public class Camera {
         return returnList;
     }
 
-
-    public Camera changeAngle(double angle){
-
-
-        //for calc vRight new position
-        double coeff[][] = {{vRight.getX(),vRight.getY(),vRight.getZ(),Math.cos((angle*Math.PI)/180)},
-                {vUp.getX(),vUp.getY(),vUp.getZ(),Math.cos(((90-angle)*Math.PI)/180)},
-                {vTo.getX(),vTo.getY(),vTo.getZ(),0}};
-
-        Util.findSolution(coeff);
-
-        //for calc vUp new position
-        coeff = new double[][]{{vUp.getX(),vUp.getY(),vUp.getZ(),Math.cos((angle*Math.PI)/180)},
-                {vRight.getX(),vRight.getY(),vRight.getZ(),Math.cos(((90+angle)*Math.PI)/180)},
-                {vTo.getX(),vTo.getY(),vTo.getZ(),0}};
-
-        Util.findSolution(coeff);
-
-        //no changes for vTo
-
+    public Camera changeAngleAndPosition(Point3D point,String plane,double angle){
+        if(point != null)
+            replaceCameraPosition(point);
+        if(plane == "XY" || plane == "YX")
+            return changeAngleXY(angle);
+        if(plane =="XZ" || plane =="ZX")
+            return changeAngleXZ(angle);
+        if(plane == "YZ" || plane == "ZY")
+            return changeAngleZY(angle);
 
         return this;
     }
 
-    public void replaceCameraPosition(Point3D point) {
+    public Camera changeAngleAndPosition(String plane,double angle){
+        return changeAngleAndPosition(null,plane,angle);
+    }
+
+    private Camera changeAngleXY(double angle){
+
+
+        double cosAlpha =Math.cos((angle*Math.PI)/180);
+        //for calc vRight new position
+        double coeff[][] = {{vRight.getX(),vRight.getY(),vRight.getZ(),cosAlpha},
+                {vUp.getX(),vUp.getY(),vUp.getZ(),Math.cos(((90-angle)*Math.PI)/180)},
+                {vTo.getX(),vTo.getY(),vTo.getZ(),0}};
+
+        vRight = Util.findSolution(coeff);
+
+        //for calc vUp new position
+        coeff = new double[][]{{vUp.getX(),vUp.getY(),vUp.getZ(),cosAlpha},
+                {vRight.getX(),vRight.getY(),vRight.getZ(),0},
+                {vTo.getX(),vTo.getY(),vTo.getZ(),0}};
+
+        vUp = Util.findSolution(coeff);
+
+        //no changes for vTo
+
+        return this;
+    }
+
+
+    private Camera changeAngleZY(double angle){
+
+
+        double cosAlpha =Math.cos((angle*Math.PI)/180);
+        //for calc vRight new position
+        double coeff[][] = {{vTo.getX(),vTo.getY(),vTo.getZ(),cosAlpha},
+                {vUp.getX(),vUp.getY(),vUp.getZ(),Math.cos(((90-angle)*Math.PI)/180)},
+                {vRight.getX(),vRight.getY(),vRight.getZ(),0}};
+
+        vTo = Util.findSolution(coeff);
+
+        //for calc vUp new position
+        coeff = new double[][]{{vUp.getX(),vUp.getY(),vUp.getZ(),cosAlpha},
+                {vTo.getX(),vTo.getY(),vTo.getZ(),0},
+                {vRight.getX(),vRight.getY(),vRight.getZ(),0}};
+
+        vUp = Util.findSolution(coeff);
+
+        //no changes for vTo
+        return this;
+
+    }
+
+
+    private Camera changeAngleXZ(double angle){
+
+
+        double cosAlpha =Math.cos((angle*Math.PI)/180);
+        //for calc vRight new position
+        double coeff[][] = {{vRight.getX(),vRight.getY(),vRight.getZ(),cosAlpha},
+                {vTo.getX(),vTo.getY(),vTo.getZ(),Math.cos(((90-angle)*Math.PI)/180)},
+                {vUp.getX(),vUp.getY(),vUp.getZ(),0}};
+
+        vRight = Util.findSolution(coeff);
+
+        //for calc vUp new position
+        coeff = new double[][]{{vTo.getX(),vTo.getY(),vTo.getZ(),cosAlpha},
+                {vRight.getX(),vRight.getY(),vRight.getZ(),0},
+                {vUp.getX(),vUp.getY(),vUp.getZ(),0}};
+
+        vTo = Util.findSolution(coeff);
+
+        //no changes for vTo
+        return this;
+
+    }
+
+    private void replaceCameraPosition(Point3D point) {
         p0 = point;
+
     }
 
     public Point3D getP0() {

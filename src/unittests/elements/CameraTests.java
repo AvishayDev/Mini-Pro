@@ -68,7 +68,7 @@ public class CameraTests {
 
         //TC0-2: Second sphere test case (r=2.5)
         sphere = new Sphere(new Point3D(0,0,-2.5d),2.5d);
-        camera.replaceCameraPosition(new Point3D(0,0,0.5));
+        camera.changeAngleAndPosition(new Point3D(0,0,0.5),"",0);
         assertEquals("TC0-2: Second sphere test case (r=2.5)", 18,
                 camera.cameraRaysIntersect(3,3,sphere).size());
 
@@ -113,11 +113,6 @@ public class CameraTests {
                 camera.cameraRaysIntersect(3,3,triangle).size());
 
     }
-    @Test
-    public void changeAngle(){
-        Camera camera = new Camera(new Point3D(0,0,0),new Vector(0,0,1), new Vector(0,1,0));
 
-        camera.changeAngle(30d);
 
-    }
 }

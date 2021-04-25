@@ -44,7 +44,7 @@ public abstract class Util {
 
 	// This function finds the solution of system of
 	// linear equations using cramer's rule
-	public static void findSolution(double coeff[][])
+	public static Vector findSolution(double coeff[][])
 	{
 		// Matrix d using coeff as given in cramer's rule
 		double d[][] = {
@@ -79,31 +79,33 @@ public abstract class Util {
 		double D1 = determinantOfMatrix(d1);
 		double D2 = determinantOfMatrix(d2);
 		double D3 = determinantOfMatrix(d3);
-		System.out.printf("D is : %.6f \n", D);
-		System.out.printf("D1 is : %.6f \n", D1);
-		System.out.printf("D2 is : %.6f \n", D2);
-		System.out.printf("D3 is : %.6f \n", D3);
+		//System.out.printf("D is : %.6f \n", D);
+		//System.out.printf("D1 is : %.6f \n", D1);
+		//System.out.printf("D2 is : %.6f \n", D2);
+		//System.out.printf("D3 is : %.6f \n", D3);
 
 		// Case 1
-		if (D != 0)
-		{
+		//if (D != 0)
+			//{
 			// Coeff have a unique solution. Apply Cramer's Rule
 			double x = D1 / D;
 			double y = D2 / D;
 			double z = D3 / D; // calculating z using cramer's rule
-			System.out.printf("Value of x is : %.6f\n", x);
-			System.out.printf("Value of y is : %.6f\n", y);
-			System.out.printf("Value of z is : %.6f\n", z);
-		}
+			//System.out.printf("Value of x is : %.6f\n", x);
+			//System.out.printf("Value of y is : %.6f\n", y);
+			//System.out.printf("Value of z is : %.6f\n", z);
+		return new Vector(x,y,z);
+			//}
 
 		// Case 2
-		else
-		{
-			if (D1 == 0 && D2 == 0 && D3 == 0)
-				System.out.printf("Infinite solutions\n");
-			else if (D1 != 0 || D2 != 0 || D3 != 0)
-				System.out.printf("No solutions\n");
-		}
+		//else
+		//{
+		//	if (D1 == 0 && D2 == 0 && D3 == 0)
+		//		System.out.printf("Infinite solutions\n");
+		//	else if (D1 != 0 || D2 != 0 || D3 != 0)
+		//		System.out.printf("No solutions\n");
+
+		//}
 	}
 
 	/**

@@ -77,13 +77,20 @@ public class Plane implements Geometry {
     public List<Point3D> findIntersections(Ray ray) {
         Vector u;
         double t;
+        double t1;
+
         try{
             u = q0.subtract(ray.getP0());
-            t = normal.dotProduct(u)/normal.dotProduct(ray.getDir());
-        }catch (Exception e){
+            t = normal.dotProduct(u);
+            t1 = normal.dotProduct(ray.getDir());
+            if(t == 0 || t1 == 0)
+                //its mean p0 is start on the plane => no intersections
+                //or the dir is orthogonal to the normal => no intersections
+                throw new IllegalArgumentException();
+            t = t/t1;
+
+        }catch (IllegalArgumentException e){
             //its mean p0==q0 => no intersections
-            //if normal.dotProduct(ray.getDir()) == 0 it mean the dir is
-            //parallel to the plane => no intersections
             return null;
         }
 

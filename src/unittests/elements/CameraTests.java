@@ -93,14 +93,14 @@ public class CameraTests {
                 camera.cameraRaysIntersect(3,3,plane).size());
 
         //TC0-7: Second Plane test case
-        //plane = new Plane(new Point3D(0,0,-2),new Vector(0,2,1));
+        //plane = new Plane(new Point3D(0,0,-1),new Vector(0,4,-2));
         //assertEquals("TC0-7: Second Plane test case", 9,
-             //   camera.cameraRaysIntersect(3,3,plane).size());
+          //      camera.cameraRaysIntersect(3,3,plane).size());
 
         //TC0-8: Third Plane test case
-        //plane = new Plane(new Point3D(0,0,-3),new Vector(0,1,3));
-        //assertEquals("TC0-8: Third Plane test case", 6,
-          //      camera.cameraRaysIntersect(3,3,plane).size());
+        plane = new Plane(new Point3D(0,0,-3),new Vector(0,(1d/0.7071067811865475),(-1d/0.7071067811865475)));
+        assertEquals("TC0-8: Third Plane test case", 6,
+                camera.cameraRaysIntersect(3,3,plane).size());
 
         //TC0-9: First Triangle test case
         Triangle triangle = new Triangle(new Point3D(0,1,-2),new Point3D(1,-1,-2), new Point3D(-1,-1,-2));

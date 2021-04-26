@@ -22,7 +22,7 @@ public class CameraTests {
      * {@link elements.Camera#constructRay(int, int, int, int)}.
      */
     @Test
-    public void constructRay() throws NoInitialContextException {
+    public void constructRay(){
 
         Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)).setDistance(10);
 
@@ -58,7 +58,7 @@ public class CameraTests {
     }
 
     @Test
-    public void cameraRaysIntersect() throws NoInitialContextException {
+    public void cameraRaysIntersect() {
         Camera camera = new Camera(new Point3D(0,0,0),new Vector(0,0,-1),new Vector(0,1,0)).setDistance(1).setViewPlaneSize(3,3);
         Sphere sphere = new Sphere(new Point3D(0,0,-3),1);
 
@@ -93,9 +93,9 @@ public class CameraTests {
                 camera.cameraRaysIntersect(3,3,plane).size());
 
         //TC0-7: Second Plane test case
-        //plane = new Plane(new Point3D(0,0,-1),new Vector(0,4,-2));
-        //assertEquals("TC0-7: Second Plane test case", 9,
-          //      camera.cameraRaysIntersect(3,3,plane).size());
+        plane = new Plane(new Point3D(0,0,-2),new Vector(0,0.5d,-1));
+        assertEquals("TC0-7: Second Plane test case", 9,
+                camera.cameraRaysIntersect(3,3,plane).size());
 
         //TC0-8: Third Plane test case
         plane = new Plane(new Point3D(0,0,-3),new Vector(0,(1d/0.7071067811865475),(-1d/0.7071067811865475)));

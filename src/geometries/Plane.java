@@ -38,7 +38,7 @@ public class Plane implements Geometry {
     /***
      * This function returns the normal of the sphere? Null for now
      * @param point A point3D object
-     * @return The normal vector?
+     * @return The normal vector
      */
     @Override
     public Vector getNormal(Point3D point) {
@@ -79,14 +79,15 @@ public class Plane implements Geometry {
         double t;
         double t1;
 
+
         try{
             u = q0.subtract(ray.getP0());
             t = normal.dotProduct(u);
             t1 = normal.dotProduct(ray.getDir());
-            if(t == 0 || t1 == 0)
+            if(Util.isZero(t1))
                 //its mean p0 is start on the plane => no intersections
                 //or the dir is orthogonal to the normal => no intersections
-                throw new IllegalArgumentException();
+                return null;
             t = t/t1;
 
         }catch (IllegalArgumentException e){

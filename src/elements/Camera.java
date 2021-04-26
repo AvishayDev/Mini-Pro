@@ -52,9 +52,9 @@ public class Camera {
      * @param i place form center pixel in y axis
      * @return ray from p0 to center of pixel place
      */
-    public Ray constructRay(int nX, int nY, int j, int i) throws NoInitialContextException {
+    public Ray constructRay(int nX, int nY, int j, int i) {
         if(width == 0 || height == 0)
-                throw new NoInitialContextException("ViewPlane size must be positive!");
+                throw new IllegalStateException("ViewPlane size must be positive!");
 
         // Image center
         Point3D pC = this.p0.add(vTo.scale(distance));
@@ -114,7 +114,7 @@ public class Camera {
      * @param geometry The geometry that's being pictured in the camera
      * @return A list of all the intersection points from the camera to the geometry.
      */
-    public List<Point3D> cameraRaysIntersect(int nX, int nY,Intersectable geometry) throws NoInitialContextException {
+    public List<Point3D> cameraRaysIntersect(int nX, int nY,Intersectable geometry) {
         List<Point3D> returnList = new LinkedList<>();
         List<Point3D> points;
 

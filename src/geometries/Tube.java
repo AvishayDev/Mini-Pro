@@ -152,7 +152,7 @@ public class Tube implements Geometry {
         // calc the equation B = 2*(v - (v,va)va, DeltaP -(DeltaP,va)va)
         B = vecA.dotProduct(pointC) * 2;
 
-        //calc Determinante
+        //calc Determinant
         double determinate = Util.alignZero((B * B) - (4d * A * C));
 
         if (determinate <= 0) {

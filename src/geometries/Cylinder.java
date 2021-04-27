@@ -114,7 +114,7 @@ public class Cylinder extends Tube {
                 //"point" is a point on the cylinder body so it cant be equal to p1 or p2
                 //because they placed in the bases so, no worry about Zero vector
                 if (va.dotProduct(point.subtract(p1)) <= 0 || va.dotProduct(point.subtract(p2)) >= 0) {
-                    // its mean the point outside the cyliner or in body and base intersection
+                    // its mean the point outside the cylinder or in body and base intersection
                     points.remove(point);
                     pointsSize--;
                 } else {
@@ -128,7 +128,7 @@ public class Cylinder extends Tube {
         // calc -(Va,v)
         double dotProV = -1 * va.dotProduct(v);
         if (Util.isZero(dotProV))
-            //its mean we dosent have t so ray dosent intersect bases!
+            //its mean we doesn't have t so ray doesn't intersect bases!
             return nullCheck || points.isEmpty() ? null : points;
 
         // calc (Va,p)
@@ -139,22 +139,22 @@ public class Cylinder extends Tube {
         double t2 = (dotProP + va.dotProduct(p2.scale(-1))) / dotProV;
 
         //calc points place
-        double radiuseSqurte = radius * radius;
+        double radiusSquare = radius * radius;
         Point3D q;
         if (nullCheck) {
             //its mean there is no body intersections so the ray is
-            //or parallel or dont cross. if parallel so may cross bases if inside
-            //so check without takeing body and base intersections
+            //or parallel or don't cross. if parallel so may cross bases if inside
+            //so check without taking body and base intersections
             points = new LinkedList<Point3D>();
             if (Util.alignZero(t1) > 0) {
                 q = ray.getPoint(t1);
-                if (q.distanceSquared(p1) < radiuseSqurte)
+                if (q.distanceSquared(p1) < radiusSquare)
                     points.add(q);
             }
 
             if (Util.alignZero(t2) > 0) {
                 q = ray.getPoint(t2);
-                if (q.distanceSquared(p2) < radiuseSqurte)
+                if (q.distanceSquared(p2) < radiusSquare)
                     points.add(q);
             }
         } else {
@@ -162,13 +162,13 @@ public class Cylinder extends Tube {
             //so check may the ray cross body and base intersections
             if (Util.alignZero(t1) > 0) {
                 q = ray.getPoint(t1);
-                if (q.distanceSquared(p1) <= radiuseSqurte)
+                if (q.distanceSquared(p1) <= radiusSquare)
                     points.add(q);
             }
 
             if (Util.alignZero(t2) > 0) {
                 q = ray.getPoint(t2);
-                if (q.distanceSquared(p2) <= radiuseSqurte)
+                if (q.distanceSquared(p2) <= radiusSquare)
                     points.add(q);
             }
         }

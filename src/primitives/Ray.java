@@ -23,18 +23,6 @@ public class Ray {
         p0 = point;
     }
 
-
-    /***
-     * Make's a Ray using vector and 3D point
-     *
-     * @param point point for the ray
-     * @param vec vector for the ray
-     */
-    public Ray(Point3D point, Vector vec) {
-        dir = vec.normalized();
-        p0 = point;
-    }
-
     /***
      * Equals function, which returns whether the current object and the received objects are equal
      * @param o The received object
@@ -90,7 +78,7 @@ public class Ray {
     }
 
     /***
-     * Getter for the Vector feild of the ray
+     * Getter for the Vector field of the ray
      * @return The dir variable
      */
     public Vector getDir() {

@@ -11,6 +11,8 @@ import java.util.List;
  * Represents Cylinder with vector ,3D point and height.
  */
 public class Cylinder extends Tube {
+
+    //Note
     private double height;
 
     /***
@@ -21,7 +23,7 @@ public class Cylinder extends Tube {
      */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
-        if (Util.isZero(height) || height < 0)
+        if (Util.alignZero(height) <= 0)
             throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
     }
@@ -56,9 +58,9 @@ public class Cylinder extends Tube {
             return axisRay.getDir();
         }
         double t = Math.abs(axisRay.getDir().dotProduct(vec1));
-        /**
-         * if t equals to 0 or in the length of height its means the point on the bases
-         */
+
+          //if t equals to 0 or in the length of height its means the point on the bases
+
         if (Util.isZero(t) || Util.isZero(t - height)) {
             //the point in the base or in the side of the base
             return axisRay.getDir();
@@ -127,25 +129,26 @@ public class Cylinder extends Tube {
         double dotProP = va.dotProduct(p);
 
         //calc t1,t2
-        double t1 = Util.alignNumber((dotProP + va.dotProduct(p1.scale(-1)))/dotProV);
-        double t2 = Util.alignNumber((dotProP + va.dotProduct(p2.scale(-1)))/dotProV);
+        double t1 = (dotProP + va.dotProduct(p1.scale(-1)))/dotProV;
+        double t2 = (dotProP + va.dotProduct(p2.scale(-1)))/dotProV;
 
         //calc points place
+        double radiuseSqurte = radius * radius;
         Point3D q;
         if(nullCheck){
             //its mean there is no body intersections so the ray is
             //or parallel or dont cross. if parallel so may cross bases if inside
             //so check without takeing body and base intersections
             points = new LinkedList<Point3D>();
-            if(t1 > 0){
+            if( Util.alignZero(t1) > 0){
                 q = ray.getPoint(t1);
-                if(q.distanceSquared(p1) < (radius * radius))
+                if(q.distanceSquared(p1) < radiuseSqurte)
                     points.add(q);
             }
 
-            if(t2 > 0){
+            if(Util.alignZero(t2)>0){
                 q = ray.getPoint(t2);
-                if(q.distanceSquared(p2) < (radius * radius))
+                if(q.distanceSquared(p2) < radiuseSqurte)
                     points.add(q);
             }
         }else{
@@ -153,13 +156,13 @@ public class Cylinder extends Tube {
             //so check may the ray cross body and base intersections
             if(t1 > 0){
                 q = ray.getPoint(t1);
-                if(q.distanceSquared(p1) <= (radius * radius))
+                if(q.distanceSquared(p1) <= radiuseSqurte)
                     points.add(q);
             }
 
             if(t2 > 0){
                 q = ray.getPoint(t2);
-                if(q.distanceSquared(p2) <= (radius * radius))
+                if(q.distanceSquared(p2) <= radiuseSqurte)
                     points.add(q);
             }
         }

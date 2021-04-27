@@ -90,11 +90,12 @@ public class Sphere implements Geometry{
         //double tm = Math.abs(u.dotProduct(ray.getDir()));
         double tm =u.dotProduct(ray.getDir());
         double d2 = u.lengthSquared()-(tm*tm);
-        if(d2>=radius*radius)
+        double checkValue = (radius*radius)-d2;
+        if(Util.alignZero(checkValue) <= 0)
             // there are no intersections
             return null;
 
-        double th =Math.sqrt((radius*radius)-d2);
+        double th =Math.sqrt(checkValue);
         double t1 = tm+th;
 
         if(Util.alignZero(t1)<=0)

@@ -24,6 +24,16 @@ public class Ray {
     }
 
     /***
+     * Alternative constructor to the one above, reverse order
+     * @param point point for the ray
+     * @param vec vector for the ray
+     */
+    public Ray(Point3D point, Vector vec){
+        p0 = point;
+        dir = vec.normalized();
+    }
+
+    /***
      * Equals function, which returns whether the current object and the received objects are equal
      * @param o The received object
      * @return True if the objects are equal, and false if they aren't.

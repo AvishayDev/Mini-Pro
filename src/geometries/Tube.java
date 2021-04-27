@@ -66,6 +66,11 @@ public class Tube implements Geometry {
                 '}';
     }
 
+    /**
+     * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     * @param ray The ray which we find the intersections to the object
+     * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 
@@ -186,6 +191,4 @@ public class Tube implements Geometry {
     public double getRadius() {
         return radius;
     }
-
-
 }

@@ -4,7 +4,6 @@ import primitives.*;
 
 import java.util.List;
 
-
 /***
  * Represents Plane with vector and 3D point.
  */
@@ -60,7 +59,7 @@ public class Plane implements Geometry {
     }
 
     /***
-     *
+     * This method is a getter for the field q0
      * @return The start point of the Plane
      */
     public Point3D getQ0() {
@@ -68,19 +67,23 @@ public class Plane implements Geometry {
     }
 
     /***
-     *
+     * This method is a getter for the field normal
      * @return The vector of the Plane
      */
     public Vector getNormal() {
         return normal;
     }
 
+    /**
+     * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     * @param ray The ray which we find the intersections to the object
+     * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Vector u;
         double t;
         double t1;
-
 
         try {
             u = q0.subtract(ray.getP0());
@@ -97,7 +100,6 @@ public class Plane implements Geometry {
             return null;
         }
 
-
         if (Util.alignZero(t) <= 0)
             //if t==0 its mean p0 on the plane
             //and if t<0 its mean p0 is over the plane
@@ -105,22 +107,5 @@ public class Plane implements Geometry {
 
         //if pass all of this, there is intersection in the plane
         return List.of(ray.getPoint(t));
-
-    }
-
-    public Color getEmission() {
-        return emission;
-    }
-
-    /***
-     * check if the point on the plane
-     * @param point point to check if on the plane
-     * @return true if so and false if not
-     */
-    public boolean pointOnPlane(Point3D point) {
-        Vector vec = point.subtract(q0);
-        if (Util.isZero(vec.dotProduct(normal)))
-            return true;
-        return false;
     }
 }

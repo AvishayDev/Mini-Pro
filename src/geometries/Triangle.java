@@ -11,7 +11,7 @@ import java.util.List;
 /***
  * Represents Triangle with Plane and three 3D points.
  */
-public class Triangle extends Polygon{
+public class Triangle extends Polygon {
 
 
     /***
@@ -21,8 +21,8 @@ public class Triangle extends Polygon{
      * @param point2 second point of the Triangle
      * @param point3 Third point of the Triangle
      */
-    public Triangle(Point3D point1, Point3D point2, Point3D point3){
-        super(point1,point2,point3);
+    public Triangle(Point3D point1, Point3D point2, Point3D point3) {
+        super(point1, point2, point3);
     }
 
     /***
@@ -37,12 +37,13 @@ public class Triangle extends Polygon{
                 '}';
     }
 
+    /**
+     * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     * @param ray The ray which we find the intersections to the object
+     * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         return super.findIntersections(ray);
-    }
-
-    public Color getEmission(){
-        return emission;
-    }
+    } // Need to change this method into unique method of triangle
 }

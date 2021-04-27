@@ -1,4 +1,5 @@
 package geometries;
+
 import primitives.*;
 import primitives.Color;
 
@@ -71,7 +72,6 @@ public class Cylinder extends Tube {
 
     }
 
-
     /***
      * To string function
      * @return Information about the Cylinder's axis ray value and the radius value
@@ -85,6 +85,11 @@ public class Cylinder extends Tube {
                 '}';
     }
 
+    /**
+     * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     * @param ray The ray which we find the intersections to the object
+     * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 
@@ -93,7 +98,7 @@ public class Cylinder extends Tube {
         //p1 = axisRay.getP0
         //p2 = same as p1 but in upper base
 
-        boolean nullCheck= true;
+        boolean nullCheck = true;
         Point3D p1 = axisRay.getP0();
         Point3D p2 = p1.add(axisRay.getDir().scale(height));
         Vector v = ray.getDir();
@@ -120,8 +125,8 @@ public class Cylinder extends Tube {
         // (Va,p) + (Va,-p1) = -(Va,v)*t1 ,
         // (Va,p) + (Va,-p2) = -(Va,v)*t2 => equations for bases intersections
         // calc -(Va,v)
-        double dotProV = -1*va.dotProduct(v);
-        if(Util.isZero(dotProV))
+        double dotProV = -1 * va.dotProduct(v);
+        if (Util.isZero(dotProV))
             //its mean we dosent have t so ray dosent intersect bases!
             return nullCheck || points.isEmpty() ? null : points;
 
@@ -135,7 +140,7 @@ public class Cylinder extends Tube {
         //calc points place
         double radiuseSqurte = radius * radius;
         Point3D q;
-        if(nullCheck){
+        if (nullCheck) {
             //its mean there is no body intersections so the ray is
             //or parallel or dont cross. if parallel so may cross bases if inside
             //so check without takeing body and base intersections
@@ -151,39 +156,31 @@ public class Cylinder extends Tube {
                 if(q.distanceSquared(p2) < radiuseSqurte)
                     points.add(q);
             }
-        }else{
+        } else {
             //its mean there is initialization for points
             //so check may the ray cross body and base intersections
-            if(t1 > 0){
+            if (t1 > 0) {
                 q = ray.getPoint(t1);
                 if(q.distanceSquared(p1) <= radiuseSqurte)
                     points.add(q);
             }
 
-            if(t2 > 0){
+            if (t2 > 0) {
                 q = ray.getPoint(t2);
                 if(q.distanceSquared(p2) <= radiuseSqurte)
                     points.add(q);
             }
         }
 
-
-
-
-
         return points.isEmpty() ? null : points;
-
     }
 
     /***
-     *
+     * This function returns the height of the cylinder
      * @return The height of the Cylinder
      */
     public double getHeight() {
         return height;
     }
 
-    public Color getEmission(){
-        return emission;
-    }
 }

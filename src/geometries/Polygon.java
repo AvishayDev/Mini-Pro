@@ -3,64 +3,66 @@ package geometries;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
 import primitives.*;
+
 import static primitives.Util.*;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
- * 
  * @author Dan
  */
 public class Polygon implements Geometry {
-	/**
-	 * List of polygon's vertices
-	 */
-	protected List<Point3D> vertices;
 
-	/**
-	 * Associated plane in which the polygon lays
-	 */
-	protected Plane plane;
+    /**
+     * List of polygon's vertices
+     */
+    protected List<Point3D> vertices;
 
-	/**
-	 * Polygon constructor based on vertices list. The list must be ordered by edge
-	 * path. The polygon must be convex.
-	 * 
-	 * @param vertices list of vertices according to their order by edge path
-	 * @throws IllegalArgumentException in any case of illegal combination of
-	 *                                  vertices:
-	 *                                  <ul>
-	 *                                  <li>Less than 3 vertices</li>
-	 *                                  <li>Consequent vertices are in the same
-	 *                                  point
-	 *                                  <li>The vertices are not in the same
-	 *                                  plane</li>
-	 *                                  <li>The order of vertices is not according
-	 *                                  to edge path</li>
-	 *                                  <li>Three consequent vertices lay in the
-	 *                                  same line (180&#176; angle between two
-	 *                                  consequent edges)
-	 *                                  <li>The polygon is concave (not convex)</li>
-	 *                                  </ul>
-	 */
-	public Polygon(Point3D... vertices) {
-		if (vertices.length < 3)
-			throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
-		this.vertices = List.of(vertices);
-		// Generate the plane according to the first three vertices and associate the
-		// polygon with this plane.
-		// The plane holds the invariant normal (orthogonal unit) vector to the polygon
-		plane = new Plane(vertices[0], vertices[1], vertices[2]);
-		if (vertices.length == 3)
-			return; // no need for more tests for a Triangle
+    /**
+     * Associated plane in which the polygon lays
+     */
+    protected Plane plane;
 
-		Vector n = plane.getNormal();
+    /**
+     * Polygon constructor based on vertices list. The list must be ordered by edge
+     * path. The polygon must be convex.
+     *
+     * @param vertices list of vertices according to their order by edge path
+     * @throws IllegalArgumentException in any case of illegal combination of
+     *                                  vertices:
+     *                                  <ul>
+     *                                  <li>Less than 3 vertices</li>
+     *                                  <li>Consequent vertices are in the same
+     *                                  point
+     *                                  <li>The vertices are not in the same
+     *                                  plane</li>
+     *                                  <li>The order of vertices is not according
+     *                                  to edge path</li>
+     *                                  <li>Three consequent vertices lay in the
+     *                                  same line (180&#176; angle between two
+     *                                  consequent edges)
+     *                                  <li>The polygon is concave (not convex)</li>
+     *                                  </ul>
+     */
+    public Polygon(Point3D... vertices) {
+        if (vertices.length < 3)
+            throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
+        this.vertices = List.of(vertices);
+        // Generate the plane according to the first three vertices and associate the
+        // polygon with this plane.
+        // The plane holds the invariant normal (orthogonal unit) vector to the polygon
+        plane = new Plane(vertices[0], vertices[1], vertices[2]);
+        if (vertices.length == 3)
+            return; // no need for more tests for a Triangle
 
-		// Subtracting any subsequent points will throw an IllegalArgumentException
-		// because of Zero Vector if they are in the same point
-		Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
-		Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
+        Vector n = plane.getNormal();
+
+        // Subtracting any subsequent points will throw an IllegalArgumentException
+        // because of Zero Vector if they are in the same point
+        Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
+        Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
 
 		// Cross Product of any subsequent edges will throw an IllegalArgumentException
 		// because of Zero Vector if they connect three vertices that lay in the same
@@ -93,9 +95,13 @@ public class Polygon implements Geometry {
 		return plane.getNormal();
 	}
 
-
-	@Override
-	public List<Point3D> findIntersections(Ray ray) {
+    /**
+     * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     * @param ray The ray which we find the intersections to the object
+     * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
+     */
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
 
 		List<Point3D> planeIntersections = plane.findIntersections(ray);
 		int verticesSize = vertices.size();
@@ -104,9 +110,9 @@ public class Polygon implements Geometry {
 			//when try to make v if one of them is the ZERO VECTOR
 			//it mean the p0 on vertex => null
 
-			//when try to make N if one of them is same as normal vector
-			//it mean the p0 on the plane => null
-			return null;
+            //when try to make N if one of them is same as normal vector
+            //it mean the p0 on the plane => null
+            return null;
 
 		Vector vec1 = vertices.get(0).subtract(ray.getP0());
 		Vector vec2 = vertices.get(1).subtract(ray.getP0());;
@@ -130,9 +136,5 @@ public class Polygon implements Geometry {
 			return null;
 
 		return planeIntersections;
-	}
-
-	public Color getEmission(){
-		return emission;
 	}
 }

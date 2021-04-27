@@ -22,7 +22,7 @@ public class RenderTests {
     /**
      * Produce a scene with basic 3D model and render it into a jpeg image with a
      * grid
-*/
+
     @Test
     public void basicRenderTwoColorTest() {
 
@@ -50,7 +50,7 @@ public class RenderTests {
 
     /**
      * Test for XML based scene - for bonus
-     */
+
     @Test
     public void basicRenderXml() {
         Scene scene = new Scene("XML Test scene");
@@ -69,5 +69,5 @@ public class RenderTests {
         render.writeToImage();
     }
 
-
+     */
 }

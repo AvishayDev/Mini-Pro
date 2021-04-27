@@ -90,15 +90,17 @@ public class Polygon implements Geometry {
 	 */
 	@Override
 	public Vector getNormal(Point3D point) {
-		return plane.normal;
+		return plane.getNormal();
 	}
 
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
 
+		List<Point3D> planeIntersections = plane.findIntersections(ray);
+		int verticesSize = vertices.size();
 		//check if the point on the plane
-		if(plane.findIntersections(ray) == null)
+		if(planeIntersections == null)
 			//when try to make v if one of them is the ZERO VECTOR
 			//it mean the p0 on vertex => null
 
@@ -112,7 +114,7 @@ public class Polygon implements Geometry {
 		double sign = Util.alignZero(N1.dotProduct(ray.getDir()));
 		Vector Ni;
 		double signI;
-		for (int i = 2; i < vertices.size(); i++ ){
+		for (int i = 2; i < verticesSize; i++ ){
 			vec1 = vertices.get(i).subtract(ray.getP0());
 			Ni = vec2.crossProduct(vec1);
 			vec2 = vec1.scale(1);
@@ -127,7 +129,7 @@ public class Polygon implements Geometry {
 			//its mean the sign is different or zero
 			return null;
 
-		return plane.findIntersections(ray);
+		return planeIntersections;
 	}
 
 	public Color getEmission(){

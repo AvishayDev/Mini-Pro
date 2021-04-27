@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class Camera {
 
-    Point3D p0;
-    Vector vUp;
-    Vector vTo;
-    Vector vRight;
-    double width;
-    double height;
-    double distance;
+    private Point3D p0;
+    private Vector vUp;
+    private Vector vTo;
+    private Vector vRight;
+    private double width;
+    private double height;
+    private double distance;
 
     /***
      * Constructor for Camera, that receives initial starting point, VectorTo (Z axis), VectorUp (Y axis)
@@ -53,8 +53,6 @@ public class Camera {
      * @return ray from p0 to center of pixel place
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        if(width == 0 || height == 0)
-                throw new IllegalStateException("ViewPlane size must be positive!");
 
         // Image center
         Point3D pC = this.p0.add(vTo.scale(distance));
@@ -70,7 +68,7 @@ public class Camera {
 
         if(!Util.isZero(xJ))
             //use pC instead of pIJ
-            pC = pC.add(vRight.scale(-xJ)); // Need another check later, different from presentation
+            pC = pC.add(vRight.scale(xJ)); // Need another check later, different from presentation
         if(!Util.isZero(yI))
             pC = pC.add(vUp.scale(yI));
 
@@ -132,55 +130,11 @@ public class Camera {
     }
 
     /***
-     * This method receives Point3D as a new position point for the camera, a String that tells which plane do you want to change the angle of,
-     * and a double that tell by what angle to you want to move the plane
-     * @param point Point3D that will be the new position point of the camera
-     * @param plane A string of the plane you want to change (XY, XZ, YZ, reverses will work too)
-     * @param angle A double that will tell what's the angle you want to change the plane by
-     * @return  This camera with the updated values.
-     */
-    public Camera changeAngleAndPosition(Point3D point,String plane,double angle){
-        if(point != null)   // This can happen if the user inserted null point manually, or if he used the alternative method
-            replaceCameraPosition(point);
-
-        if (plane == null)  // This can happen if the user inserted null plane manually, or if he used the alternative method
-            return this;
-
-        if(plane.equals("XY") || plane.equals("YX"))
-            return changeAngleXY(angle);
-        if(plane.equals("XZ") || plane.equals("ZX"))
-            return changeAngleXZ(angle);
-        if(plane.equals("YZ")|| plane.equals("ZY"))
-            return changeAngleZY(angle);
-
-        return this;
-    }
-
-    /***
-     * Alternative for the method above, in case the user don't want to change the position of the camera, only the angles.
-     * @param plane A string of the plane you want to change (XY, XZ, YZ, reverses will work too)
-     * @param angle A double that will tell what's the angle you want to change the plane by
-     * @return This camera with the updated values.
-     */
-    public Camera changeAngleAndPosition(String plane,double angle){
-        return changeAngleAndPosition(null,plane,angle);
-    }
-
-    /***
-     * Alternative for the method above, in case the user don't want to change the angles of the planes, only the position of the camera.
-     * @param point Point3D that will be the new position point of the camera
-     * @return This camera with the updated values.
-     */
-    public Camera changeAngleAndPosition(Point3D point){
-        return changeAngleAndPosition(point,null,0);
-    }
-
-    /***
      * This method serves changeAngleAndPosition, and it changes and angle of plane XY by a received number
      * @param angle The angle you want to tilt the plane XY
      * @return This camera with the updated values.
      */
-    private Camera changeAngleXY(double angle){
+    public Camera changeAngle(double angle){
 
 
         double cosAlpha =Math.cos((angle*Math.PI)/180);
@@ -201,69 +155,13 @@ public class Camera {
         //no changes for vTo
 
         return this;
-    }
-
-    /***
-     * This method serves changeAngleAndPosition, and it changes and angle of plane ZY by a received number
-     * @param angle The angle you want to tilt the plane ZY
-     * @return This camera with the updated values.
-     */
-    private Camera changeAngleZY(double angle){
-
-
-        double cosAlpha =Math.cos((angle*Math.PI)/180);
-        //for calc vRight new position
-        double coeff[][] = {{vTo.getX(),vTo.getY(),vTo.getZ(),cosAlpha},
-                {vUp.getX(),vUp.getY(),vUp.getZ(),Math.cos(((90-angle)*Math.PI)/180)},
-                {vRight.getX(),vRight.getY(),vRight.getZ(),0}};
-
-        vTo = Util.findSolution(coeff);
-
-        //for calc vUp new position
-        coeff = new double[][]{{vUp.getX(),vUp.getY(),vUp.getZ(),cosAlpha},
-                {vTo.getX(),vTo.getY(),vTo.getZ(),0},
-                {vRight.getX(),vRight.getY(),vRight.getZ(),0}};
-
-        vUp = Util.findSolution(coeff);
-
-        //no changes for vTo
-        return this;
-
-    }
-
-    /***
-     * This method serves changeAngleAndPosition, and it changes and angle of plane XZ by a received number
-     * @param angle The angle you want to tilt the plane XZ
-     * @return This camera with the updated values.
-     */
-    private Camera changeAngleXZ(double angle){
-
-
-        double cosAlpha =Math.cos((angle*Math.PI)/180);
-        //for calc vRight new position
-        double coeff[][] = {{vRight.getX(),vRight.getY(),vRight.getZ(),cosAlpha},
-                {vTo.getX(),vTo.getY(),vTo.getZ(),Math.cos(((90-angle)*Math.PI)/180)},
-                {vUp.getX(),vUp.getY(),vUp.getZ(),0}};
-
-        vRight = Util.findSolution(coeff);
-
-        //for calc vUp new position
-        coeff = new double[][]{{vTo.getX(),vTo.getY(),vTo.getZ(),cosAlpha},
-                {vRight.getX(),vRight.getY(),vRight.getZ(),0},
-                {vUp.getX(),vUp.getY(),vUp.getZ(),0}};
-
-        vTo = Util.findSolution(coeff);
-
-        //no changes for vTo
-        return this;
-
     }
 
     /***
      * This method changes the location point of the Camera
      * @param point A Point3D which will be the the new location of the camera
      */
-    private void replaceCameraPosition(Point3D point) {
+    public void replaceCameraPosition(Point3D point) {
         p0 = point;
 
     }

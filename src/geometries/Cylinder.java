@@ -11,7 +11,7 @@ import java.util.List;
  * Represents Cylinder with vector ,3D point and height.
  */
 public class Cylinder extends Tube {
-    double height;
+    private double height;
 
     /***
      * Create Cylinder from Ray radius and height
@@ -97,17 +97,18 @@ public class Cylinder extends Tube {
         Vector v = ray.getDir();
         Vector va = axisRay.getDir();
         Point3D p = ray.getP0();
-
         if(points != null) {
+            int pointsSize = points.size();
             nullCheck =false;
             Point3D point;
-            for (int i = 0; i < points.size(); ) {
+            for (int i = 0; i < pointsSize; ) {
                 point = points.get(i);
                 //"point" is a point on the cylinder body so it cant be equal to p1 or p2
                 //because they placed in the bases so, no worry about Zero vector
                 if (va.dotProduct(point.subtract(p1)) <= 0 || va.dotProduct(point.subtract(p2)) >= 0) {
                     // its mean the point outside the cyliner or in body and base intersection
                     points.remove(point);
+                    pointsSize--;
                 } else {
                     i++;
                 }

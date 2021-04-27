@@ -1,4 +1,5 @@
 package geometries;
+
 import primitives.*;
 
 import java.util.List;
@@ -8,17 +9,17 @@ import java.util.List;
  * Represents Plane with vector and 3D point.
  */
 public class Plane implements Geometry {
-    Point3D q0;
-    Vector normal;
+    private Point3D q0;
+    private Vector normal;
 
     /***
      * Make's Plane with 3D point and vector.
      * @param q0 Start point of the Plane
      * @param normal Vector of the Plane
      */
-    public Plane(Point3D q0,Vector normal){
-        this.q0 = new Point3D(q0.getX(), q0.getY(), q0.getZ());
-        this.normal= normal.normalized();
+    public Plane(Point3D q0, Vector normal) {
+        this.q0 = q0;
+        this.normal = normal.normalized();
     }
 
     /***
@@ -27,12 +28,13 @@ public class Plane implements Geometry {
      * @param point1 1st point
      * @param point2 2nd point
      * @param point3 3rd point
+     * @throws IllegalArgumentException when the points are on the same line
      */
-    public Plane(Point3D point1,Point3D point2, Point3D point3){
-        q0=point1;
+    public Plane(Point3D point1, Point3D point2, Point3D point3) {
+        q0 = point1;
         Vector vec1 = point2.subtract(point1);
         Vector vec2 = point3.subtract(point1);
-        normal = new Vector(vec1.crossProduct(vec2).getHead()).normalize();
+        normal = vec1.crossProduct(vec2).normalize();
     }
 
     /***
@@ -80,23 +82,23 @@ public class Plane implements Geometry {
         double t1;
 
 
-        try{
+        try {
             u = q0.subtract(ray.getP0());
             t = normal.dotProduct(u);
             t1 = normal.dotProduct(ray.getDir());
-            if(Util.isZero(t1))
+            if (Util.isZero(t1))
                 //its mean p0 is start on the plane => no intersections
                 //or the dir is orthogonal to the normal => no intersections
                 return null;
-            t = t/t1;
+            t = t / t1;
 
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             //its mean p0==q0 => no intersections
             return null;
         }
 
 
-        if(Util.alignZero(t) <= 0)
+        if (Util.alignZero(t) <= 0)
             //if t==0 its mean p0 on the plane
             //and if t<0 its mean p0 is over the plane
             return null;
@@ -106,7 +108,7 @@ public class Plane implements Geometry {
 
     }
 
-    public Color getEmission(){
+    public Color getEmission() {
         return emission;
     }
 
@@ -115,9 +117,9 @@ public class Plane implements Geometry {
      * @param point point to check if on the plane
      * @return true if so and false if not
      */
-    public boolean pointOnPlane(Point3D point){
-        Vector vec =point.subtract(q0);
-        if(Util.isZero(vec.dotProduct(normal)))
+    public boolean pointOnPlane(Point3D point) {
+        Vector vec = point.subtract(q0);
+        if (Util.isZero(vec.dotProduct(normal)))
             return true;
         return false;
     }

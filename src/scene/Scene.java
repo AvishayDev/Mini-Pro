@@ -11,7 +11,9 @@ public class Scene {
     String name = null;
     Geometries geometries = null;
     Color background = Color.BLACK;
-    AmbientLight ambient = new AmbientLight(Color.BLACK, 0);
+    AmbientLight ambientLight = new AmbientLight(Color.BLACK, 0);
     List<LightSource> lights = null;
+
+
 }
 

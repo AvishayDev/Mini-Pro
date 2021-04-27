@@ -9,7 +9,7 @@ public class Render {
     Scene scene = null;
     Camera camera;
     RayTracerBase rayTracer;
-    ImageWriter imgWriter;
+    ImageWriter imageWriter;
 
     public void renderImage(){
 

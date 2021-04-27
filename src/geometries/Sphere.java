@@ -8,8 +8,8 @@ import java.util.List;
  * Represents Sphere with 3D point and radius.
  */
 public class Sphere implements Geometry{
-    Point3D center;
-    double radius;
+    private Point3D center;
+    private double radius;
 
     /***
      * Make's Sphere from 3D point that

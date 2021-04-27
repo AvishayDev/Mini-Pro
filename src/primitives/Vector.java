@@ -28,7 +28,7 @@ public class Vector {
      * @param z Value z
      */
     public Vector(double x,double y,double z){
-        Point3D point=new Point3D(Util.alignNumber(x),Util.alignNumber(y),Util.alignNumber(z));
+        Point3D point=new Point3D(x,y,z);
         if(point.equals(Point3D.ZERO))
             throw new IllegalArgumentException("Please Don't Choose The 0 Vector!");
         head=point;

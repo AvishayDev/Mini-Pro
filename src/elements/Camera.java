@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class Camera {
 
+
+    // Note
     private Point3D p0;
     private Vector vUp;
     private Vector vTo;
@@ -39,7 +41,7 @@ public class Camera {
         this.p0 = p0;
         this.vUp = vUp.normalized();
         this.vTo = vTo.normalized();
-        this.vRight = vUp.crossProduct(vTo).normalized(); // Vector of emulated X axis
+        this.vRight = vUp.crossProduct(vTo).normalize(); // Vector of emulated X axis
 
     }
 
@@ -166,18 +168,19 @@ public class Camera {
 
     }
 
+    //Note
     public Point3D getP0() {
         return p0;
     }
-
+    //Note
     public Vector getvUp() {
         return vUp;
     }
-
+    //Note
     public Vector getvTo() {
         return vTo;
     }
-
+    //Note
     public Vector getvRight() {
         return vRight;
     }

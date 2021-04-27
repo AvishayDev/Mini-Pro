@@ -262,16 +262,16 @@ public class CylinderTests {
         assertEquals("TC1-37: ray start in Cylinder and intersect intersection of body and base", List.of(new Point3D(0,-1,2)), cylinder.findIntersections(rayCheck));
 
         //TC1-38: ray intersect tangent point in body and base intersection
-        //rayCheck = new Ray(new Vector(0,-1,2),new Point3D(0,2,0));
-        //assertEquals("TC1-38: ray intersect tangent point in body and base intersection", null, cylinder.findIntersections(rayCheck));
+        rayCheck = new Ray(new Vector(0,-1,2),new Point3D(0,2,0));
+        assertEquals("TC1-38: ray intersect tangent point in body and base intersection", List.of(new Point3D(0,1,2)), cylinder.findIntersections(rayCheck));
 
         //TC1-39: ray intersect tangent point in body were the body and base intersect same level as p1
         rayCheck = new Ray(new Vector(-1,0,2),new Point3D(1,1,0));
         assertEquals("TC1-39: ray intersect tangent point in body were the body and base intersect", null, cylinder.findIntersections(rayCheck));
 
         //TC1-40: ray intersect tangent point in body and base intersection above p1
-        //rayCheck = new Ray(new Vector(0,-1,2),new Point3D(0,1.5,1));
-        //assertEquals("TC1-38: ray intersect tangent point in body and base intersection", null, cylinder.findIntersections(rayCheck));
+        rayCheck = new Ray(new Vector(0,-1,2),new Point3D(0,1.5,1));
+        assertEquals("TC1-38: ray intersect tangent point in body and base intersection", List.of(new Point3D(0,1,2)), cylinder.findIntersections(rayCheck));
 
 
 

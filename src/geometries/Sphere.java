@@ -34,7 +34,7 @@ public class Sphere implements Geometry{
      */
     public Sphere(Coordinate x, Coordinate y, Coordinate z, double radius) {
         this.center = new Point3D(x, y, z);
-        if (Util.isZero(radius) || radius < 0)
+        if (Util.alignZero(radius)<=0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
     }
@@ -93,14 +93,15 @@ public class Sphere implements Geometry{
             return List.of(ray.getPoint(radius));
         }
         //double tm = Math.abs(u.dotProduct(ray.getDir()));
-        double tm = u.dotProduct(ray.getDir());
-        double d2 = u.lengthSquared() - (tm * tm);
-        if (d2 >= radius * radius)
+        double tm =u.dotProduct(ray.getDir());
+        double d2 = u.lengthSquared()-(tm*tm);
+        double checkValue = (radius*radius)-d2;
+        if(Util.alignZero(checkValue) <= 0)
             // there are no intersections
             return null;
 
-        double th = Math.sqrt((radius * radius) - d2);
-        double t1 = tm + th;
+        double th =Math.sqrt(checkValue);
+        double t1 = tm+th;
 
         if (Util.alignZero(t1) <= 0)
             //if true, p0 is on the sphere or out of it => no points

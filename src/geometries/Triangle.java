@@ -58,21 +58,21 @@ public class Triangle extends Polygon {
         Vector N3 = vec3.crossProduct(vec1).normalize();
 
         //calc signs
-        double checksign1 = N1.dotProduct(rayDir);
-        if (Util.isZero(checksign1))
+        double checkSign1 = N1.dotProduct(rayDir);
+        if (Util.isZero(checkSign1))
             //if zero => no intersections
             return null;
 
         //else the sign is not zero so check for next normal
-        double checksign2 = N2.dotProduct(rayDir);
-        if (!Util.checkSign(checksign1, checksign2) || Util.isZero(checksign2))
+        double checkSign2 = N2.dotProduct(rayDir);
+        if (!Util.checkSign(checkSign1, checkSign2) || Util.isZero(checkSign2))
             //if sign is not equal or N2 is zero => no intersections
             return null;
 
         //else N1,N2 not zero and same sign!
-        //so use N1 sign to calc the N3 sign (dont care because N2 same sign)
-        checksign1 = N3.dotProduct(rayDir);
-        if (!Util.checkSign(checksign1, checksign2) || Util.isZero(checksign1))
+        //so use N1 sign to calc the N3 sign (don't care because N2 same sign)
+        checkSign1 = N3.dotProduct(rayDir);
+        if (!Util.checkSign(checkSign1, checkSign2) || Util.isZero(checkSign1))
             //if sign is not equal or N2 is zero => no intersections
             return null;
 

@@ -112,7 +112,7 @@ public class Sphere implements Geometry {
             return null;
 
         double t2 = tm - th;
-        //if t2 <=0 dont take, else take both
+        //if t2 <=0 don't take, else take both
         if (Util.alignZero(t2) <= 0)
             //if true, p0 on the sphere or in it => one point
             return List.of(ray.getPoint(t1));

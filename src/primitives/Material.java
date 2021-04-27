@@ -2,7 +2,7 @@ package primitives;
 
 /**
  * This class represents material properties.
- * The class is Passive Data Strucre (PDS)
+ * The class is Passive Data Structure (PDS)
  * and uses Build-like setters for chaining the initialization
  */
 public class Material {

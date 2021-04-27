@@ -14,7 +14,7 @@ public abstract class Util {
     //public static final int ZERO = 0;
 
     /**
-     * Empty private ctor to hide the public one
+     * Empty private constructor to hide the public one
      */
     private Util() {
     }
@@ -29,8 +29,6 @@ public abstract class Util {
         // 3. Zero the sign of number bit by mask 0x7FF
         // 4. "De-normalize" the exponent by subtracting 1023
         return (int) ((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL) - 1023;
-
-
     }
 
 

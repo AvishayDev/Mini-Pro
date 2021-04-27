@@ -18,13 +18,11 @@ public class RenderTests {
             .setDistance(100) //
             .setViewPlaneSize(500, 500);
 
-    /*
-     *
 
     /**
      * Produce a scene with basic 3D model and render it into a jpeg image with a
      * grid
-
+*/
     @Test
     public void basicRenderTwoColorTest() {
 
@@ -52,7 +50,7 @@ public class RenderTests {
 
     /**
      * Test for XML based scene - for bonus
-
+     */
     @Test
     public void basicRenderXml() {
         Scene scene = new Scene("XML Test scene");
@@ -70,6 +68,6 @@ public class RenderTests {
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }
-*/
+
 
 }

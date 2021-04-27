@@ -7,6 +7,8 @@ import java.awt.*;
  * and have basic functions on the point.
  */
 public class Point3D {
+
+    //Note
     final Coordinate x;
     final Coordinate y;
     final Coordinate z;
@@ -14,7 +16,7 @@ public class Point3D {
     /***
      * This point is the center of our coordinate system
      */
-    final public static Point3D ZERO=new Point3D(0,0,0);
+    final public static Point3D ZERO = new Point3D(0, 0, 0);
 
     /***
      * Make's Point3D object with 3 Coordinates
@@ -34,10 +36,10 @@ public class Point3D {
      * @param y Second Coordinate values
      * @param z Third Coordinate values
      */
-    public Point3D(double x,double y, double z){
-        this.x=new Coordinate(x);
-        this.y=new Coordinate(y);
-        this.z=new Coordinate(z);
+    public Point3D(double x, double y, double z) {
+        this.x = new Coordinate(x);
+        this.y = new Coordinate(y);
+        this.z = new Coordinate(z);
     }
 
     /***
@@ -46,8 +48,8 @@ public class Point3D {
      * @param vec Vector for adding to the point
      * @return The final point
      */
-    public Point3D add(Vector vec){
-        return new Point3D(this.x.coord+vec.head.x.coord,this.y.coord+vec.head.y.coord,this.z.coord+vec.head.z.coord);
+    public Point3D add(Vector vec) {
+        return new Point3D(this.x.coord + vec.head.x.coord, this.y.coord + vec.head.y.coord, this.z.coord + vec.head.z.coord);
     }
 
     /***
@@ -55,8 +57,8 @@ public class Point3D {
      * @param point 1st point
      * @return The final vector
      */
-    public Vector subtract(Point3D point){
-        return new Vector(this.x.coord-point.x.coord,this.y.coord-point.y.coord,this.z.coord-point.z.coord);
+    public Vector subtract(Point3D point) {
+        return new Vector(this.x.coord - point.x.coord, this.y.coord - point.y.coord, this.z.coord - point.z.coord);
     }
 
     /***
@@ -65,10 +67,10 @@ public class Point3D {
      * @param point The point which we calculate the distance from
      * @return distance squared between the 2 points
      */
-    public double distanceSquared(Point3D point){
-        return ((this.x.coord-point.x.coord)*(this.x.coord-point.x.coord))+
-                ((this.y.coord-point.y.coord)*(this.y.coord-point.y.coord))+
-        ((this.z.coord-point.z.coord)*(this.z.coord-point.z.coord));
+    public double distanceSquared(Point3D point) {
+        return ((this.x.coord - point.x.coord) * (this.x.coord - point.x.coord)) +
+                ((this.y.coord - point.y.coord) * (this.y.coord - point.y.coord)) +
+                ((this.z.coord - point.z.coord) * (this.z.coord - point.z.coord));
 
     }
 
@@ -79,7 +81,7 @@ public class Point3D {
      * @param point The point which we calculate the distance from
      * @return distance between the 2 points
      */
-    public double distance(Point3D point){
+    public double distance(Point3D point) {
         return Math.sqrt(distanceSquared(point));
     }
 
@@ -88,8 +90,8 @@ public class Point3D {
      * @param t The amount of scale we will increase/decrease the vector
      * @return The scaled point
      */
-    public Point3D scale(double t){
-        return new Point3D(this.getX()*t,this.getY()*t,this.getZ()*t);
+    public Point3D scale(double t) {
+        return new Point3D(this.getX() * t, this.getY() * t, this.getZ() * t);
     }
 
     /***
@@ -98,11 +100,11 @@ public class Point3D {
      * @return True if the objects are equal, and false if they aren't.
      */
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
         if (!(obj instanceof Point3D)) return false;
-        Point3D other = (Point3D)obj;
+        Point3D other = (Point3D) obj;
         return x.equals(other.x) && y.equals(other.y) && z.equals(other.z);
     }
 

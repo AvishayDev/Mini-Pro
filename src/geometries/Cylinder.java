@@ -60,7 +60,7 @@ public class Cylinder extends Tube {
         }
         double t = Math.abs(axisRay.getDir().dotProduct(vec1));
 
-          //if t equals to 0 or in the length of height its means the point on the bases
+        //if t equals to 0 or in the length of height its means the point on the bases
 
         if (Util.isZero(t) || Util.isZero(t - height)) {
             //the point in the base or in the side of the base
@@ -87,6 +87,7 @@ public class Cylinder extends Tube {
 
     /**
      * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     *
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
      */
@@ -104,9 +105,9 @@ public class Cylinder extends Tube {
         Vector v = ray.getDir();
         Vector va = axisRay.getDir();
         Point3D p = ray.getP0();
-        if(points != null) {
+        if (points != null) {
             int pointsSize = points.size();
-            nullCheck =false;
+            nullCheck = false;
             Point3D point;
             for (int i = 0; i < pointsSize; ) {
                 point = points.get(i);
@@ -134,8 +135,8 @@ public class Cylinder extends Tube {
         double dotProP = va.dotProduct(p);
 
         //calc t1,t2
-        double t1 = (dotProP + va.dotProduct(p1.scale(-1)))/dotProV;
-        double t2 = (dotProP + va.dotProduct(p2.scale(-1)))/dotProV;
+        double t1 = (dotProP + va.dotProduct(p1.scale(-1))) / dotProV;
+        double t2 = (dotProP + va.dotProduct(p2.scale(-1))) / dotProV;
 
         //calc points place
         double radiuseSqurte = radius * radius;
@@ -145,29 +146,29 @@ public class Cylinder extends Tube {
             //or parallel or dont cross. if parallel so may cross bases if inside
             //so check without takeing body and base intersections
             points = new LinkedList<Point3D>();
-            if( Util.alignZero(t1) > 0){
+            if (Util.alignZero(t1) > 0) {
                 q = ray.getPoint(t1);
-                if(q.distanceSquared(p1) < radiuseSqurte)
+                if (q.distanceSquared(p1) < radiuseSqurte)
                     points.add(q);
             }
 
-            if(Util.alignZero(t2)>0){
+            if (Util.alignZero(t2) > 0) {
                 q = ray.getPoint(t2);
-                if(q.distanceSquared(p2) < radiuseSqurte)
+                if (q.distanceSquared(p2) < radiuseSqurte)
                     points.add(q);
             }
         } else {
             //its mean there is initialization for points
             //so check may the ray cross body and base intersections
-            if (t1 > 0) {
+            if (Util.alignZero(t1) > 0) {
                 q = ray.getPoint(t1);
-                if(q.distanceSquared(p1) <= radiuseSqurte)
+                if (q.distanceSquared(p1) <= radiuseSqurte)
                     points.add(q);
             }
 
-            if (t2 > 0) {
+            if (Util.alignZero(t2) > 0) {
                 q = ray.getPoint(t2);
-                if(q.distanceSquared(p2) <= radiuseSqurte)
+                if (q.distanceSquared(p2) <= radiuseSqurte)
                     points.add(q);
             }
         }

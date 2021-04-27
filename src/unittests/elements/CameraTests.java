@@ -57,6 +57,10 @@ public class CameraTests {
                 camera.setViewPlaneSize(6, 6).constructRay(3, 3, 0, 1));
     }
 
+    /**
+     * Test method for
+     * {@link elements.Camera#cameraRaysIntersect(int, int, Intersectable)}.
+     */
     @Test
     public void cameraRaysIntersect() {
         Camera camera = new Camera(new Point3D(0,0,0),new Vector(0,0,-1),new Vector(0,1,0)).setDistance(1).setViewPlaneSize(3,3);

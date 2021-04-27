@@ -70,8 +70,6 @@ public class Color {
     }
 
 
-
-
     /**
      * Color getter - returns the color after converting it into java.awt.Color
      * object During the conversion any component bigger than 255 is set to 255

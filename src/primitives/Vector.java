@@ -6,6 +6,7 @@ package primitives;
  */
 public class Vector {
 
+    //Note
     Point3D head;
 
     /***
@@ -14,11 +15,11 @@ public class Vector {
      * @param y Coordinate y
      * @param z Coordinate z
      */
-    public Vector(Coordinate x,Coordinate y,Coordinate z){
-        Point3D point=new Point3D(x,y,z);
-        if(point.equals(Point3D.ZERO))
+    public Vector(Coordinate x, Coordinate y, Coordinate z) {
+        Point3D point = new Point3D(x, y, z);
+        if (point.equals(Point3D.ZERO))
             throw new IllegalArgumentException("Please Don't Choose The 0 Vector!");
-        head=point;
+        head = point;
     }
 
     /***
@@ -27,11 +28,11 @@ public class Vector {
      * @param y Value y
      * @param z Value z
      */
-    public Vector(double x,double y,double z){
-        Point3D point=new Point3D(x,y,z);
-        if(point.equals(Point3D.ZERO))
+    public Vector(double x, double y, double z) {
+        Point3D point = new Point3D(x, y, z);
+        if (point.equals(Point3D.ZERO))
             throw new IllegalArgumentException("Please Don't Choose The 0 Vector!");
-        head=point;
+        head = point;
     }
 
     /***
@@ -39,9 +40,9 @@ public class Vector {
      * @param point The vector's head
      */
     public Vector(Point3D point) {
-        if(point.equals(Point3D.ZERO))
+        if (point.equals(Point3D.ZERO))
             throw new IllegalArgumentException("Please Don't Choose The 0 Vector!");
-        head=new Point3D(point.x, point.y, point.z);
+        head = new Point3D(point.x, point.y, point.z);
     }
 
     /***
@@ -50,21 +51,21 @@ public class Vector {
      * @param point point to add for the vector
      * @return new vector with the add of the point
      */
-    public Vector add(Point3D point){
-        return new Vector(this.head.getX()+point.getX()
-                ,this.head.getY()+point.getY()
-                ,this.head.getZ()+point.getZ());
+    public Vector add(Point3D point) {
+        return new Vector(this.head.getX() + point.getX()
+                , this.head.getY() + point.getY()
+                , this.head.getZ() + point.getZ());
     }
 
     /***
      * This function sums up between the current vector and the received vector
      * @param vec The vector which we want to add to the current vector
-     * @return  The sum of the two vectors
+     * @return The sum of the two vectors
      */
-    public Vector add(Vector vec){
-        return new Vector(this.head.getX()+vec.head.getX(),
-                        this.head.getY()+vec.head.getY(),
-                    this.head.getZ()+vec.head.getZ());
+    public Vector add(Vector vec) {
+        return new Vector(this.head.getX() + vec.head.getX(),
+                this.head.getY() + vec.head.getY(),
+                this.head.getZ() + vec.head.getZ());
     }
 
     /***
@@ -72,10 +73,10 @@ public class Vector {
      * @param vec The vector which we want to subtract to the current vector
      * @return The subtraction of the 2 vectors
      */
-    public Vector subtract(Vector vec){
-        return new Vector(this.head.getX()-vec.head.getX(),
-                this.head.getY()-vec.head.getY(),
-                this.head.getZ()-vec.head.getZ());
+    public Vector subtract(Vector vec) {
+        return new Vector(this.head.getX() - vec.head.getX(),
+                this.head.getY() - vec.head.getY(),
+                this.head.getZ() - vec.head.getZ());
     }
 
     /***
@@ -83,10 +84,10 @@ public class Vector {
      * @param Num The amount of scale we will increase/decrease the vector
      * @return The scaled vector
      */
-    public Vector scale(double Num){
-        return new Vector(this.head.getX()*Num,
-                this.head.getY()*Num,
-                this.head.getZ()*Num);
+    public Vector scale(double Num) {
+        return new Vector(this.head.getX() * Num,
+                this.head.getY() * Num,
+                this.head.getZ() * Num);
     }
 
     /***
@@ -94,10 +95,10 @@ public class Vector {
      * @param vec The received vector
      * @return The result of the cross product action.
      */
-    public Vector crossProduct(Vector vec){
-        return new Vector((this.head.getY()*vec.head.getZ())-(this.head.getZ()*vec.head.getY()),
-                (this.head.getZ()*vec.head.getX())-(this.head.getX()*vec.head.getZ()),
-                (this.head.getX()*vec.head.getY())-(this.head.getY()*vec.head.getX()));
+    public Vector crossProduct(Vector vec) {
+        return new Vector((this.head.getY() * vec.head.getZ()) - (this.head.getZ() * vec.head.getY()),
+                (this.head.getZ() * vec.head.getX()) - (this.head.getX() * vec.head.getZ()),
+                (this.head.getX() * vec.head.getY()) - (this.head.getY() * vec.head.getX()));
     }
 
     /***
@@ -105,10 +106,10 @@ public class Vector {
      * @param vec The received vector
      * @return The result of the dot product action.
      */
-    public double dotProduct(Vector vec){
-       return (this.head.getX()*vec.head.getX())+
-               (this.head.getY()*vec.head.getY())+
-               (this.head.getZ()*vec.head.getZ());
+    public double dotProduct(Vector vec) {
+        return (this.head.getX() * vec.head.getX()) +
+                (this.head.getY() * vec.head.getY()) +
+                (this.head.getZ() * vec.head.getZ());
     }
 
 
@@ -117,16 +118,17 @@ public class Vector {
      * @param point The received vector
      * @return The result of the dot product action.
      */
-    public double dotProduct(Point3D point){
-        return (this.head.getX()*point.getX())+
-                (this.head.getY()*point.getY())+
-                (this.head.getZ()*point.getZ());
+    public double dotProduct(Point3D point) {
+        return (this.head.getX() * point.getX()) +
+                (this.head.getY() * point.getY()) +
+                (this.head.getZ() * point.getZ());
     }
+
     /***
      * This function returns the length squared of the current vector
      * @return The length squared value, type of double
      */
-    public double lengthSquared(){
+    public double lengthSquared() {
         return head.distanceSquared(Point3D.ZERO);
     }
 
@@ -134,7 +136,7 @@ public class Vector {
      * This function returns the length of the current vector
      * @return The length value, type of double
      */
-    public double length(){
+    public double length() {
         return Math.sqrt(lengthSquared());
     }
 
@@ -142,17 +144,17 @@ public class Vector {
      * This function normalize the current vector
      * @return The current vector, but now normalized
      */
-    public Vector normalize(){
+    public Vector normalize() {
         double size = length();
-        this.head = new Point3D(head.getX()/size,head.getY()/size,head.getZ()/size );
-      return this;
+        this.head = new Point3D(head.getX() / size, head.getY() / size, head.getZ() / size);
+        return this;
     }
 
     /***
      * This function returns a normalized version the current vector
      * @return The normalized version the current vector
      */
-    public Vector normalized(){
+    public Vector normalized() {
         return new Vector(this.head).normalize();
     }
 
@@ -166,7 +168,7 @@ public class Vector {
         if (this == obj) return true;
         if (obj == null) return false;
         if (!(obj instanceof Vector)) return false;
-        Vector other = (Vector)obj;
+        Vector other = (Vector) obj;
         return head.equals(other.head);
     }
 
@@ -189,7 +191,18 @@ public class Vector {
         return head;
     }
 
-    public double getX(){return this.head.getX();}
-    public double getY(){return this.head.getY();}
-    public double getZ(){return this.head.getZ();}
+    //Note
+    public double getX() {
+        return this.head.getX();
+    }
+
+    //Note
+    public double getY() {
+        return this.head.getY();
+    }
+
+    //Note
+    public double getZ() {
+        return this.head.getZ();
+    }
 }

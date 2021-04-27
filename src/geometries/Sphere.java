@@ -7,7 +7,9 @@ import java.util.List;
 /***
  * Represents Sphere with 3D point and radius.
  */
-public class Sphere implements Geometry{
+public class Sphere implements Geometry {
+
+    //Note
     private Point3D center;
     private double radius;
 
@@ -34,7 +36,7 @@ public class Sphere implements Geometry{
      */
     public Sphere(Coordinate x, Coordinate y, Coordinate z, double radius) {
         this.center = new Point3D(x, y, z);
-        if (Util.alignZero(radius)<=0)
+        if (Util.alignZero(radius) <= 0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
     }
@@ -80,6 +82,7 @@ public class Sphere implements Geometry{
 
     /**
      * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     *
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
      */
@@ -93,22 +96,23 @@ public class Sphere implements Geometry{
             return List.of(ray.getPoint(radius));
         }
         //double tm = Math.abs(u.dotProduct(ray.getDir()));
-        double tm =u.dotProduct(ray.getDir());
-        double d2 = u.lengthSquared()-(tm*tm);
-        double checkValue = (radius*radius)-d2;
-        if(Util.alignZero(checkValue) <= 0)
+        double tm = u.dotProduct(ray.getDir());
+        double d2 = u.lengthSquared() - (tm * tm);
+        double checkValue = (radius * radius) - d2;
+
+        if (Util.alignZero(checkValue) <= 0)
             // there are no intersections
             return null;
 
-        double th =Math.sqrt(checkValue);
-        double t1 = tm+th;
+        double th = Math.sqrt(checkValue);
+        double t1 = tm + th;
 
         if (Util.alignZero(t1) <= 0)
             //if true, p0 is on the sphere or out of it => no points
             return null;
 
         double t2 = tm - th;
-        //if t2<=0 dont take, else take both
+        //if t2 <=0 dont take, else take both
         if (Util.alignZero(t2) <= 0)
             //if true, p0 on the sphere or in it => one point
             return List.of(ray.getPoint(t1));

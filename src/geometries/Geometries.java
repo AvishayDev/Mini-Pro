@@ -9,7 +9,7 @@ import java.util.*;
 /***
  * Represents list of geometries from all the types we have
  */
-public class Geometries implements Intersectable{
+public class Geometries implements Intersectable {
 
     /**
      * List that have all the geometries
@@ -19,8 +19,8 @@ public class Geometries implements Intersectable{
     /***
      * create EMPTY list of geometries
      */
-    public Geometries(){
-        geometries =new LinkedList<Intersectable>();
+    public Geometries() {
+        geometries = new LinkedList<Intersectable>();
     }
 
     /***
@@ -28,7 +28,7 @@ public class Geometries implements Intersectable{
      * it get
      * @param geometries all the geometries
      */
-    public Geometries(Intersectable... geometries){
+    public Geometries(Intersectable... geometries) {
         this.geometries = List.of(geometries);
     }
 
@@ -36,7 +36,7 @@ public class Geometries implements Intersectable{
      * adding number of geometries to the list
      * @param geometries the adding geometries
      */
-    public void add(Intersectable... geometries){
+    public void add(Intersectable... geometries) {
         this.geometries.addAll(Arrays.asList(geometries.clone()));
     }
 
@@ -48,25 +48,23 @@ public class Geometries implements Intersectable{
      */
     public List<Point3D> findIntersections(Ray ray) {
 
-        if(geometries.isEmpty())
+        if (geometries.isEmpty())
             //if geometries is empty so no intersection => null
             return null;
 
         List<Point3D> saveList;
         List<Point3D> returnList = new LinkedList<Point3D>();
-        for (Intersectable g: geometries){
+        for (Intersectable g : geometries) {
             saveList = g.findIntersections(ray);
-            if(saveList != null)
+            if (saveList != null)
                 returnList.addAll(saveList);
         }
 
 
-        if(returnList.isEmpty())
+        if (returnList.isEmpty())
             return null;
         returnList.sort(Comparator.comparingDouble(ray::getT));
         return returnList;
 
     }
-
-
 }

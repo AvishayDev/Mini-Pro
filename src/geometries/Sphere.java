@@ -7,7 +7,7 @@ import java.util.List;
 /***
  * Represents Sphere with 3D point and radius.
  */
-public class Sphere implements Geometry{
+public class Sphere implements Geometry {
     Point3D center;
     double radius;
 
@@ -19,7 +19,7 @@ public class Sphere implements Geometry{
      */
     public Sphere(Point3D center, double radius) {
         this.center = new Point3D(center.getX(), center.getY(), center.getZ());
-        if(Util.isZero(radius) || radius < 0)
+        if (Util.isZero(radius) || radius < 0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
     }
@@ -32,11 +32,11 @@ public class Sphere implements Geometry{
      * @param z Third coordinate for the 3D point
      * @param radius Radius to the Sphere
      */
-    public Sphere(Coordinate x,Coordinate y,Coordinate z, double radius){
-        this.center = new Point3D(x,y,z);
-        if(Util.isZero(radius) || radius < 0)
+    public Sphere(Coordinate x, Coordinate y, Coordinate z, double radius) {
+        this.center = new Point3D(x, y, z);
+        if (Util.isZero(radius) || radius < 0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
-        this.radius=radius;
+        this.radius = radius;
     }
 
     /***
@@ -63,7 +63,7 @@ public class Sphere implements Geometry{
     }
 
     /***
-     *
+     * This method is a getter for the field center
      * @return the center of the Sphere represents with 3D point.
      */
     public Point3D getCenter() {
@@ -71,47 +71,48 @@ public class Sphere implements Geometry{
     }
 
     /***
-     *
+     * This method is a getter for the field radius
      * @return the radius of the Sphere
      */
     public double getRadius() {
         return radius;
     }
 
+    /**
+     * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
+     * @param ray The ray which we find the intersections to the object
+     * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Vector u;
         try {
             u = this.center.subtract(ray.getP0());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             //p0 on the center point
             return List.of(ray.getPoint(radius));
         }
         //double tm = Math.abs(u.dotProduct(ray.getDir()));
-        double tm =u.dotProduct(ray.getDir());
-        double d2 = u.lengthSquared()-(tm*tm);
-        if(d2>=radius*radius)
+        double tm = u.dotProduct(ray.getDir());
+        double d2 = u.lengthSquared() - (tm * tm);
+        if (d2 >= radius * radius)
             // there are no intersections
             return null;
 
-        double th =Math.sqrt((radius*radius)-d2);
-        double t1 = tm+th;
+        double th = Math.sqrt((radius * radius) - d2);
+        double t1 = tm + th;
 
-        if(Util.alignZero(t1)<=0)
+        if (Util.alignZero(t1) <= 0)
             //if true, p0 is on the sphere or out of it => no points
             return null;
 
-        double t2 = tm-th;
+        double t2 = tm - th;
         //if t2<=0 dont take, else take both
-        if(Util.alignZero(t2)<=0)
+        if (Util.alignZero(t2) <= 0)
             //if true, p0 on the sphere or in it => one point
             return List.of(ray.getPoint(t1));
 
         //if pass all of this it mean p0 cross twice the sphere
-        return List.of(ray.getPoint(t1),ray.getPoint(t2));
-    }
-
-    public Color getEmission(){
-        return emission;
+        return List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 }

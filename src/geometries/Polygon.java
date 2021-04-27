@@ -64,37 +64,36 @@ public class Polygon implements Geometry {
         Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
         Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
 
-        // Cross Product of any subsequent edges will throw an IllegalArgumentException
-        // because of Zero Vector if they connect three vertices that lay in the same
-        // line.
-        // Generate the direction of the polygon according to the angle between last and
-        // first edge being less than 180 deg. It is hold by the sign of its dot product
-        // with
-        // the normal. If all the rest consequent edges will generate the same sign -
-        // the
-        // polygon is convex ("kamur" in Hebrew).
-        boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
-        for (int i = 1; i < vertices.length; ++i) {
-            // Test that the point is in the same plane as calculated originally
-            if (!isZero(vertices[i].subtract(vertices[0]).dotProduct(n)))
-                throw new IllegalArgumentException("All vertices of a polygon must lay in the same plane");
-            // Test the consequent edges have
-            edge1 = edge2;
-            edge2 = vertices[i].subtract(vertices[i - 1]);
-            if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
-                throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
-        }
-    }
-
-    /***
-     * This function returns the normal of the Polygon? Null for now
-     * @param point A point3D object
-     * @return The normal vector?
-     */
-    @Override
-    public Vector getNormal(Point3D point) {
-        return plane.normal;
-    }
+		// Cross Product of any subsequent edges will throw an IllegalArgumentException
+		// because of Zero Vector if they connect three vertices that lay in the same
+		// line.
+		// Generate the direction of the polygon according to the angle between last and
+		// first edge being less than 180 deg. It is hold by the sign of its dot product
+		// with
+		// the normal. If all the rest consequent edges will generate the same sign -
+		// the
+		// polygon is convex ("kamur" in Hebrew).
+		boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
+		for (int i = 1; i < vertices.length; ++i) {
+			// Test that the point is in the same plane as calculated originally
+			if (!isZero(vertices[i].subtract(vertices[0]).dotProduct(n)))
+				throw new IllegalArgumentException("All vertices of a polygon must lay in the same plane");
+			// Test the consequent edges have
+			edge1 = edge2;
+			edge2 = vertices[i].subtract(vertices[i - 1]);
+			if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
+				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
+		}
+	}
+	/***
+	 * This function returns the normal of the Polygon? Null for now
+	 * @param point A point3D object
+	 * @return The normal vector?
+	 */
+	@Override
+	public Vector getNormal(Point3D point) {
+		return plane.getNormal();
+	}
 
     /**
      * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
@@ -104,37 +103,38 @@ public class Polygon implements Geometry {
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 
-        //check if the point on the plane
-        if (plane.findIntersections(ray) == null)
-            //when try to make v if one of them is the ZERO VECTOR
-            //it mean the p0 on vertex => null
+		List<Point3D> planeIntersections = plane.findIntersections(ray);
+		int verticesSize = vertices.size();
+		//check if the point on the plane
+		if(planeIntersections == null)
+			//when try to make v if one of them is the ZERO VECTOR
+			//it mean the p0 on vertex => null
 
             //when try to make N if one of them is same as normal vector
             //it mean the p0 on the plane => null
             return null;
 
-        Vector vec1 = vertices.get(0).subtract(ray.getP0());
-        Vector vec2 = vertices.get(1).subtract(ray.getP0());
-        ;
-        Vector N1 = vec1.crossProduct(vec2);
-        double sign = Util.alignZero(N1.dotProduct(ray.getDir()));
-        Vector Ni;
-        double signI;
-        for (int i = 2; i < vertices.size(); i++) {
-            vec1 = vertices.get(i).subtract(ray.getP0());
-            Ni = vec2.crossProduct(vec1);
-            vec2 = vec1.scale(1);
-            signI = Util.alignZero(ray.getDir().dotProduct(Ni));
-            if (sign * signI <= 0)
-                //its mean the sign is different or zero
-                return null;
-        }
-        Ni = vec2.crossProduct(vertices.get(0).subtract(ray.getP0()));
-        signI = Util.alignZero(Ni.dotProduct(ray.getDir()));
-        if (sign * signI <= 0)
-            //its mean the sign is different or zero
-            return null;
+		Vector vec1 = vertices.get(0).subtract(ray.getP0());
+		Vector vec2 = vertices.get(1).subtract(ray.getP0());;
+		Vector N1 = vec1.crossProduct(vec2);
+		double sign = Util.alignZero(N1.dotProduct(ray.getDir()));
+		Vector Ni;
+		double signI;
+		for (int i = 2; i < verticesSize; i++ ){
+			vec1 = vertices.get(i).subtract(ray.getP0());
+			Ni = vec2.crossProduct(vec1);
+			vec2 = vec1.scale(1);
+			signI = Util.alignZero(ray.getDir().dotProduct(Ni));
+			if(sign*signI <=0)
+				//its mean the sign is different or zero
+				return null;
+		}
+		Ni = vec2.crossProduct(vertices.get(0).subtract(ray.getP0()));
+		signI = Util.alignZero(Ni.dotProduct(ray.getDir()));
+		if(sign*signI <=0)
+			//its mean the sign is different or zero
+			return null;
 
-        return plane.findIntersections(ray);
-    }
+		return planeIntersections;
+	}
 }

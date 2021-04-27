@@ -1,6 +1,8 @@
 package primitives;
 
 import static geometries.Intersectable.GeoPoint;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ public class Ray {
      * @param vec vector for the ray
      * @param point point for the ray
      */
-    public Ray(Vector vec, Point3D point){
+    public Ray(Vector vec, Point3D point) {
         dir = vec.normalized();
         p0 = point;
     }
@@ -34,8 +36,26 @@ public class Ray {
         return p0.equals(ray.p0) && dir.equals(ray.dir);
     }
 
-    public GeoPoint findClosestPoint(List<GeoPoint> points){
-        return null;
+    public Point3D findClosestPoint(List<Point3D> points) {
+        if (points == null)
+            return null;
+
+        int pointsSize = points.size();
+        Point3D lowPoint = points.get(0);
+        Point3D optionalPoint;
+        double distance = p0.distance(lowPoint);
+        double distance2;
+
+        for (int i = 1; i < pointsSize; i++) {
+            optionalPoint = points.get(i);
+            distance2 = p0.distance(optionalPoint);
+            if (distance2 < distance) {
+                distance = distance2;
+                lowPoint = optionalPoint;
+            }
+        }
+
+        return lowPoint;
     }
 
     /***
@@ -43,19 +63,12 @@ public class Ray {
      * @param t the scale to v
      * @return the point multiply by t from p0 in the angle of dir
      */
-    public Point3D getPoint(double t){
+    public Point3D getPoint(double t) {
 
         return p0.add(dir.scale(t));
     }
 
-    /***
-     * calculate the t for the point on the ray
-     * @param point the point on the ray
-     * @return
-     */
-    public double getT(Point3D point){
-        return point.subtract(p0).length();
-    }
+
     /***
      * Getter for the Point3D field of the ray
      * @return The p0 variable

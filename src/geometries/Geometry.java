@@ -8,7 +8,7 @@ import primitives.*;
 public interface Geometry extends Intersectable {
 
     Color emission = null;
-    Meterial meterial = null;
+    Material material = null;
 
     /**
      * A method that receives a point, and returns the normal from the current object to this point

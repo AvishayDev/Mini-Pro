@@ -107,7 +107,7 @@ public class Tube implements Geometry {
             // so we take only the vector of the ray
             vecA = v;
         }
-        A = Util.alignNumber(vecA.lengthSquared()); //vecA^2
+        A = vecA.lengthSquared(); //vecA^2
 
         // ------ Calc of C --------
 
@@ -142,30 +142,25 @@ public class Tube implements Geometry {
             }
         }
         //(pointC)^2 - r^2
-        C = Util.alignNumber(pointC.distanceSquared(Point3D.ZERO) - (radius * radius));
+        C = pointC.distanceSquared(Point3D.ZERO) - (radius * radius);
 
         // ------ Calc of B --------
 
         // calc the equation B = 2*(v - (v,va)va, DeltaP -(DeltaP,va)va)
-        B = Util.alignNumber(vecA.dotProduct(pointC) * 2);
+        B = vecA.dotProduct(pointC) * 2;
 
         //calc Determinante
-        double determinate = Util.alignNumber((B * B) - (4d * A * C));
+        double determinate = Util.alignZero((B * B) - (4d * A * C));
 
-        if (Util.alignZero(determinate) < 0) {
+        if (determinate <= 0) {
             //its mean no intersections so
             return null;
         }
 
-        determinate = Math.sqrt(determinate);
-        if (Util.alignZero(determinate) == 0) {
-            //its mean there is only one intersection by
-            //tangent point
-            return null;
-        }
 
         //if pass all its mean two intersections
 
+        determinate = Math.sqrt(determinate);
         List<Point3D> list = new LinkedList<Point3D>();
         double t1 = (-B + determinate) / (2d * A);
         double t2 = (-B - determinate) / (2d * A);

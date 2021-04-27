@@ -14,7 +14,7 @@ public class Geometries implements Intersectable {
     /**
      * List that have all the geometries
      */
-    List<Intersectable> geometries;
+    private List<Intersectable> geometries;
 
     /***
      * create EMPTY list of geometries
@@ -63,7 +63,7 @@ public class Geometries implements Intersectable {
 
         if (returnList.isEmpty())
             return null;
-        returnList.sort(Comparator.comparingDouble(ray::getT));
+        returnList.sort(Comparator.comparingDouble(ray.getP0()::distance));
         return returnList;
 
     }

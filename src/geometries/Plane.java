@@ -8,8 +8,8 @@ import java.util.List;
  * Represents Plane with vector and 3D point.
  */
 public class Plane implements Geometry {
-    Point3D q0;
-    Vector normal;
+    private Point3D q0;
+    private Vector normal;
 
     /***
      * Make's Plane with 3D point and vector.
@@ -17,7 +17,7 @@ public class Plane implements Geometry {
      * @param normal Vector of the Plane
      */
     public Plane(Point3D q0, Vector normal) {
-        this.q0 = new Point3D(q0.getX(), q0.getY(), q0.getZ());
+        this.q0 = q0;
         this.normal = normal.normalized();
     }
 
@@ -27,18 +27,19 @@ public class Plane implements Geometry {
      * @param point1 1st point
      * @param point2 2nd point
      * @param point3 3rd point
+     * @throws IllegalArgumentException when the points are on the same line
      */
     public Plane(Point3D point1, Point3D point2, Point3D point3) {
         q0 = point1;
         Vector vec1 = point2.subtract(point1);
         Vector vec2 = point3.subtract(point1);
-        normal = new Vector(vec1.crossProduct(vec2).getHead()).normalize();
+        normal = vec1.crossProduct(vec2).normalize();
     }
 
     /***
      * This function returns the normal of the sphere? Null for now
      * @param point A point3D object
-     * @return The normal vector?
+     * @return The normal vector
      */
     @Override
     public Vector getNormal(Point3D point) {
@@ -75,7 +76,6 @@ public class Plane implements Geometry {
 
     /**
      * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
-     *
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
      */
@@ -89,10 +89,10 @@ public class Plane implements Geometry {
             u = q0.subtract(ray.getP0());
             t = normal.dotProduct(u);
             t1 = normal.dotProduct(ray.getDir());
-            if (t == 0 || t1 == 0)
+            if (Util.isZero(t1))
                 //its mean p0 is start on the plane => no intersections
                 //or the dir is orthogonal to the normal => no intersections
-                throw new IllegalArgumentException();
+                return null;
             t = t / t1;
 
         } catch (IllegalArgumentException e) {

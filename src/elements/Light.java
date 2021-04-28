@@ -2,9 +2,9 @@ package elements;
 
 import primitives.Color;
 
-public interface Light {
+public abstract class Light {
 
-    Color intensity =null;
+    protected Color intensity;
 
-    public Color getIntensity();
+    public abstract Color getIntensity();
 }

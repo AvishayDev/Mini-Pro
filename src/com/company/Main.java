@@ -1,6 +1,8 @@
 package com.company;
 
 import primitives.*;
+import renderer.ImageWriter;
+
 import static java.lang.System.out;
 import static primitives.Util.*;
 
@@ -18,8 +20,8 @@ public final class Main {
      */
     public static void main(String[] args) {
 
-
-
+       // ImageWriter.print();
+        /*
         Vector u = new Vector(-1,-7,7);
         Vector w = new Vector(2,4,-8);
         u.normalize();
@@ -77,5 +79,8 @@ public final class Main {
              out.println("ERROR: Point - Point does not work correctly");
 
         out.println("If there were no any other outputs - all tests succeeded!");
+    */
     }
+
+
 }

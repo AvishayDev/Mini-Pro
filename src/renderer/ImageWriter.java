@@ -19,10 +19,11 @@ import javax.imageio.*;
  * @author Dan
  */
 public class ImageWriter {
+
     private int nX;
     private int nY;
 
-    private static final String FOLDER_PATH = System.getProperty("user.dir") + "/images";
+    private static final String FOLDER_PATH = System.getProperty("user.dir") + "\\Images";
 
     private BufferedImage image;
     private String imageName;
@@ -45,6 +46,8 @@ public class ImageWriter {
 
         image = new BufferedImage(nX, nY, BufferedImage.TYPE_INT_RGB);
     }
+
+
 
     // ***************** Getters/Setters ********************** //
 

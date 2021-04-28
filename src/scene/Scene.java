@@ -8,12 +8,32 @@ import java.util.List;
 
 public class Scene {
 
-    String name = null;
-    Geometries geometries = null;
-    Color background = Color.BLACK;
-    AmbientLight ambientLight = new AmbientLight(Color.BLACK, 0);
-    List<LightSource> lights = null;
+    public String name;
+    public Geometries geometries;
+    public Color background = Color.BLACK;
+    public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 0);
+    public List<LightSource> lights;
 
 
+    public Scene(String name) {
+        this.name = name;
+        geometries = new Geometries();
+    }
+
+
+    public Scene setGeometries(Geometries geometries) {
+        this.geometries = geometries;
+        return this;
+    }
+
+    public Scene setBackground(Color background) {
+        this.background = background;
+        return this;
+    }
+
+    public Scene setAmbientLight(AmbientLight ambientLight) {
+        this.ambientLight = ambientLight;
+        return this;
+    }
 }
 

@@ -8,15 +8,21 @@ import scene.Scene;
 
 import java.util.List;
 
-public interface RayTracerBase {
+public abstract class RayTracerBase {
 
-    Geometries geometries = null;
+    Geometries geometries;
     Color background = Color.BLACK;
     //AmbientLight ambient = new AmbientLight(Color.BLACK, 0);
-    Color ambient = null;
-    List<Light> lights = null;
+    Color ambient;
+    protected Scene scene;
+    List<Light> lights;
 
-    Color traceRay(Ray ray);
+    public RayTracerBase(Scene scene){
+        //this.scene = scene;
+        throw new IllegalArgumentException();
+    }
 
-    java.awt.Color castRay(Ray ray);
+    abstract Color traceRay(Ray ray);
+
+    abstract java.awt.Color castRay(Ray ray);
 }

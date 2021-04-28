@@ -46,6 +46,7 @@ public class Ray {
         return p0.equals(ray.p0) && dir.equals(ray.dir);
     }
 
+
     public Point3D findClosestPoint(List<Point3D> points) {
         if (points == null)
             return null;

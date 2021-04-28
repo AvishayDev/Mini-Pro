@@ -21,6 +21,7 @@ public class PlaneTests {
     @Test
     public void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
+
         // TC01: There is a simple single test here, values from here: https://web.ma.utexas.edu/users/m408m/Display12-5-4.shtml
         Plane plane = new Plane(new Point3D(-1,1,2), new Point3D(-4, 2,2), new Point3D(-2,1,5));
         Vector normal = new Vector(3,9,1).normalize();

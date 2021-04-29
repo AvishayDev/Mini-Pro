@@ -3,8 +3,8 @@ package renderer;
 import elements.*;
 import primitives.*;
 import scene.*;
-
 import java.util.MissingResourceException;
+
 
 public class Render {
 
@@ -15,10 +15,22 @@ public class Render {
 
 
     public void renderImage(){
-
         if(scene == null || camera == null|| rayTracer== null|| imageWriter== null)
             throw new MissingResourceException("A","B","C");
-        throw new UnsupportedOperationException();
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+        Ray rayTrace;
+        Color pixelColor;
+
+        for(int i = 0; i<nY;i++){
+            for(int j = 0; j<nX;j++) {
+                rayTrace = camera.constructRay(nX,nY,j,i);
+                pixelColor = rayTracer.traceRay(rayTrace);
+                imageWriter.writePixel(j,i,pixelColor);
+            }
+        }
+
 
     }
 
@@ -40,6 +52,7 @@ public class Render {
                 imageWriter.writePixel(j,i,color);
             }
         }
+
 
     }
 

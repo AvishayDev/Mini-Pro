@@ -24,12 +24,22 @@ public class Render {
      * then draws the checked pixel with the color we received.
      * @throws MissingResourceException in case the any of the fields is null.
      */
-    public void renderImage(){
+    public void renderImage() {
+        if (scene == null || camera == null || rayTracer == null || imageWriter == null)
+            throw new MissingResourceException("A", "B", "C");
 
-        if(scene == null || camera == null|| rayTracer== null|| imageWriter== null)
-            throw new MissingResourceException("A","B","C");
-        throw new UnsupportedOperationException();
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+        Ray rayTrace;
+        Color pixelColor;
 
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
+                rayTrace = camera.constructRay(nX, nY, j, i);
+                pixelColor = rayTracer.traceRay(rayTrace);
+                imageWriter.writePixel(j, i, pixelColor);
+            }
+        }
     }
 
     /***
@@ -38,34 +48,33 @@ public class Render {
      * @param color The color of the grid's line.
      * @throws MissingResourceException in case the imageWriter is null.
      */
-    public void printGrid(int interval, Color color){
-        if(imageWriter == null)
-            throw new MissingResourceException("A","B","C");
+    public void printGrid(int interval, Color color) {
+        if (imageWriter == null)
+            throw new MissingResourceException("A", "B", "C");
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
-        for(int i = 0; i<nY;i+=interval){
-            for(int j = 0; j<nX;j++){
-                imageWriter.writePixel(j,i,color);
+        for (int i = 0; i < nY; i += interval) {
+            for (int j = 0; j < nX; j++) {
+                imageWriter.writePixel(j, i, color);
             }
         }
 
-        for(int i = 0; i<nY;i++){
-            for(int j = 0; j<nX;j+=interval){
-                imageWriter.writePixel(j,i,color);
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j += interval) {
+                imageWriter.writePixel(j, i, color);
             }
         }
-
     }
 
     /***
      * This method is being used to call the writeToImage method of the field imageWriter.
      * @throws MissingResourceException in case the imageWriter is null.
      */
-    public void writeToImage(){
-        if(imageWriter ==null)
-            throw new MissingResourceException("A","B","C");
+    public void writeToImage() {
+        if (imageWriter == null)
+            throw new MissingResourceException("A", "B", "C");
 
         imageWriter.writeToImage();
     }

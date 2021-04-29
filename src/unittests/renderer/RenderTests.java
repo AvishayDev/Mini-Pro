@@ -26,12 +26,12 @@ public class RenderTests {
 */
     @Test
     public void basicRenderTwoColorTest() {
-/*
+
         Scene scene = new Scene("Test scene")//
                 .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
                 .setBackground(new Color(75, 127, 90));
 
-        scene.geometries.add(new Sphere(50, new Point3D(0, 0, -100)),
+        scene.geometries.add(new Sphere( new Point3D(0, 0, -100),50),
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
                 new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left
@@ -42,12 +42,12 @@ public class RenderTests {
                 .setImageWriter(imageWriter) //
                 .setScene(scene) //
                 .setCamera(camera) //
-                .setRayTracer(new BasicRayTracer(scene));
+                .setRayTracer(new RayTracerBasic(scene));
 
         render.renderImage();
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
-        */
+
     }
 
     /**

@@ -17,13 +17,19 @@ import java.util.List;
 public class Camera {
 
 
-    // Note
+    // p0 is a Point3D value, it shows the exact location of the camera, it is the head point of all the rays coming out of the camera.
     private Point3D p0;
+    // vUp is a Vector value, the emulated Y axis of the camera.
     private Vector vUp;
+    // vTo is a Vector value, the emulated Z axis of the camera.
     private Vector vTo;
+    // vRight is a Vector value, the emulated  X axis of the camera.
     private Vector vRight;
+    // width is a double value that indicates the width of the view plane
     private double width;
+    // height is a double value that indicates the height of the view plane
     private double height;
+    // distance is a double value the indicates how far the p0 is from the center of the view plane
     private double distance;
 
     /***
@@ -168,25 +174,36 @@ public class Camera {
 
     }
 
-    //Note
+    /***
+     * Getter for the Point3D p0 field of the camera
+     * @return The Point3D p0
+     */
     public Point3D getP0() {
         return p0;
     }
 
-    //Note
-    public Vector getvUp() {
+    /***
+     * Getter for the Vector vUp field of the camera
+     * @return The Vector vUp
+     */
+    public Vector getVUp() {
         return vUp;
     }
 
-    //Note
-    public Vector getvTo() {
+    /***
+     * Getter for the Vector vTo field of the camera
+     * @return The Vector vTo
+     */
+    public Vector getVTo() {
         return vTo;
     }
 
-    //Note
-    public Vector getvRight() {
+    /***
+     * Getter for the Vector vRight field of the camera
+     * @return The Vector vRight
+     */
+    public Vector getVRight() {
         return vRight;
     }
-
 
 }

@@ -48,7 +48,7 @@ public class Ray {
 
 
     public Point3D findClosestPoint(List<Point3D> points) {
-        if (points == null)
+        if (points == null || points.isEmpty())
             return null;
 
         int pointsSize = points.size();

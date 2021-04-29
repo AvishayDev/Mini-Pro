@@ -47,6 +47,12 @@ public class Ray {
     }
 
 
+    /***
+     * This method receives a list of Point3Ds, and returns the point that have the lowest distance from the head of the ray
+     * If list is empty or null sent, null will be returned
+     * @param points A list of Point3Ds
+     * @return The closest point to the head of the ray
+     */
     public Point3D findClosestPoint(List<Point3D> points) {
         if (points == null || points.isEmpty())
             return null;

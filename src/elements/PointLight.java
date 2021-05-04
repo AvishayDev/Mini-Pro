@@ -16,12 +16,12 @@ public class PointLight extends Light implements LightSource{
     //       Kc + kl*d +Kq*(d^2)
 
 
-
-    @Override
-    public Color getIntensity() {
-        return null;
-    }
-
+    /**
+     *
+     * calc the Il of point in the scene
+     * @param point point to light
+     * @return the color of the point
+     */
     @Override
     public Color getIntensity(Point3D point) {
         return null;

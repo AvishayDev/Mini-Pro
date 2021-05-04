@@ -9,7 +9,7 @@ import java.util.List;
  * Represents Tube with Ray and radius.
  */
 
-public class Tube implements Geometry {
+public class Tube extends Geometry {
 
     //Note
     protected Ray axisRay;
@@ -177,6 +177,11 @@ public class Tube implements Geometry {
 
         return list.isEmpty() ? null : list;
 
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
     }
 
     /***

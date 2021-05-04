@@ -176,6 +176,11 @@ public class Cylinder extends Tube {
         return points.isEmpty() ? null : points;
     }
 
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
+    }
+
     /***
      * This function returns the height of the cylinder
      * @return The height of the Cylinder

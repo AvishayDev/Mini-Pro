@@ -20,13 +20,21 @@ public class Material {
      */
     public int nShininess = 1;
 
-    public Material setkD(double value) {
+
+    public Material(){
+    }
+    public Material setKd(double value) {
         kD = value;
         return this;
     }
 
-    public Material setkS(double value) {
+    public Material setKs(double value) {
         kS = value;
+        return this;
+    }
+
+    public Material setShininess(int nShininess) {
+        this.nShininess = nShininess;
         return this;
     }
 }

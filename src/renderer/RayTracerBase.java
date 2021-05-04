@@ -14,11 +14,6 @@ import java.util.List;
  */
 public abstract class RayTracerBase {
 
-    Geometries geometries;
-    Color background = Color.BLACK;
-    //AmbientLight ambient = new AmbientLight(Color.BLACK, 0);
-    List<Light> lights;
-    Color ambient;
 
     protected Scene scene;
 
@@ -39,7 +34,6 @@ public abstract class RayTracerBase {
      * @param ray the ray from the camera throw the scene
      * @return the color of the pixel of the ray
      */
-    abstract Color traceRay(Ray ray);
+    public abstract Color traceRay(Ray ray);
 
-    abstract java.awt.Color castRay(Ray ray);
 }

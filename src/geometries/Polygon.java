@@ -14,7 +14,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
 
     /**
      * List of polygon's vertices
@@ -121,7 +121,7 @@ public class Polygon implements Geometry {
         Point3D point0 = ray.getP0();
         Vector vec1 = vertices.get(0).subtract(point0);
         Vector vec2 = vertices.get(1).subtract(point0);
-        ;
+
         Vector N1 = vec1.crossProduct(vec2);
         double sign = Util.alignZero(N1.dotProduct(rayDir));
         Vector Ni;
@@ -142,5 +142,10 @@ public class Polygon implements Geometry {
             return null;
 
         return planeIntersections;
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 /***
  * Represents Sphere with 3D point and radius.
  */
-public class Sphere implements Geometry {
+public class Sphere extends Geometry {
 
     //Note
     private Point3D center;
@@ -119,5 +119,10 @@ public class Sphere implements Geometry {
 
         //if pass all of this it mean p0 cross twice the sphere
         return List.of(ray.getPoint(t1), ray.getPoint(t2));
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
     }
 }

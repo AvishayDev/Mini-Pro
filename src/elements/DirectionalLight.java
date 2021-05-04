@@ -11,11 +11,12 @@ public class DirectionalLight extends Light implements LightSource{
 
     Vector direction;
 
-    @Override
-    public Color getIntensity() {
-        return null;
-    }
-
+    /**
+     *
+     * calc the Il of point in the scene
+     * @param point point to light
+     * @return the color of the point
+     */
     @Override
     public Color getIntensity(Point3D point) {
         return null;

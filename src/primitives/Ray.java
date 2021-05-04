@@ -75,6 +75,28 @@ public class Ray {
         return lowPoint;
     }
 
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points){
+        if (points == null || points.isEmpty())
+            return null;
+
+        int pointsSize = points.size();
+        GeoPoint lowPoint = points.get(0);
+        GeoPoint optionalPoint;
+        double distance = p0.distance(lowPoint);
+        double distance2;
+
+        for (int i = 1; i < pointsSize; i++) {
+            optionalPoint = points.get(i);
+            distance2 = p0.distance(optionalPoint);
+            if (distance2 < distance) {
+                distance = distance2;
+                lowPoint = optionalPoint;
+            }
+        }
+
+        return lowPoint;
+    }
+
     /***
      * calculate the place of point from p0 by t scale
      * @param t the scale to v

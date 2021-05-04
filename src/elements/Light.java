@@ -15,5 +15,7 @@ public abstract class Light {
      * Getter for the Color field of the Light
      * @return The Color variable
      */
-    public abstract Color getIntensity();
+    public Color getIntensity(){
+        return intensity;
+    }
 }

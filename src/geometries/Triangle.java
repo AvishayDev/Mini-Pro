@@ -42,6 +42,7 @@ public class Triangle extends Polygon {
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+
         List<Point3D> planeIntersections = plane.findIntersections(ray);
 
         if (planeIntersections == null)
@@ -53,30 +54,37 @@ public class Triangle extends Polygon {
         Vector vec1 = vertices.get(0).subtract(point0);
         Vector vec2 = vertices.get(1).subtract(point0);
         Vector vec3 = vertices.get(2).subtract(point0);
-        Vector N1 = vec1.crossProduct(vec2).normalize();
-        Vector N2 = vec2.crossProduct(vec3).normalize();
-        Vector N3 = vec3.crossProduct(vec1).normalize();
+        Vector normal1 = vec1.crossProduct(vec2).normalize();
+        Vector normal2 = vec2.crossProduct(vec3).normalize();
+        Vector normal3 = vec3.crossProduct(vec1).normalize();
 
         //calc signs
-        double checkSign1 = N1.dotProduct(rayDir);
+        double checkSign1 = normal1.dotProduct(rayDir);
         if (Util.isZero(checkSign1))
             //if zero => no intersections
             return null;
 
         //else the sign is not zero so check for next normal
-        double checkSign2 = N2.dotProduct(rayDir);
+        double checkSign2 = normal2.dotProduct(rayDir);
         if (!Util.checkSign(checkSign1, checkSign2) || Util.isZero(checkSign2))
             //if sign is not equal or N2 is zero => no intersections
             return null;
 
         //else N1,N2 not zero and same sign!
         //so use N1 sign to calc the N3 sign (don't care because N2 same sign)
-        checkSign1 = N3.dotProduct(rayDir);
+        checkSign1 = normal3.dotProduct(rayDir);
         if (!Util.checkSign(checkSign1, checkSign2) || Util.isZero(checkSign1))
             //if sign is not equal or N2 is zero => no intersections
             return null;
 
         //if pass everything the point in triangle
         return planeIntersections;
+
+
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
     }
 }

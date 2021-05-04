@@ -1,8 +1,5 @@
 package primitives;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
  *
@@ -124,6 +121,11 @@ public abstract class Util {
         double num1 = (Math.round(num * 10d) / 10d);
         return getExp(num1 - num) < ACCURACY ? num1 : num;
 
+    }
+
+
+    public static double max(double num1, double num2){
+        return num1 >= num2 ? num1 : num2;
     }
 
     /**

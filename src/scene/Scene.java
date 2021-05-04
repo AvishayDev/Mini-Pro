@@ -35,5 +35,9 @@ public class Scene {
         this.ambientLight = ambientLight;
         return this;
     }
+
+    public Color ambientGetIntensity() {
+        return ambientLight.getIntensity();
+    }
 }
 

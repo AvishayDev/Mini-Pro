@@ -14,12 +14,5 @@ public class AmbientLight extends Light{
         this.intensity = intensity.scale(kA);
     }
 
-    /***
-     * Getter for the Color field of the Light
-     * @return The Color variable
-     */
-    @Override
-    public Color getIntensity() {
-        return intensity;
-    }
+
 }

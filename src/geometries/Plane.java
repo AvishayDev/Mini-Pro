@@ -7,7 +7,7 @@ import java.util.List;
 /***
  * Represents Plane with vector and 3D point.
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 
     //Note
     private Point3D q0;
@@ -110,5 +110,10 @@ public class Plane implements Geometry {
 
         //if pass all of this, there is intersection in the plane
         return List.of(ray.getPoint(t));
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
     }
 }

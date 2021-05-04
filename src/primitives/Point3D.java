@@ -1,5 +1,7 @@
 package primitives;
 
+import geometries.Intersectable;
+import static geometries.Intersectable.GeoPoint;
 import java.awt.*;
 
 /***
@@ -74,7 +76,18 @@ public class Point3D {
 
     }
 
+    /***
+     * Calculate the distance squared between this point and the
+     * get point
+     * @param point The point which we calculate the distance from
+     * @return distance squared between the 2 points
+     */
+    public double distanceSquared(GeoPoint point) {
+        return ((this.x.coord - point.point.getX()) * (this.x.coord - point.point.getX())) +
+                ((this.y.coord - point.point.getY()) * (this.y.coord - point.point.getY())) +
+                ((this.z.coord - point.point.getZ()) * (this.z.coord - point.point.getZ()));
 
+    }
     /***
      * Calculate the distance between this point and the
      * get point
@@ -85,6 +98,15 @@ public class Point3D {
         return Math.sqrt(distanceSquared(point));
     }
 
+    /***
+     * Calculate the distance between this point and the
+     * get point
+     * @param point The point which we calculate the distance from
+     * @return distance between the 2 points
+     */
+    public double distance(GeoPoint point) {
+        return Math.sqrt(distanceSquared(point));
+    }
     /***
      * This function returns a scaled version of the current point
      * @param t The amount of scale we will increase/decrease the vector

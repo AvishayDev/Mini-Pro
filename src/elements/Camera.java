@@ -144,6 +144,10 @@ public class Camera {
      */
     public Camera changeAngle(double angle) {
 
+        // thinking
+        // x = p0(x)+sin(90-alpha)
+        // y = p0(y)+cos(90-alpha)
+        // z = sqrt(1-x^2-y^2)
 
         double cosAlpha = Math.cos((angle * Math.PI) / 180);
         //for calc vRight new position

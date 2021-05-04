@@ -112,32 +112,6 @@ public class Camera {
     }
 
     /***
-     * This method receives the amount of pixels in the view plane's X axis and Y axis, and a geometry, and returns a list of intersection points from
-     * rays out of the camera, through the view plane that hits the geometry object
-     * It will throw exception in case width or height of the camera are not initialized properly.
-     * @param nX The amount of pixels in X axis of the view plane
-     * @param nY The amount of pixels in Y axis of the view plane
-     * @param geometry The geometry that's being pictured in the camera
-     * @return A list of all the intersection points from the camera to the geometry.
-     */
-    public List<Point3D> cameraRaysIntersect(int nX, int nY, Intersectable geometry) {
-        List<Point3D> returnList = new LinkedList<>();
-        List<Point3D> points;
-
-        Ray rayCheck;
-
-        for (int i = 0; i < nX; i++)
-            for (int j = 0; j < nY; j++) {
-                rayCheck = constructRay(nX, nY, j, i);
-                points = geometry.findIntersections(rayCheck);
-                if (points != null)
-                    returnList.addAll(points);
-            }
-
-        return returnList;
-    }
-
-    /***
      * This method serves changeAngleAndPosition, and it changes and angle of plane XY by a received number
      * @param angle The angle you want to tilt the plane XY
      * @return This camera with the updated values.
@@ -175,7 +149,6 @@ public class Camera {
      */
     public void replaceCameraPosition(Point3D point) {
         p0 = point;
-
     }
 
     /***

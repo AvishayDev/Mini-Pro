@@ -9,8 +9,9 @@ import java.util.List;
  */
 public class Plane extends Geometry {
 
-    //Note
+    // Some point3D located on the plane.
     private Point3D q0;
+    // The normal vector to the plane, it will be normalized in the constructor.
     private Vector normal;
 
     /***
@@ -112,6 +113,7 @@ public class Plane extends Geometry {
         return List.of(ray.getPoint(t));
     }
 
+    // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;

@@ -11,8 +11,9 @@ import java.util.List;
 
 public class Tube extends Geometry {
 
-    //Note
+    // The axis ray of the tube.
     protected Ray axisRay;
+    // The width of the tube.
     protected double radius;
 
     /***
@@ -85,10 +86,10 @@ public class Tube extends Geometry {
         Vector deltaP = null;
         Vector vecA;
         Vector vecC;
-        double A;
-        double B;
-        double C;
-        boolean Flag = false;
+        double a;
+        double b;
+        double c;
+        boolean flag = false;
 
         // ------ Calc of A --------
         try { //calc the equation A = ( v - (v,va)va )^2
@@ -96,12 +97,12 @@ public class Tube extends Geometry {
             //calc (v,va)va
             vecA = va.scale(v.dotProduct(va));
             //calc the final equation
-            Flag = true;
+            flag = true;
             vecA = v.subtract(vecA);
 
         } catch (IllegalArgumentException e) {
             //
-            if (Flag) {
+            if (flag) {
                 //if true, its mean the Exception came from the final calc
                 //  so the ray and the axisRay is parallel
                 return null;
@@ -110,29 +111,29 @@ public class Tube extends Geometry {
             // so we take only the vector of the ray
             vecA = v;
         }
-        A = vecA.lengthSquared(); //vecA^2
+        a = vecA.lengthSquared(); //vecA^2
 
         // ------ Calc of C --------
 
-        Flag = false;
-        boolean Flag2 = false;
+        flag = false;
+        boolean flag2 = false;
         Point3D pointC;
         try { //calc the equation C = ( DeltaP - (DeltaP,va)va )^2 - r^2
             //calc DeltaP
             deltaP = p.subtract(pa);
             // calc (DeltaP,va)va
-            Flag = true;
+            flag = true;
             vecC = va.scale(deltaP.dotProduct(va));
             // calc the final equation
-            Flag2 = true;
+            flag2 = true;
             pointC = deltaP.subtract(vecC).getHead();
 
         } catch (IllegalArgumentException e) {
-            if (Flag2) {
+            if (flag2) {
                 //if true its mean the Exception came from the final
                 //calc so deltaP on parallel axisRay so the final calc is only: -r^2
                 pointC = Point3D.ZERO;
-            } else if (Flag) {
+            } else if (flag) {
                 // if the its mean the Exception came from the calc of
                 // (DeltaP,va)va . so we take only deltaP for the calc:
                 pointC = deltaP.getHead();
@@ -145,28 +146,27 @@ public class Tube extends Geometry {
             }
         }
         //(pointC)^2 - r^2
-        C = pointC.distanceSquared(Point3D.ZERO) - (radius * radius);
+        c = pointC.distanceSquared(Point3D.ZERO) - (radius * radius);
 
         // ------ Calc of B --------
 
         // calc the equation B = 2*(v - (v,va)va, DeltaP -(DeltaP,va)va)
-        B = vecA.dotProduct(pointC) * 2;
+        b = vecA.dotProduct(pointC) * 2;
 
         //calc Determinant
-        double determinate = Util.alignZero((B * B) - (4d * A * C));
+        double determinate = Util.alignZero((b * b) - (4d * a * c));
 
         if (determinate <= 0) {
             //its mean no intersections so
             return null;
         }
 
-
         //if pass all its mean two intersections
 
         determinate = Math.sqrt(determinate);
         List<Point3D> list = new LinkedList<Point3D>();
-        double t1 = (-B + determinate) / (2d * A);
-        double t2 = (-B - determinate) / (2d * A);
+        double t1 = (-b + determinate) / (2d * a);
+        double t2 = (-b - determinate) / (2d * a);
         if (Util.alignZero(t1) > 0)
             //so we want to take t1
             list.add(ray.getPoint(t1));
@@ -179,6 +179,7 @@ public class Tube extends Geometry {
 
     }
 
+    // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;

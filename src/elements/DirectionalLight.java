@@ -4,15 +4,15 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
-public class DirectionalLight extends Light implements LightSource{
+// note
+public class DirectionalLight extends Light implements LightSource {
 
 
     //IL = I0
-
+    // note
     Vector direction;
 
     /**
-     *
      * calc the Il of point in the scene
      * @param point point to light
      * @return the color of the point
@@ -22,6 +22,7 @@ public class DirectionalLight extends Light implements LightSource{
         return null;
     }
 
+    // note
     @Override
     public Vector getL(Point3D point) {
         return null;

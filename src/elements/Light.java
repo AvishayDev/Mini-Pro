@@ -8,14 +8,14 @@ import primitives.Color;
  */
 public abstract class Light {
 
-    // Note
+    // This color field represent the intensity of the light.
     protected Color intensity;
 
     /***
      * Getter for the Color field of the Light
      * @return The Color variable
      */
-    public Color getIntensity(){
+    public Color getIntensity() {
         return intensity;
     }
 }

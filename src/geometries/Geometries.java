@@ -60,7 +60,6 @@ public class Geometries implements Intersectable {
                 returnList.addAll(saveList);
         }
 
-
         if (returnList.isEmpty())
             return null;
         returnList.sort(Comparator.comparingDouble(ray.getP0()::distanceSquared));
@@ -68,6 +67,7 @@ public class Geometries implements Intersectable {
 
     }
 
+    // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         if (geometries.isEmpty())
@@ -81,7 +81,6 @@ public class Geometries implements Intersectable {
             if (saveList != null)
                 returnList.addAll(saveList);
         }
-
 
         if (returnList.isEmpty())
             return null;

@@ -9,8 +9,9 @@ import java.util.List;
  */
 public class Sphere extends Geometry {
 
-    //Note
+    // A Point3D that is in the location of the center of the sphere.
     private Point3D center;
+    // A double value that represent the value of the radius of the sphere.
     private double radius;
 
     /***
@@ -121,6 +122,7 @@ public class Sphere extends Geometry {
         return List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 
+    // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;

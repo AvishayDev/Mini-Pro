@@ -11,7 +11,6 @@ import static primitives.Util.*;
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
- *
  * @author Dan
  */
 public class Polygon extends Geometry {
@@ -144,6 +143,7 @@ public class Polygon extends Geometry {
         return planeIntersections;
     }
 
+    // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;

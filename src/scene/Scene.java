@@ -61,6 +61,7 @@ public class Scene {
         return this;
     }
 
+
     public Color ambientGetIntensity() {
         return ambientLight.getIntensity();
     }

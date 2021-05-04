@@ -36,7 +36,6 @@ public class Triangle extends Polygon {
 
     /**
      * This method receives a ray and returns a list of all the intersections points. In case there are none, null will be returned
-     *
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
      */
@@ -79,10 +78,9 @@ public class Triangle extends Polygon {
 
         //if pass everything the point in triangle
         return planeIntersections;
-
-
     }
 
+    // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Cylinder extends Tube {
 
-    //Note
+    // Height is the distance between the bases of the Cylinder
     private double height;
 
     /***
@@ -43,7 +43,6 @@ public class Cylinder extends Tube {
             throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
     }
-
 
     /***
      * This function returns the normal of the sphere? Null for now
@@ -176,6 +175,7 @@ public class Cylinder extends Tube {
         return points.isEmpty() ? null : points;
     }
 
+    // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;

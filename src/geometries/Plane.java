@@ -116,6 +116,32 @@ public class Plane extends Geometry {
     // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
-        return null;
+
+        Vector u;
+        double t;
+
+        double t1 = normal.dotProduct(ray.getDir());
+        if (Util.isZero(t1))
+            //its mean p0 is start on the plane => no intersections
+            //or the dir is orthogonal to the normal => no intersections
+            return null;
+
+        try {
+            u = q0.subtract(ray.getP0());
+            t = normal.dotProduct(u);
+            t = t / t1;
+
+        } catch (IllegalArgumentException e) {
+            //its mean p0==q0 => no intersections
+            return null;
+        }
+
+        if (Util.alignZero(t) <= 0)
+            //if t==0 its mean p0 on the plane
+            //and if t<0 its mean p0 is over the plane
+            return null;
+
+        //if pass all of this, there is intersection in the plane
+        return List.of(new GeoPoint(this,ray.getPoint(t)));
     }
 }

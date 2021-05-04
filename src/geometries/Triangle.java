@@ -59,22 +59,19 @@ public class Triangle extends Polygon {
 
         //calc signs
         double checkSign1 = normal1.dotProduct(rayDir);
-        if (Util.isZero(checkSign1))
-            //if zero => no intersections
-            return null;
-
-        //else the sign is not zero so check for next normal
         double checkSign2 = normal2.dotProduct(rayDir);
-        if (!Util.checkSign(checkSign1, checkSign2) || Util.isZero(checkSign2))
-            //if sign is not equal or N2 is zero => no intersections
+        if (Util.alignZero(checkSign1*checkSign2)<=0)
+            //if least from zero => not equal signs
+            //if zero => outside triangle
             return null;
 
-        //else N1,N2 not zero and same sign!
         //so use N1 sign to calc the N3 sign (don't care because N2 same sign)
         checkSign1 = normal3.dotProduct(rayDir);
-        if (!Util.checkSign(checkSign1, checkSign2) || Util.isZero(checkSign1))
-            //if sign is not equal or N2 is zero => no intersections
+        if (Util.alignZero(checkSign1*checkSign2)<=0)
+            //if least from zero => not equal signs
+            //if zero => outside triangle
             return null;
+
 
         //if pass everything the point in triangle
         return planeIntersections;
@@ -83,6 +80,39 @@ public class Triangle extends Polygon {
     // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
-        return null;
+
+        List<Point3D> planeIntersections = plane.findIntersections(ray);
+
+        if (planeIntersections == null)
+            return null;
+
+        //create vectors
+        Point3D point0 = ray.getP0();
+        Vector rayDir = ray.getDir();
+        Vector vec1 = vertices.get(0).subtract(point0);
+        Vector vec2 = vertices.get(1).subtract(point0);
+        Vector vec3 = vertices.get(2).subtract(point0);
+        Vector normal1 = vec1.crossProduct(vec2).normalize();
+        Vector normal2 = vec2.crossProduct(vec3).normalize();
+        Vector normal3 = vec3.crossProduct(vec1).normalize();
+
+        //calc signs
+        double checkSign1 = normal1.dotProduct(rayDir);
+        double checkSign2 = normal2.dotProduct(rayDir);
+        if (Util.alignZero(checkSign1*checkSign2)<=0)
+            //if least from zero => not equal signs
+            //if zero => outside triangle
+            return null;
+
+        //so use N1 sign to calc the N3 sign (don't care because N2 same sign)
+        checkSign1 = normal3.dotProduct(rayDir);
+        if (Util.alignZero(checkSign1*checkSign2)<=0)
+            //if least from zero => not equal signs
+            //if zero => outside triangle
+            return null;
+
+
+        //if pass everything the point in triangle
+        return List.of(new GeoPoint(this,planeIntersections.get(0)));
     }
 }

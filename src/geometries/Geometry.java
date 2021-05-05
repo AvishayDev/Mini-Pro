@@ -53,5 +53,4 @@ public abstract class Geometry implements Intersectable {
         return this;
     }
 
-    public abstract Vector getNormal();
 }

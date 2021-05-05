@@ -2,6 +2,7 @@ package elements;
 
 import primitives.Color;
 import primitives.Point3D;
+import primitives.Util;
 import primitives.Vector;
 
 // note
@@ -26,12 +27,9 @@ public class SpotLight extends PointLight {
      */
     @Override
     public Color getIntensity(Point3D point) {
-        return null;
+        double distanceSquared = position.distanceSquared(point);
+        Vector l = getL(point);
+        return intensity.scale(Util.max(0,direction.dotProduct(l))).reduce(kC+(kL*Math.sqrt(distanceSquared))+(kQ*distanceSquared));
     }
 
-    // note
-    @Override
-    public Vector getL(Point3D point) {
-        return null;
-    }
 }

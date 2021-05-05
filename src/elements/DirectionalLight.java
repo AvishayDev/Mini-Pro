@@ -29,6 +29,6 @@ public class DirectionalLight extends Light implements LightSource {
     // note
     @Override
     public Vector getL(Point3D point) {
-        return null;
+        return direction;
     }
 }

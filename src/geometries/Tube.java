@@ -57,6 +57,8 @@ public class Tube extends Geometry {
         return point.subtract(o).normalize();
     }
 
+
+
     /***
      * To string function
      * @return Information about the tube's ray and its radius.

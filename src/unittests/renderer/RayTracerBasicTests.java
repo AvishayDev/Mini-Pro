@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class RayTracerBasicTests {
 
-
+    // note
     @Test
     public void traceRay() {
 

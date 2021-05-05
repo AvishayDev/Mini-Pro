@@ -20,28 +20,29 @@ public class PointLight extends Light implements LightSource {
     // IL =  ---------------------
     //       Kc + kl*d +Kq*(d^2)
 
-    public PointLight(Color light, Point3D point, double KcValue,double KlValue,double KqValue){
+    public PointLight(Color light, Point3D point, double KcValue, double KlValue, double KqValue) {
         super(light);
-        position =point;
-        kC=KcValue;
+        position = point;
+        kC = KcValue;
         kL = KlValue;
         kQ = KqValue;
     }
 
     /**
      * calc the IL of point in the scene
+     *
      * @param point point to light
      * @return the color of the point
      */
     @Override
     public Color getIntensity(Point3D point) {
         double distanceSquared = position.distanceSquared(point);
-        return intensity.reduce(kC+(kL*Math.sqrt(distanceSquared))+(kQ*distanceSquared));
+        return intensity.reduce(kC + (kL * Math.sqrt(distanceSquared)) + (kQ * distanceSquared));
     }
 
     // note
     @Override
     public Vector getL(Point3D point) {
-        return point.subtract(position);
+        return point.subtract(position).normalize();
     }
 }

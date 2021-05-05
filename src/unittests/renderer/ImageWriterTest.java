@@ -8,14 +8,7 @@ import static org.junit.Assert.*;
 
 public class ImageWriterTest {
 
-    @Test
-    public void writeToImage() {
-
-
-
-
-    }
-
+    // note
     @Test
     public void imageTest(){
 
@@ -31,7 +24,6 @@ public class ImageWriterTest {
             }
         }
 
-
         for(int i = 0; i<nY;i+=50){
             for(int j = 0; j<nX;j++){
                 imageWriter.writePixel(j,i,orangeRed);
@@ -45,14 +37,5 @@ public class ImageWriterTest {
         }
 
         imageWriter.writeToImage();
-
-
-
-
-
-    }
-
-    @Test
-    public void writePixel() {
     }
 }

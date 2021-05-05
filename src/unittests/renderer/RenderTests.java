@@ -73,7 +73,7 @@ public class RenderTests {
          */
     }
 
-
+    // note
     @Test
     public void basicRenderMultiColorTest() {
         Scene scene = new Scene("Test scene")//

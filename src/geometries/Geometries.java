@@ -45,7 +45,7 @@ public class Geometries implements Intersectable {
      * in the list
      * @param ray The ray which we find the intersections to the object
      * @return List of all the points
-     */
+     *
     public List<Point3D> findIntersections(Ray ray) {
 
         if (geometries.isEmpty())
@@ -66,7 +66,7 @@ public class Geometries implements Intersectable {
         return returnList;
 
     }
-
+*/
     // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {

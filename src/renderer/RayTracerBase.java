@@ -1,7 +1,6 @@
 package renderer;
 
 import elements.AmbientLight;
-import elements.Light;
 import geometries.Geometries;
 import primitives.*;
 import scene.Scene;

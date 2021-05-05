@@ -8,21 +8,28 @@ import primitives.Vector;
 public class PointLight extends Light implements LightSource {
 
     // note
-    Point3D position;
+    private Point3D position;
     // note
-    double kC;
+    private double kC;
     // note
-    double kL;
+    private double kL;
     // note
-    double kQ;
+    private double kQ;
 
     //               I0
     // IL =  ---------------------
     //       Kc + kl*d +Kq*(d^2)
 
+    public PointLight(Color light, Point3D point, double KcValue,double KlValue,double KqValue){
+        super(light);
+        position =point;
+        kC=KcValue;
+        kL = KlValue;
+        kQ = KqValue;
+    }
 
     /**
-     * calc the Il of point in the scene
+     * calc the IL of point in the scene
      * @param point point to light
      * @return the color of the point
      */

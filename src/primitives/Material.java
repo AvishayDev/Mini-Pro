@@ -37,4 +37,16 @@ public class Material {
         this.nShininess = nShininess;
         return this;
     }
+
+    public double getkD() {
+        return kD;
+    }
+
+    public double getkS() {
+        return kS;
+    }
+
+    public int getnShininess() {
+        return nShininess;
+    }
 }

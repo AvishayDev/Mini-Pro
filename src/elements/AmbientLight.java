@@ -15,7 +15,8 @@ public class AmbientLight extends Light {
      * @param kA The power of the received color
      */
     public AmbientLight(Color intensity, double kA) {
-        this.intensity = intensity.scale(kA);
+        super(intensity.scale(kA));
     }
+
 
 }

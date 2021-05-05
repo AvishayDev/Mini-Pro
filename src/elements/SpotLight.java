@@ -12,10 +12,15 @@ public class SpotLight extends PointLight {
     //         Kc+Ki*d +Kq*(d^2)
 
     // note
-    Vector direction;
+    private Vector direction;
+
+    public SpotLight(Color light,Vector directionLight, Point3D point, double KcValue,double KlValue,double KqValue){
+        super(light,point,KcValue,KlValue,KqValue);
+        direction = directionLight;
+    }
 
     /**
-     * calc the Il of point in the scene
+     * calc the IL of point in the scene
      * @param point point to light
      * @return the color of the point
      */

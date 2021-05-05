@@ -101,7 +101,7 @@ public class Polygon extends Geometry {
      *
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
-     */
+     *
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 
@@ -142,7 +142,7 @@ public class Polygon extends Geometry {
 
         return planeIntersections;
     }
-
+*/
     // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {

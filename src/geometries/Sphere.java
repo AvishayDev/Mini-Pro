@@ -86,7 +86,7 @@ public class Sphere extends Geometry {
      *
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
-     */
+     *
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Vector u;
@@ -121,7 +121,7 @@ public class Sphere extends Geometry {
         //if pass all of this it mean p0 cross twice the sphere
         return List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
-
+*/
     // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {

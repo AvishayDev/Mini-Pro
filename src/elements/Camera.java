@@ -47,7 +47,7 @@ public class Camera {
         this.p0 = p0;
         this.vUp = vUp.normalized();
         this.vTo = vTo.normalized();
-        this.vRight = vUp.crossProduct(vTo).normalize(); // Vector of emulated X axis
+        this.vRight = vTo.crossProduct(vUp).normalize(); // Vector of emulated X axis
 
     }
 

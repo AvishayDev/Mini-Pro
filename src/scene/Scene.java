@@ -4,6 +4,7 @@ import geometries.*;
 import primitives.*;
 import elements.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /***
@@ -22,7 +23,7 @@ public class Scene {
     // The ambient light object. Default value is black light with a power of 0.
     public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 0);
     // A list of all the light sources.
-    public List<LightSource> lights;
+    public List<LightSource> lights = new LinkedList<LightSource>();
 
     /***
      * A simple constructor, receives name only. It also initializing the geometries object with to be empty 3D model rather than null
@@ -40,6 +41,10 @@ public class Scene {
      */
     public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
+        return this;
+    }
+    public Scene setLights(List<LightSource> lightSources) {
+        lights.addAll(lightSources);
         return this;
     }
 

@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class Camera {
 
-
     // p0 is a Point3D value, it shows the exact location of the camera, it is the head point of all the rays coming out of the camera.
     private Point3D p0;
     // vUp is a Vector value, the emulated Y axis of the camera.
@@ -82,7 +81,6 @@ public class Camera {
 
         return new Ray(pC.subtract(p0), p0);
     }
-
 
     /***
      * This method receives 2 doubles and inserts them as the camera's width and height values, as long as they're valid (bigger than 0).
@@ -182,5 +180,4 @@ public class Camera {
     public Vector getVRight() {
         return vRight;
     }
-
 }

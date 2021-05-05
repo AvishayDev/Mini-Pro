@@ -81,7 +81,7 @@ public class Triangle extends Polygon {
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
 
-        List<Point3D> planeIntersections = plane.findIntersections(ray);
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
 
         if (planeIntersections == null)
             return null;
@@ -112,7 +112,7 @@ public class Triangle extends Polygon {
             return null;
 
 
-        //if pass everything the point in triangle
-        return List.of(new GeoPoint(this,planeIntersections.get(0)));
+        planeIntersections.get(0).geometry = this;
+        return planeIntersections;
     }
 }

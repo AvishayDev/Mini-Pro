@@ -146,6 +146,43 @@ public class Polygon extends Geometry {
     // note, pretty much copy paste from above
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
-        return null;
+
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
+        int verticesSize = vertices.size();
+        //check if the point on the plane
+        if (planeIntersections == null)
+            //when try to make v if one of them is the ZERO VECTOR
+            //it mean the p0 on vertex => null
+
+            //when try to make N if one of them is same as normal vector
+            //it mean the p0 on the plane => null
+            return null;
+
+        Vector rayDir = ray.getDir();
+        Point3D point0 = ray.getP0();
+        Vector vec1 = vertices.get(0).subtract(point0);
+        Vector vec2 = vertices.get(1).subtract(point0);
+
+        Vector N1 = vec1.crossProduct(vec2);
+        double sign = Util.alignZero(N1.dotProduct(rayDir));
+        Vector Ni;
+        double signI;
+        for (int i = 2; i < verticesSize; i++) {
+            vec1 = vertices.get(i).subtract(point0);
+            Ni = vec2.crossProduct(vec1);
+            vec2 = vec1.scale(1);
+            signI = Util.alignZero(rayDir.dotProduct(Ni));
+            if (sign * signI <= 0)
+                //its mean the sign is different or zero
+                return null;
+        }
+        Ni = vec2.crossProduct(vertices.get(0).subtract(point0));
+        signI = Util.alignZero(Ni.dotProduct(rayDir));
+        if (sign * signI <= 0)
+            //its mean the sign is different or zero
+            return null;
+
+        planeIntersections.get(0).geometry = this;
+        return planeIntersections;
     }
 }

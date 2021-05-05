@@ -5,7 +5,7 @@ import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
-
+import static geometries.Intersectable.GeoPoint;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -54,8 +54,6 @@ public class CylinderTests {
      */
     @Test
     public void testFindIntersectionPoint(){
-
-        //tests don't pass: TC1-38
 
         Cylinder cylinder= new Cylinder(new Vector(0,0,1),new Point3D(0,0,0),1,2);
         Ray rayCheck;
@@ -274,6 +272,17 @@ public class CylinderTests {
         assertEquals("TC1-38: ray intersect tangent point in body and base intersection", List.of(new Point3D(0,1,2)), cylinder.findIntersections(rayCheck));
 
 
+
+    }
+
+    @Test
+    public void findGeoIntersections() {
+        Cylinder cylinder= new Cylinder(new Vector(0,0,1),new Point3D(0,0,0),1,2);
+        Ray rayCheck;
+
+        // TC0-1: the ray intersect the Cylinder twice on body
+        rayCheck = new Ray(new Vector(0,-2,1),new Point3D(0,2,0));
+        assertEquals("TC01: the ray intersect the Cylinder twice", List.of(new GeoPoint(cylinder,new Point3D(0,-1,1.5d)),new GeoPoint(cylinder,new Point3D(0,1,0.5d))),cylinder.findGeoIntersections(rayCheck));
 
     }
 }

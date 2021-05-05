@@ -11,7 +11,10 @@ abstract class Light {
     // This color field represent the intensity of the light.
     protected Color intensity;
 
-
+    /***
+     * Simple constructor, initializing the received color into intensity field
+     * @param color The value of intensity
+     */
     protected Light(Color color){
         intensity = color;
     }

@@ -40,34 +40,12 @@ public class Geometries implements Intersectable {
         this.geometries.addAll(Arrays.asList(geometries.clone()));
     }
 
-    /***
-     * calculate all the points that touch all the geometries
-     * in the list
-     * @param ray The ray which we find the intersections to the object
-     * @return List of all the points
-     *
-    public List<Point3D> findIntersections(Ray ray) {
-
-        if (geometries.isEmpty())
-            //if geometries is empty so no intersection => null
-            return null;
-
-        List<Point3D> saveList;
-        List<Point3D> returnList = new LinkedList<Point3D>();
-        for (Intersectable g : geometries) {
-            saveList = g.findIntersections(ray);
-            if (saveList != null)
-                returnList.addAll(saveList);
-        }
-
-        if (returnList.isEmpty())
-            return null;
-        returnList.sort(Comparator.comparingDouble(ray.getP0()::distanceSquared));
-        return returnList;
-
-    }
-*/
-    // note, pretty much copy paste from above
+    /**
+     * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
+     * In case there are none, null will be returned.
+     * @param ray The ray which we find the intersections to the object.
+     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
+     */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
         if (geometries.isEmpty())

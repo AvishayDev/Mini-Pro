@@ -15,9 +15,10 @@ abstract class Light {
      * Simple constructor, initializing the received color into intensity field
      * @param color The value of intensity
      */
-    protected Light(Color color){
+    protected Light(Color color) {
         intensity = color;
     }
+
     /***
      * Getter for the Color field of the Light
      * @return The Color variable

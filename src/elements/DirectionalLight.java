@@ -8,16 +8,24 @@ import primitives.Vector;
 public class DirectionalLight extends Light implements LightSource {
 
 
-    //IL = I0
-    // note
+    /**
+     * the direction of the light
+     */
     private Vector direction;
 
-    public DirectionalLight(Color light, Vector directionLight){
+    /***
+     * constructor for the DirectionLight. reset the parameters
+     * @param light the color of the light
+     * @param directionLight the direction of the light
+     */
+    public DirectionalLight(Color light, Vector directionLight) {
         super(light);
         direction = directionLight.normalized();
     }
+
     /**
      * calc the IL of point in the scene
+     *
      * @param point point to light
      * @return the color of the point
      */
@@ -26,7 +34,11 @@ public class DirectionalLight extends Light implements LightSource {
         return intensity;
     }
 
-    // note
+    /***
+     * calc the vector L of the light
+     * @param point the point to light
+     * @return the vector L
+     */
     @Override
     public Vector getL(Point3D point) {
         return direction;

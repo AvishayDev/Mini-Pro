@@ -7,19 +7,31 @@ import primitives.Vector;
 // note
 public class PointLight extends Light implements LightSource {
 
-    // note
+    /**
+     * the position of the light
+     */
     protected Point3D position;
-    // note
+    /**
+     * the value of light by kC
+     */
     protected double kC;
-    // note
+    /**
+     * the value of light by kL
+     */
     protected double kL;
-    // note
+    /**
+     * the value of light by kQ
+     */
     protected double kQ;
 
-    //               I0
-    // IL =  ---------------------
-    //       Kc + kl*d +Kq*(d^2)
-
+    /***
+     * constructor for this light, reset parameters
+     * @param light the color of the light
+     * @param point the position in scene
+     * @param KcValue the kC value
+     * @param KlValue the kL value
+     * @param KqValue the kQ value
+     */
     public PointLight(Color light, Point3D point, double KcValue, double KlValue, double KqValue) {
         super(light);
         position = point;
@@ -31,6 +43,10 @@ public class PointLight extends Light implements LightSource {
     /**
      * calc the IL of point in the scene
      *
+     //               I0
+     // IL =  ---------------------
+     //       Kc + kl*d +Kq*(d^2)
+
      * @param point point to light
      * @return the color of the point
      */
@@ -40,7 +56,11 @@ public class PointLight extends Light implements LightSource {
         return intensity.reduce(kC + (kL * Math.sqrt(distanceSquared)) + (kQ * distanceSquared));
     }
 
-    // note
+    /***
+     * calc the vector L of the light
+     * @param point the point to light
+     * @return the vector L
+     */
     @Override
     public Vector getL(Point3D point) {
         return point.subtract(position).normalize();

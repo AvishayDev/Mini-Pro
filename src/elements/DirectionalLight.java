@@ -4,7 +4,11 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
-// note
+/**
+ * The class DirectionalLight is an extension of the class Light and implements the class LightSource
+ * Its field are the color intensity, which is a field from class Light and a vector that represent the direction of the light
+ * It has one constructor and implements the methods of LightSource.
+ */
 public class DirectionalLight extends Light implements LightSource {
 
 
@@ -16,7 +20,7 @@ public class DirectionalLight extends Light implements LightSource {
     /***
      * constructor for the DirectionLight. reset the parameters
      * @param light the color of the light
-     * @param directionLight the direction of the light
+     * @param directionLight the direction of the light, normalized vector
      */
     public DirectionalLight(Color light, Vector directionLight) {
         super(light);

@@ -4,7 +4,12 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
-// note
+/**
+ * The class PointLight is an extension of the class Light and implements the class LightSource.
+ * It includes fields of the position Point3D, a double for the kC value, another one for kL value and another one for kQ value
+ * along with intensity color field from Light class.
+ * It has one constructor and implements the methods of LightSource.
+ */
 public class PointLight extends Light implements LightSource {
 
     /**
@@ -42,11 +47,11 @@ public class PointLight extends Light implements LightSource {
 
     /**
      * calc the IL of point in the scene
+     * <p>
+     * //               I0
+     * // IL =  ---------------------
+     * //       Kc + kl*d +Kq*(d^2)
      *
-     //               I0
-     // IL =  ---------------------
-     //       Kc + kl*d +Kq*(d^2)
-
      * @param point point to light
      * @return the color of the point
      */

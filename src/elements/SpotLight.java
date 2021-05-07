@@ -6,8 +6,9 @@ import primitives.Util;
 import primitives.Vector;
 
 /**
- * this class represent light from point in the scene and
- * light for i direction with narrow light effect.
+ * The class "SpotLight" extends the class "PointLight".
+ * Its fields are a Vector that represent the direction of the light, along with the fields of "PointLight" class.
+ * It has one constructor and one method of "getIntensity".
  */
 public class SpotLight extends PointLight {
 
@@ -26,8 +27,8 @@ public class SpotLight extends PointLight {
      * @param KlValue the kL value
      * @param KqValue the kQ value
      */
-    public SpotLight(Color light,Vector directionLight, Point3D point, double KcValue,double KlValue,double KqValue){
-        super(light,point,KcValue,KlValue,KqValue);
+    public SpotLight(Color light, Vector directionLight, Point3D point, double KcValue, double KlValue, double KqValue) {
+        super(light, point, KcValue, KlValue, KqValue);
         direction = directionLight.normalized();
     }
 

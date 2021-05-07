@@ -2,7 +2,9 @@ package elements;
 
 import primitives.*;
 
-// note
+/**
+ * this interface represent all light source that can be in the scene
+ */
 public interface LightSource {
 
 

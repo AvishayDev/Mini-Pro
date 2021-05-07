@@ -5,7 +5,10 @@ import primitives.Point3D;
 import primitives.Util;
 import primitives.Vector;
 
-// note
+/**
+ * this class represent light from point in the scene and
+ * light for i direction with narrow light effect.
+ */
 public class SpotLight extends PointLight {
 
 
@@ -30,9 +33,9 @@ public class SpotLight extends PointLight {
 
     /**
      * calc the IL of point in the scene
-     * //          (I0*max(0,dir.dotProduct(l))
-     *     // IL =  -------------------------
-     *     //         Kc+Ki*d +Kq*(d^2)
+     * //     (I0*max(0,dir.dotProduct(l))
+     * // IL =  -------------------------
+     * //         Kc+Ki*d +Kq*(d^2)
      * @param point point to light
      * @return the color of the point
      */
@@ -41,7 +44,7 @@ public class SpotLight extends PointLight {
         double distanceSquared = position.distanceSquared(point);
         double Alpha = direction.dotProduct(getL(point));
         //if angle <=0 the color is scaled by 0 so return black(0,0,0) => less calculations
-        return Alpha > 0 ? intensity.scale(Alpha).reduce(kC + (kL * Math.sqrt(distanceSquared)) + (2 * kQ * distanceSquared)) : Color.BLACK;
+        return Alpha > 0 ? intensity.scale(Alpha*Alpha*Alpha).reduce(kC + (kL * Math.sqrt(distanceSquared)) + (2 * kQ * distanceSquared)) : Color.BLACK;
     }
 
 }

@@ -4,7 +4,10 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
-// note
+/**
+ * this class represent a type of light that give the same light power for a
+ * direction
+ */
 public class DirectionalLight extends Light implements LightSource {
 
 

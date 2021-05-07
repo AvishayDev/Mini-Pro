@@ -8,7 +8,9 @@ import primitives.Color;
  */
 abstract class Light {
 
-    // This color field represent the intensity of the light.
+    /**
+     * This color field represent the intensity of the light.
+     */
     protected Color intensity;
 
     /***

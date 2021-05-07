@@ -18,7 +18,7 @@ public class Material {
     /**
      * Shininess level of material - affects size and blur of specular effect of light reflection
      */
-    public int nShininess = 1;
+    public int nShininess = 0;
 
 
     public Material(){

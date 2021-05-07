@@ -4,7 +4,9 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
-// note
+/**
+ * thi class represent light from point in the scene for all directions
+ */
 public class PointLight extends Light implements LightSource {
 
     /**
@@ -14,15 +16,15 @@ public class PointLight extends Light implements LightSource {
     /**
      * the value of light by kC
      */
-    protected double kC;
+    protected double kC = 1.0;
     /**
      * the value of light by kL
      */
-    protected double kL;
+    protected double kL = 0.0;
     /**
      * the value of light by kQ
      */
-    protected double kQ;
+    protected double kQ = 0.0;
 
     /***
      * constructor for this light, reset parameters

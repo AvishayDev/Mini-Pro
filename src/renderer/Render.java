@@ -13,7 +13,7 @@ import java.util.MissingResourceException;
 public class Render {
 
     //Note
-    private Scene scene = null;
+    //private Scene scene = null;
     private Camera camera = null;
     private RayTracerBase rayTracer = null;
     private ImageWriter imageWriter = null;
@@ -25,7 +25,7 @@ public class Render {
      * @throws MissingResourceException in case the any of the fields is null.
      */
     public void renderImage() {
-        if (scene == null || camera == null || rayTracer == null || imageWriter == null)
+        if (camera == null || rayTracer == null || imageWriter == null)
             throw new MissingResourceException("A", "B", "C");
 
         int nX = imageWriter.getNx();
@@ -77,15 +77,6 @@ public class Render {
             throw new MissingResourceException("A", "B", "C");
 
         imageWriter.writeToImage();
-    }
-
-    /***
-     * Setter for the Scene field of this Render.
-     * @return This Render.
-     */
-    public Render setScene(Scene scene) {
-        this.scene = scene;
-        return this;
     }
 
     /***

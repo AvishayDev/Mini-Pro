@@ -18,4 +18,7 @@ public class AmbientLight extends Light {
         super(intensity.scale(kA));
     }
 
+    public AmbientLight(){
+        super(Color.BLACK);
+    }
 }

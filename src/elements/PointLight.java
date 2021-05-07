@@ -33,16 +33,10 @@ public class PointLight extends Light implements LightSource {
      * constructor for this light, reset parameters
      * @param light the color of the light
      * @param point the position in scene
-     * @param KcValue the kC value
-     * @param KlValue the kL value
-     * @param KqValue the kQ value
      */
-    public PointLight(Color light, Point3D point, double KcValue, double KlValue, double KqValue) {
+    public PointLight(Color light, Point3D point) {
         super(light);
         position = point;
-        kC = KcValue;
-        kL = KlValue;
-        kQ = KqValue;
     }
 
     /**
@@ -69,5 +63,35 @@ public class PointLight extends Light implements LightSource {
     @Override
     public Vector getL(Point3D point) {
         return point.subtract(position).normalize();
+    }
+
+    /***
+     * reset the value of kC in builderType
+     * @param KC the kC value
+     * @return this object
+     */
+    public PointLight setkC(double KC) {
+        kC = kC;
+        return this;
+    }
+
+    /***
+     * reset the value of kL in builderType
+     * @param KL the kL value
+     * @return this object
+     */
+    public PointLight setkL(double KL) {
+        kL = kL;
+        return this;
+    }
+
+    /***
+     * reset the value of kQ in builderType
+     * @param KQ the kQ value
+     * @return this object
+     */
+    public PointLight setkQ(double KQ) {
+        kQ = kQ;
+        return this;
     }
 }

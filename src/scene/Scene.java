@@ -21,7 +21,7 @@ public class Scene {
     // The color of the background. Default value is black.
     public Color background = Color.BLACK;
     // The ambient light object. Default value is black light with a power of 0.
-    public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 0);
+    public AmbientLight ambientLight = new AmbientLight();
     // A list of all the light sources.
     public List<LightSource> lights = new LinkedList<LightSource>();
 

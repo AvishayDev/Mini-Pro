@@ -12,10 +12,17 @@ import java.util.MissingResourceException;
  */
 public class Render {
 
-    //Note
-    //private Scene scene = null;
+    /**
+     * the camera view of the scene
+     */
     private Camera camera = null;
+    /**
+     * the ray-tracer calculator
+     */
     private RayTracerBase rayTracer = null;
+    /**
+     * the image creator
+     */
     private ImageWriter imageWriter = null;
 
 

@@ -6,9 +6,11 @@ package primitives;
  * @author Dan
  */
 public abstract class Util {
-    // It is binary, equivalent to ~1/1,000,000,000,000 in decimal (12 digits)
+
+    /**
+     * It is binary, equivalent to ~1/1,000,000,000,000 in decimal (12 digits)
+     */
     private static final int ACCURACY = -40;
-    //public static final int ZERO = 0;
 
     /**
      * Empty private constructor to hide the public one
@@ -123,10 +125,6 @@ public abstract class Util {
 
     }
 
-
-    public static double max(double num1, double num2){
-        return num1 >= num2 ? num1 : num2;
-    }
 
     /**
      * Check whether two numbers have the same sign

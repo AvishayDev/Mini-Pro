@@ -4,6 +4,7 @@ import geometries.*;
 import primitives.*;
 import elements.*;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,15 +15,25 @@ import java.util.List;
  */
 public class Scene {
 
-    // The name of the scene.
+    /**
+     *  The name of the scene.
+     */
     public String name;
-    // The Geometry object in context of the scene.
-    public Geometries geometries;
-    // The color of the background. Default value is black.
+    /**
+     * The Geometry object in context of the scene.
+     */
+    public Geometries geometries = new Geometries();;
+    /**
+     * The color of the background. Default value is black.
+     */
     public Color background = Color.BLACK;
-    // The ambient light object. Default value is black light with a power of 0.
+    /**
+     * The ambient light object. Default value is black.
+     */
     public AmbientLight ambientLight = new AmbientLight();
-    // A list of all the light sources.
+    /**
+     * A list of all the light sources.
+     */
     public List<LightSource> lights = new LinkedList<LightSource>();
 
     /***
@@ -32,19 +43,25 @@ public class Scene {
      */
     public Scene(String name) {
         this.name = name;
-        geometries = new Geometries();
     }
 
-    /***
-     * Setter for the Geometries field of the scene. Builder design pattern.
+    /**
+     * Setter for the lights field of the scene. Builder design pattern.
+     * @param geometries list of geometries to reset
      * @return The current scene after setting the object.
      */
     public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
         return this;
     }
+
+    /**
+     * Setter for the lights field of the scene. Builder design pattern.
+     * @param lightSources list of lights to reset
+     * @return The current scene after setting the object.
+     */
     public Scene setLights(List<LightSource> lightSources) {
-        lights.addAll(lightSources);
+        lights = lightSources;
         return this;
     }
 
@@ -67,6 +84,10 @@ public class Scene {
     }
 
 
+    /**
+     * getter for AmbientLight intensity
+     * @return the intensity of AmbientLight
+     */
     public Color ambientGetIntensity() {
         return ambientLight.getIntensity();
     }

@@ -9,9 +9,13 @@ import java.util.List;
  */
 public class Sphere extends Geometry {
 
-    // A Point3D that is in the location of the center of the sphere.
+    /**
+     * A Point3D that is in the location of the center of the sphere.
+     */
     private Point3D center;
-    // A double value that represent the value of the radius of the sphere.
+    /**
+     *  A double value that represent the value of the radius of the sphere.
+     */
     private double radius;
 
     /***

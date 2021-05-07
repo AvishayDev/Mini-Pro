@@ -13,7 +13,9 @@ import java.util.List;
  */
 public class Cylinder extends Tube {
 
-    // Height is the distance between the bases of the Cylinder
+    /**
+     * Height is the distance between the bases of the Cylinder
+     */
     private double height;
 
     /***

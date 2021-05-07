@@ -67,31 +67,31 @@ public class PointLight extends Light implements LightSource {
 
     /***
      * reset the value of kC in builderType
-     * @param KC the kC value
+     * @param Kc the kC value
      * @return this object
      */
-    public PointLight setkC(double KC) {
-        kC = kC;
+    public PointLight setKc(double Kc) {
+        kC = Kc;
         return this;
     }
 
     /***
      * reset the value of kL in builderType
-     * @param KL the kL value
+     * @param Kl the kL value
      * @return this object
      */
-    public PointLight setkL(double KL) {
-        kL = kL;
+    public PointLight setKl(double Kl) {
+        kL = Kl;
         return this;
     }
 
     /***
      * reset the value of kQ in builderType
-     * @param KQ the kQ value
+     * @param Kq the kQ value
      * @return this object
      */
-    public PointLight setkQ(double KQ) {
-        kQ = kQ;
+    public PointLight setKq(double Kq) {
+        kQ = Kq;
         return this;
     }
 }

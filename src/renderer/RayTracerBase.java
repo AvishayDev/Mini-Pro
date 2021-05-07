@@ -14,6 +14,9 @@ import java.util.List;
 public abstract class RayTracerBase {
 
 
+    /**
+     * the scene we work on
+     */
     protected Scene scene;
 
 
@@ -24,7 +27,6 @@ public abstract class RayTracerBase {
      */
     public RayTracerBase(Scene scene) {
         this.scene = scene;
-       // throw new IllegalArgumentException();
     }
 
     /***

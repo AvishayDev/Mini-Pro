@@ -6,9 +6,14 @@ import primitives.*;
 
 import static org.junit.Assert.*;
 
+/**
+ * this class testing the creation of image by imageWriter
+ */
 public class ImageWriterTest {
 
-    // note
+    /**
+     * the first test for imageWrite - check everything ok
+     */
     @Test
     public void imageTest(){
 

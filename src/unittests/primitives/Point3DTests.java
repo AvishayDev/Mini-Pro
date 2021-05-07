@@ -7,6 +7,9 @@ import primitives.Vector;
 import static org.junit.Assert.*;
 import static primitives.Util.isZero;
 
+/**
+ * class for test the functions in Point3D
+ */
 public class Point3DTests {
 
     /**

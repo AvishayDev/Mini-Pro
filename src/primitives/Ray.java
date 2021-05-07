@@ -10,7 +10,13 @@ import java.util.Objects;
  * Represents Ray with vector and 3D point.
  */
 public class Ray {
+    /**
+     * the start of the ray
+     */
     private final Point3D p0;
+    /**
+     * the direction of the ray
+     */
     private final Vector dir;
 
     /***
@@ -74,7 +80,12 @@ public class Ray {
 
         return lowPoint;
     }
-
+    /***
+     * This method receives a list of GeoPoints, and returns the geoPoint that have the lowest distance from the head of the ray
+     * If list is empty or null sent, null will be returned
+     * @param points A list of GeoPoints
+     * @return The closest point to the head of the ray
+     */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points){
         if (points == null || points.isEmpty())
             return null;

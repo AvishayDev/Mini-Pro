@@ -20,14 +20,25 @@ import javax.imageio.*;
  */
 public class ImageWriter {
 
+    /**
+     * the number of pixels in x direction of the ViewPlane
+     */
     private int nX;
+    /**
+     * the number of pixels in y direction of the ViewPlane
+     */
     private int nY;
 
-    private static final String FOLDER_PATH = System.getProperty("user.dir") + "\\Images";
-
-    private BufferedImage image;
+    /**
+     * the name of the image
+     */
     private String imageName;
 
+    /**
+     * parameters for building the image
+     */
+    private static final String FOLDER_PATH = System.getProperty("user.dir") + "\\Images";
+    private BufferedImage image;
     private Logger logger = Logger.getLogger("ImageWriter");
 
     // ***************** Constructors ********************** //

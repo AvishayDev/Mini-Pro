@@ -5,15 +5,19 @@ import primitives.*;
 import java.util.LinkedList;
 import java.util.List;
 
-/***
+/**
  * Represents Tube with Ray and radius.
  */
 
 public class Tube extends Geometry {
 
-    // The axis ray of the tube.
+    /**
+     *  The axis ray of the tube.
+     */
     protected Ray axisRay;
-    // The width of the tube.
+    /**
+     * The width of the tube.
+     */
     protected double radius;
 
     /***

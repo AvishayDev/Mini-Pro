@@ -17,6 +17,9 @@ public class Color {
     final double g;
     final double b;
 
+    /**
+     * the default color
+     */
     public static final Color BLACK = new Color();
 
     /**
@@ -44,18 +47,6 @@ public class Color {
         this.g = g;
         this.b = b;
     }
-
-    /**
-     * Copy constructor for Color
-     *
-     * public Color(Color other) {
-     *         r = other.r;
-     *         g = other.g;
-     *         b = other.b;
-     *     }
-     *
-     * @param other the source color
-     */
 
 
     /**

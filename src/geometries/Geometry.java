@@ -7,9 +7,13 @@ import primitives.*;
  */
 public abstract class Geometry implements Intersectable {
 
-    // The color that is being returned from the 3D model object. Default color is black.
+    /**
+     * The color that is being returned from the 3D model object. Default color is black.
+     */
     protected Color emission = Color.BLACK;
-    // The material type of the 3D model object.
+    /**
+     * The material type of the 3D model object.
+     */
     private Material material = new Material();
 
     /**

@@ -8,10 +8,13 @@ import java.util.List;
  * Represents Plane with vector and 3D point.
  */
 public class Plane extends Geometry {
-
-    // Some point3D located on the plane.
+    /**
+     * Some point3D located on the plane.
+     */
     private Point3D q0;
-    // The normal vector to the plane, it will be normalized in the constructor.
+    /**
+     * The normal vector to the plane, it will be normalized in the constructor.
+     */
     private Vector normal;
 
     /***

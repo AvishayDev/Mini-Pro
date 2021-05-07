@@ -1,5 +1,6 @@
 package unittests.primitives;
 
+import static geometries.Intersectable.GeoPoint;
 import geometries.Intersectable;
 import geometries.Triangle;
 import org.junit.Test;
@@ -11,9 +12,15 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * class for testing the functions in Ray class
+ */
 public class RayTests {
 
 
+    /**
+     * Test method for {@link primitives.Ray#findClosestPoint(List<Point3D>)}.
+     */
     @Test
     public void findClosestPoint() {
 
@@ -45,6 +52,9 @@ public class RayTests {
 
     }
 
+    /**
+     * Test method for {@link primitives.Ray#findClosestGeoPoint(List<GeoPoint>)}.
+     */
     @Test
     public void findClosestGeoPoint() {
 

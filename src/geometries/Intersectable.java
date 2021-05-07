@@ -11,11 +11,18 @@ import java.util.stream.Collectors;
  */
 public interface Intersectable {
 
-    // note, also, is this not supposed to be in a different file?
-    public static class GeoPoint {
-        // 3D model object.
+
+    /**
+     * this class represents point on geometry and the geometry the point on.
+     */
+     public static class GeoPoint {
+        /**
+         * 3D model object.
+         */
         public Geometry geometry;
-        // 3D Point object.
+        /**
+         * 3D point object.
+         */
         public Point3D point;
 
         /***

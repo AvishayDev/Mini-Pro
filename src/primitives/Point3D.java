@@ -10,9 +10,17 @@ import java.awt.*;
  */
 public class Point3D {
 
-    //Note
+    /**
+     * the x coordinate of point n the scene
+     */
     final Coordinate x;
+    /**
+     * the y coordinate of point n the scene
+     */
     final Coordinate y;
+    /**
+     * the z coordinate of point n the scene
+     */
     final Coordinate z;
 
     /***

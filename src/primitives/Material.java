@@ -21,32 +21,63 @@ public class Material {
     public int nShininess = 0;
 
 
-    public Material(){
+    /***
+     * Empty constructor. This class is PDS, so use the setters to set values to kD, kS and Shininess instead.
+     */
+    public Material() {
     }
+
+    /***
+     * This method is a setter for the double field kD.
+     * @param value the double value of kD.
+     * @return This object of material, with the updated values.
+     */
     public Material setKd(double value) {
         kD = value;
         return this;
     }
 
+    /***
+     * This method is a setter for the double field kS.
+     * @param value the double value of kS.
+     * @return This object of material, with the updated values.
+     */
     public Material setKs(double value) {
         kS = value;
         return this;
     }
 
+    /***
+     * This method is a setter for the int field nShininess
+     * @param nShininess the int value of nShininess
+     * @return This object of material, with the updated values.
+     */
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
         return this;
     }
 
-    public double getkD() {
+    /***
+     * This method is a getter for the field kD.
+     * @return The kD value, in form of a double.
+     */
+    public double getKd() {
         return kD;
     }
 
-    public double getkS() {
+    /***
+     * This method is a getter for the field kS.
+     * @return The kS value, in form of a double.
+     */
+    public double getKs() {
         return kS;
     }
 
-    public int getnShininess() {
+    /***
+     * This method is a getter for the field nShininess.
+     * @return The nShininess value, in form of int.
+     */
+    public int getShininess() {
         return nShininess;
     }
 }

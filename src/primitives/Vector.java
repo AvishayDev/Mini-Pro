@@ -6,7 +6,6 @@ package primitives;
  */
 public class Vector {
 
-    //Note
     Point3D head;
 
     /***
@@ -191,17 +190,26 @@ public class Vector {
         return head;
     }
 
-    //Note
+    /***
+     * This method is a getter for the X value of the head of this Vector.
+     * @return the X value of the head of this vector, in form of a double.
+     */
     public double getX() {
         return this.head.getX();
     }
 
-    //Note
+    /***
+     * This method is a getter for the Y value of the head of this Vector.
+     * @return the Y value of the head of this vector, in form of a double.
+     */
     public double getY() {
         return this.head.getY();
     }
 
-    //Note
+    /***
+     * This method is a getter for the Z value of the head of this Vector.
+     * @return the Z value of the head of this vector, in form of a double.
+     */
     public double getZ() {
         return this.head.getZ();
     }

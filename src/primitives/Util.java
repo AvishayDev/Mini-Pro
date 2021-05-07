@@ -123,7 +123,6 @@ public abstract class Util {
 
     }
 
-
     public static double max(double num1, double num2){
         return num1 >= num2 ? num1 : num2;
     }
@@ -149,7 +148,5 @@ public abstract class Util {
     public static double random(double min, double max) {
         return Math.random() * (max - min) + min;
     }
-
-
 
 }

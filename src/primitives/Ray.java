@@ -75,6 +75,7 @@ public class Ray {
         return lowPoint;
     }
 
+    // Note, probably copy paste from above
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points){
         if (points == null || points.isEmpty())
             return null;
@@ -135,6 +136,5 @@ public class Ray {
                 ", dir=" + dir +
                 '}';
     }
-
 
 }

@@ -43,6 +43,12 @@ public class Scene {
         this.geometries = geometries;
         return this;
     }
+
+    /***
+     * This method receives a list of LightSource objects, and adds them all into the field lights.
+     * @param lightSources  A list of LightSource objects.
+     * @return              This Scene, with the updated values.
+     */
     public Scene setLights(List<LightSource> lightSources) {
         lights.addAll(lightSources);
         return this;
@@ -66,7 +72,10 @@ public class Scene {
         return this;
     }
 
-
+    /***
+     * This is a getter method for the Intensity field of the ambientLight field of this object.
+     * @return  The Intensity value, in a form of Color.
+     */
     public Color ambientGetIntensity() {
         return ambientLight.getIntensity();
     }

@@ -13,18 +13,14 @@ import java.util.List;
  */
 public abstract class RayTracerBase {
 
-
     protected Scene scene;
-
 
     /**
      * constructor for initialize the scene object
-     *
      * @param scene the scene of the image
      */
     public RayTracerBase(Scene scene) {
         this.scene = scene;
-       // throw new IllegalArgumentException();
     }
 
     /***

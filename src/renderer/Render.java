@@ -12,12 +12,10 @@ import java.util.MissingResourceException;
  */
 public class Render {
 
-    //Note
-    //private Scene scene = null;
+    // Notes
     private Camera camera = null;
     private RayTracerBase rayTracer = null;
     private ImageWriter imageWriter = null;
-
 
     /***
      * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic

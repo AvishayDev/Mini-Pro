@@ -10,7 +10,6 @@ import java.awt.*;
  */
 public class Point3D {
 
-    //Note
     final Coordinate x;
     final Coordinate y;
     final Coordinate z;
@@ -166,6 +165,5 @@ public class Point3D {
     public double getZ() {
         return z.coord;
     }
-
 
 }

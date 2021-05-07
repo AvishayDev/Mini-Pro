@@ -25,7 +25,6 @@ public class Render {
      */
     private ImageWriter imageWriter = null;
 
-
     /***
      * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic
      * then draws the checked pixel with the color we received.

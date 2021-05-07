@@ -175,5 +175,4 @@ public class Point3D {
         return z.coord;
     }
 
-
 }

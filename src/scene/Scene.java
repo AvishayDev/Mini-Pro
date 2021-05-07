@@ -55,10 +55,10 @@ public class Scene {
         return this;
     }
 
-    /**
-     * Setter for the lights field of the scene. Builder design pattern.
-     * @param lightSources list of lights to reset
-     * @return The current scene after setting the object.
+    /***
+     * This method receives a list of LightSource objects, and adds them all into the field lights.
+     * @param lightSources  A list of LightSource objects.
+     * @return              This Scene, with the updated values.
      */
     public Scene setLights(List<LightSource> lightSources) {
         lights = lightSources;
@@ -83,10 +83,9 @@ public class Scene {
         return this;
     }
 
-
-    /**
-     * getter for AmbientLight intensity
-     * @return the intensity of AmbientLight
+    /***
+     * This is a getter method for the Intensity field of the ambientLight field of this object.
+     * @return  The Intensity value, in a form of Color.
      */
     public Color ambientGetIntensity() {
         return ambientLight.getIntensity();

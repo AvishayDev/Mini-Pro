@@ -4,7 +4,7 @@ import primitives.Color;
 
 /***
  * AmbientLight is a extends class of the abstract class Light
- * It contains a constructor, and an implementation of getIntensity
+ * It contains a constructor and default constructor
  */
 public class AmbientLight extends Light {
 
@@ -18,6 +18,9 @@ public class AmbientLight extends Light {
         super(intensity.scale(kA));
     }
 
+    /***
+     * Default constructor, only initializing the constructor of "Light" With black.
+     */
     public AmbientLight(){
         super(Color.BLACK);
     }

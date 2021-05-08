@@ -116,4 +116,16 @@ public class Color {
         return new Color(r / k, g / k, b / k);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Color color = (Color) o;
+
+        if (color.r != r) return false;
+        if (color.g != g) return false;
+        return color.b == b;
+    }
+
 }

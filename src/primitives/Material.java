@@ -61,7 +61,7 @@ public class Material {
      * This method is a getter for the field kD.
      * @return The kD value, in form of a double.
      */
-    public double getKd() {
+    public double getkD() {
         return kD;
     }
 
@@ -69,7 +69,7 @@ public class Material {
      * This method is a getter for the field kS.
      * @return The kS value, in form of a double.
      */
-    public double getKs() {
+    public double getkS() {
         return kS;
     }
 
@@ -77,7 +77,7 @@ public class Material {
      * This method is a getter for the field nShininess.
      * @return The nShininess value, in form of int.
      */
-    public int getShininess() {
+    public int getnShininess() {
         return nShininess;
     }
 }

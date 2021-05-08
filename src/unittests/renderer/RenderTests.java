@@ -47,7 +47,10 @@ public class RenderTests {
 
     }
 
-    // note
+    /**
+     * Produce a scene with basic 3D model and render it into a jpeg image with a
+     * grid
+     */
     @Test
     public void basicRenderMultiColorTest() {
         Scene scene = new Scene("Test scene")//

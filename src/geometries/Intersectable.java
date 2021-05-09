@@ -49,7 +49,7 @@ public interface Intersectable {
 
             GeoPoint geoPoint = (GeoPoint) o;
             if (geometry.getClass() != geoPoint.geometry.getClass()) return false;
-            //if (!geometry.equals(geoPoint.geometry)) return false;
+            if (!geometry.equals(geoPoint.geometry)) return false;
             return point.equals(geoPoint.point);
         }
     }
@@ -72,7 +72,6 @@ public interface Intersectable {
     /**
      * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none, null will be returned.
-     *
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */

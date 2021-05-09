@@ -226,6 +226,4 @@ public class VectorTests {
         assertNotEquals("ERROR: normalized() function does not create a new vector", u, v);
     }
 
-
-
 }

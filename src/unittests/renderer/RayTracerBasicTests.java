@@ -33,7 +33,6 @@ public class RayTracerBasicTests {
         Geometries geometries1 = new Geometries(sphere);
         Ray rayCheck;
 
-
         // ============ Equivalence Partitions Tests ==============
 
         //TC0-1: the ray cross geometry once
@@ -57,6 +56,4 @@ public class RayTracerBasicTests {
         assertEquals("TC1-1: no geometries in the scene",Color.BLACK,tracer.traceRay(rayCheck));
 
     }
-
-
 }

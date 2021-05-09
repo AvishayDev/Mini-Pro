@@ -37,6 +37,7 @@ public class RayTracerBasic extends RayTracerBase {
         return calcColor(closestPoint, ray);
     }
 
+
     /***
      * The function calculate the color of point in geometry
      * @param intersection the GeoPoint of the point and geometry
@@ -77,16 +78,35 @@ public class RayTracerBasic extends RayTracerBase {
         return color;
     }
 
+
+    /***
+     * this function calculate the Diffusive effect on the color by light
+     * @param kd the material kD factor
+     * @param l the vector from the light position to the point on geometry
+     * @param n the normal of the geometry in intersection point
+     * @param lightIntensity the power of light came from the light
+     * @return the final color of Diffusing
+     */
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-        double dotProCalc = l.dotProduct(n);
+        double dotProCalc = Util.alignZero(l.dotProduct(n));
         dotProCalc = dotProCalc < 0 ? dotProCalc * -1 : dotProCalc;
 
         return lightIntensity.scale(kd*dotProCalc);
     }
 
+    /***
+     * this function calculate the Specular effect on the color by light
+     * @param ks the kS value from material
+     * @param l the vector from the light position to the point on geometry
+     * @param n the normal of the geometry in intersection point
+     * @param v the vector from the camera
+     * @param nShininess the value of Shininess
+     * @param lightIntensity the power of light came from the light
+     * @return the final color on Specular
+     */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
         Vector r = l.subtract(n.scale(2*l.dotProduct(n)));
-        double angle = -1*v.dotProduct(r);
+        double angle = Util.alignZero(-1*v.dotProduct(r));
         return angle > 0 ?lightIntensity.scale(ks*Math.pow(angle,nShininess)):Color.BLACK;
 
     }

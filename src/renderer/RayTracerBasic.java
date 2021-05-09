@@ -9,13 +9,13 @@ import scene.Scene;
 import java.util.List;
 
 /**
- * this class extends RayTracerBase abstract class
+ * This class extends RayTracerBase abstract class
  * and have more functions for Specific calculations
  */
 public class RayTracerBasic extends RayTracerBase {
 
     /**
-     * constructor that calls super constructor
+     * Constructor that calls super constructor
      *
      * @param scene the scene for the image
      */
@@ -24,7 +24,7 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /***
-     * implements the function 'traceRay', calc the color of
+     * Implements the function 'traceRay', calc the color of
      * ray came from the camera
      * @param ray the ray from the camera throw the scene
      * @return the color of the pixel of the ray
@@ -37,9 +37,8 @@ public class RayTracerBasic extends RayTracerBase {
         return calcColor(closestPoint, ray);
     }
 
-
     /***
-     * the function calculate the color of point in geometry
+     * The function calculate the color of point in geometry
      * @param intersection the GeoPoint of the point and geometry
      * @param ray the ray cross the geometry
      * @return the final color with lights around
@@ -52,7 +51,7 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * calcuate the final color of point in geometry with all the light effects
+     * Calculates the final color of point in geometry with all the light effects
      * @param intersection the geometry with the point needs to be colorized
      * @param ray the ray that cross the geometry
      * @return the final color after adding light effects
@@ -77,7 +76,6 @@ public class RayTracerBasic extends RayTracerBase {
         }
         return color;
     }
-
 
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
         double dotProCalc = l.dotProduct(n);

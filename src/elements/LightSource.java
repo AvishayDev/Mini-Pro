@@ -9,7 +9,6 @@ import primitives.*;
  */
 public interface LightSource {
 
-
     /**
      * calc the Il of point in the scene
      * @param point point to light

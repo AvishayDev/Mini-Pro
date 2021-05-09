@@ -37,7 +37,6 @@ public class RayTracerBasic extends RayTracerBase {
         return calcColor(closestPoint, ray);
     }
 
-
     /***
      * The function calculate the color of point in geometry
      * @param intersection the GeoPoint of the point and geometry

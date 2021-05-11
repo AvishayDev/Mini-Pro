@@ -66,11 +66,9 @@ public class RayTracerBasic extends RayTracerBase {
         int nShininess = material.getShininess();
         double kd = material.getKd(), ks = material.getKs();
         Color color = Color.BLACK;
-        Vector l;
-        double nl;
         for (LightSource lightSource : scene.lights) {
-            l = lightSource.getL(intersection.point);
-            nl = Util.alignZero(n.dotProduct(l));
+            Vector l = lightSource.getL(intersection.point);
+            double nl = Util.alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color.add(calcDiffusive(kd, l, n, lightIntensity),

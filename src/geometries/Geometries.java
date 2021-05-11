@@ -49,9 +49,6 @@ public class Geometries implements Intersectable {
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
-        if (geometries.isEmpty())
-            //if geometries is empty so no intersection => null
-            return null;
 
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = new LinkedList<GeoPoint>();
@@ -61,9 +58,6 @@ public class Geometries implements Intersectable {
                 returnList.addAll(saveList);
         }
 
-        if (returnList.isEmpty())
-            return null;
-        returnList.sort(Comparator.comparingDouble(ray.getP0()::distanceSquared));
         return returnList;
     }
 }

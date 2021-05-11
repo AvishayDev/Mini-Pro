@@ -81,11 +81,8 @@ public class LightsTests {
         scene1.geometries.add(square);
         scene1.geometries.add(cylinder);
         scene1.geometries.add(tube);
-        scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(50, 50, -50)));
-        scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-30, -30, -20)));
-        //scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-300, -300, -150)));
-        //scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(0, 0, -1),new Point3D(0,0,-40),2));
-
+        scene1.lights.add(new PointLight(new Color(100, 400, 100), new Point3D(50, 50, -50)));
+        scene1.lights.add(new PointLight(new Color(500, 300, 100), new Point3D(-30, -30, -20)));
         ImageWriter imageWriter = new ImageWriter("cylinderPoint", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //

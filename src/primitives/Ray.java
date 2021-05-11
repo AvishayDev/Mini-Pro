@@ -88,21 +88,17 @@ public class Ray {
      * @return The closest point to the head of the ray
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
-        if (points == null || points.isEmpty())
+        if (points == null)
             return null;
 
-        int pointsSize = points.size();
-        GeoPoint lowPoint = points.get(0);
-        GeoPoint optionalPoint;
-        double distance = p0.distance(lowPoint);
-        double distance2;
+        GeoPoint lowPoint = null;
+        double distance = Double.POSITIVE_INFINITY;
 
-        for (int i = 1; i < pointsSize; i++) {
-            optionalPoint = points.get(i);
-            distance2 = p0.distance(optionalPoint);
+        for (var p : points) {
+            double distance2 = p0.distance(p.point);
             if (distance2 < distance) {
                 distance = distance2;
-                lowPoint = optionalPoint;
+                lowPoint = p;
             }
         }
 

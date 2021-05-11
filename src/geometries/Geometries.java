@@ -14,14 +14,12 @@ public class Geometries implements Intersectable {
     /**
      * List that have all the geometries
      */
-    private List<Intersectable> geometries;
+    private List<Intersectable> geometries = new LinkedList<>();
 
     /***
      * create EMPTY list of geometries
      */
-    public Geometries() {
-        geometries = new LinkedList<Intersectable>();
-    }
+    public Geometries() { }
 
     /***
      * create List of geometries from all the geometries
@@ -29,7 +27,7 @@ public class Geometries implements Intersectable {
      * @param geometries all the geometries
      */
     public Geometries(Intersectable... geometries) {
-        this.geometries = List.of(geometries);
+        add(geometries);
     }
 
     /***
@@ -37,7 +35,7 @@ public class Geometries implements Intersectable {
      * @param geometries the adding geometries
      */
     public void add(Intersectable... geometries) {
-        this.geometries.addAll(Arrays.asList(geometries.clone()));
+        this.geometries.addAll(List.of(geometries));
     }
 
     /**
@@ -49,21 +47,16 @@ public class Geometries implements Intersectable {
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
-        if (geometries.isEmpty())
-            //if geometries is empty so no intersection => null
-            return null;
-
         List<GeoPoint> saveList;
-        List<GeoPoint> returnList = new LinkedList<GeoPoint>();
+        List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
             saveList = g.findGeoIntersections(ray);
             if (saveList != null)
-                returnList.addAll(saveList);
+                if (returnList == null)
+                    returnList = new LinkedList<>(saveList);
+                else
+                    returnList.addAll(saveList);
         }
-
-        if (returnList.isEmpty())
-            return null;
-        returnList.sort(Comparator.comparingDouble(ray.getP0()::distanceSquared));
         return returnList;
     }
 }

@@ -62,7 +62,7 @@ public class Camera {
     public Ray constructRay(int nX, int nY, int j, int i) {
 
         // Image center
-        Point3D pC = this.p0.add(vTo.scale(distance));
+        Point3D pC = p0.add(vTo.scale(distance));
 
         // Ratio (pixel width & height)
         double rY = this.height / (double) nY;

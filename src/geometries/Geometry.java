@@ -19,6 +19,7 @@ public abstract class Geometry implements Intersectable {
 
     /**
      * A method that receives a point, and returns the normal from the current object to this point
+     *
      * @param point The point in which we calculate its normal
      * @return The normal from the object to the received point
      */

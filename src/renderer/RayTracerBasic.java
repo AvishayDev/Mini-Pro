@@ -52,8 +52,9 @@ public class RayTracerBasic extends RayTracerBase {
 
     /**
      * Calculates the final color of point in geometry with all the light effects
+     *
      * @param intersection the geometry with the point needs to be colorized
-     * @param ray the ray that cross the geometry
+     * @param ray          the ray that cross the geometry
      * @return the final color after adding light effects
      */
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
@@ -65,9 +66,11 @@ public class RayTracerBasic extends RayTracerBase {
         int nShininess = material.getShininess();
         double kd = material.getKd(), ks = material.getKs();
         Color color = Color.BLACK;
+        Vector l;
+        double nl;
         for (LightSource lightSource : scene.lights) {
-            Vector l = lightSource.getL(intersection.point);
-            double nl = Util.alignZero(n.dotProduct(l));
+            l = lightSource.getL(intersection.point);
+            nl = Util.alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color.add(calcDiffusive(kd, l, n, lightIntensity),
@@ -89,7 +92,7 @@ public class RayTracerBasic extends RayTracerBase {
         double dotProCalc = Util.alignZero(l.dotProduct(n));
         dotProCalc = dotProCalc < 0 ? dotProCalc * -1 : dotProCalc;
 
-        return lightIntensity.scale(kd*dotProCalc);
+        return lightIntensity.scale(kd * dotProCalc);
     }
 
     /***
@@ -103,9 +106,9 @@ public class RayTracerBasic extends RayTracerBase {
      * @return the final color on Specular
      */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-        Vector r = l.subtract(n.scale(2*l.dotProduct(n)));
-        double angle = Util.alignZero(-1*v.dotProduct(r));
-        return angle > 0 ?lightIntensity.scale(ks*Math.pow(angle,nShininess)):Color.BLACK;
+        Vector r = l.subtract(n.scale(2 * l.dotProduct(n)));
+        double angle = Util.alignZero(-1 * v.dotProduct(r));
+        return angle > 0 ? lightIntensity.scale(ks * Math.pow(angle, nShininess)) : Color.BLACK;
 
     }
 

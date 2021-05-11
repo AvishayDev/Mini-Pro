@@ -23,7 +23,7 @@ public class Point3DTests {
 
         // ============ Equivalence Partitions Tests ==============
         Point3D p3 = new Point3D(5, 7, 6);
-        Point3D p4 = new Point3D(3,3,0);
+        Point3D p4 = new Point3D(3, 3, 0);
 
         // Test that addition of vector is proper
         assertEquals("add(vector) method doesn't work properly", p1.add(v2), p3);
@@ -41,7 +41,7 @@ public class Point3DTests {
         Point3D minus_p2 = new Point3D(-1, -2, -3);
 
         // ============ Equivalence Partitions Tests ==============
-        Vector v3 = new Vector(3,3,0);
+        Vector v3 = new Vector(3, 3, 0);
         Vector v4 = new Vector(5, 7, 6);
 
 
@@ -55,7 +55,8 @@ public class Point3DTests {
         try {
             p1.subtract(p1);
             fail("subtract(Point3D) for identical Point3Ds does not throw an exception");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -64,7 +65,7 @@ public class Point3DTests {
     @Test
     public void testDistanceSquared() {
         Point3D p1 = new Point3D(4, 5, 3);
-        Point3D p2 = new Point3D(1,2,1);
+        Point3D p2 = new Point3D(1, 2, 1);
 
         // test distanceSquared returns accurate value
         assertTrue("ERROR: distanceSquared(Point3D) wrong value", isZero(p1.distanceSquared(p2) - 22));
@@ -75,8 +76,8 @@ public class Point3DTests {
      */
     @Test
     public void testDistance() {
-        Point3D p1 = new Point3D(0,3,4);
-        Point3D p2 = new Point3D(0,0,0);
+        Point3D p1 = new Point3D(0, 3, 4);
+        Point3D p2 = new Point3D(0, 0, 0);
 
         // test distance returns accurate value
         assertTrue("ERROR: distance(Point3D) wrong value", isZero(p1.distance(p2) - 5));

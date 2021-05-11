@@ -8,13 +8,14 @@ import static primitives.Util.*;
 
 /**
  * Unit tests for primitives.Vector class
+ *
  * @author Avihai & Avishay
  */
 
 public class VectorTests {
 
     /**
-     * Test method for {@link primitives.Vector#Vector(Coordinate,Coordinate,Coordinate)}.
+     * Test method for {@link primitives.Vector#Vector(Coordinate, Coordinate, Coordinate)}.
      */
     @Test
     public void testConstructorCoordinate() {
@@ -24,11 +25,12 @@ public class VectorTests {
         try { // test zero vector
             new Vector(zero, zero, zero);
             fail("ERROR: zero vector does not throw an exception when coordinates constructor is used");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     /**
-     * Test method for {@link primitives.Vector#Vector(double,double,double)}.
+     * Test method for {@link primitives.Vector#Vector(double, double, double)}.
      */
     @Test
     public void testConstructorDouble() {
@@ -37,7 +39,8 @@ public class VectorTests {
         try { // test zero vector
             new Vector(0, 0, 0);
             fail("ERROR: zero vector does not throw an exception when doubles constructor is used");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
     }
 
@@ -52,7 +55,8 @@ public class VectorTests {
         try { // test zero vector
             new Vector(point3DZero);
             fail("ERROR: zero vector does not throw an exception when Point3D constructor is used");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -103,7 +107,8 @@ public class VectorTests {
         try {
             v1.subtract(v1);
             fail("subtract(vector) for identical vectors does not throw an exception");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -111,11 +116,11 @@ public class VectorTests {
      */
     @Test
     public void testScale() {
-        Vector v1 = new Vector(1,2,3);
+        Vector v1 = new Vector(1, 2, 3);
 
         // ============ Equivalence Partitions Tests ==============
         Vector v2 = new Vector(-1, -2, -3);
-        Vector v3 = new Vector(3,6,9);
+        Vector v3 = new Vector(3, 6, 9);
 
         // Test that scaling vectors works properly
         assertEquals("scale(double) method doesn't work properly", v1.scale(-1), v2);
@@ -127,7 +132,8 @@ public class VectorTests {
         try {
             v1.scale(0);
             fail("scale(double) for 0 does not throw an exception");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -154,7 +160,8 @@ public class VectorTests {
         try {
             v1.crossProduct(v2);
             fail("crossProduct() for parallel vectors does not throw an exception");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
     }
 
@@ -170,7 +177,7 @@ public class VectorTests {
         // test dotProduct() between orthogonal vectors should be zero
         assertTrue("ERROR: dotProduct() for orthogonal vectors is not zero", isZero(v1.dotProduct(v3)));
         // test Dot-Product values are correct
-        assertTrue("ERROR: dotProduct() wrong value", isZero(v1.dotProduct(v2)+28));
+        assertTrue("ERROR: dotProduct() wrong value", isZero(v1.dotProduct(v2) + 28));
     }
 
     /**

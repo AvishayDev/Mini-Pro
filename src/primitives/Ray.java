@@ -34,7 +34,7 @@ public class Ray {
      * @param point point for the ray
      * @param vec vector for the ray
      */
-    public Ray(Point3D point,Vector vec) {
+    public Ray(Point3D point, Vector vec) {
         dir = vec.normalized();
         p0 = point;
     }
@@ -80,13 +80,14 @@ public class Ray {
 
         return lowPoint;
     }
+
     /***
      * This method receives a list of GeoPoints, and returns the geoPoint that have the lowest distance from the head of the ray
      * If list is empty or null sent, null will be returned
      * @param points A list of GeoPoints
      * @return The closest point to the head of the ray
      */
-    public GeoPoint findClosestGeoPoint(List<GeoPoint> points){
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
         if (points == null || points.isEmpty())
             return null;
 

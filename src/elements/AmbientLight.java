@@ -21,7 +21,7 @@ public class AmbientLight extends Light {
     /***
      * Default constructor, only initializing the constructor of "Light" With black.
      */
-    public AmbientLight(){
+    public AmbientLight() {
         super(Color.BLACK);
     }
 }

@@ -16,13 +16,14 @@ import java.util.List;
 public class Scene {
 
     /**
-     *  The name of the scene.
+     * The name of the scene.
      */
     public String name;
     /**
      * The Geometry object in context of the scene.
      */
-    public Geometries geometries = new Geometries();;
+    public Geometries geometries = new Geometries();
+
     /**
      * The color of the background. Default value is black.
      */
@@ -47,6 +48,7 @@ public class Scene {
 
     /**
      * Setter for the lights field of the scene. Builder design pattern.
+     *
      * @param geometries list of geometries to reset
      * @return The current scene after setting the object.
      */
@@ -58,7 +60,7 @@ public class Scene {
     /***
      * This method receives a list of LightSource objects, and adds them all into the field lights.
      * @param lightSources  A list of LightSource objects.
-     * @return              This Scene, with the updated values.
+     * @return This Scene, with the updated values.
      */
     public Scene setLights(List<LightSource> lightSources) {
         lights = lightSources;
@@ -85,7 +87,7 @@ public class Scene {
 
     /***
      * This is a getter method for the Intensity field of the ambientLight field of this object.
-     * @return  The Intensity value, in a form of Color.
+     * @return The Intensity value, in a form of Color.
      */
     public Color ambientGetIntensity() {
         return ambientLight.getIntensity();

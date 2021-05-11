@@ -38,15 +38,16 @@ public class SpotLight extends PointLight {
      * //     (I0*max(0,dir.dotProduct(l))
      * // IL =  -------------------------
      * //         Kc+Ki*d +Kq*(d^2)
+     *
      * @param point point to light
      * @return the color of the point
      */
     @Override
     public Color getIntensity(Point3D point) {
-        Color intensityReturn =  super.getIntensity(point);
+        Color intensityReturn = super.getIntensity(point);
         double dotProDir = Util.alignZero(direction.dotProduct(getL(point)));
         //if angle <=0 the color is scaled by 0 so return black(0,0,0) => less calculations
-        return dotProDir > 0 ? intensityReturn.scale(Math.pow(dotProDir,narrow)) : Color.BLACK;
+        return dotProDir > 0 ? intensityReturn.scale(Math.pow(dotProDir, narrow)) : Color.BLACK;
     }
 
 }

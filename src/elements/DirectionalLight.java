@@ -28,6 +28,7 @@ public class DirectionalLight extends Light implements LightSource {
 
     /**
      * calc the IL of point in the scene
+     *
      * @param point point to light
      * @return the color of the point
      */

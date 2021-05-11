@@ -10,6 +10,7 @@ import scene.Scene;
 
 /**
  * Test rendering a basic image
+ *
  * @author Dan
  */
 public class RenderTests {
@@ -21,7 +22,7 @@ public class RenderTests {
     /**
      * Produce a scene with basic 3D model and render it into a jpeg image with a
      * grid
-    */
+     */
     @Test
     public void basicRenderTwoColorTest() {
 
@@ -29,7 +30,7 @@ public class RenderTests {
                 .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
                 .setBackground(new Color(75, 127, 90));
 
-        scene.geometries.add(new Sphere( new Point3D(0, 0, -100),50),
+        scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
                 new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left
@@ -56,7 +57,7 @@ public class RenderTests {
         Scene scene = new Scene("Test scene")//
                 .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
 
-        scene.geometries.add(new Sphere(new Point3D(0, 0, -100),50),
+        scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)) // up left
                         .setEmission(new Color(java.awt.Color.GREEN)),
                 new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right

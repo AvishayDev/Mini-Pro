@@ -28,11 +28,11 @@ public class LightsTests {
             new Point3D(-150, -150, -150), new Point3D(150, -150, -150), new Point3D(75, 75, -150));
     private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
-    private static Geometry sphere = new Sphere( new Point3D(-5, -10, -50),50) //
+    private static Geometry sphere = new Sphere(new Point3D(-5, -10, -50), 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
-    private static Geometry cylinder = new Cylinder( new Ray(new Point3D(0, 0, -50),new Vector(1,2,3)),50,50) //
+    private static Geometry cylinder = new Cylinder(new Ray(new Point3D(0, 0, -50), new Vector(1, 2, 3)), 50, 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
@@ -59,7 +59,7 @@ public class LightsTests {
     @Test
     public void cylinderFunTests() {
 
-        scene1.geometries.add(cylinder,sphere);
+        scene1.geometries.add(cylinder, sphere);
         scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-20, -20, 100)));
 
         ImageWriter imageWriter = new ImageWriter("cylinderPoint", 500, 500);
@@ -71,6 +71,7 @@ public class LightsTests {
         render.writeToImage();
 
     }
+
     /**
      * Produce a picture of a sphere lighted by a point light
      */
@@ -95,7 +96,7 @@ public class LightsTests {
     @Test
     public void sphereSpot() {
         scene1.geometries.add(sphere);
-        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(1, 1, -2), new Point3D(-50, -50, 50),3) //
+        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(1, 1, -2), new Point3D(-50, -50, 50), 3) //
                 .setKl(0.00001).setKq(0.00000001));
 
         ImageWriter imageWriter = new ImageWriter("lightSphereSpot", 500, 500);
@@ -152,7 +153,7 @@ public class LightsTests {
     public void trianglesSpot() {
         scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
                 triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
-        scene2.lights.add(new SpotLight(new Color(500, 250, 250), new Vector(-2, -2, -1), new Point3D(10, -10, -130),3) //
+        scene2.lights.add(new SpotLight(new Color(500, 250, 250), new Vector(-2, -2, -1), new Point3D(10, -10, -130), 3) //
                 .setKl(0.0001).setKq(0.000005));
 
         ImageWriter imageWriter = new ImageWriter("lightTrianglesSpot", 500, 500);
@@ -171,7 +172,7 @@ public class LightsTests {
     public void sphereSpotSharp() {
 
         scene1.geometries.add(sphere);
-        scene1.lights.add(new SpotLight(new Color(500, 300, 0),  new Vector(1, 1, -2), new Point3D(-50, -50, 50),3)
+        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(1, 1, -2), new Point3D(-50, -50, 50), 3)
                 .setKc(1)
                 .setKl(0.000005)
                 .setKq(0.00000025));
@@ -194,7 +195,7 @@ public class LightsTests {
 
         scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
                 triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
-        scene2.lights.add(new SpotLight(new Color(800, 400, 400),  new Vector(-2, -2, -1), new Point3D(10, -10, -130),3)
+        scene2.lights.add(new SpotLight(new Color(800, 400, 400), new Vector(-2, -2, -1), new Point3D(10, -10, -130), 3)
                 .setKc(1)
                 .setKl(0.000005)
                 .setKq(0.00000025));

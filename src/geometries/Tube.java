@@ -12,7 +12,7 @@ import java.util.List;
 public class Tube extends Geometry {
 
     /**
-     *  The axis ray of the tube.
+     * The axis ray of the tube.
      */
     protected Ray axisRay;
     /**
@@ -62,7 +62,6 @@ public class Tube extends Geometry {
     }
 
 
-
     /***
      * To string function
      * @return Information about the tube's ray and its radius.
@@ -78,6 +77,7 @@ public class Tube extends Geometry {
     /**
      * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none, null will be returned.
+     *
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
@@ -175,11 +175,11 @@ public class Tube extends Geometry {
 
         if (Util.alignZero(t1) > 0)
             //so we want to take t1
-            list.add(new GeoPoint(this,ray.getPoint(t1)));
+            list.add(new GeoPoint(this, ray.getPoint(t1)));
 
         if (Util.alignZero(t2) > 0)
             //so we want to take t2
-            list.add(new GeoPoint(this,ray.getPoint(t2)));
+            list.add(new GeoPoint(this, ray.getPoint(t2)));
 
         return list.isEmpty() ? null : list;
 

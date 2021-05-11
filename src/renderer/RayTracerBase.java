@@ -21,6 +21,7 @@ public abstract class RayTracerBase {
 
     /**
      * constructor for initialize the scene object
+     *
      * @param scene the scene of the image
      */
     public RayTracerBase(Scene scene) {

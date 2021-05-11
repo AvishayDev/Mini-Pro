@@ -28,13 +28,31 @@ public class LightsTests {
             new Point3D(-150, -150, -150), new Point3D(150, -150, -150), new Point3D(75, 75, -150));
     private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
-    private static Geometry sphere = new Sphere(new Point3D(-5, -10, -50), 50) //
+    private static Geometry sphere = new Sphere(new Point3D(0, 0, -120), 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+    private static Geometries square = new Geometries(new Polygon(new Point3D(0,0,-50),new Point3D(50,0,-100),new Point3D(50,50,-150),new Point3D(0,50,-100))
+                                                        .setEmission(new Color(java.awt.Color.BLUE)) //
+                                                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+            new Polygon(new Point3D(0,0,-50),new Point3D(-50,0,-100),new Point3D(-50,50,-150),new Point3D(0,50,-100))
+                    .setEmission(new Color(java.awt.Color.BLUE)) //
+                    .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+            new Polygon(new Point3D(0,0,-50),new Point3D(-50,0,-100),new Point3D(-50,-50,-150),new Point3D(0,-50,-100))
+                    .setEmission(new Color(java.awt.Color.BLUE)) //
+                    .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+            new Polygon(new Point3D(0,0,-50),new Point3D(50,0,-100),new Point3D(50,-50,-150),new Point3D(0,-50,-100))
+                    .setEmission(new Color(java.awt.Color.BLUE)) //
+                    .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100))
+    );
 
-    private static Geometry cylinder = new Cylinder(new Ray(new Point3D(0, 0, -50), new Vector(1, 2, 3)), 50, 50) //
+    private static Geometry cylinder = new Cylinder(new Ray(new Point3D(-50, -50, -100), new Vector(1, 2, 3)), 50, 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
-            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+            .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(200));
+
+    private static Geometry tube = new Tube(new Ray(new Point3D(50, 50, -150), new Vector(1, 2, 3)), 50) //
+            .setEmission(new Color(java.awt.Color.BLUE)) //
+            .setMaterial(new Material().setKd(0.4).setKs(0.6).setShininess(200));
+
 
     /**
      * Produce a picture of a sphere lighted by a directional light
@@ -53,14 +71,20 @@ public class LightsTests {
         render.writeToImage();
     }
 
+
     /**
      * Produce a picture of a sphere lighted by a directional light
      */
     @Test
-    public void cylinderFunTests() {
+    public void FunTests() {
 
-        scene1.geometries.add(cylinder, sphere);
-        scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-20, -20, 100)));
+        scene1.geometries.add(square);
+        scene1.geometries.add(cylinder);
+        scene1.geometries.add(tube);
+        scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(50, 50, -50)));
+        scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-30, -30, -20)));
+        //scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-300, -300, -150)));
+        //scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(0, 0, -1),new Point3D(0,0,-40),2));
 
         ImageWriter imageWriter = new ImageWriter("cylinderPoint", 500, 500);
         Render render = new Render()//

@@ -89,8 +89,9 @@ public class RayTracerBasic extends RayTracerBase {
      * @return the final color of Diffusing
      */
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-        double dotProCalc = Util.alignZero(l.dotProduct(n));
-        dotProCalc = dotProCalc < 0 ? dotProCalc * -1 : dotProCalc;
+        double dotProCalc = l.dotProduct(n);
+        if (Util.alignZero(dotProCalc) < 0)
+            dotProCalc = -dotProCalc;
 
         return lightIntensity.scale(kd * dotProCalc);
     }

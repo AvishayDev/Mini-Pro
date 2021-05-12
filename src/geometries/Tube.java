@@ -171,17 +171,22 @@ public class Tube extends Geometry {
         determinate = Math.sqrt(determinate);
         double t1 = (-b + determinate) / (2d * a);
         double t2 = (-b - determinate) / (2d * a);
-        List<GeoPoint> list = new LinkedList<GeoPoint>();
+        List<GeoPoint> list = null;
 
         if (Util.alignZero(t1) > 0)
             //so we want to take t1
-            list.add(new GeoPoint(this, ray.getPoint(t1)));
+            list = new LinkedList<>(List.of(new GeoPoint(this, ray.getPoint(t1))));
 
         if (Util.alignZero(t2) > 0)
             //so we want to take t2
-            list.add(new GeoPoint(this, ray.getPoint(t2)));
+            if(list == null)
+                list = new LinkedList<>(List.of(new GeoPoint(this, ray.getPoint(t2))));
+            else
+                list.add(new GeoPoint(this, ray.getPoint(t2)));
 
-        return list.isEmpty() ? null : list;
+        if(list ==null ||list.isEmpty())
+            return null;
+        return list;
 
     }
 

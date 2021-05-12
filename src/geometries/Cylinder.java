@@ -53,19 +53,21 @@ public class Cylinder extends Tube {
      */
     @Override
     public Vector getNormal(Point3D point) {
+        Vector axisDir = axisRay.getDir();
+
         Vector vec1;
         try {
             vec1 = point.subtract(axisRay.getP0());
         } catch (IllegalArgumentException e) {//if catch it means the point on the center
-            return axisRay.getDir();
+            return axisDir;
         }
-        double t = Math.abs(axisRay.getDir().dotProduct(vec1));
+        double t = Math.abs(axisDir.dotProduct(vec1));
 
         //if t equals to 0 or in the length of height its means the point on the bases
 
         if (Util.isZero(t) || Util.isZero(t - height)) {
             //the point in the base or in the side of the base
-            return axisRay.getDir();
+            return axisDir;
         } else
             //the point on the side of the Cylinder
             return super.getNormal(point);
@@ -146,17 +148,19 @@ public class Cylinder extends Tube {
             //its mean there is no body intersections so the ray is
             //or parallel or don't cross. if parallel so may cross bases if inside
             //so check without taking body and base intersections
-            points = new LinkedList<GeoPoint>();
             if (Util.alignZero(t1) > 0) {
                 q = ray.getPoint(t1);
                 if (q.distanceSquared(p1) < radiusSquare)
-                    points.add(new GeoPoint(this, q));
+                    points = new LinkedList<GeoPoint>(List.of(new GeoPoint(this, q)));
             }
 
             if (Util.alignZero(t2) > 0) {
                 q = ray.getPoint(t2);
                 if (q.distanceSquared(p2) < radiusSquare)
-                    points.add(new GeoPoint(this, q));
+                    if (points == null)
+                        points = new LinkedList<GeoPoint>(List.of(new GeoPoint(this, q)));
+                    else
+                        points.add(new GeoPoint(this, q));
             }
         } else {
             //its mean there is initialization for points
@@ -174,7 +178,9 @@ public class Cylinder extends Tube {
             }
         }
 
-        return points.isEmpty() ? null : points;
+        if (points == null || points.isEmpty())
+            return null;
+        return points;
     }
 
     /***

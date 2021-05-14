@@ -108,23 +108,31 @@ public class Cylinder extends Tube {
         Vector va = axisRay.getDir();
         Point3D p = ray.getP0();
         if (points != null) {
-            int pointsSize = points.size();
             nullCheck = false;
-            GeoPoint geoPoint;
-            for (int i = 0; i < pointsSize; ) {
-                //points.get(i).geometry = this;
+            int i = 0;
+            GeoPoint geoPoint = points.get(i);
+
+            //points.get(i).geometry = this;
+            //"point" is a point on the cylinder body so it cant be equal to p1 or p2
+            //because they placed in the bases so, no worry about Zero vector
+            if (va.dotProduct(geoPoint.point.subtract(p1)) <= 0 || va.dotProduct(geoPoint.point.subtract(p2)) >= 0) {
+                // its mean the point outside the cylinder or in body and base intersection
+                points.remove(i);
+            } else {
+                i++;
+            }
+
+            if(points.size() > i) {
                 geoPoint = points.get(i);
-                //"point" is a point on the cylinder body so it cant be equal to p1 or p2
-                //because they placed in the bases so, no worry about Zero vector
                 if (va.dotProduct(geoPoint.point.subtract(p1)) <= 0 || va.dotProduct(geoPoint.point.subtract(p2)) >= 0) {
                     // its mean the point outside the cylinder or in body and base intersection
-                    points.remove(geoPoint);
-                    pointsSize--;
+                    points.remove(i);
                 } else {
                     i++;
                 }
             }
         }
+
 
         // (Va,p) + (Va,-p1) = -(Va,v)*t1 ,
         // (Va,p) + (Va,-p2) = -(Va,v)*t2 => equations for bases intersections

@@ -20,7 +20,9 @@ public final class Main {
      */
     public static void main(String[] args) {
 
-       // ImageWriter.print();
+
+        Vector vec1 =new Vector(1,1,-2);
+        out.println(vec1.normalize());
         /*
         Vector u = new Vector(-1,-7,7);
         Vector w = new Vector(2,4,-8);

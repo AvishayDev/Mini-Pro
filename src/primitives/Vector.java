@@ -60,6 +60,16 @@ public class Vector {
     }
 
     /***
+     * this function calculate the angle between this vector
+     * and the vector sent
+     * @param vec the vector to angle
+     * @return this final value by DEGREES
+     */
+    public double getAngle(Vector vec) {
+        return Math.acos((dotProduct(vec)) / (length() * vec.length())) / Math.PI * 180;
+    }
+
+    /***
      * This function sums up between the current vector and the received vector
      * @param vec The vector which we want to add to the current vector
      * @return The sum of the two vectors

@@ -110,17 +110,38 @@ public class Camera {
     }
 
     /***
-     * This method serves changeAngleAndPosition, and it changes and angle of plane XY by a received number
-     * @param angle The angle you want to tilt the plane XY
-     * @return This camera with the updated values.
+     * this function change the angle of XY plane(positive == clockwise)
+     * and change the camera to look at the point sent
+     * Builder pattern
+     * @param point the point to look at
+     * @param angle the angle to change
+     * @return this object
      */
-    public Camera changeAngle(double angle) {
+    public Camera directionChange(Point3D point, double angle){
 
-        // thinking
-        // x = p0(x)+sin(90-alpha)
-        // y = p0(y)+cos(90-alpha)
-        // z = sqrt(1-x^2-y^2)
+        /*
+        * for the point change, every time ZERO one coordinate
+        * and calc the angle to change in each plane (XY,YZ,ZX)
+        * and move the vectors (vRight & vUp) to the new angle
+        * from their places
+        * */
 
+
+
+
+        return this;
+    }
+
+
+    /***
+     * This function change the angle of XY plane with Builder pattern
+     * positive angle is clockwise change
+     * @param angle the angle to change
+     * @return this object
+     */
+    public Camera directionChange(double angle) {
+
+        /*
         double cosAlpha = Math.cos((angle * Math.PI) / 180);
         //for calc vRight new position
         double coeff[][] = {{vRight.getX(), vRight.getY(), vRight.getZ(), cosAlpha},
@@ -137,7 +158,7 @@ public class Camera {
         vUp = Util.findSolution(coeff);
 
         //no changes for vTo
-
+*/
         return this;
     }
 

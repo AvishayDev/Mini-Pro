@@ -117,16 +117,14 @@ public class Camera {
      * @param angle the angle to change
      * @return this object
      */
-    public Camera directionChange(Point3D point, double angle){
+    public Camera directionChange(Point3D point, double angle) {
 
         /*
-        * for the point change, every time ZERO one coordinate
-        * and calc the angle to change in each plane (XY,YZ,ZX)
-        * and move the vectors (vRight & vUp) to the new angle
-        * from their places
-        * */
-
-
+         * for the point change, every time ZERO one coordinate
+         * and calc the angle to change in each plane (XY,YZ,ZX)
+         * and move the vectors (vRight & vUp) to the new angle
+         * from their places
+         * */
 
 
         return this;
@@ -141,7 +139,35 @@ public class Camera {
      */
     public Camera directionChange(double angle) {
 
-        /*
+        // we want to rotate vRight and vUp by the angle sent.
+        // we use this formula to do it:
+        // Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 - cos(angle))
+        // K = vTo
+
+
+        double cosAngle = Math.cos(angle);
+        double sinAngle = Math.sin(angle);
+
+        // V * cos(angle)
+        Vector Vfinal = vRight.scale(cosAngle);
+        // + (K x V) * sin(angle)
+        Vfinal = Vfinal.add(vTo.crossProduct(vRight).scale(sinAngle));
+        // + K * (K dot V) * (1 - cos(angle)) => K dot V is always 0
+        //Vfinal = Vfinal.add(vTo.scale(vTo.dotProduct(vRight)*(1-cosAngle)));
+
+        vRight = Vfinal;
+
+        // V * cos(angle)
+        Vector Vfinal2 = vUp.scale(cosAngle);
+        // + (K x V) * sin(angle)
+        Vfinal2 = Vfinal2.add(vTo.crossProduct(vUp).scale(sinAngle));
+        // + K * (K dot V) * (1 - cos(angle)) => K dot V is always 0
+        //Vfinal2 = Vfinal2.add(vTo.scale(vTo.dotProduct(vUp)*(1-cosAngle)));
+
+        vUp = Vfinal2;
+
+
+/*
         double cosAlpha = Math.cos((angle * Math.PI) / 180);
         //for calc vRight new position
         double coeff[][] = {{vRight.getX(), vRight.getY(), vRight.getZ(), cosAlpha},

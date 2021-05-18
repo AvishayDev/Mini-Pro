@@ -1,5 +1,6 @@
 package elements;
 
+import geometries.Intersectable;
 import primitives.*;
 
 /***
@@ -23,4 +24,12 @@ public interface LightSource {
      * @return the vector L
      */
     Vector getL(Point3D point);
+
+    /***
+     * this function calculate the distance between the light source
+     * and the point gets
+     * @param geoPoint the point to find distance from
+     * @return the final distance
+     */
+    double getDistance(Intersectable.GeoPoint geoPoint);
 }

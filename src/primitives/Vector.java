@@ -60,13 +60,36 @@ public class Vector {
     }
 
     /***
-     * this function calculate the angle between this vector
+     * this function calculate the cos(angle) between this vector
      * and the vector sent
      * @param vec the vector to angle
-     * @return this final value by DEGREES
+     * @return final value
      */
-    public double getAngle(Vector vec) {
-        return Math.acos((dotProduct(vec)) / (length() * vec.length())) / Math.PI * 180;
+    public double getCosAngle(Vector vec) {
+        if (isNormalize() && vec.isNormalize())
+            return dotProduct(vec);
+        return (dotProduct(vec)) / (length() * vec.length());
+    }
+
+    /***
+     * this function calculate the sin(angle) between this vector
+     * and the vector sent
+     * @param vec the vector to angle
+     * @return final value
+     */
+    public double getSinAngle(Vector vec) {
+        if (isNormalize() && vec.isNormalize())
+            return crossProduct(vec).length();
+        return (crossProduct(vec).length()) / (length() * vec.length());
+    }
+
+
+    /***
+     * this function calculate if the vector is normalize or not
+     * @return true for normalize and false either
+     */
+    public boolean isNormalize() {
+        return Util.isZero(((getX() * getX()) + (getY() * getY()) + (getZ() * getZ())) - 1) ? true : false;
     }
 
     /***

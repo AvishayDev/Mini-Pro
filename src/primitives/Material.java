@@ -19,7 +19,18 @@ public class Material {
      * Shininess level of material - affects size and blur of specular effect of light reflection
      */
     public int nShininess = 0;
+    /**
+     * Refraction of material attenuation factor of light Refraction from the material
+     */
+    public double kR = 0.0;
+    /**
+     * Transparency of material attenuation factor of light Transparency from the material
+     */
+    public double kT = 0.0;
 
+    // for real images:
+    // kS = 8 * kT
+    // kD + ((kS/8) || kR) + kT <= 1
 
     /***
      * Empty constructor. This class is PDS, so use the setters to set values to kD, kS and Shininess instead.
@@ -79,5 +90,21 @@ public class Material {
      */
     public int getShininess() {
         return nShininess;
+    }
+
+    /***
+     * This method is a getter for the field kR.
+     * @return The kR value, in form of a double.
+     */
+    public double getKr() {
+        return kR;
+    }
+
+    /***
+     * This method is a getter for the field kT.
+     * @return The kT value, in form of a double.
+     */
+    public double getKt() {
+        return kT;
     }
 }

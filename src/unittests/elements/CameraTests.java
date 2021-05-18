@@ -75,7 +75,7 @@ public class CameraTests {
         scene1.geometries.add(sphere);
         scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
 
-        ImageWriter imageWriter = new ImageWriter("lightSphereDirectional1", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("lightSphereDirectional2", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //

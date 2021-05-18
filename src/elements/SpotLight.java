@@ -33,6 +33,19 @@ public class SpotLight extends PointLight {
         direction = directionLight.normalized();
     }
 
+    /***
+     * constructor for the light, reset parameters
+     * @param light color of the light
+     * @param point the position of the light
+     * @param directionLight the direction of the light
+     * @param narrowLight the narrow of the light (bigger then 1!)
+     */
+    public SpotLight(Color light,  Point3D point,Vector directionLight, int narrowLight) {
+        super(light, point);
+        narrow = narrowLight;
+        direction = directionLight.normalized();
+    }
+
     /**
      * calc the IL of point in the scene
      * //     (I0*max(0,dir.dotProduct(l))

@@ -69,6 +69,25 @@ public class Material {
     }
 
     /***
+     * This method is a setter for the double field kR
+     * @param kR the int value of kR
+     * @return This object of material, with the updated values.
+     */
+    public Material setKr(double kR) {
+        this.kR = kR;
+        return this;
+    }
+    /***
+     * This method is a setter for the double field kT
+     * @param kT the int value of kT
+     * @return This object of material, with the updated values.
+     */
+    public Material setKt(double kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    /***
      * This method is a getter for the field kD.
      * @return The kD value, in form of a double.
      */
@@ -107,4 +126,5 @@ public class Material {
     public double getKt() {
         return kT;
     }
+
 }

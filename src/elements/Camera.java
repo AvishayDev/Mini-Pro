@@ -246,14 +246,26 @@ public class Camera {
         if (cosZero) {
             //if cos == 0 => sin != 0
             // + (K x V) * sin(angle)
+            try{
             vFinal = axisDir.crossProduct(vRight).scale(sinAngle);
+            } catch (IllegalArgumentException e) {
+                //if catch its mean the axisDir and vRight is the same
+                // so we need to add the Zero Vector so dont do nothing
+                vFinal = vRight;
+            }
         } else {
             // V * cos(angle)
             vFinal = vRight.scale(cosAngle);
             if (!sinZero) {
                 //if sin == 0 => cos != 0
                 // + (K x V) * sin(angle)
+                try{
                 vFinal = vFinal.add(axisDir.crossProduct(vRight).scale(sinAngle));
+                } catch (IllegalArgumentException e) {
+                    //if catch its mean the axisDir and vRight is the same
+                    // so we need to add the Zero Vector so dont do nothing
+                    vFinal = vRight;
+                }
             }
         }
 
@@ -264,14 +276,26 @@ public class Camera {
         if (cosZero) {
             //if cos == 0 => sin != 0
             // + (K x V) * sin(angle)
-            vFinal1 = axisDir.crossProduct(vUp).scale(sinAngle);
+            try{
+                vFinal1 = axisDir.crossProduct(vUp).scale(sinAngle);}
+            catch (IllegalArgumentException e){
+                //if catch its mean the axisDir and vRight is the same
+                // so we need to add the Zero Vector so dont do nothing
+                vFinal1 = vUp;
+            }
         } else {
             // V * cos(angle)
             vFinal1 = vUp.scale(cosAngle);
             if (!sinZero) {
                 //if sin == 0 => cos != 0
                 // + (K x V) * sin(angle)
-                vFinal1 = vFinal1.add(axisDir.crossProduct(vUp).scale(sinAngle));
+                try{
+                    vFinal1 = vFinal1.add(axisDir.crossProduct(vUp).scale(sinAngle));
+                } catch (IllegalArgumentException e) {
+                    //if catch its mean the axisDir and vRight is the same
+                    // so we need to add the Zero Vector so dont do nothing
+                    vFinal1 = vUp;
+                }
             }
         }
 

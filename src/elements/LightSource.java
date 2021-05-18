@@ -28,8 +28,8 @@ public interface LightSource {
     /***
      * this function calculate the distance between the light source
      * and the point gets
-     * @param geoPoint the point to find distance from
+     * @param point the point to find distance from
      * @return the final distance
      */
-    double getDistance(Intersectable.GeoPoint geoPoint);
+    double getDistance(Point3D point);
 }

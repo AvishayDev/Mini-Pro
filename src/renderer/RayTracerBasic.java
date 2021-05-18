@@ -93,7 +93,7 @@ public class RayTracerBasic extends RayTracerBase {
         if (intersections == null) return true;
         double lightDistance = light.getDistance(geopoint.point);
         for (GeoPoint gp : intersections) {
-            if (alignZero(gp.point.distance(geopoint.point) – lightDistance) <= 0)
+            if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0)
                 return false;
         }
         return true;

@@ -1,6 +1,7 @@
 package renderer;
 
 import static geometries.Intersectable.GeoPoint;
+import static primitives.Util.alignZero;
 
 import elements.LightSource;
 import primitives.*;
@@ -63,7 +64,7 @@ public class RayTracerBasic extends RayTracerBase {
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
         Vector v = ray.getDir();
         Vector n = intersection.geometry.getNormal(intersection.point);
-        double nv = Util.alignZero(n.dotProduct(v));
+        double nv = alignZero(n.dotProduct(v));
         if (nv == 0) return Color.BLACK;
         Material material = intersection.geometry.getMaterial();
         int nShininess = material.getShininess();
@@ -71,7 +72,7 @@ public class RayTracerBasic extends RayTracerBase {
         Color color = Color.BLACK;
         for (LightSource lightSource : scene.lights) {
             Vector l = lightSource.getL(intersection.point);
-            double nl = Util.alignZero(n.dotProduct(l));
+            double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 if(unshaded(lightSource,l,n,intersection)) {
                     Color lightIntensity = lightSource.getIntensity(intersection.point);
@@ -92,7 +93,7 @@ public class RayTracerBasic extends RayTracerBase {
         if (intersections == null) return true;
         double lightDistance = light.getDistance(geopoint.point);
         for (GeoPoint gp : intersections) {
-            if (Util.alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0)
+            if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0)
                 return false;
         }
         return true;
@@ -107,7 +108,7 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
         double dotProCalc = l.dotProduct(n);
-        if (Util.alignZero(dotProCalc) < 0)
+        if (alignZero(dotProCalc) < 0)
             dotProCalc = -dotProCalc;
 
         return lightIntensity.scale(kd * dotProCalc);
@@ -125,7 +126,7 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
         Vector r = l.subtract(n.scale(2 * l.dotProduct(n)));
-        double angle = Util.alignZero(-1 * v.dotProduct(r));
+        double angle = alignZero(-1 * v.dotProduct(r));
         return angle > 0 ? lightIntensity.scale(ks * Math.pow(angle, nShininess)) : Color.BLACK;
 
     }

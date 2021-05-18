@@ -32,6 +32,18 @@ public class Sphere extends Geometry {
     }
 
     /***
+     * Alternative to the constructor above, different order of parameters.
+     * @param radius radius of the sphere
+     * @param center center of the sphere
+     */
+    public Sphere(double radius, Point3D center) {
+        this.center = new Point3D(center.getX(), center.getY(), center.getZ());
+        if (Util.isZero(radius) || radius < 0)
+            throw new IllegalArgumentException("Please Don't Choose radius zero");
+        this.radius = radius;
+    }
+
+    /***
      * Make's Sphere from 3 coordinates and radius.
      * From the 3 coordinates it make 3D point and use it
      * @param x First coordinate for the 3D point

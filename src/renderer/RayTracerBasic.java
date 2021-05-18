@@ -16,7 +16,8 @@ import java.util.List;
 public class RayTracerBasic extends RayTracerBase {
 
 
-
+    private static final int MAX_CALC_COLOR_LEVEL = 10;
+    private static final double MIN_CALC_COLOR_K = 0.001;
     private static final double DELTA = 0.1;
     /**
      * Constructor that calls super constructor

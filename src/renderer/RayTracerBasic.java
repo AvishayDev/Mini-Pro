@@ -99,6 +99,7 @@ public class RayTracerBasic extends RayTracerBase {
         }
         return true;
     }
+
     /***
      * this function calculate the Diffusive effect on the color by light
      * @param kd the material kD factor

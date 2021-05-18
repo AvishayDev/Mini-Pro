@@ -1,6 +1,8 @@
 package unittests.elements;
 
 import geometries.Geometry;
+import geometries.Plane;
+import geometries.Polygon;
 import geometries.Sphere;
 import org.junit.Test;
 import elements.*;
@@ -67,12 +69,17 @@ public class CameraTests {
         Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setViewPlaneSize(150, 150) //
                 .setDistance(1000)
-                .directionChange(30);
+                .changeAngle(30)
+                .changeDirection(new Point3D(0,0,-1240),new Point3D(0,0,-120));
         Geometry sphere = new Sphere(new Point3D(0, 0, -120), 50) //
                 .setEmission(new Color(java.awt.Color.BLUE)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
-        scene1.geometries.add(sphere);
+        Geometry square1 = new Polygon(new Point3D(60,0,-120),new Point3D(0,60,-120),new Point3D(-60,0,-120),new Point3D(0,-60,-120))
+                .setEmission(new Color(java.awt.Color.GREEN)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+
+        scene1.geometries.add(sphere,square1);
         scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
 
         ImageWriter imageWriter = new ImageWriter("lightSphereDirectional2", 500, 500);

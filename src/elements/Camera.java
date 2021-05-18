@@ -7,6 +7,7 @@ import primitives.Util;
 import primitives.Vector;
 
 import javax.naming.NoInitialContextException;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -110,82 +111,172 @@ public class Camera {
     }
 
     /***
-     * this function change the angle of XY plane(positive == clockwise)
-     * and change the camera to look at the point sent
      * Builder pattern
-     * @param point the point to look at
-     * @param angle the angle to change
+     * this function will change the position, direction and the angle of the camera
+     * @param newPositionPoint the new position of the camera (send p0 for no change)
+     * @param newDirectionPoint the point to look at
      * @return this object
      */
-    public Camera directionChange(Point3D point, double angle) {
+    public Camera changeDirection(Point3D newPositionPoint, Point3D newDirectionPoint) {
 
-        /*
-         * for the point change, every time ZERO one coordinate
-         * and calc the angle to change in each plane (XY,YZ,ZX)
-         * and move the vectors (vRight & vUp) to the new angle
-         * from their places
-         * */
+        //replace camera position
+        replaceCameraPosition(newPositionPoint);
 
-
+        boolean parallel = false;
+        // 1) we calc the direction
+        Vector newVto = newDirectionPoint.subtract(p0).normalize();
+        // 2) we calc the axisDir
+        Vector axisDir = null;
+        try {
+            axisDir = vTo.crossProduct(newVto).normalize();
+        }catch(IllegalArgumentException e){
+            //if catch its mean the new vector is parallel to vTo so the angle
+            // is 180 and need only to scale everything by -1
+            vTo = vTo.scale(-1);
+            vRight = vRight.scale(-1);
+            vUp = vUp.scale(-1);
+            parallel = true;
+        }
+        if(!parallel) {
+            //if not parallel os do the regular calculations
+            // 3) calc the angle that changed
+            double angle = vTo.getAngle(newVto);
+            // 4) change the vRight & vUp along the new axisDir
+            angleChange(axisDir, angle);
+            // 5) finally change the vTo
+            vTo = newVto;
+        }
         return this;
     }
 
 
     /***
-     * This function change the angle of XY plane with Builder pattern
-     * positive angle is clockwise change
-     * @param angle the angle to change
+     * Builder pattern
+     * This function change the angle of vRight & vUp along vTo direction
+     * the angle change Counterclockwise by the vTo axis!
+     * @param angle the angle to change by DEGREES!
      * @return this object
      */
-    public Camera directionChange(double angle) {
+    public Camera changeAngle(double angle) {
+
 
         // we want to rotate vRight and vUp by the angle sent.
         // we use this formula to do it:
         // Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 - cos(angle))
         // K = vTo
+        // V = vRight || vUp
 
 
-        double cosAngle = Math.cos(angle);
-        double sinAngle = Math.sin(angle);
+        //change to degrees
+        double cosAngle = Math.cos((angle * Math.PI) / 180);
+        double sinAngle = Math.sin((angle * Math.PI) / 180);
 
-        // V * cos(angle)
-        Vector Vfinal = vRight.scale(cosAngle);
-        // + (K x V) * sin(angle)
-        Vfinal = Vfinal.add(vTo.crossProduct(vRight).scale(sinAngle));
+        boolean cosZero = Util.isZero(cosAngle);
+        boolean sinZero = Util.isZero(sinAngle);
+
+
         // + K * (K dot V) * (1 - cos(angle)) => K dot V is always 0
-        //Vfinal = Vfinal.add(vTo.scale(vTo.dotProduct(vRight)*(1-cosAngle)));
 
-        vRight = Vfinal;
+        //calculations for vRight
+        Vector vFinal;
+        if (cosZero) {
+            //if cos == 0 => sin != 0
+            // + (K x V) * sin(angle)
+            vFinal = vTo.crossProduct(vRight).scale(sinAngle);
+        } else {
+            // V * cos(angle)
+            vFinal = vRight.scale(cosAngle);
+            if (!sinZero) {
+                //if sin == 0 => cos != 0
+                // + (K x V) * sin(angle)
+                vFinal = vFinal.add(vTo.crossProduct(vRight).scale(sinAngle));
+            }
+        }
+        vRight = vFinal.normalize();
 
-        // V * cos(angle)
-        Vector Vfinal2 = vUp.scale(cosAngle);
-        // + (K x V) * sin(angle)
-        Vfinal2 = Vfinal2.add(vTo.crossProduct(vUp).scale(sinAngle));
-        // + K * (K dot V) * (1 - cos(angle)) => K dot V is always 0
-        //Vfinal2 = Vfinal2.add(vTo.scale(vTo.dotProduct(vUp)*(1-cosAngle)));
+        //calculations for vRight
+        Vector vFinal1;
+        if (cosZero) {
+            //if cos == 0 => sin != 0
+            // + (K x V) * sin(angle)
+            vFinal1 = vTo.crossProduct(vUp).scale(sinAngle);
+        } else {
+            // V * cos(angle)
+            vFinal1 = vUp.scale(cosAngle);
+            if (!sinZero) {
+                //if sin == 0 => cos != 0
+                // + (K x V) * sin(angle)
+                vFinal1 = vFinal1.add(vTo.crossProduct(vUp).scale(sinAngle));
+            }
+        }
+        vUp = vFinal1.normalize();
 
-        vUp = Vfinal2;
-
-
-/*
-        double cosAlpha = Math.cos((angle * Math.PI) / 180);
-        //for calc vRight new position
-        double coeff[][] = {{vRight.getX(), vRight.getY(), vRight.getZ(), cosAlpha},
-                {vUp.getX(), vUp.getY(), vUp.getZ(), Math.cos(((90 - angle) * Math.PI) / 180)},
-                {vTo.getX(), vTo.getY(), vTo.getZ(), 0}};
-
-        vRight = Util.findSolution(coeff);
-
-        //for calc vUp new position
-        coeff = new double[][]{{vUp.getX(), vUp.getY(), vUp.getZ(), cosAlpha},
-                {vRight.getX(), vRight.getY(), vRight.getZ(), 0},
-                {vTo.getX(), vTo.getY(), vTo.getZ(), 0}};
-
-        vUp = Util.findSolution(coeff);
-
-        //no changes for vTo
-*/
         return this;
+    }
+
+    /***
+     * Help function
+     * This function change the angle of vRight & vUp along axisDir direction
+     *  - positive angle is Counterclockwise change -
+     * @param angle the angle to change by DEGREES!
+     * @param axisDir the vector to axis
+     * @return this object
+     */
+    private void angleChange(Vector axisDir, double angle) {
+
+        // we want to rotate vRight and vUp by the angle sent.
+        // we use this formula to do it:
+        // Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 - cos(angle))
+        // K = the axis Vector
+        // V = vRight || vUp
+
+
+        //change to degrees
+        double cosAngle = Math.cos((angle * Math.PI) / 180);
+        double sinAngle = Math.sin((angle * Math.PI) / 180);
+
+        boolean cosZero = Util.isZero(cosAngle);
+        boolean sinZero = Util.isZero(sinAngle);
+
+
+        // + K * (K dot V) * (1 - cos(angle)) => K dot V is always 0
+
+        //calculations for vRight
+        Vector vFinal;
+        if (cosZero) {
+            //if cos == 0 => sin != 0
+            // + (K x V) * sin(angle)
+            vFinal = axisDir.crossProduct(vRight).scale(sinAngle);
+        } else {
+            // V * cos(angle)
+            vFinal = vRight.scale(cosAngle);
+            if (!sinZero) {
+                //if sin == 0 => cos != 0
+                // + (K x V) * sin(angle)
+                vFinal = vFinal.add(axisDir.crossProduct(vRight).scale(sinAngle));
+            }
+        }
+
+        vRight = vFinal.normalize();
+
+        //calculations for vRight
+        Vector vFinal1;
+        if (cosZero) {
+            //if cos == 0 => sin != 0
+            // + (K x V) * sin(angle)
+            vFinal1 = axisDir.crossProduct(vUp).scale(sinAngle);
+        } else {
+            // V * cos(angle)
+            vFinal1 = vUp.scale(cosAngle);
+            if (!sinZero) {
+                //if sin == 0 => cos != 0
+                // + (K x V) * sin(angle)
+                vFinal1 = vFinal1.add(axisDir.crossProduct(vUp).scale(sinAngle));
+            }
+        }
+
+        vUp = vFinal1.normalize();
+
     }
 
     /***

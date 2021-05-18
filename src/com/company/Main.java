@@ -1,5 +1,8 @@
 package com.company;
 
+import geometries.Plane;
+import geometries.Sphere;
+import geometries.Triangle;
 import primitives.*;
 import renderer.ImageWriter;
 
@@ -21,11 +24,8 @@ public final class Main {
     public static void main(String[] args) {
 
 
-        Vector vec1 = new Vector(1, 1, -2);//.normalize();
-        if (vec1.isNormalize())
-            out.println(vec1.normalize());
-        else
-            out.println("kkkk");
+        Vector u = new Vector(1,1,1);
+
         /*
         Vector u = new Vector(-1,-7,7);
         Vector w = new Vector(2,4,-8);

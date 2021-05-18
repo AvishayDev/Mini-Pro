@@ -65,22 +65,16 @@ public class Vector {
      * @param vec the vector to angle
      * @return final value
      */
-    public double getCosAngle(Vector vec) {
-        if (isNormalize() && vec.isNormalize())
-            return dotProduct(vec);
-        return (dotProduct(vec)) / (length() * vec.length());
-    }
+    public double getAngle(Vector vec) {
 
-    /***
-     * this function calculate the sin(angle) between this vector
-     * and the vector sent
-     * @param vec the vector to angle
-     * @return final value
-     */
-    public double getSinAngle(Vector vec) {
+        //              This dot vec
+        // cos(angle) = -------------
+        //              |This|*|vec|
+
+        //if both normalize don't calc length..
         if (isNormalize() && vec.isNormalize())
-            return crossProduct(vec).length();
-        return (crossProduct(vec).length()) / (length() * vec.length());
+            return Math.acos(dotProduct(vec)) * 180 / Math.PI;
+        return ((dotProduct(vec)) / (length() * vec.length())) * 180 / Math.PI;
     }
 
 

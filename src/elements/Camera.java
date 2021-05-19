@@ -139,10 +139,11 @@ public class Camera {
         }
         if(!parallel) {
             //if not parallel os do the regular calculations
-            // 3) calc the angle that changed
-            double angle = vTo.getAngle(newVto);
+            // 3) calc the cos(angle) that changed
+            double cosAngle = vTo.dotProduct(newVto);
+            double sinAngle = vTo.crossProduct(newVto).length();
             // 4) change the vRight & vUp along the new axisDir
-            angleChange(axisDir, angle);
+            angleChange(axisDir, cosAngle, sinAngle);
             // 5) finally change the vTo
             vTo = newVto;
         }
@@ -218,11 +219,12 @@ public class Camera {
      * Help function
      * This function change the angle of vRight & vUp along axisDir direction
      *  - positive angle is Counterclockwise change -
-     * @param angle the angle to change by DEGREES!
+     * @param cosAngle the cos(angle) value
+     * @param sinAngle the sin(angle) value
      * @param axisDir the vector to axis
      * @return this object
      */
-    private void angleChange(Vector axisDir, double angle) {
+    private void angleChange(Vector axisDir, double cosAngle, double sinAngle) {
 
         // we want to rotate vRight and vUp by the angle sent.
         // we use this formula to do it:
@@ -230,10 +232,6 @@ public class Camera {
         // K = the axis Vector
         // V = vRight || vUp
 
-
-        //change to degrees
-        double cosAngle = Math.cos((angle * Math.PI) / 180);
-        double sinAngle = Math.sin((angle * Math.PI) / 180);
 
         boolean cosZero = Util.isZero(cosAngle);
         boolean sinZero = Util.isZero(sinAngle);

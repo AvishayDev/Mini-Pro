@@ -60,33 +60,6 @@ public class Vector {
     }
 
     /***
-     * this function calculate the cos(angle) between this vector
-     * and the vector sent
-     * @param vec the vector to angle
-     * @return final value
-     */
-    public double getAngle(Vector vec) {
-
-        //              This dot vec
-        // cos(angle) = -------------
-        //              |This|*|vec|
-
-        //if both normalize don't calc length..
-        if (isNormalize() && vec.isNormalize())
-            return Math.acos(dotProduct(vec)) * 180 / Math.PI;
-        return ((dotProduct(vec)) / (length() * vec.length())) * 180 / Math.PI;
-    }
-
-
-    /***
-     * this function calculate if the vector is normalize or not
-     * @return true for normalize and false either
-     */
-    public boolean isNormalize() {
-        return Util.isZero(((getX() * getX()) + (getY() * getY()) + (getZ() * getZ())) - 1) ? true : false;
-    }
-
-    /***
      * This function sums up between the current vector and the received vector
      * @param vec The vector which we want to add to the current vector
      * @return The sum of the two vectors

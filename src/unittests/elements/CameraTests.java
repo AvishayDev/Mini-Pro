@@ -69,8 +69,8 @@ public class CameraTests {
         Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setViewPlaneSize(150, 150) //
                 .setDistance(1000)
-                .changeAngle(30)
-                .changeDirection(new Point3D(0,0,-1240),new Point3D(0,0,-120));
+                .changeAngle(180);
+                //.changeDirection(new Point3D(-1120,0,-120),new Point3D(0,0,-120));
         Geometry sphere = new Sphere(new Point3D(0, 0, -120), 50) //
                 .setEmission(new Color(java.awt.Color.BLUE)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));

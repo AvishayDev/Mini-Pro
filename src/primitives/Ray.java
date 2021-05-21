@@ -19,6 +19,9 @@ public class Ray {
      */
     private final Vector dir;
 
+
+    private static final double DELTA = 0.1;
+
     /***
      * Make's a Ray using vector and 3D point
      * @param vec vector for the ray
@@ -47,8 +50,11 @@ public class Ray {
      * @param vec vector for the ray
      */
     public Ray(Point3D point, Vector vec, Vector normal) {
+
+        double normalDirAngle = normal.dotProduct(vec);
+        Vector calcVec = normal.scale(normalDirAngle > 0 ? DELTA : - DELTA);
         dir = vec.normalized();
-        p0 = point;
+        p0 = point.add(calcVec);
     }
 
     /***

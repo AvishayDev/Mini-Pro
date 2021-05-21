@@ -18,7 +18,6 @@ public class RayTracerBasic extends RayTracerBase {
 
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
-    private static final double DELTA = 0.1;
     /**
      * Constructor that calls super constructor
      *
@@ -55,6 +54,37 @@ public class RayTracerBasic extends RayTracerBase {
 
     }
 
+    private Ray constructReflectedRay(Vector normal, Point3D point, Ray createRay){
+
+        Vector rayDir = createRay.getDir();
+        Vector ref = rayDir.subtract(normal.scale(2*rayDir.dotProduct(normal)));
+
+        return new Ray(point,ref,normal);
+    }
+
+    private Ray constructRefractedRay(Vector normal, Point3D point, Ray ray) {
+        return new Ray(point,ray.getDir(),normal);
+    }
+
+    private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
+        Color color = Color.BLACK;
+        Material material = geopoint.geometry.getMaterial();
+        double kr = material.kR , kkr = k * kr;
+        if (kkr > MIN_CALC_COLOR_K) {
+            Ray reflectedRay = constructReflectedRay(geopoint.geometry.getNormal(geopoint.point), geopoint.point, ray);
+            GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+            color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
+        }
+        double kt = material.kT, kkt = k * kt;
+        if (kkt > MIN_CALC_COLOR_K) {
+            Ray refractedRay = constructRefractedRay(geopoint.geometry.getNormal(geopoint.point), geopoint.point, ray);
+            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+            color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
+        }
+        return color;
+    }
+
+
     /**
      * Calculates the final color of point in geometry with all the light effects
      *
@@ -87,9 +117,7 @@ public class RayTracerBasic extends RayTracerBase {
 
     private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
         Vector lightDirection = l.scale(-1); // from point to light source
-        Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
-        Point3D point = geopoint.point.add(delta);
-        Ray lightRay = new Ray(point, lightDirection);
+        Ray lightRay = new Ray(geopoint.point, lightDirection,n);
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
         if (intersections == null) return true;
         double lightDistance = light.getDistance(geopoint.point);

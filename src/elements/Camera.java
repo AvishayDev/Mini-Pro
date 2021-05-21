@@ -132,21 +132,28 @@ public class Camera {
         }catch(IllegalArgumentException e){
             //if catch its mean the new vector is parallel to vTo so the angle
             // is 180 and need only to scale everything by -1
-            vTo = vTo.scale(-1);
-            vRight = vRight.scale(-1);
-            vUp = vUp.scale(-1);
+            if(vTo.dotProduct(newVto)<0){
+                //its mean they the opposite direction so change by 180
+                //degrees easily by scaling by -1
+                vTo = vTo.scale(-1);
+                vRight = vRight.scale(-1);
+                vUp = vUp.scale(-1);
+            }
+            //else its mean the same direction so don't do nothing..
             parallel = true;
         }
         if(!parallel) {
             //if not parallel os do the regular calculations
-            // 3) calc the cos(angle) that changed
+            // 3) calc the cos(angle)
             double cosAngle = vTo.dotProduct(newVto);
+            // 3) calc the sin(angle)
             double sinAngle = vTo.crossProduct(newVto).length();
             // 4) change the vRight & vUp along the new axisDir
             angleChange(axisDir, cosAngle, sinAngle);
             // 5) finally change the vTo
             vTo = newVto;
         }
+
         return this;
     }
 

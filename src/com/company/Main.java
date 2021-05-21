@@ -24,7 +24,10 @@ public final class Main {
     public static void main(String[] args) {
 
 
-        Vector u = new Vector(1,1,1);
+        Vector u = new Vector(1,1,1).normalize();
+
+        //if(u.isNormalize())
+        //    out.println("yes");
 
         /*
         Vector u = new Vector(-1,-7,7);

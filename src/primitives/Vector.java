@@ -59,6 +59,13 @@ public class Vector {
                 , this.head.getZ() + point.getZ());
     }
 
+    /*
+    public boolean isNormalize(){
+        if(Util.isZero(((getX()*getX())+(getY()*getY())+(getZ()*getZ()))-1))
+            return true;
+        return false;
+    }*/
+
     /***
      * This function sums up between the current vector and the received vector
      * @param vec The vector which we want to add to the current vector

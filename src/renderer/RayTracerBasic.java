@@ -55,7 +55,6 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     private Ray constructReflectedRay(Vector normal, Point3D point, Ray createRay){
-
         Vector rayDir = createRay.getDir();
         Vector ref = rayDir.subtract(normal.scale(2*rayDir.dotProduct(normal)));
 
@@ -65,7 +64,7 @@ public class RayTracerBasic extends RayTracerBase {
     private Ray constructRefractedRay(Vector normal, Point3D point, Ray ray) {
         return new Ray(point,ray.getDir(),normal);
     }
-
+/*
     private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
         Color color = Color.BLACK;
         Material material = geopoint.geometry.getMaterial();
@@ -84,7 +83,7 @@ public class RayTracerBasic extends RayTracerBase {
         return color;
     }
 
-
+*/
     /**
      * Calculates the final color of point in geometry with all the light effects
      *

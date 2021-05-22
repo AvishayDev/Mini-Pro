@@ -78,12 +78,13 @@ public class LightsTests {
     @Test
     public void FunTests() {
 
+        camera1.changeAngle(30);
         scene1.geometries.add(square);
         scene1.geometries.add(cylinder);
         scene1.geometries.add(tube);
         scene1.lights.add(new PointLight(new Color(100, 400, 100), new Point3D(50, 50, -50)));
         scene1.lights.add(new PointLight(new Color(500, 300, 100), new Point3D(-30, -30, -20)));
-        ImageWriter imageWriter = new ImageWriter("cylinderPoint2", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("cylinderPoint1", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //

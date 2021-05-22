@@ -122,17 +122,16 @@ public class Camera {
         //replace camera position
         replaceCameraPosition(newPositionPoint);
 
-        boolean parallel = false;
         // 1) we calc the direction
         Vector newVto = newDirectionPoint.subtract(p0).normalize();
         // 2) we calc the axisDir
         Vector axisDir = null;
         try {
             axisDir = vTo.crossProduct(newVto).normalize();
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             //if catch its mean the new vector is parallel to vTo so the angle
             // is 180 and need only to scale everything by -1
-            if(vTo.dotProduct(newVto)<0){
+            if (vTo.dotProduct(newVto) < 0) {
                 //its mean they the opposite direction so change by 180
                 //degrees easily by scaling by -1
                 vTo = vTo.scale(-1);
@@ -140,19 +139,18 @@ public class Camera {
                 vUp = vUp.scale(-1);
             }
             //else its mean the same direction so don't do nothing..
-            parallel = true;
+            return this;
         }
-        if(!parallel) {
-            //if not parallel os do the regular calculations
-            // 3) calc the cos(angle)
-            double cosAngle = vTo.dotProduct(newVto);
-            // 3) calc the sin(angle)
-            double sinAngle = vTo.crossProduct(newVto).length();
-            // 4) change the vRight & vUp along the new axisDir
-            angleChange(axisDir, cosAngle, sinAngle);
-            // 5) finally change the vTo
-            vTo = newVto;
-        }
+
+        //if not parallel os do the regular calculations
+        // 3) calc the cos(angle)
+        double cosAngle = vTo.dotProduct(newVto);
+        // 3) calc the sin(angle)
+        double sinAngle = vTo.crossProduct(newVto).length();
+        // 4) change the vRight & vUp along the new axisDir
+        angleChange(axisDir, cosAngle, sinAngle);
+        // 5) finally change the vTo
+        vTo = newVto;
 
         return this;
     }
@@ -202,7 +200,7 @@ public class Camera {
         }
         vRight = vFinal.normalize();
 
-        //calculations for vRight
+        //calculations for vUp
         Vector vFinal1;
         if (cosZero) {
             //if cos == 0 => sin != 0
@@ -217,6 +215,7 @@ public class Camera {
                 vFinal1 = vFinal1.add(vTo.crossProduct(vUp).scale(sinAngle));
             }
         }
+
         vUp = vFinal1.normalize();
 
         return this;
@@ -242,66 +241,89 @@ public class Camera {
 
         boolean cosZero = Util.isZero(cosAngle);
         boolean sinZero = Util.isZero(sinAngle);
-
-
-        // + K * (K dot V) * (1 - cos(angle)) => K dot V is always 0
+        double KdotV = Util.alignZero(axisDir.dotProduct(vRight));
 
         //calculations for vRight
         Vector vFinal;
         if (cosZero) {
             //if cos == 0 => sin != 0
             // + (K x V) * sin(angle)
-            try{
-            vFinal = axisDir.crossProduct(vRight).scale(sinAngle);
+            try {
+                vFinal = axisDir.crossProduct(vRight).scale(sinAngle);
             } catch (IllegalArgumentException e) {
                 //if catch its mean the axisDir and vRight is the same
                 // so we need to add the Zero Vector so dont do nothing
-                vFinal = vRight;
+                vFinal = axisDir;
             }
+            // + K * (K dot V) * (1 - cos(angle)) => cos(angle) == 0 => (1 - cos(angle)) == 1
+            if (KdotV != 0)
+                vFinal = vFinal.add(axisDir.scale(KdotV));
+
         } else {
             // V * cos(angle)
             vFinal = vRight.scale(cosAngle);
-            if (!sinZero) {
-                //if sin == 0 => cos != 0
-                // + (K x V) * sin(angle)
-                try{
+
+
+            //sin(angle) is always != 0
+            // + (K x V) * sin(angle)
+            try {
                 vFinal = vFinal.add(axisDir.crossProduct(vRight).scale(sinAngle));
-                } catch (IllegalArgumentException e) {
-                    //if catch its mean the axisDir and vRight is the same
-                    // so we need to add the Zero Vector so dont do nothing
-                    vFinal = vRight;
-                }
+            } catch (IllegalArgumentException e) {
+                //if catch its mean the axisDir and vRight is the same
+                // so we need to add the Zero Vector so dont do nothing
+                vFinal = axisDir;
             }
+
+            // + K * (K dot V) * (1 - cos(angle))
+
+            if (KdotV != 0 && !Util.isZero(1-cosAngle))
+                vFinal = vFinal.add(axisDir.scale(KdotV).scale(1-cosAngle));
+
         }
 
         vRight = vFinal.normalize();
 
-        //calculations for vRight
+
+        //calculations for vUp
+
+        KdotV = Util.alignZero(axisDir.dotProduct(vUp));
         Vector vFinal1;
         if (cosZero) {
             //if cos == 0 => sin != 0
             // + (K x V) * sin(angle)
-            try{
-                vFinal1 = axisDir.crossProduct(vUp).scale(sinAngle);}
-            catch (IllegalArgumentException e){
+            try {
+                vFinal1 = axisDir.crossProduct(vUp).scale(sinAngle);
+            } catch (IllegalArgumentException e) {
                 //if catch its mean the axisDir and vRight is the same
                 // so we need to add the Zero Vector so dont do nothing
-                vFinal1 = vUp;
+                vFinal1 = axisDir;
             }
+
+            // + K * (K dot V) * (1 - cos(angle)) => cos(angle) == 0 => (1 - cos(angle)) == 1
+            if (KdotV != 0)
+                vFinal1 = vFinal1.add(axisDir.scale(KdotV));
+
+
         } else {
             // V * cos(angle)
             vFinal1 = vUp.scale(cosAngle);
-            if (!sinZero) {
-                //if sin == 0 => cos != 0
-                // + (K x V) * sin(angle)
-                try{
-                    vFinal1 = vFinal1.add(axisDir.crossProduct(vUp).scale(sinAngle));
-                } catch (IllegalArgumentException e) {
-                    //if catch its mean the axisDir and vRight is the same
-                    // so we need to add the Zero Vector so dont do nothing
-                    vFinal1 = vUp;
-                }
+
+            //if sin == 0 => cos != 0
+            // + (K x V) * sin(angle)
+            try {
+                vFinal1 = vFinal1.add(axisDir.crossProduct(vUp).scale(sinAngle));
+            } catch (IllegalArgumentException e) {
+                //if catch its mean the axisDir and vRight is the same
+                // so we need to add the Zero Vector so dont do nothing
+                vFinal1 = axisDir;
             }
+
+
+            // + K * (K dot V) * (1 - cos(angle))
+
+            if (KdotV != 0 && !Util.isZero(1-cosAngle))
+                vFinal1 = vFinal1.add(axisDir.scale(KdotV).scale(1-cosAngle));
+
         }
 
         vUp = vFinal1.normalize();

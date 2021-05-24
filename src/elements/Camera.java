@@ -125,7 +125,7 @@ public class Camera {
         // 1) we calc the direction
         Vector newVto = newDirectionPoint.subtract(p0).normalize();
         // 2) we calc the axisDir
-        Vector axisDir = null;
+        Vector axisDir;
         try {
             axisDir = vTo.crossProduct(newVto).normalize();
         } catch (IllegalArgumentException e) {

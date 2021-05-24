@@ -110,7 +110,7 @@ public class ReflectionRefractionTests {
 		scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(60, 50, 0), new Vector(0, 0, -1),1) //
 				.setKl(4E-5).setKq(2E-7));
 
-		ImageWriter imageWriter = new ImageWriter("refractionShadow", 600, 600);
+		ImageWriter imageWriter = new ImageWriter("refractionShadow1", 600, 600);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //

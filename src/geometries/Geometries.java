@@ -50,12 +50,14 @@ public class Geometries implements Intersectable {
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
+            //if (g.isIntersect){
             saveList = g.findGeoIntersections(ray);
             if (saveList != null)
                 if (returnList == null)
                     returnList = new LinkedList<>(saveList);
                 else
                     returnList.addAll(saveList);
+                //}
         }
         return returnList;
     }

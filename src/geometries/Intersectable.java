@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Vector;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +52,14 @@ public interface Intersectable {
             if (geometry.getClass() != geoPoint.geometry.getClass()) return false;
             if (!geometry.equals(geoPoint.geometry)) return false;
             return point.equals(geoPoint.point);
+        }
+
+        public Vector getNormal(){
+            return geometry.getNormal(point);
+        }
+
+        public double getKt(){
+            return geometry.getMaterial().kT;
         }
     }
 

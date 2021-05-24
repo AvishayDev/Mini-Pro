@@ -52,9 +52,9 @@ public class Ray {
     public Ray(Point3D point, Vector vec, Vector normal) {
 
         double normalDirAngle = normal.dotProduct(vec);
-        Vector calcVec = normal.scale(normalDirAngle > 0 ? DELTA : - DELTA);
+        Vector delta = normal.scale(normalDirAngle > 0 ? DELTA : - DELTA);
         dir = vec.normalized();
-        p0 = point.add(calcVec);
+        p0 = point.add(delta);
     }
 
     /***
@@ -108,6 +108,9 @@ public class Ray {
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
         if (points == null)
             return null;
+
+        if(points.size() == 1)
+            return points.get(0);
 
         GeoPoint lowPoint = null;
         double distance = Double.POSITIVE_INFINITY;

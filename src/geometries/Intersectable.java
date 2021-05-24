@@ -38,6 +38,22 @@ public interface Intersectable {
         }
 
         /***
+         * Getter for the normal of the geometry field of this object.
+         * @return The normal vector of this object's geometry.
+         */
+        public Vector getNormal() {
+            return geometry.getNormal(point);
+        }
+
+        /***
+         * Getter for the Kt field of the geometry's material of this object.
+         * @return The double value of Kt.
+         */
+        public double getKt() {
+            return geometry.getMaterial().kT;
+        }
+
+        /***
          * Override of the equals method, receives some object and checks if it's from the same type (GeoPoint) and not null,
          * checks if geometry's field class are equal and if the points fields are equal
          * @param o The object we're comparing against
@@ -54,13 +70,6 @@ public interface Intersectable {
             return point.equals(geoPoint.point);
         }
 
-        public Vector getNormal(){
-            return geometry.getNormal(point);
-        }
-
-        public double getKt(){
-            return geometry.getMaterial().kT;
-        }
     }
 
     /**
@@ -81,6 +90,7 @@ public interface Intersectable {
     /**
      * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none, null will be returned.
+     *
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */

@@ -276,8 +276,8 @@ public class Camera {
 
             // + K * (K dot V) * (1 - cos(angle))
 
-            if (KdotV != 0 && !Util.isZero(1-cosAngle))
-                vFinal = vFinal.add(axisDir.scale(KdotV).scale(1-cosAngle));
+            if (KdotV != 0 && !Util.isZero(1 - cosAngle))
+                vFinal = vFinal.add(axisDir.scale(KdotV).scale(1 - cosAngle));
 
         }
 
@@ -321,8 +321,8 @@ public class Camera {
 
             // + K * (K dot V) * (1 - cos(angle))
 
-            if (KdotV != 0 && !Util.isZero(1-cosAngle))
-                vFinal1 = vFinal1.add(axisDir.scale(KdotV).scale(1-cosAngle));
+            if (KdotV != 0 && !Util.isZero(1 - cosAngle))
+                vFinal1 = vFinal1.add(axisDir.scale(KdotV).scale(1 - cosAngle));
 
         }
 

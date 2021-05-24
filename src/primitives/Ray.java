@@ -42,17 +42,17 @@ public class Ray {
         p0 = point;
     }
 
-
     /***
-     * Make's a Ray using vector and 3D point and move the ray
+     * Constructor for a secondary Ray using a vector, a 3D point and a normal vector.
      * by delta with the normal vector
-     * @param point point for the ray
-     * @param vec vector for the ray
+     * @param point Intersection point
+     * @param vec Original Vector
+     * @param normal The normal from the intersection point
      */
     public Ray(Point3D point, Vector vec, Vector normal) {
 
         double normalDirAngle = normal.dotProduct(vec);
-        Vector delta = normal.scale(normalDirAngle > 0 ? DELTA : - DELTA);
+        Vector delta = normal.scale(normalDirAngle > 0 ? DELTA : -DELTA);
         dir = vec.normalized();
         p0 = point.add(delta);
     }
@@ -109,7 +109,7 @@ public class Ray {
         if (points == null)
             return null;
 
-        if(points.size() == 1)
+        if (points.size() == 1)
             return points.get(0);
 
         GeoPoint lowPoint = null;

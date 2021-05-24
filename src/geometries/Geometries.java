@@ -19,7 +19,8 @@ public class Geometries implements Intersectable {
     /***
      * create EMPTY list of geometries
      */
-    public Geometries() { }
+    public Geometries() {
+    }
 
     /***
      * create List of geometries from all the geometries
@@ -57,7 +58,7 @@ public class Geometries implements Intersectable {
                     returnList = new LinkedList<>(saveList);
                 else
                     returnList.addAll(saveList);
-                //}
+            //}
         }
         return returnList;
     }

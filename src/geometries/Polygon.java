@@ -145,4 +145,57 @@ public class Polygon extends Geometry {
         planeIntersections.get(0).geometry = this;
         return planeIntersections;
     }
+
+    /**
+     * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
+     * In case there are none or pass the max distance, null will be returned.
+     *
+     * @param ray         The ray which we find the intersections to the object.
+     * @param maxDistance the maximum distance for the ray to go
+     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
+     */
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
+        //because we care about the distance in the plane we
+        //don't need to care about it here
+
+        int verticesSize = vertices.size();
+        //check if the point on the plane
+        if (planeIntersections == null)
+            //when try to make v if one of them is the ZERO VECTOR
+            //it mean the p0 on vertex => null
+
+            //when try to make N if one of them is same as normal vector
+            //it mean the p0 on the plane => null
+            return null;
+
+        Vector rayDir = ray.getDir();
+        Point3D point0 = ray.getP0();
+        Vector vec1 = vertices.get(0).subtract(point0);
+        Vector vec2 = vertices.get(1).subtract(point0);
+
+        Vector N1 = vec1.crossProduct(vec2);
+        double sign = Util.alignZero(N1.dotProduct(rayDir));
+        Vector Ni;
+        double signI;
+        for (int i = 2; i < verticesSize; i++) {
+            vec1 = vertices.get(i).subtract(point0);
+            Ni = vec2.crossProduct(vec1);
+            vec2 = vec1.scale(1);
+            signI = Util.alignZero(rayDir.dotProduct(Ni));
+            if (sign * signI <= 0)
+                //its mean the sign is different or zero
+                return null;
+        }
+        Ni = vec2.crossProduct(vertices.get(0).subtract(point0));
+        signI = Util.alignZero(Ni.dotProduct(rayDir));
+        if (sign * signI <= 0)
+            //its mean the sign is different or zero
+            return null;
+
+        planeIntersections.get(0).geometry = this;
+        return planeIntersections;
+    }
 }

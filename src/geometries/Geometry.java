@@ -2,6 +2,9 @@ package geometries;
 
 import primitives.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * An interface that extends the interface Intersectable, and adds another method that returns the normal
  */

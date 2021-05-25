@@ -165,6 +165,7 @@ public class LightsTests {
                 .setCamera(camera2) //
                 .setRayTracer(new RayTracerBasic(scene2));
         render.renderImage();
+        //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
     }
 

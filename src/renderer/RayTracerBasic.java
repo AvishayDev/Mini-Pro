@@ -198,14 +198,15 @@ public class RayTracerBasic extends RayTracerBase {
 
         Ray lightRay = new Ray(geoPoint.point, lightDirection, n); // refactored ray head move
 
+        double lightDistance = light.getDistance(geoPoint.point);
         List<GeoPoint> intersections = scene.geometries
-                .findGeoIntersections(lightRay, light.getDistance(geoPoint.point));
+                .findGeoIntersections(lightRay, lightDistance);
 
         if (intersections == null) return 1.0;
         double ktr = 1.0;
         for (GeoPoint gp : intersections) {
-            ktr *= gp.geometry.getMaterial().getKt();
-            if (ktr < MIN_CALC_COLOR_K) return 0.0;
+                ktr *= gp.geometry.getMaterial().getKt();
+                if (ktr < MIN_CALC_COLOR_K) return 0.0;
         }
         return ktr;
     }

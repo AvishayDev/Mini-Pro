@@ -40,19 +40,20 @@ public class Geometries implements Intersectable {
     }
 
     /**
-     * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
-     * In case there are none, null will be returned.
+     * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
+     * In case there are none or pass the max distance, null will be returned.
      *
-     * @param ray The ray which we find the intersections to the object.
+     * @param ray         The ray which we find the intersections to the object.
+     * @param maxDistance the maximum distance for the ray to go
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
             //if (g.isIntersect){
-            saveList = g.findGeoIntersections(ray);
+            saveList = g.findGeoIntersections(ray,maxDistance);
             if (saveList != null)
                 if (returnList == null)
                     returnList = new LinkedList<>(saveList);

@@ -87,111 +87,6 @@ public class Cylinder extends Tube {
     }
 
     /**
-     * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
-     * In case there are none, null will be returned.
-     *
-     * @param ray The ray which we find the intersections to the object.
-     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
-     */
-    @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-
-        List<GeoPoint> points = super.findGeoIntersections(ray);
-
-        //p1 = axisRay.getP0
-        //p2 = same as p1 but in upper base
-
-        boolean nullCheck = true;
-        Point3D p1 = axisRay.getP0();
-        Point3D p2 = p1.add(axisRay.getDir().scale(height));
-        Vector v = ray.getDir();
-        Vector va = axisRay.getDir();
-        Point3D p = ray.getP0();
-        if (points != null) {
-            nullCheck = false;
-            int i = 0;
-            GeoPoint geoPoint = points.get(i);
-
-            //points.get(i).geometry = this;
-            //"point" is a point on the cylinder body so it cant be equal to p1 or p2
-            //because they placed in the bases so, no worry about Zero vector
-            if (va.dotProduct(geoPoint.point.subtract(p1)) <= 0 || va.dotProduct(geoPoint.point.subtract(p2)) >= 0) {
-                // its mean the point outside the cylinder or in body and base intersection
-                points.remove(i);
-            } else {
-                i++;
-            }
-
-            if (points.size() > i) {
-                geoPoint = points.get(i);
-                if (va.dotProduct(geoPoint.point.subtract(p1)) <= 0 || va.dotProduct(geoPoint.point.subtract(p2)) >= 0) {
-                    // its mean the point outside the cylinder or in body and base intersection
-                    points.remove(i);
-                } else {
-                    i++;
-                }
-            }
-        }
-
-
-        // (Va,p) + (Va,-p1) = -(Va,v)*t1 ,
-        // (Va,p) + (Va,-p2) = -(Va,v)*t2 => equations for bases intersections
-        // calc -(Va,v)
-        double dotProV = -1 * va.dotProduct(v);
-        if (Util.isZero(dotProV))
-            //its mean we doesn't have t so ray doesn't intersect bases!
-            return nullCheck || points.isEmpty() ? null : points;
-
-        // calc (Va,p)
-        double dotProP = va.dotProduct(p);
-
-        //calc t1,t2
-        double t1 = (dotProP + va.dotProduct(p1.scale(-1))) / dotProV;
-        double t2 = (dotProP + va.dotProduct(p2.scale(-1))) / dotProV;
-
-        //calc points place
-        double radiusSquare = radius * radius;
-        Point3D q;
-        if (nullCheck) {
-            //its mean there is no body intersections so the ray is
-            //or parallel or don't cross. if parallel so may cross bases if inside
-            //so check without taking body and base intersections
-            if (Util.alignZero(t1) > 0) {
-                q = ray.getPoint(t1);
-                if (q.distanceSquared(p1) < radiusSquare)
-                    points = new LinkedList<GeoPoint>(List.of(new GeoPoint(this, q)));
-            }
-
-            if (Util.alignZero(t2) > 0) {
-                q = ray.getPoint(t2);
-                if (q.distanceSquared(p2) < radiusSquare)
-                    if (points == null)
-                        points = new LinkedList<GeoPoint>(List.of(new GeoPoint(this, q)));
-                    else
-                        points.add(new GeoPoint(this, q));
-            }
-        } else {
-            //its mean there is initialization for points
-            //so check may the ray cross body and base intersections
-            if (Util.alignZero(t1) > 0) {
-                q = ray.getPoint(t1);
-                if (q.distanceSquared(p1) <= radiusSquare)
-                    points.add(new GeoPoint(this, q));
-            }
-
-            if (Util.alignZero(t2) > 0) {
-                q = ray.getPoint(t2);
-                if (q.distanceSquared(p2) <= radiusSquare)
-                    points.add(new GeoPoint(this, q));
-            }
-        }
-
-        if (points == null || points.isEmpty())
-            return null;
-        return points;
-    }
-
-    /**
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.
      *
@@ -203,7 +98,7 @@ public class Cylinder extends Tube {
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
 
-        List<GeoPoint> points = super.findGeoIntersections(ray);
+        List<GeoPoint> points = super.findGeoIntersections(ray,maxDistance);
 
         //p1 = axisRay.getP0
         //p2 = same as p1 but in upper base

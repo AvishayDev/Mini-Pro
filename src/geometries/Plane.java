@@ -4,6 +4,8 @@ import primitives.*;
 
 import java.util.List;
 
+import static primitives.Util.isZero;
+
 /***
  * Represents Plane with vector and 3D point.
  */
@@ -81,44 +83,6 @@ public class Plane extends Geometry {
     }
 
     /**
-     * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
-     * In case there are none, null will be returned.
-     *
-     * @param ray The ray which we find the intersections to the object.
-     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
-     */
-    @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-
-        Vector u;
-        double t;
-
-        double t1 = normal.dotProduct(ray.getDir());
-        if (Util.isZero(t1))
-            //its mean p0 is start on the plane => no intersections
-            //or the dir is orthogonal to the normal => no intersections
-            return null;
-
-        try {
-            u = q0.subtract(ray.getP0());
-            t = normal.dotProduct(u);
-            t = t / t1;
-
-        } catch (IllegalArgumentException e) {
-            //its mean p0==q0 => no intersections
-            return null;
-        }
-
-        if (Util.alignZero(t) <= 0)
-            //if t==0 its mean p0 on the plane
-            //and if t<0 its mean p0 is over the plane
-            return null;
-
-        //if pass all of this, there is intersection in the plane
-        return List.of(new GeoPoint(this, ray.getPoint(t)));
-    }
-
-    /**
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.
      *
@@ -133,7 +97,7 @@ public class Plane extends Geometry {
         double t;
 
         double t1 = normal.dotProduct(ray.getDir());
-        if (Util.isZero(t1))
+        if (isZero(t1))
             //its mean p0 is start on the plane => no intersections
             //or the dir is orthogonal to the normal => no intersections
             return null;
@@ -148,12 +112,12 @@ public class Plane extends Geometry {
             return null;
         }
 
-        if (Util.alignZero(t) <= 0 || Util.alignZero(t - maxDistance) > 0)
+        if (Util.alignZero(t) > 0 && Util.alignZero(t - maxDistance) <= 0)
             //if t==0 its mean p0 on the plane
             //and if t<0 its mean p0 is over the plane
-            return null;
+            return List.of(new GeoPoint(this, ray.getPoint(t)));
 
         //if pass all of this, there is intersection in the plane
-        return List.of(new GeoPoint(this, ray.getPoint(t)));
+        return null;
     }
 }

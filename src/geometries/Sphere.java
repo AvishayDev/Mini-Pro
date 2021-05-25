@@ -98,50 +98,6 @@ public class Sphere extends Geometry {
     }
 
     /**
-     * This method receives a ray and returns a list of all the intersections points in objects of GeoPoint.
-     * In case there are none, null will be returned.
-     *
-     * @param ray The ray which we find the intersections to the object
-     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
-     */
-    @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-
-        Vector u;
-        try {
-            u = center.subtract(ray.getP0());
-        } catch (IllegalArgumentException e) {
-            //p0 on the center point
-            return List.of(new GeoPoint(this, ray.getPoint(radius)));
-        }
-
-        //double tm = Math.abs(u.dotProduct(ray.getDir()));
-        double tm = u.dotProduct(ray.getDir());
-        double d2 = u.lengthSquared() - (tm * tm);
-        double checkValue = (radius * radius) - d2;
-
-        if (Util.alignZero(checkValue) <= 0)
-            // there are no intersections
-            return null;
-
-        double th = Math.sqrt(checkValue);
-        double t1 = tm + th;
-
-        if (Util.alignZero(t1) <= 0)
-            //if true, p0 is on the sphere or out of it => no points
-            return null;
-
-        double t2 = tm - th;
-        //if t2 <=0 don't take, else take both
-        if (Util.alignZero(t2) <= 0)
-            //if true, p0 on the sphere or in it => one point
-            return List.of(new GeoPoint(this, ray.getPoint(t1)));
-
-        //if pass all of this it mean p0 cross twice the sphere
-        return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
-    }
-
-    /**
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.
      *
@@ -171,6 +127,7 @@ public class Sphere extends Geometry {
         double th = Math.sqrt(checkValue);
         double t1 = tm + th;
 
+        List<GeoPoint> returnList;
         if (Util.alignZero(t1) <= 0 || Util.alignZero(t1 - maxDistance) > 0)
             //if true, p0 is on the sphere or out of it => no points
             return null;
@@ -179,7 +136,12 @@ public class Sphere extends Geometry {
         //if t2 <=0 don't take, else take both
         if (Util.alignZero(t2) <= 0 || Util.alignZero(t2 - maxDistance) > 0)
             //if true, p0 on the sphere or in it => one point
-            return List.of(new GeoPoint(this, ray.getPoint(t1)));
+            if (Util.alignZero(t1 - maxDistance) <= 0)
+                //if true so inside the distance we want so take it
+                return List.of(new GeoPoint(this, ray.getPoint(t1)));
+            else
+                //else out of distance do don't take anyone
+                return null;
 
         //if pass all of this it mean p0 cross twice the sphere
         return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));

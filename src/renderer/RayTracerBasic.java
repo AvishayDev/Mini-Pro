@@ -15,8 +15,17 @@ import java.util.List;
  */
 public class RayTracerBasic extends RayTracerBase {
 
+    /**
+     * the starting point for the k calculations
+     */
     private static final double INITIAL_K = 1.0;
+    /**
+     * stop parameter for the recursive functions - maximum level of deep
+     */
     private static final int MAX_CALC_COLOR_LEVEL = 10;
+    /**
+     * stop parameter for the recursive functions - minimum level of k effect
+     */
     private static final double MIN_CALC_COLOR_K = 0.001;
 
     /**
@@ -46,8 +55,8 @@ public class RayTracerBasic extends RayTracerBase {
      * calculated Color.
      * @param intersection  The closest intersection point
      * @param ray           The intersecting ray
-     * @param level
-     * @param k
+     * @param level         The level of deep (recursive value)
+     * @param k             The k value for calculations (recursive value)
      * @return The calculated Color
      */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
@@ -74,8 +83,8 @@ public class RayTracerBasic extends RayTracerBase {
      * double value of k and returns the calculated color.
      * @param gp    The closest intersection point
      * @param v     The vector of the intersecting ray
-     * @param level
-     * @param k
+     * @param level The level of deep (recursive value)
+     * @param k     The k value for calculations (recursive value)
      * @return The calculated color.
      */
     private Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k) {
@@ -130,10 +139,10 @@ public class RayTracerBasic extends RayTracerBase {
     /***
      * This is a private function that is being used by the functions calcColor and calcGlobalEffect.
      * It receives a ray, int value of level and double values of kx and kkx and returns the calculated color.
-     * @param ray
-     * @param level
-     * @param kx
-     * @param kkx
+     * @param ray   The new ray for reflection/refraction
+     * @param level The level of depp in the recursion
+     * @param kx    kR or kT value (reflection or refraction)
+     * @param kkx   The recursive value K multiply by kR or kT
      * @return The calculated Color.
      */
     private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {

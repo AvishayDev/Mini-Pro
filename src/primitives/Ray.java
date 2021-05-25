@@ -20,6 +20,9 @@ public class Ray {
     private final Vector dir;
 
 
+    /**
+     * the Delta to move the vector if needed
+     */
     private static final double DELTA = 0.1;
 
     /***

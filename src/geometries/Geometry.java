@@ -12,6 +12,7 @@ public abstract class Geometry implements Intersectable {
      */
     protected Color emission = Color.BLACK;
 
+
     /*
     Point3D minPoint;
     Point3D maxPoint;

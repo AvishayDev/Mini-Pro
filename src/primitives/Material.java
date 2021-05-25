@@ -28,9 +28,11 @@ public class Material {
      */
     public double kT = 0.0;
 
-    // for real images:
-    // kS = 8 * kT
-    // kD + ((kS/8) || kR) + kT <= 1
+    /*
+        for real images:
+        kS = 8 * kT
+        kD + ((kS/8) || kR) + kT <= 1
+    */
 
     /***
      * Empty constructor. This class is PDS, so use the setters to set values to kD, kS and Shininess instead.

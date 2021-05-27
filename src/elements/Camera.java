@@ -123,7 +123,6 @@ public class Camera {
         // 1) we calc the direction
         vTo = newDirectionPoint.subtract(p0).normalize();
         // 2) we calc the axisDir
-        Vector axisDir;
         try {
             vRight = vTo.crossProduct(Vector.Y).normalize();
             vUp = vRight.crossProduct(vTo).normalize();
@@ -142,16 +141,15 @@ public class Camera {
      * @return this object
      */
     public Camera rotate(double angle) {
+        //change from degrees
         double radians = Math.toRadians(angle);
 
         // we want to rotate vRight and vUp by the angle sent.
         // we use this formula to do it:
-        // Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 - cos(angle))
+        // Final Vector = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 - cos(angle))
         // K = vTo
         // V = vRight || vUp
 
-
-        //change to degrees
         double cosAngle = Math.cos(radians);
         double sinAngle = Math.sin(radians);
 
@@ -184,10 +182,9 @@ public class Camera {
         // K = the axis Vector
         // V = vRight || vUp
 
-
         boolean cosZero = Util.isZero(cosAngle);
         boolean sinZero = Util.isZero(sinAngle);
-        double KdotV = Util.alignZero(axisDir.dotProduct(vRight));
+        double kdotV = Util.alignZero(axisDir.dotProduct(vRight));
 
         //calculations for vRight
         Vector vFinal;
@@ -202,8 +199,8 @@ public class Camera {
                 vFinal = axisDir;
             }
             // + K * (K dot V) * (1 - cos(angle)) => cos(angle) == 0 => (1 - cos(angle)) == 1
-            if (KdotV != 0)
-                vFinal = vFinal.add(axisDir.scale(KdotV));
+            if (kdotV != 0)
+                vFinal = vFinal.add(axisDir.scale(kdotV));
 
         } else {
             // V * cos(angle)
@@ -222,8 +219,8 @@ public class Camera {
 
             // + K * (K dot V) * (1 - cos(angle))
 
-            if (KdotV != 0 && !Util.isZero(1 - cosAngle))
-                vFinal = vFinal.add(axisDir.scale(KdotV).scale(1 - cosAngle));
+            if (kdotV != 0 && !Util.isZero(1 - cosAngle))
+                vFinal = vFinal.add(axisDir.scale(kdotV).scale(1 - cosAngle));
 
         }
 
@@ -232,7 +229,7 @@ public class Camera {
 
         //calculations for vUp
 
-        KdotV = Util.alignZero(axisDir.dotProduct(vUp));
+        kdotV = Util.alignZero(axisDir.dotProduct(vUp));
         Vector vFinal1;
         if (cosZero) {
             //if cos == 0 => sin != 0
@@ -246,8 +243,8 @@ public class Camera {
             }
 
             // + K * (K dot V) * (1 - cos(angle)) => cos(angle) == 0 => (1 - cos(angle)) == 1
-            if (KdotV != 0)
-                vFinal1 = vFinal1.add(axisDir.scale(KdotV));
+            if (kdotV != 0)
+                vFinal1 = vFinal1.add(axisDir.scale(kdotV));
 
 
         } else {
@@ -264,11 +261,10 @@ public class Camera {
                 vFinal1 = axisDir;
             }
 
-
             // + K * (K dot V) * (1 - cos(angle))
 
-            if (KdotV != 0 && !Util.isZero(1 - cosAngle))
-                vFinal1 = vFinal1.add(axisDir.scale(KdotV).scale(1 - cosAngle));
+            if (kdotV != 0 && !Util.isZero(1 - cosAngle))
+                vFinal1 = vFinal1.add(axisDir.scale(kdotV).scale(1 - cosAngle));
 
         }
 

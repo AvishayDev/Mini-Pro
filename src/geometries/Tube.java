@@ -47,6 +47,12 @@ public class Tube extends Geometry {
         this.radius = radius;
     }
 
+
+    @Override
+    protected void findMinMax() {
+
+    }
+
     /***
      * Getter for the Normal vector of the tube? Null for now
      * @param point Point3D object

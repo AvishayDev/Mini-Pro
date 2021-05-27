@@ -149,6 +149,9 @@ public class Vector {
         return Math.sqrt(lengthSquared());
     }
 
+    public Vector divide(Vector vec){
+        return new Vector(getX()/ vec.getX(),getY()/vec.getY(),getZ()/vec.getZ());
+    }
     /***
      * This function normalize the current vector
      * @return The current vector, but now normalized

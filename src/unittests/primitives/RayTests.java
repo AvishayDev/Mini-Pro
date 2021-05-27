@@ -41,7 +41,7 @@ public class RayTests {
         // =============== Boundary Values Tests ==================
 
         //TC1-0: empty list
-        assertNull("TC1-0: empty list", ray.findClosestPoint(List.of()));
+        assertNull("TC1-0: empty list", ray.findClosestPoint(null));
 
         //TC1-1: first point in the list is the closet
 

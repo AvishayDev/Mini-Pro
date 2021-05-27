@@ -5,6 +5,7 @@ import static geometries.Intersectable.GeoPoint;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /***
  * Represents Ray with vector and 3D point.
@@ -25,7 +26,7 @@ public class Ray {
      */
     private static final double DELTA = 0.1;
 
-    /***
+    /**
      * Make's a Ray using vector and 3D point
      * @param vec vector for the ray
      * @param point point for the ray
@@ -35,28 +36,26 @@ public class Ray {
         p0 = point;
     }
 
-    /***
+    /**
      * Make's a Ray using vector and 3D point
      * @param point point for the ray
      * @param vec vector for the ray
      */
     public Ray(Point3D point, Vector vec) {
-        dir = vec.normalized();
-        p0 = point;
+        this(vec, point);
     }
 
-    /***
+    /**
      * Constructor for a secondary Ray using a vector, a 3D point and a normal vector.
      * by delta with the normal vector
      * @param point Intersection point
-     * @param vec Original Vector
+     * @param vec Original Vector - must be normalized
      * @param normal The normal from the intersection point
      */
     public Ray(Point3D point, Vector vec, Vector normal) {
-
         double normalDirAngle = normal.dotProduct(vec);
         Vector delta = normal.scale(normalDirAngle > 0 ? DELTA : -DELTA);
-        dir = vec.normalized();
+        dir = vec;
         p0 = point.add(delta);
     }
 
@@ -81,25 +80,13 @@ public class Ray {
      * @return The closest point to the head of the ray
      */
     public Point3D findClosestPoint(List<Point3D> points) {
-        if (points == null || points.isEmpty())
+        if (points == null)
             return null;
 
-        int pointsSize = points.size();
-        Point3D lowPoint = points.get(0);
-        Point3D optionalPoint;
-        double distance = p0.distance(lowPoint);
-        double distance2;
-
-        for (int i = 1; i < pointsSize; i++) {
-            optionalPoint = points.get(i);
-            distance2 = p0.distance(optionalPoint);
-            if (distance2 < distance) {
-                distance = distance2;
-                lowPoint = optionalPoint;
-            }
-        }
-
-        return lowPoint;
+        return findClosestGeoPoint( //
+                points.stream().map(p -> new GeoPoint(null,p)) //
+                        .collect(Collectors.toList()) //
+        ).point;
     }
 
     /***

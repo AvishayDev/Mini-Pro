@@ -34,6 +34,11 @@ public class Triangle extends Polygon {
                 '}';
     }
 
+
+    @Override
+    protected void findMinMax() {
+
+    }
     /**
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.
@@ -57,28 +62,30 @@ public class Triangle extends Polygon {
         Vector rayDir = ray.getDir();
         Vector vec1 = vertices.get(0).subtract(point0);
         Vector vec2 = vertices.get(1).subtract(point0);
-        Vector vec3 = vertices.get(2).subtract(point0);
         Vector normal1 = vec1.crossProduct(vec2).normalize();
-        Vector normal2 = vec2.crossProduct(vec3).normalize();
-        Vector normal3 = vec3.crossProduct(vec1).normalize();
 
         //calc signs
-        double checkSign1 = normal1.dotProduct(rayDir);
-        double checkSign2 = normal2.dotProduct(rayDir);
-        if (Util.alignZero(checkSign1 * checkSign2) <= 0)
+        double checkSign1 = Util.alignZero(normal1.dotProduct(rayDir));
+        if (checkSign1 == 0)
+            return null;
+
+        Vector vec3 = vertices.get(2).subtract(point0);
+        Vector normal2 = vec2.crossProduct(vec3).normalize();
+        double checkSign2 = Util.alignZero(normal2.dotProduct(rayDir));
+        if (checkSign1 * checkSign2 <= 0)
             //if least from zero => not equal signs
             //if zero => outside triangle
             return null;
 
+        Vector normal3 = vec3.crossProduct(vec1).normalize();
         //so use N1 sign to calc the N3 sign (don't care because N2 same sign)
-        checkSign1 = normal3.dotProduct(rayDir);
-        if (Util.alignZero(checkSign1 * checkSign2) <= 0)
+        checkSign1 = Util.alignZero(normal3.dotProduct(rayDir));
+        if (checkSign1 * checkSign2 <= 0)
             //if least from zero => not equal signs
             //if zero => outside triangle
             return null;
 
         planeIntersections.get(0).geometry = this;
         return planeIntersections;
-
     }
 }

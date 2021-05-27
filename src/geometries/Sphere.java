@@ -25,10 +25,11 @@ public class Sphere extends Geometry {
      * @param radius radius of the sphere
      */
     public Sphere(Point3D center, double radius) {
-        this.center = new Point3D(center.getX(), center.getY(), center.getZ());
+        this.center = center;
         if (Util.isZero(radius) || radius < 0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
+        //findMinMax();
     }
 
     /***
@@ -37,25 +38,18 @@ public class Sphere extends Geometry {
      * @param center center of the sphere
      */
     public Sphere(double radius, Point3D center) {
-        this.center = new Point3D(center.getX(), center.getY(), center.getZ());
-        if (Util.isZero(radius) || radius < 0)
-            throw new IllegalArgumentException("Please Don't Choose radius zero");
-        this.radius = radius;
+        this(center, radius);
     }
 
-    /***
-     * Make's Sphere from 3 coordinates and radius.
-     * From the 3 coordinates it make 3D point and use it
-     * @param x First coordinate for the 3D point
-     * @param y Second coordinate for the 3D point
-     * @param z Third coordinate for the 3D point
-     * @param radius Radius to the Sphere
-     */
-    public Sphere(Coordinate x, Coordinate y, Coordinate z, double radius) {
-        this.center = new Point3D(x, y, z);
-        if (Util.alignZero(radius) <= 0)
-            throw new IllegalArgumentException("Please Don't Choose radius zero");
-        this.radius = radius;
+    @Override
+    protected void findMinMax() {
+        minPoint[0] = center.getX() - radius;
+        minPoint[1] = center.getY() - radius;
+        minPoint[2] = center.getZ() - radius;
+
+        maxPoint[0] = center.getX() + radius;
+        maxPoint[1] = center.getY() + radius;
+        maxPoint[2] = center.getZ() + radius;
     }
 
     /***
@@ -65,7 +59,6 @@ public class Sphere extends Geometry {
      */
     @Override
     public Vector getNormal(Point3D point) {
-
         return point.subtract(center).normalize();
     }
 
@@ -128,22 +121,22 @@ public class Sphere extends Geometry {
         double t1 = tm + th;
 
         List<GeoPoint> returnList;
-        if (Util.alignZero(t1) <= 0 || Util.alignZero(t1 - maxDistance) > 0)
+        if (Util.alignZero(t1) <= 0)
             //if true, p0 is on the sphere or out of it => no points
             return null;
+        boolean checkMaxT1 = Util.alignZero(t1 - maxDistance) < 0;
 
         double t2 = tm - th;
+        if (Util.alignZero(t2 - maxDistance) >= 0)
+            return null;
         //if t2 <=0 don't take, else take both
-        if (Util.alignZero(t2) <= 0 || Util.alignZero(t2 - maxDistance) > 0)
+        if (Util.alignZero(t2) <= 0)
             //if true, p0 on the sphere or in it => one point
-            if (Util.alignZero(t1 - maxDistance) <= 0)
-                //if true so inside the distance we want so take it
-                return List.of(new GeoPoint(this, ray.getPoint(t1)));
-            else
-                //else out of distance do don't take anyone
-                return null;
+            return checkMaxT1 ? List.of(new GeoPoint(this, ray.getPoint(t1))) : null;
 
         //if pass all of this it mean p0 cross twice the sphere
-        return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
+        return checkMaxT1 //
+                ? List.of(new GeoPoint(this, ray.getPoint(t2)), new GeoPoint(this, ray.getPoint(t1))) //
+                : List.of(new GeoPoint(this, ray.getPoint(t2)));
     }
 }

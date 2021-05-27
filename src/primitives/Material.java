@@ -35,12 +35,6 @@ public class Material {
     */
 
     /***
-     * Empty constructor. This class is PDS, so use the setters to set values to kD, kS and Shininess instead.
-     */
-    public Material() {
-    }
-
-    /***
      * This method is a setter for the double field kD.
      * @param value the double value of kD.
      * @return This object of material, with the updated values.

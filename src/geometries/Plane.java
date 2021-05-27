@@ -44,6 +44,13 @@ public class Plane extends Geometry {
         normal = vec1.crossProduct(vec2).normalize();
     }
 
+
+
+    @Override
+    protected void findMinMax() {
+
+    }
+
     /***
      * This function returns the normal of the sphere? Null for now
      * @param point A point3D object

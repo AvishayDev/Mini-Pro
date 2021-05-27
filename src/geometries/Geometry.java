@@ -16,38 +16,13 @@ public abstract class Geometry implements Intersectable {
     protected Color emission = Color.BLACK;
 
 
-    /*
-    Point3D minPoint;
-    Point3D maxPoint;
 
-    private void findMinMax();
-    public boolean isIntersect(Ray ray) {
+    public double[] minPoint = new double[3];
+    public double[] maxPoint = new double[3];
 
-        A = min point
-        B = max point
-        O = p0 of ray
-        D = dir of ray
+    protected abstract void findMinMax();
 
-        1) find t's for may intersect by the equations:
-        tAx = (Ax - Ox) / Dx
-        tAy = (Ay - Oy) / Dy
-        tBx = (Bx - Ox) / Dx
-        tBy = (By - Oy) / Dy
 
-        for each t do:
-        if t >= 0
-            2) calc the point with the ray.getPoint(t)
-            3) if point Sustained this, so take it:
-                Ax < Px < Bx
-                Ay < Py < By
-                Az < Pz < Bz
-                return true;
-
-        - if all pass:
-            return false;
-    }
-
-    */
 
     /**
      * The material type of the 3D model object.

@@ -87,6 +87,12 @@ public class Polygon extends Geometry {
         }
     }
 
+
+    @Override
+    protected void findMinMax() {
+
+    }
+
     /***
      * This function returns the normal of the Polygon? Null for now
      * @param point A point3D object

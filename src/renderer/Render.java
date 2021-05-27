@@ -2,7 +2,6 @@ package renderer;
 
 import elements.*;
 import primitives.*;
-import scene.*;
 
 import java.util.MissingResourceException;
 

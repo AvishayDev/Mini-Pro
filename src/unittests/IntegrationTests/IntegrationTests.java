@@ -61,7 +61,7 @@ public class IntegrationTests {
 
         //TC0-2: Second sphere test case (r=2.5)
         sphere = new Sphere(new Point3D(0, 0, -2.5d), 2.5d);
-        camera.replaceCameraPosition(new Point3D(0, 0, 0.5));
+        camera.changeDirection(new Point3D(0, 0, 0.5), camera.getVTo().getHead());
         assertEquals("TC0-2: Second sphere test case (r=2.5)", 18,
                 cameraRaysIntersect(camera, 3, 3, sphere));
 

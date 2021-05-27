@@ -84,44 +84,4 @@ public class Material {
         return this;
     }
 
-    /***
-     * This method is a getter for the field kD.
-     * @return The kD value, in form of a double.
-     */
-    public double getKd() {
-        return kD;
-    }
-
-    /***
-     * This method is a getter for the field kS.
-     * @return The kS value, in form of a double.
-     */
-    public double getKs() {
-        return kS;
-    }
-
-    /***
-     * This method is a getter for the field nShininess.
-     * @return The nShininess value, in form of int.
-     */
-    public int getShininess() {
-        return nShininess;
-    }
-
-    /***
-     * This method is a getter for the field kR.
-     * @return The kR value, in form of a double.
-     */
-    public double getKr() {
-        return kR;
-    }
-
-    /***
-     * This method is a getter for the field kT.
-     * @return The kT value, in form of a double.
-     */
-    public double getKt() {
-        return kT;
-    }
-
 }

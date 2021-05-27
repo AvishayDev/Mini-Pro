@@ -40,7 +40,7 @@ public class SpotLight extends PointLight {
      * @param directionLight the direction of the light
      * @param narrowLight the narrow of the light (bigger then 1!)
      */
-    public SpotLight(Color light,  Point3D point,Vector directionLight, int narrowLight) {
+    public SpotLight(Color light, Point3D point, Vector directionLight, int narrowLight) {
         super(light, point);
         narrow = narrowLight;
         direction = directionLight.normalized();
@@ -57,14 +57,11 @@ public class SpotLight extends PointLight {
      */
     @Override
     public Color getIntensity(Point3D point) {
-        Color intensityReturn = super.getIntensity(point);
         double dotProDir = Util.alignZero(direction.dotProduct(getL(point)));
-        if (narrow != 1)
-            return dotProDir > 0 ? intensityReturn.scale(Math.pow(dotProDir, narrow)) : Color.BLACK;
-        else
-            return dotProDir > 0 ? intensityReturn.scale(dotProDir) : Color.BLACK;
-            //if angle <=0 the color is scaled by 0 so return black(0,0,0) => less calculations
-
+        if (dotProDir <= 0) return Color.BLACK; // behind the spot
+        if (narrow != 1) dotProDir = Math.pow(dotProDir, narrow); // if there is narrow at all
+        return super.getIntensity(point).scale(dotProDir);
+        //if angle <=0 the color is scaled by 0 so return black(0,0,0) => less calculations
     }
 
 }

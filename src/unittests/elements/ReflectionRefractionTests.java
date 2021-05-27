@@ -128,7 +128,7 @@ public class ReflectionRefractionTests {
 	@Test
 	public void twoSpheresOurTest() {
 		Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setViewPlaneSize(150, 150).setDistance(1000).changeDirection(new Point3D(1000,1000,1000),new Point3D(0,0,-50)).changeAngle(220);
+				.setViewPlaneSize(150, 150).setDistance(1000).changeDirection(new Point3D(1000,1000,1000),new Point3D(0,0,-50)).rotate(220);
 
 		scene.geometries.add( //
 				new Sphere( new Point3D(0, 0, -50),50) //

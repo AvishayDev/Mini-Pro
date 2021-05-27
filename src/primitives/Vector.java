@@ -11,6 +11,21 @@ public class Vector {
      */
     Point3D head;
 
+    /**
+     * X-axis unit vector
+     */
+    public static final Vector X = new Vector(1,0,0);
+
+    /**
+     * Y-axis unit vector
+     */
+    public static final Vector Y = new Vector(0,1,0);
+
+    /**
+     * Z-axis unit vector
+     */
+    public static final Vector Z = new Vector(0,0,1);
+
     /***
      * This constructor gets 3 coordinates and returns a vector that include those values
      * @param x Coordinate x

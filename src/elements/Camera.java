@@ -40,7 +40,6 @@ public class Camera {
      * @param vUp Vector of emulated Y axis
      */
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
-
         if (vUp.dotProduct(vTo) != 0)
             throw new IllegalArgumentException("Only vUp orthogonal to vTo accepted!");
 
@@ -118,43 +117,22 @@ public class Camera {
      * @return this object
      */
     public Camera changeDirection(Point3D newPositionPoint, Point3D newDirectionPoint) {
-
         //replace camera position
-        replaceCameraPosition(newPositionPoint);
+        p0 = newPositionPoint;
 
         // 1) we calc the direction
-        Vector newVto = newDirectionPoint.subtract(p0).normalize();
+        vTo = newDirectionPoint.subtract(p0).normalize();
         // 2) we calc the axisDir
         Vector axisDir;
         try {
-            axisDir = vTo.crossProduct(newVto).normalize();
+            vRight = vTo.crossProduct(Vector.Y).normalize();
+            vUp = vRight.crossProduct(vTo).normalize();
         } catch (IllegalArgumentException e) {
-            //if catch its mean the new vector is parallel to vTo so the angle
-            // is 180 and need only to scale everything by -1
-            if (vTo.dotProduct(newVto) < 0) {
-                //its mean they the opposite direction so change by 180
-                //degrees easily by scaling by -1
-                vTo = vTo.scale(-1);
-                vRight = vRight.scale(-1);
-                vUp = vUp.scale(-1);
-            }
-            //else its mean the same direction so don't do nothing..
-            return this;
+            vUp = Vector.Z;
+            vRight = vTo.crossProduct(vUp).normalize();
         }
-
-        //if not parallel os do the regular calculations
-        // 3) calc the cos(angle)
-        double cosAngle = vTo.dotProduct(newVto);
-        // 3) calc the sin(angle)
-        double sinAngle = vTo.crossProduct(newVto).length();
-        // 4) change the vRight & vUp along the new axisDir
-        angleChange(axisDir, cosAngle, sinAngle);
-        // 5) finally change the vTo
-        vTo = newVto;
-
         return this;
     }
-
 
     /***
      * Builder pattern
@@ -163,8 +141,8 @@ public class Camera {
      * @param angle the angle to change by DEGREES!
      * @return this object
      */
-    public Camera changeAngle(double angle) {
-
+    public Camera rotate(double angle) {
+        double radians = Math.toRadians(angle);
 
         // we want to rotate vRight and vUp by the angle sent.
         // we use this formula to do it:
@@ -174,49 +152,17 @@ public class Camera {
 
 
         //change to degrees
-        double cosAngle = Math.cos((angle * Math.PI) / 180);
-        double sinAngle = Math.sin((angle * Math.PI) / 180);
+        double cosAngle = Math.cos(radians);
+        double sinAngle = Math.sin(radians);
 
-        boolean cosZero = Util.isZero(cosAngle);
-        boolean sinZero = Util.isZero(sinAngle);
+        if (Util.isZero(sinAngle))
+            vUp = vUp.scale(cosAngle).normalize();
+        else if (Util.isZero(cosAngle))
+            vUp = vRight.scale(sinAngle).normalize();
+        else
+            vUp = vUp.scale(cosAngle).add(vRight.scale(sinAngle)).normalize();
 
-
-        // + K * (K dot V) * (1 - cos(angle)) => K dot V is always 0
-
-        //calculations for vRight
-        Vector vFinal;
-        if (cosZero) {
-            //if cos == 0 => sin != 0
-            // + (K x V) * sin(angle)
-            vFinal = vTo.crossProduct(vRight).scale(sinAngle);
-        } else {
-            // V * cos(angle)
-            vFinal = vRight.scale(cosAngle);
-            if (!sinZero) {
-                //if sin == 0 => cos != 0
-                // + (K x V) * sin(angle)
-                vFinal = vFinal.add(vTo.crossProduct(vRight).scale(sinAngle));
-            }
-        }
-        vRight = vFinal.normalize();
-
-        //calculations for vUp
-        Vector vFinal1;
-        if (cosZero) {
-            //if cos == 0 => sin != 0
-            // + (K x V) * sin(angle)
-            vFinal1 = vTo.crossProduct(vUp).scale(sinAngle);
-        } else {
-            // V * cos(angle)
-            vFinal1 = vUp.scale(cosAngle);
-            if (!sinZero) {
-                //if sin == 0 => cos != 0
-                // + (K x V) * sin(angle)
-                vFinal1 = vFinal1.add(vTo.crossProduct(vUp).scale(sinAngle));
-            }
-        }
-
-        vUp = vFinal1.normalize();
+        vRight = vTo.crossProduct(vUp).normalize();
 
         return this;
     }
@@ -328,14 +274,6 @@ public class Camera {
 
         vUp = vFinal1.normalize();
 
-    }
-
-    /***
-     * This method changes the location point of the Camera
-     * @param point A Point3D which will be the the new location of the camera
-     */
-    public void replaceCameraPosition(Point3D point) {
-        p0 = point;
     }
 
     /***

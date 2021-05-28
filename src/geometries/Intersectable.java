@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * This interface includes one method that finds the intersections between the current object a ray
  */
-public interface Intersectable {
+public interface Intersectable{
 
     /**
      * This class represents a point on some geometry and the geometry that the point is on it.

@@ -36,4 +36,12 @@ public abstract class RayTracerBase {
      */
     public abstract Color traceRay(Ray ray);
 
+    /***
+     * this function calculate the color of the pixel
+     * the rays cross
+     * @param rays the list of rays from the camera throw the scene
+     * @return the color of the pixel of the ray
+     */
+    public abstract Color traceRays(List<Ray> rays);
+
 }

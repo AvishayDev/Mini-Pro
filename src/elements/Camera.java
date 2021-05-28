@@ -5,6 +5,7 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
+import unittests.renderer.BlackBoard;
 
 import javax.naming.NoInitialContextException;
 import java.awt.*;
@@ -31,6 +32,14 @@ public class Camera {
     private double height;
     // distance is a double value the indicates how far the p0 is from the center of the view plane
     private double distance;
+    // This Point3D will store the center of the view plane
+    private Point3D pCenter;
+    // This variable stores the focal distance, which is the distance between p0 to the focal board.
+    private double focalDistance;
+    // todo note
+    private double apertureHeight;
+    // todo note
+    private double apertureWidth;
 
     /***
      * Constructor for Camera, that receives initial starting point, VectorTo (Z axis), VectorUp (Y axis)
@@ -47,22 +56,21 @@ public class Camera {
         this.vUp = vUp.normalized();
         this.vTo = vTo.normalized();
         this.vRight = vTo.crossProduct(vUp).normalize(); // Vector of emulated X axis
+        this.pCenter = p0.add(vTo.scale(distance));
 
     }
 
-    /***
-     * make a Ray from the p0 and intersect the
-     * center of a pixel
+    /**
+     * Find the Point3D value on the View Plane, given the amount of pixels in it and the number of pixels
+     * it is from the center.
+     *
      * @param nX number of pixels in X axis
-     * @param nY number of pixels in X axis
-     * @param j place form center pixel in x axis
-     * @param i place form center pixel in y axis
-     * @return ray from p0 to center of pixel place
+     * @param nY number of pixels in Y axis
+     * @param j  place form center pixel in X axis
+     * @param i  place form center pixel in Y axis
+     * @return The Point3D of the Center of the pixel.
      */
-    public Ray constructRay(int nX, int nY, int j, int i) {
-
-        // Image center
-        Point3D pC = p0.add(vTo.scale(distance));
+    private Point3D findCenterPixel(int nX, int nY, int j, int i) {
 
         // Ratio (pixel width & height)
         double rY = this.height / (double) nY;
@@ -75,12 +83,53 @@ public class Camera {
 
         if (!Util.isZero(xJ))
             //use pC instead of pIJ
-            pC = pC.add(vRight.scale(xJ)); // Need another check later, different from presentation
+            pCenter = pCenter.add(vRight.scale(xJ));
         if (!Util.isZero(yI))
-            pC = pC.add(vUp.scale(yI));
+            pCenter = pCenter.add(vUp.scale(yI));
 
+        return pCenter;
+    }
+
+    /***
+     * make a Ray from the p0 and intersect the
+     * center of a pixel
+     * @param nX    number of pixels in X axis
+     * @param nY    number of pixels in Y axis
+     * @param j     place form center pixel in X axis
+     * @param i     place form center pixel in Y axis
+     * @return ray from p0 to center of pixel place
+     */
+    public Ray constructRay(int nX, int nY, int j, int i) {
+
+        // The center of the pixel that we received
+        Point3D pC = findCenterPixel(nX, nY, j, i);
+
+        // A ray from the camera position to the center of the received pixel.
         return new Ray(pC.subtract(p0), p0);
     }
+
+    public Point3D findFocalPoint(Ray ray) {
+        double t = focalDistance / (ray.getDir().dotProduct(vTo));
+        return ray.getPoint(t);
+    }
+
+    public List<Ray> constructDOFRays(int nX, int nY, int j, int i, int numOfRays) {
+        // First step - create the ray to center of the pixel
+        Ray centerRay = constructRay(nX, nY, j, i);
+        // Second step - calculate focal point
+        Point3D focalPoint = findFocalPoint(centerRay);
+        // Third step - Create points on the aperture
+        List<Point3D> points = BlackBoard.FindPoints(p0, apertureHeight, apertureWidth, vUp, vRight, numOfRays);
+        // Create rays from points to the focal point.
+        return BlackBoard.raysFromPointToPoints(focalPoint,points, true);
+    }
+
+    /*public Ray constructRays(int nX, int nY, int j, int i){
+        List<Ray> rays = new LinkedList<>();
+        rays.add(constructRay(nX,nY, j, i));
+
+        return BlackBoard.raysFromPointToPoints()
+    }*/
 
     /***
      * This method receives 2 doubles and inserts them as the camera's width and height values, as long as they're valid (bigger than 0).
@@ -98,14 +147,41 @@ public class Camera {
     }
 
     /***
+     * This method receives 2 doubles and inserts them as the camera's width and height values, as long as they're valid (bigger than 0).
+     * @param width The width of the View Plane
+     * @param height The height of the View Plane
+     * @return This camera, with the updated values. Not a clone.
+     */
+    public Camera setApertureSize(double width, double height) {
+        if (Util.alignZero(width) <= 0 || Util.alignZero(height) <= 0)
+            throw new IllegalArgumentException("ViewPlane size must be positive!");
+
+        this.apertureWidth = width;
+        this.apertureHeight = height;
+        return this;
+    }
+
+    /***
      * This method receives a double and inserts it as the distance between the camera and the view plane
      * @param distance The distance between the camera and the view plane
      * @return This camera, with the updated values. Not a clone.
      */
     public Camera setDistance(double distance) {
         if (distance <= 0)
-            throw new IllegalArgumentException("ViewPlane distance must be positive!");
+            throw new IllegalArgumentException("View Plane distance must be positive!");
         this.distance = distance;
+        return this;
+    }
+
+    /***
+     * This method receives a double and inserts it as the distance between the camera and the Focal plane
+     * @param distance The distance between the camera and the Focal plane
+     * @return This camera, with the updated values. Not a clone.
+     */
+    public Camera setFocalDistance(double distance) {
+        if (distance <= 0)
+            throw new IllegalArgumentException("Focal Plane distance must be positive!");
+        this.focalDistance = distance;
         return this;
     }
 
@@ -130,6 +206,9 @@ public class Camera {
             vUp = Vector.Z;
             vRight = vTo.crossProduct(vUp).normalize();
         }
+
+        this.pCenter = p0.add(vTo.scale(distance));
+
         return this;
     }
 
@@ -161,6 +240,8 @@ public class Camera {
             vUp = vUp.scale(cosAngle).add(vRight.scale(sinAngle)).normalize();
 
         vRight = vTo.crossProduct(vUp).normalize();
+
+        this.pCenter = p0.add(vTo.scale(distance));
 
         return this;
     }

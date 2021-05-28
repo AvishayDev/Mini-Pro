@@ -154,7 +154,7 @@ public class RayTracerBasic extends RayTracerBase {
      * Calculates the final color of point in geometry with all the light effects
      *
      * @param intersection the geometry with the point needs to be colorized
-     * @param v          the ray direction that cross the geometry
+     * @param v            the ray direction that cross the geometry
      * @return the final color after adding light effects
      */
     private Color calcLocalEffects(GeoPoint intersection, Vector v, double k) {
@@ -230,5 +230,14 @@ public class RayTracerBasic extends RayTracerBase {
         Vector r = l.subtract(n.scale(2 * l.dotProduct(n)));
         double angle = -alignZero(v.dotProduct(r));
         return angle > 0 ? ks * Math.pow(angle, nShininess) : 0.0;
+    }
+
+    public Color traceRays(List<Ray> rays) {
+        Color finalColor = Color.BLACK;
+        for (Ray ray : rays) {
+            finalColor = finalColor.add(traceRay(ray));
+        }
+        finalColor.scale(1d/rays.size());
+        return finalColor;
     }
 }

@@ -1,15 +1,11 @@
 package elements;
 
-import geometries.Intersectable;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 import unittests.renderer.BlackBoard;
 
-import javax.naming.NoInitialContextException;
-import java.awt.*;
-import java.util.LinkedList;
 import java.util.List;
 
 /***
@@ -33,7 +29,7 @@ public class Camera {
     // distance is a double value the indicates how far the p0 is from the center of the view plane
     private double distance;
     // This Point3D will store the center of the view plane
-    private Point3D pCenter;
+    private Point3D viewPlaneCenter;
     // This variable stores the focal distance, which is the distance between p0 to the focal board.
     private double focalDistance;
     // todo note
@@ -58,8 +54,8 @@ public class Camera {
         this.vUp = vUp.normalized();
         this.vTo = vTo.normalized();
         this.vRight = vTo.crossProduct(vUp).normalize(); // Vector of emulated X axis
-        this.pCenter = p0.add(vTo.scale(distance));
-        apertureCenter = pCenter;
+        this.viewPlaneCenter = p0.add(vTo.scale(distance));
+        apertureCenter = p0;
     }
 
     /**
@@ -74,6 +70,8 @@ public class Camera {
      */
     private Point3D findCenterPixel(int nX, int nY, int j, int i) {
 
+        Point3D pixelCenter = viewPlaneCenter;
+
         // Ratio (pixel width & height)
         double rY = this.height / (double) nY;
         double rX = this.width / (double) nX;
@@ -84,11 +82,11 @@ public class Camera {
 
         if (!Util.isZero(xJ))
             //use pC instead of pIJ
-            pCenter = pCenter.add(vRight.scale(xJ));
+            pixelCenter = pixelCenter.add(vRight.scale(xJ));
         if (!Util.isZero(yI))
-            pCenter = pCenter.add(vUp.scale(yI));
+            pixelCenter = pixelCenter.add(vUp.scale(yI));
 
-        return pCenter;
+        return pixelCenter;
     }
 
     /***
@@ -220,7 +218,12 @@ public class Camera {
             vRight = vTo.crossProduct(vUp).normalize();
         }
 
-        this.pCenter = p0.add(vTo.scale(distance));
+        this.viewPlaneCenter = p0.add(vTo.scale(distance));
+
+        //calc the previous distance
+        double apertureDistance = p0.distance(apertureCenter);
+        if(!Util.isZero(apertureDistance))
+            this.apertureCenter = p0.add(vTo.scale(apertureDistance));
 
         return this;
     }
@@ -254,7 +257,7 @@ public class Camera {
 
         vRight = vTo.crossProduct(vUp).normalize();
 
-        this.pCenter = p0.add(vTo.scale(distance));
+        //this.viewPlaneCenter = p0.add(vTo.scale(distance));
 
         return this;
     }

@@ -31,16 +31,16 @@ public class LightsTests {
     private static Geometry sphere = new Sphere(new Point3D(0, 0, -120), 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
-    private static Geometries square = new Geometries(new Polygon(new Point3D(0,0,-50),new Point3D(50,0,-100),new Point3D(50,50,-150),new Point3D(0,50,-100))
-                                                        .setEmission(new Color(java.awt.Color.BLUE)) //
-                                                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-            new Polygon(new Point3D(0,0,-50),new Point3D(-50,0,-100),new Point3D(-50,50,-150),new Point3D(0,50,-100))
+    private static Geometries square = new Geometries(new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, 50, -150), new Point3D(0, 50, -100))
+            .setEmission(new Color(java.awt.Color.BLUE)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
+            new Polygon(new Point3D(0, 0, -50), new Point3D(-50, 0, -100), new Point3D(-50, 50, -150), new Point3D(0, 50, -100))
                     .setEmission(new Color(java.awt.Color.BLUE)) //
                     .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-            new Polygon(new Point3D(0,0,-50),new Point3D(-50,0,-100),new Point3D(-50,-50,-150),new Point3D(0,-50,-100))
+            new Polygon(new Point3D(0, 0, -50), new Point3D(-50, 0, -100), new Point3D(-50, -50, -150), new Point3D(0, -50, -100))
                     .setEmission(new Color(java.awt.Color.BLUE)) //
                     .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-            new Polygon(new Point3D(0,0,-50),new Point3D(50,0,-100),new Point3D(50,-50,-150),new Point3D(0,-50,-100))
+            new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, -50, -150), new Point3D(0, -50, -100))
                     .setEmission(new Color(java.awt.Color.BLUE)) //
                     .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100))
     );
@@ -239,7 +239,13 @@ public class LightsTests {
      */
     @Test
     public void DOFTests() {
+        camera1.setFocalDistance(1200).setApertureSize(20, 20);
+        Triangle triangle = new Triangle(new Point3D(50, 50, -200), new Point3D(100, 50, -200),
+                new Point3D(50, 100, -200));
+        triangle.setEmission(new Color(java.awt.Color.BLUE)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
         scene1.geometries.add(sphere);
+        scene1.geometries.add(triangle);
         scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-50, -50, 50))//
                 .setKl(0.00001).setKq(0.000001));
 
@@ -247,7 +253,8 @@ public class LightsTests {
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
-                .setRayTracer(new RayTracerBasic(scene1));
+                .setRayTracer(new RayTracerBasic(scene1))
+                .setDepthOfField(true).setNumOfRays(50);
         render.renderImage();
         render.writeToImage();
     }

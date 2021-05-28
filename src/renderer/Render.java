@@ -135,11 +135,13 @@ public class Render {
         return this;
     }
 
-    public void setDepthOfField(boolean depthOfField) {
+    public Render setDepthOfField(boolean depthOfField) {
         this.depthOfField = depthOfField;
+        return this;
     }
 
-    public void setNumOfRays(int numOfRays) {
+    public Render setNumOfRays(int numOfRays) {
         this.numOfRays = numOfRays;
+        return this;
     }
 }

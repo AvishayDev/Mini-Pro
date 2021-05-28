@@ -69,7 +69,6 @@ public class Camera {
         double rX = this.width / (double) nX;
 
         // Pixel[i,j] center
-
         double yI = -(i - ((nY - 1) / 2d)) * rY;
         double xJ = (j - ((nX - 1) / 2d)) * rX;
 

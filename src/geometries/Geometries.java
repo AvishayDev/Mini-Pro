@@ -23,6 +23,7 @@ public class Geometries implements Intersectable {
      * create EMPTY list of geometries
      */
     public Geometries() {
+        //findMinMax();
     }
 
     /***
@@ -31,6 +32,7 @@ public class Geometries implements Intersectable {
      * @param geometries all the geometries
      */
     public Geometries(Intersectable... geometries) {
+        this();
         add(geometries);
     }
 
@@ -55,7 +57,7 @@ public class Geometries implements Intersectable {
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
-            //if (isIntersect((Geometry) g, ray)) {
+            //if (isIntersect((Geometry)g,ray)) {
             saveList = g.findGeoIntersections(ray, maxDistance);
             if (saveList != null)
                 if (returnList == null)
@@ -67,163 +69,72 @@ public class Geometries implements Intersectable {
         return returnList;
     }
 
-    /*
-        private boolean isIntersect(Geometry geo, Ray ray) {
+/*
+    public boolean isIntersect(Geometry geo, Ray ray) {
 
-            //A = minPoint;
-            //B = max point
-            //O = p0 of ray
-            Point3D oPoint = ray.getP0();
-            //D = dir of ray
-            Vector rayDir = ray.getDir();
+        Point3D origin = ray.getP0();
+        double originX = origin.getX();
+        double originY = origin.getY();
+        double originZ = origin.getZ();
+        Vector dir = ray.getDir();
+        double dirX = dir.getX();
+        double dirY = dir.getY();
+        double dirZ = dir.getZ();
 
-            //1) find t's for may intersect by the equations:
-            double t = Double.POSITIVE_INFINITY;
-            double optional;
+        double tmin;
+        double tmax;
 
-            // tAx = (Ax - Ox) / Dx
-            optional = Util.alignZero((geo.minPoint[0] - oPoint.getX()) / rayDir.getX());
-            if (optional >= 0 && optional < t)
-                t = optional;
+        if (Util.alignZero(dir.getX()) >= 0) {
+            tmin = (geo.minPoint[0] - originX) / dirX;
+            tmax = (geo.maxPoint[0] - originX) / dirX;
+        } else {
+            tmin = (geo.maxPoint[0] - originX) / dirX;
+            tmax = (geo.minPoint[0] - originX) / dirX;
+        }
 
-            // tAy = (Ay - Oy) / Dy
-            optional = Util.alignZero((geo.minPoint[1] - oPoint.getY()) / rayDir.getY());
-            if (optional >= 0 && optional < t)
-                t = optional;
-
-            // tAz = (Az - Oz) / Dz
-            optional = Util.alignZero((geo.minPoint[2] - oPoint.getZ()) / rayDir.getZ());
-            if (optional >= 0 && optional < t)
-                t = optional;
-
-            Point3D optionalPoint;
-            if (t != 0)
-                optionalPoint = ray.getPoint(t);
-            else
-                optionalPoint = oPoint;
-            if (geo.minPoint[0] <= optionalPoint.getX() && optionalPoint.getX() <= geo.maxPoint[0] &&
-                    geo.minPoint[1] <= optionalPoint.getY() && optionalPoint.getY() <= geo.maxPoint[1] &&
-                    geo.minPoint[2] <= optionalPoint.getZ() && optionalPoint.getZ() <= geo.maxPoint[2])
-                return true;
-
-            t = Double.POSITIVE_INFINITY;
-            // tBx = (Bx - Ox) / Dx
-            optional = Util.alignZero((geo.maxPoint[0] - oPoint.getX()) / rayDir.getX());
-            if (optional >= 0 && optional < t)
-                t = optional;
-
-            // tBy = (By - Oy) / Dy
-            optional = Util.alignZero((geo.maxPoint[1] - oPoint.getY()) / rayDir.getY());
-            if (optional >= 0 && optional < t)
-                t = optional;
-
-            // tBz = (Bz - Oz) / Dz
-            optional = Util.alignZero((geo.maxPoint[2] - oPoint.getZ()) / rayDir.getZ());
-            if (optional >= 0 && optional < t)
-                t = optional;
-
-
-            if (t != 0)
-                optionalPoint = ray.getPoint(t);
-            else
-                optionalPoint = oPoint;
-            if (geo.minPoint[0] <= optionalPoint.getX() && optionalPoint.getX() <= geo.maxPoint[0] &&
-                    geo.minPoint[1] <= optionalPoint.getY() && optionalPoint.getY() <= geo.maxPoint[1] &&
-                    geo.minPoint[2] <= optionalPoint.getZ() && optionalPoint.getZ() <= geo.maxPoint[2])
-                return true;
-
-            //if pass all its mean there is no intersections
-            //so dont calc
-            return false;
+        double tymin;
+        double tymax;
+        if (Util.alignZero(dir.getY()) >= 0) {
+            tymin = (geo.minPoint[1] - originY) / dirY;
+            tymax = (geo.maxPoint[1] - originY) / dirY;
+        } else {
+            tymin = (geo.maxPoint[1] - originY) / dirY;
+            tymax = (geo.minPoint[1] - originY) / dirY;
         }
 
 
-    private boolean isIntersect(Geometry geo, Ray ray) {
-        //A = minPoint;
-        //B = max point
-        //O = p0 of ray
-        Point3D oPoint = ray.getP0();
-        //D = dir of ray
-        Vector rayDir = ray.getDir();
-
-        //1) find t's for may intersect by the equations:
-
-        // tAx = (Ax - Ox) / Dx
-        double tx = Util.alignZero((geo.minPoint[0] - oPoint.getX()) / rayDir.getX());
-
-        // tBy = (By - Oy) / Dy
-        double ty = Util.alignZero((geo.maxPoint[1] - oPoint.getY()) / rayDir.getY());
-
-        if (tx >= ty && ty != Double.POSITIVE_INFINITY && tx != Double.POSITIVE_INFINITY)
+        if ((tmin > tymax) || (tymin > tmax))
             return false;
 
-        // tAy = (Ay - Oy) / Dy
-        ty = Util.alignZero((geo.minPoint[1] - oPoint.getY()) / rayDir.getY());
+        if (tymin > tmin)
+            tmin = tymin;
 
-        // tBx = (Bx - Ox) / Dx
-        tx = Util.alignZero((geo.maxPoint[0] - oPoint.getX()) / rayDir.getX());
+        if (tymax < tmax)
+            tmax = tymax;
 
-        if (ty >= tx && ty != Double.POSITIVE_INFINITY && tx != Double.POSITIVE_INFINITY)
+        double tzmin;
+        double tzmax;
+
+        if (Util.alignZero(dir.getZ()) >= 0) {
+            tzmin = (geo.minPoint[2] - originZ) / dirZ;
+            tzmax = (geo.maxPoint[2] - originZ) / dirZ;
+        } else {
+            tzmin = (geo.maxPoint[2] - originZ) / dirZ;
+            tzmax = (geo.minPoint[2] - originZ) / dirZ;
+        }
+
+        if ((tmin > tzmax) || (tzmin > tmax))
             return false;
+
+        if (tzmin > tmin)
+            tmin = tzmin;
+
+        if (tzmax < tmax)
+            tmax = tzmax;
 
         return true;
     }
 
-     */
-    /*
-    private boolean isIntersect(Geometry geo, Ray ray) {
-
-        double[] xt = CheckAxis(transRay.origin.x, transRay.direction.x);
-        double[] yt = CheckAxis(transRay.origin.y, transRay.direction.y);
-        double[] zt = CheckAxis(transRay.origin.z, transRay.direction.z);
-
-        double tMin = Math.Max(Math.Max(xt[0], yt[0]), zt[0]);
-        double tMax = Math.Min(Math.Min(xt[1], yt[1]), zt[1]);
-
-        List<Intersection> xs = new List<Intersection>();
-
-        if (tMin > tMax)
-        {
-            return xs;
-        }
-
-        xs.Add(new Intersection(this, tMin));
-        xs.Add(new Intersection(this, tMax));
-        return xs;
-    }
-
-    private double[] CheckAxis(double origin, double direction)
-    {
-
-        double[] t = new double[2];
-
-        double tMinNumerator = (-1 - origin);
-        double tMaxNumerator = (1 - origin);
-
-        if(direction < 0)
-            direction = -direction;
-        //Infinities might pop here due to division by zero
-        if (direction >= 0.001)
-        {
-            t[0] = tMinNumerator / direction;
-            t[1] = tMaxNumerator / direction;
-        }
-        else
-        {
-            t[0] = tMinNumerator * Double.POSITIVE_INFINITY;
-            t[1] = tMaxNumerator * Double.POSITIVE_INFINITY;
-        }
-
-        if(t[0] > t[1])
-        {
-            double temp = t[0];
-            t[0] = t[1];
-            t[1] = temp;
-        }
-
-        return t;
-    }
-
-     */
+ */
 }
 

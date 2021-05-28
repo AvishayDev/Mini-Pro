@@ -29,7 +29,7 @@ public class Sphere extends Geometry {
         if (Util.isZero(radius) || radius < 0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
         this.radius = radius;
-        //findMinMax();
+        findMinMax();
     }
 
     /***
@@ -42,7 +42,8 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    protected void findMinMax() {
+    public void findMinMax() {
+        /*
         minPoint[0] = center.getX() - radius;
         minPoint[1] = center.getY() - radius;
         minPoint[2] = center.getZ() - radius;
@@ -50,6 +51,7 @@ public class Sphere extends Geometry {
         maxPoint[0] = center.getX() + radius;
         maxPoint[1] = center.getY() + radius;
         maxPoint[2] = center.getZ() + radius;
+         */
     }
 
     /***

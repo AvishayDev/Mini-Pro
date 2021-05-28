@@ -36,7 +36,7 @@ public class Triangle extends Polygon {
 
 
     @Override
-    protected void findMinMax() {
+    public void findMinMax() {
 
     }
     /**

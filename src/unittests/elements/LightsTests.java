@@ -79,7 +79,7 @@ public class LightsTests {
     public void FunTests() {
 
         //camera1.changeAngle(30);
-        //scene1.geometries.add(square);
+        scene1.geometries.add(square);
         scene1.geometries.add(cylinder);
         //scene1.geometries.add(tube);
         scene1.lights.add(new PointLight(new Color(100, 400, 100), new Point3D(50, 50, -50)));

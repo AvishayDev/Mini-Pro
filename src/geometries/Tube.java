@@ -49,7 +49,7 @@ public class Tube extends Geometry {
 
 
     @Override
-    protected void findMinMax() {
+    public void findMinMax() {
 
     }
 

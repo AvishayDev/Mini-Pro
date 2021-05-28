@@ -89,8 +89,46 @@ public class Polygon extends Geometry {
 
 
     @Override
-    protected void findMinMax() {
+    public void findMinMax() {
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        double maxZ = Double.NEGATIVE_INFINITY;
 
+        for (Point3D p : vertices) {
+            double pX = p.getX();
+            double pY = p.getY();
+            double pZ = p.getZ();
+            //calc min
+            if (pX < minX)
+                minX = pX;
+            if (pY < minY)
+                minY = pY;
+            if (pZ < minZ)
+                minZ = pZ;
+
+            //calc max
+            if (pX > maxX)
+                maxX = pX;
+            if (pY > maxY)
+                maxY = pY;
+            if (pZ > maxZ)
+                maxZ = pZ;
+        }
+
+        /*
+        //reset min
+        minPoint[0] = minX;
+        minPoint[1] = minY;
+        minPoint[2] = minZ;
+
+        //reset max
+        maxPoint[0] = minX;
+        maxPoint[1] = minY;
+        maxPoint[2] = minZ;
+*/
     }
 
     /***
@@ -114,7 +152,7 @@ public class Polygon extends Geometry {
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
-        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray,maxDistance);
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxDistance);
         //because we care about the distance in the plane we
         //don't need to care about it here
 

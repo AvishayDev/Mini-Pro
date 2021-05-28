@@ -47,7 +47,7 @@ public class Plane extends Geometry {
 
 
     @Override
-    protected void findMinMax() {
+    public void findMinMax() {
 
     }
 

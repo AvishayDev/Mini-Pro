@@ -41,6 +41,8 @@ public class Camera {
     // todo note
     private double apertureWidth;
 
+    private Point3D apertureCenter;
+
     /***
      * Constructor for Camera, that receives initial starting point, VectorTo (Z axis), VectorUp (Y axis)
      * VectorRight (X axis) will be calculated inside the constructor
@@ -57,7 +59,7 @@ public class Camera {
         this.vTo = vTo.normalized();
         this.vRight = vTo.crossProduct(vUp).normalize(); // Vector of emulated X axis
         this.pCenter = p0.add(vTo.scale(distance));
-
+        apertureCenter = pCenter;
     }
 
     /**
@@ -118,9 +120,9 @@ public class Camera {
         // Second step - calculate focal point
         Point3D focalPoint = findFocalPoint(centerRay);
         // Third step - Create points on the aperture
-        List<Point3D> points = BlackBoard.FindPoints(p0, apertureHeight, apertureWidth, vUp, vRight, numOfRays);
-        // Create rays from points to the focal point.
-        return BlackBoard.raysFromPointToPoints(focalPoint,points, true);
+        List<Point3D> points = BlackBoard.FindPoints(apertureCenter, apertureHeight, apertureWidth, vUp, vRight, numOfRays);
+        // Fourth step - Create rays from points to the focal point.
+        return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
     }
 
     /*public Ray constructRays(int nX, int nY, int j, int i){
@@ -185,6 +187,18 @@ public class Camera {
     }
 
     /***
+     * This method receives a double and inserts it as the distance between the camera and the view plane
+     * @param distance The distance between the camera and the view plane
+     * @return This camera, with the updated values. Not a clone.
+     */
+    public Camera setAperturePoint(double distance) {
+        if (distance <= 0)
+            throw new IllegalArgumentException("View Plane distance must be positive!");
+        apertureCenter = p0.add(vTo.scale(distance));
+        return this;
+    }
+
+    /***
      * Builder pattern
      * this function will change the position, direction and the angle of the camera
      * @param newPositionPoint the new position of the camera (send p0 for no change)
@@ -243,113 +257,6 @@ public class Camera {
         this.pCenter = p0.add(vTo.scale(distance));
 
         return this;
-    }
-
-    /***
-     * Help function
-     * This function change the angle of vRight & vUp along axisDir direction
-     *  - positive angle is Counterclockwise change -
-     * @param cosAngle the cos(angle) value
-     * @param sinAngle the sin(angle) value
-     * @param axisDir the vector to axis
-     * @return this object
-     */
-    private void angleChange(Vector axisDir, double cosAngle, double sinAngle) {
-
-        // we want to rotate vRight and vUp by the angle sent.
-        // we use this formula to do it:
-        // Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 - cos(angle))
-        // K = the axis Vector
-        // V = vRight || vUp
-
-        boolean cosZero = Util.isZero(cosAngle);
-        boolean sinZero = Util.isZero(sinAngle);
-        double kdotV = Util.alignZero(axisDir.dotProduct(vRight));
-
-        //calculations for vRight
-        Vector vFinal;
-        if (cosZero) {
-            //if cos == 0 => sin != 0
-            // + (K x V) * sin(angle)
-            try {
-                vFinal = axisDir.crossProduct(vRight).scale(sinAngle);
-            } catch (IllegalArgumentException e) {
-                //if catch its mean the axisDir and vRight is the same
-                // so we need to add the Zero Vector so dont do nothing
-                vFinal = axisDir;
-            }
-            // + K * (K dot V) * (1 - cos(angle)) => cos(angle) == 0 => (1 - cos(angle)) == 1
-            if (kdotV != 0)
-                vFinal = vFinal.add(axisDir.scale(kdotV));
-
-        } else {
-            // V * cos(angle)
-            vFinal = vRight.scale(cosAngle);
-
-
-            //sin(angle) is always != 0
-            // + (K x V) * sin(angle)
-            try {
-                vFinal = vFinal.add(axisDir.crossProduct(vRight).scale(sinAngle));
-            } catch (IllegalArgumentException e) {
-                //if catch its mean the axisDir and vRight is the same
-                // so we need to add the Zero Vector so dont do nothing
-                vFinal = axisDir;
-            }
-
-            // + K * (K dot V) * (1 - cos(angle))
-
-            if (kdotV != 0 && !Util.isZero(1 - cosAngle))
-                vFinal = vFinal.add(axisDir.scale(kdotV).scale(1 - cosAngle));
-
-        }
-
-        vRight = vFinal.normalize();
-
-
-        //calculations for vUp
-
-        kdotV = Util.alignZero(axisDir.dotProduct(vUp));
-        Vector vFinal1;
-        if (cosZero) {
-            //if cos == 0 => sin != 0
-            // + (K x V) * sin(angle)
-            try {
-                vFinal1 = axisDir.crossProduct(vUp).scale(sinAngle);
-            } catch (IllegalArgumentException e) {
-                //if catch its mean the axisDir and vRight is the same
-                // so we need to add the Zero Vector so dont do nothing
-                vFinal1 = axisDir;
-            }
-
-            // + K * (K dot V) * (1 - cos(angle)) => cos(angle) == 0 => (1 - cos(angle)) == 1
-            if (kdotV != 0)
-                vFinal1 = vFinal1.add(axisDir.scale(kdotV));
-
-
-        } else {
-            // V * cos(angle)
-            vFinal1 = vUp.scale(cosAngle);
-
-            //if sin == 0 => cos != 0
-            // + (K x V) * sin(angle)
-            try {
-                vFinal1 = vFinal1.add(axisDir.crossProduct(vUp).scale(sinAngle));
-            } catch (IllegalArgumentException e) {
-                //if catch its mean the axisDir and vRight is the same
-                // so we need to add the Zero Vector so dont do nothing
-                vFinal1 = axisDir;
-            }
-
-            // + K * (K dot V) * (1 - cos(angle))
-
-            if (kdotV != 0 && !Util.isZero(1 - cosAngle))
-                vFinal1 = vFinal1.add(axisDir.scale(kdotV).scale(1 - cosAngle));
-
-        }
-
-        vUp = vFinal1.normalize();
-
     }
 
     /***

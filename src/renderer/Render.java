@@ -3,6 +3,7 @@ package renderer;
 import elements.*;
 import primitives.*;
 
+import java.util.List;
 import java.util.MissingResourceException;
 
 /***
@@ -24,6 +25,15 @@ public class Render {
      */
     private ImageWriter imageWriter = null;
 
+    /**
+     * This boolean will decide whether do we use depthOfField or not.
+     */
+    private boolean depthOfField = false;
+    /**
+     * This is the amount of rays, in case depth of field is on.
+     */
+    private int numOfRays =0;
+
     /***
      * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic
      * then draws the checked pixel with the color we received.
@@ -35,14 +45,28 @@ public class Render {
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
-        Ray rayTrace;
         Color pixelColor;
 
-        for (int i = 0; i < nY; i++) {
-            for (int j = 0; j < nX; j++) {
-                rayTrace = camera.constructRay(nX, nY, j, i);
-                pixelColor = rayTracer.traceRay(rayTrace);
-                imageWriter.writePixel(j, i, pixelColor);
+        if(!depthOfField)
+        {
+            Ray rayTrace;
+            for (int i = 0; i < nY; i++) {
+                for (int j = 0; j < nX; j++) {
+                    rayTrace = camera.constructRay(nX, nY, j, i);
+                    pixelColor = rayTracer.traceRay(rayTrace);
+                    imageWriter.writePixel(j, i, pixelColor);
+                }
+            }
+        }
+        else
+        {
+            List<Ray> raysTrace;
+            for (int i = 0; i < nY; i++) {
+                for (int j = 0; j < nX; j++) {
+                    raysTrace = camera.constructDOFRays(nX, nY, j, i,numOfRays);
+                    pixelColor = rayTracer.traceRays(raysTrace);
+                    imageWriter.writePixel(j, i, pixelColor);
+                }
             }
         }
     }
@@ -109,5 +133,13 @@ public class Render {
     public Render setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
         return this;
+    }
+
+    public void setDepthOfField(boolean depthOfField) {
+        this.depthOfField = depthOfField;
+    }
+
+    public void setNumOfRays(int numOfRays) {
+        this.numOfRays = numOfRays;
     }
 }

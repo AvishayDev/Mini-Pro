@@ -26,7 +26,7 @@ public class CameraTests {
     @Test
     public void constructRay() {
 
-        Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)).setDistance(10);
+        Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0),10);
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: 3X3 Corner (0,0)
@@ -64,9 +64,8 @@ public class CameraTests {
 
         Scene scene1 = new Scene("Test scene");
 
-        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0),1000) //
                 .setViewPlaneSize(150, 150) //
-                .setDistance(1000)
                 //.changeAngle(0)
                 .changeDirection(new Point3D(0,0,-1000),new Point3D(0,0,-120));
 

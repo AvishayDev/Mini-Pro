@@ -63,6 +63,18 @@ public class Point3D {
     }
 
     /***
+     * Add vector to this point and return it.
+     * (with no changes in the point)
+     * @param vector Vector for adding to the point
+     * @return The final point
+     */
+    public Point3D add(Vector vector,double t) {
+        Vector vec = vector.scale(t);
+        return new Point3D(this.x.coord + vec.head.x.coord, this.y.coord + vec.head.y.coord, this.z.coord + vec.head.z.coord);
+    }
+
+
+    /***
      * Make's vector from the 1st point to the 2sd point
      * @param point 1st point
      * @return The final vector

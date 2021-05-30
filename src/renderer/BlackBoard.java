@@ -1,4 +1,4 @@
-package unittests.renderer;
+package renderer;
 
 import primitives.Point3D;
 import primitives.Ray;
@@ -7,7 +7,6 @@ import primitives.Vector;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class BlackBoard {
 
@@ -85,6 +84,5 @@ public class BlackBoard {
 
         return rays;
     }
-
 
 }

@@ -4,7 +4,7 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
-import unittests.renderer.BlackBoard;
+import renderer.BlackBoard;
 
 import java.util.List;
 

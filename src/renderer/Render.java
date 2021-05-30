@@ -13,15 +13,15 @@ import java.util.MissingResourceException;
 public class Render {
 
     /**
-     * the camera view of the scene
+     * The camera view of the scene
      */
     private Camera camera = null;
     /**
-     * the ray-tracer calculator
+     * The ray-tracer calculator
      */
     private RayTracerBase rayTracer = null;
     /**
-     * the image creator
+     * The image creator
      */
     private ImageWriter imageWriter = null;
 
@@ -108,38 +108,51 @@ public class Render {
         imageWriter.writeToImage();
     }
 
-    /***
+    /**
      * Setter for the Camera field of this Render.
-     * @return This Render.
+     * @param camera    The updated camera.
+     * @return  This Render, with the updated values.
      */
     public Render setCamera(Camera camera) {
         this.camera = camera;
         return this;
     }
 
-    /***
+    /**
      * Setter for the RayTracer field of this Render.
-     * @return This Render.
+     * @param rayTracer The updated rayTracer
+     * @return  This Render, with the updated values.
      */
     public Render setRayTracer(RayTracerBase rayTracer) {
         this.rayTracer = rayTracer;
         return this;
     }
 
-    /***
+    /**
      * Setter for the ImageWriter field of this Render.
-     * @return This Render.
+     * @param imageWriter   The updated imageWriter.
+     * @return  This Render, with the updated values.
      */
     public Render setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
         return this;
     }
 
+    /**
+     * Setter for the depthOfField field of this Render. Send true if you want it activated, false otherwise.
+     * @param depthOfField  Boolean value of whether DOF is on or off.
+     * @return  This Render, with the updated values.
+     */
     public Render setDepthOfField(boolean depthOfField) {
         this.depthOfField = depthOfField;
         return this;
     }
 
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     * @param numOfRays The amount of rays you want to go through the focal point.
+     * @return  This Render, with the updated values.
+     */
     public Render setNumOfRays(int numOfRays) {
         this.numOfRays = numOfRays;
         return this;

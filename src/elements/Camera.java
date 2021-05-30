@@ -15,6 +15,7 @@ import java.util.List;
 public class Camera {
 
     // ----------- camera variables -------------
+
     // p0 is a Point3D value, it shows the exact location of the camera, it is the head point of all the rays coming out of the camera.
     private Point3D p0;
     // vUp is a Vector value, the emulated Y axis of the camera.
@@ -23,6 +24,7 @@ public class Camera {
     private Vector vTo;
     // vRight is a Vector value, the emulated  X axis of the camera.
     private Vector vRight;
+
 
     // ----------- viewPlane variables -------------
     // width is a double value that indicates the width of the view plane
@@ -35,14 +37,15 @@ public class Camera {
     private double viewPlaneDistance;
 
     // ----------- focalPlane variables -------------
+    // This variable stores the focal distance, which is completely virtual
     private double focalDistance;
 
     // ----------- aperture variables -------------
-    // todo note
+    // This variable stores the height of the camera's aperture
     private double apertureHeight;
-    // todo note
+    // This variable stores the height of the camera's aperture
     private double apertureWidth;
-
+    // This variable stores the center point of the aperture. It will usually just be the center of the camera.
     private Point3D apertureCenter;
 
     /***
@@ -114,11 +117,26 @@ public class Camera {
         return new Ray(pC.subtract(p0), p0);
     }
 
+    /**
+     * This method receives a ray and calculates the point it intersects the virtual focal plane
+     * @param ray   A ray, usually sent from the view plane
+     * @return  The intersection point between the ray and the virtual focal point.
+     */
     public Point3D findFocalPoint(Ray ray) {
         double t = focalDistance / (ray.getDir().dotProduct(vTo));
         return ray.getPoint(t);
     }
 
+    /**
+     * This method receives the amount of pixel and the pixel we want to send a ray through, and the amount of different
+     * rays to send through the area of it to the focal point. It will return a list of rays that go through this pixel.
+     * @param nX        number of pixels in X axis
+     * @param nY        number of pixels in Y axis
+     * @param j         place form center pixel in X axis
+     * @param i         place form center pixel in Y axis
+     * @param numOfRays The amount of rays we want to go through the focal point from the area of the received pixel.
+     * @return  A list of rays that go from the received pixel area to the focal point.
+     */
     public List<Ray> constructDOFRays(int nX, int nY, int j, int i, int numOfRays) {
         // First step - create the ray to center of the pixel
         Ray centerRay = constructRay(nX, nY, j, i);

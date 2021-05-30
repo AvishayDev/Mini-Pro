@@ -13,14 +13,15 @@ public class BlackBoard {
 
     /**
      * This method receives a point of the center of the board, the board's height and weight, its direction vectors
-     * and the amount
-     * @param center
-     * @param height
-     * @param width
-     * @param vUp
-     * @param vRight
-     * @param numOfPoints
-     * @return
+     * and the amount of different points you want to generate on that board.
+     * It returns a list of the generated points.
+     * @param center        This point represents the center of the received board.
+     * @param height        Double that represents the height of the board.
+     * @param width         Double that represents the width of the board.
+     * @param vUp           Vector that represent the Y axis of the board.
+     * @param vRight        Vector that represent the X axis of the board.
+     * @param numOfPoints   The amount of generated points on the board.
+     * @return  A list of all the generated points.
      */
     public static List<Point3D> FindPoints(Point3D center, double height, double width, Vector vUp, Vector vRight, int numOfPoints) {
         List<Point3D> points3D = new LinkedList<>();
@@ -53,6 +54,14 @@ public class BlackBoard {
         return points3D;
     }
 
+    /**
+     * Method that receives a point and a list of points, and returns a list of rays from the point to the
+     * list of points, or from the list of points to the points, depends whether you send reversed or not.
+     * @param point     One single Point3D
+     * @param points    A list of many Point3D
+     * @param reversed  True if you want rays from list of points to the point. False otherwise.
+     * @return  A list of rays from the point to the list of points or vice verse.
+     */
     public static List<Ray> raysFromPointToPoints(Point3D point, List<Point3D> points, boolean reversed)
     {
         List<Ray> rays = new LinkedList<>();

@@ -1,4 +1,4 @@
-package unittests.renderer;
+package renderer;
 
 import primitives.Point3D;
 import primitives.Ray;

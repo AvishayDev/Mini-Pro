@@ -4,7 +4,7 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
-import unittests.renderer.BlackBoard;
+import renderer.BlackBoard;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class Camera {
     // This Point3D will store the center of the view plane
     private Point3D viewPlaneCenter;
     // This variable stores the focal distance, which is the distance between p0 to the focal board.
-    private double viewPlaneDistance;
+    //todo note - (add later) private double viewPlaneDistance;
 
     // ----------- focalPlane variables -------------
     private double focalDistance;
@@ -45,6 +45,7 @@ public class Camera {
 
     private Point3D apertureCenter;
 
+
     /***
      * Constructor for Camera, that receives initial starting point, VectorTo (Z axis), VectorUp (Y axis)
      * VectorRight (X axis) will be calculated inside the constructor
@@ -52,7 +53,7 @@ public class Camera {
      * @param vTo Vector of emulated Z axis
      * @param vUp Vector of emulated Y axis
      */
-    public Camera(Point3D p0, Vector vTo, Vector vUp, double viewPlaneDistance) {
+    public Camera(Point3D p0, Vector vTo, Vector vUp) {
         if (vUp.dotProduct(vTo) != 0)
             throw new IllegalArgumentException("Only vUp orthogonal to vTo accepted!");
 
@@ -60,7 +61,6 @@ public class Camera {
         this.vUp = vUp.normalized();
         this.vTo = vTo.normalized();
         this.vRight = vTo.crossProduct(vUp).normalize(); // Vector of emulated X axis
-        this.viewPlaneCenter = this.p0.add(vTo, viewPlaneDistance);
         apertureCenter = p0;
     }
 
@@ -77,7 +77,6 @@ public class Camera {
     private Point3D findCenterPixel(int nX, int nY, int j, int i) {
 
         Point3D pixelCenter = viewPlaneCenter;
-        //Point3D pixelCenter = p0.add(vTo, viewPlaneDistance);
 
         // Ratio (pixel width & height)
         double rY = this.height / (double) nY;
@@ -177,7 +176,7 @@ public class Camera {
      * @param distance The distance between the camera and the view plane
      * @return This camera, with the updated values. Not a clone.
      */
-    public Camera setAperturePoint(double distance) {
+    public Camera setApertureDistance(double distance) {
         if (distance <= 0)
             throw new IllegalArgumentException("View Plane distance must be positive!");
         apertureCenter = p0.add(vTo, distance);
@@ -250,8 +249,6 @@ public class Camera {
 
         vRight = vTo.crossProduct(vUp).normalize();
 
-        //this.viewPlaneCenter = p0.add(vTo.scale(distance));
-
         return this;
     }
 
@@ -291,7 +288,7 @@ public class Camera {
 
         if (viewPlaneDistance <= 0)
             throw new IllegalArgumentException("View Plane distance must be positive!");
-        this.viewPlaneDistance = viewPlaneDistance;
+        this.viewPlaneCenter = this.p0.add(vTo, viewPlaneDistance);
         return this;
     }
 }

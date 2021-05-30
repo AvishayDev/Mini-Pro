@@ -5,8 +5,6 @@ import elements.*;
 import primitives.*;
 import geometries.*;
 
-import javax.naming.NoInitialContextException;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,7 +50,7 @@ public class IntegrationTests {
     @Test
     public void cameraRaysIntersectSphere() {
 
-        Camera camera = new Camera(new Point3D(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3, 3);
+        Camera camera = new Camera(new Point3D(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0)).setViewPlaneDistance(1).setViewPlaneSize(3, 3);
 
         //TC0-1: First sphere test case Sphere (r=1)
         Sphere sphere = new Sphere(new Point3D(0, 0, -3), 1);
@@ -87,7 +85,7 @@ public class IntegrationTests {
     @Test
     public void cameraRaysIntersectPlane() {
 
-        Camera camera = new Camera(new Point3D(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3, 3);
+        Camera camera = new Camera(new Point3D(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0)).setViewPlaneDistance(1).setViewPlaneSize(3, 3);
 
         //TC0-6: First Plane test case
         Plane plane = new Plane(new Point3D(0, 0, -2), new Vector(0, 0, -1));
@@ -111,7 +109,7 @@ public class IntegrationTests {
     @Test
     public void cameraRaysIntersectTriangle() {
 
-        Camera camera = new Camera(new Point3D(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3, 3);
+        Camera camera = new Camera(new Point3D(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0)).setViewPlaneDistance(1).setViewPlaneSize(3, 3);
 
         //TC0-9: First Triangle test case
         Triangle triangle = new Triangle(new Point3D(0, 1, -2), new Point3D(1, -1, -2), new Point3D(-1, -1, -2));

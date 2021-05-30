@@ -17,18 +17,21 @@ public class LightsTests {
     private Scene scene1 = new Scene("Test scene");
     private Scene scene2 = new Scene("Test scene") //
             .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
-    private Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-            .setViewPlaneSize(150, 150) //
-            .setDistance(1000);
-    private Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-            .setViewPlaneSize(200, 200) //
-            .setDistance(1000);
+    private Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1),
+            new Vector(0, 1, 0))//
+            .setViewPlaneDistance(1000) //
+            .setViewPlaneSize(150, 150); //
+
+    private Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1),
+            new Vector(0, 1, 0)) //
+            .setViewPlaneDistance(1000)//
+            .setViewPlaneSize(200, 200); //
 
     private static Geometry triangle1 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(150, -150, -150), new Point3D(75, 75, -150));
     private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
-    private static Geometry sphere = new Sphere(new Point3D(0, 0, -120), 50) //
+    private static Geometry sphere = new Sphere(new Point3D(0, 0, 0), 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
     private static Geometries square = new Geometries(new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, 50, -150), new Point3D(0, 50, -100))
@@ -239,23 +242,25 @@ public class LightsTests {
      */
     @Test
     public void DOFTests() {
-        camera1.setFocalDistance(1200).setApertureSize(20, 20);
-        Triangle triangle = new Triangle(new Point3D(50, 50, -200), new Point3D(100, 50, -200),
-                new Point3D(50, 100, -200));
-        triangle.setEmission(new Color(java.awt.Color.BLUE)) //
+        camera1.setFocalDistance(1050).setApertureSize(30, 30);
+        Triangle triangle = new Triangle(new Point3D(50, 50, -350), new Point3D(100, 50, -300),
+                new Point3D(50, 100, -300));
+        triangle.setEmission(new Color(java.awt.Color.GREEN)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
         scene1.geometries.add(sphere);
         scene1.geometries.add(triangle);
         scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-50, -50, 50))//
                 .setKl(0.00001).setKq(0.000001));
-
+        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(0, 0, -1), new Point3D(40, 40, 700), 1)//
+                .setKl(0.00001).setKq(0.000001));
         ImageWriter imageWriter = new ImageWriter("DOFtest", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
-                .setRayTracer(new RayTracerBasic(scene1))
+                .setRayTracer(new RayTracerBasic(scene1))//;
                 .setDepthOfField(true).setNumOfRays(50);
         render.renderImage();
+        render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
     }
 

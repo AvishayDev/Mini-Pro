@@ -237,7 +237,7 @@ public class RayTracerBasic extends RayTracerBase {
         for (Ray ray : rays) {
             finalColor = finalColor.add(traceRay(ray));
         }
-        finalColor.scale(1d/rays.size());
+        finalColor = finalColor.reduce(rays.size());
         return finalColor;
     }
 }

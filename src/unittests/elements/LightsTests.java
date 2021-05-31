@@ -92,7 +92,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new RayTracerBasic(scene1))//
-        .setAntiAliasing(true).setNumOfRays(50);
+        .setNumOfAARays(50);
         render.renderImage();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
@@ -259,7 +259,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new RayTracerBasic(scene1))//;
-                .setAntiAliasing(true).setNumOfRays(50);
+                .setNumOfDOFRays(50);
         render.renderImage();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();

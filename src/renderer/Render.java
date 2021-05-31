@@ -3,6 +3,7 @@ package renderer;
 import elements.*;
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
 
@@ -16,25 +17,26 @@ public class Render {
      * The camera view of the scene
      */
     private Camera camera = null;
+
     /**
      * The ray-tracer calculator
      */
     private RayTracerBase rayTracer = null;
+
     /**
      * The image creator
      */
     private ImageWriter imageWriter = null;
 
     /**
-     * This boolean will decide whether do we use depthOfField or not.
+     * This is the amount of rays, in case depth of field is on.
      */
-    private boolean depthOfField = false;
+    private int numOfDOFRays = 0;
 
-    private boolean antiAliasing = false;
     /**
      * This is the amount of rays, in case depth of field is on.
      */
-    private int numOfRays = 0;
+    private int numOfAARays = 0;
 
     /***
      * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic
@@ -48,29 +50,26 @@ public class Render {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
         Color pixelColor;
-
-        if (depthOfField) {
+        if (numOfDOFRays != 0) {
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
-                    raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfRays);
+                    raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfDOFRays);
                     pixelColor = rayTracer.traceRays(raysTrace);
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
 
-
-        } else if(antiAliasing){
+        } else if (numOfAARays != 0) {
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
-                    raysTrace = camera.constructAntiARays(nX, nY, j, i, numOfRays);
+                    raysTrace = camera.constructAntiARays(nX, nY, j, i, numOfAARays);
                     pixelColor = rayTracer.traceRays(raysTrace);
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
-        }
-        else {
+        } else {
             Ray rayTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -80,6 +79,28 @@ public class Render {
                 }
             }
         }
+        /*
+        List<Ray> raysTrace = new LinkedList<>();
+
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
+
+                // The ray to the center must be added
+                raysTrace.add(camera.constructRay(nX, nY, j, i));
+
+                // Include all DOF rays only if DOF is on, a.k.a not zero.
+                if(numOfDOFRays != 0)
+                    raysTrace.addAll(raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfDOFRays));
+
+                // Include all Anti Aliasing rays only if AA is on, a.k.a not zero.
+                if(numOfAARays !=0)
+                    raysTrace.addAll(camera.constructAntiARays(nX, nY, j, i, numOfAARays));
+
+
+                pixelColor = rayTracer.traceRays(raysTrace);
+                imageWriter.writePixel(j, i, pixelColor);
+            }
+        }*/
     }
 
     /***
@@ -153,29 +174,31 @@ public class Render {
     }
 
     /**
-     * Setter for the depthOfField field of this Render. Send true if you want it activated, false otherwise.
+     * Setter for the numOfDOFRays field of this Render. Default value is 0. Initialize this only if you want DOF on.
+     * The number can't be negative.
      *
-     * @param depthOfField Boolean value of whether DOF is on or off.
+     * @param numOfDOFRays The amount of rays you want to go through the focal point.
      * @return This Render, with the updated values.
      */
-    public Render setDepthOfField(boolean depthOfField) {
-        this.depthOfField = depthOfField;
-        return this;
-    }
+    public Render setNumOfDOFRays(int numOfDOFRays) {
+        if (numOfDOFRays < 0)
+            throw new IllegalArgumentException("Please don't choose negative amount of DOF rays!");
 
-    public Render setAntiAliasing(boolean antiAliasing) {
-        this.antiAliasing = antiAliasing;
+        this.numOfDOFRays = numOfDOFRays;
         return this;
     }
 
     /**
-     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     * Setter for the numOfAARays field of this Render. Default value is 0. Initialize this only if you want AA on.
      *
-     * @param numOfRays The amount of rays you want to go through the focal point.
-     * @return This Render, with the updated values.
+     * @param numOfAARays
+     * @return
      */
-    public Render setNumOfRays(int numOfRays) {
-        this.numOfRays = numOfRays;
+    public Render setNumOfAARays(int numOfAARays) {
+        if (numOfAARays < 0)
+            throw new IllegalArgumentException("Please don't choose negative amount of AA rays!");
+
+        this.numOfAARays = numOfAARays;
         return this;
     }
 }

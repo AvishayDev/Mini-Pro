@@ -232,6 +232,12 @@ public class RayTracerBasic extends RayTracerBase {
         return angle > 0 ? ks * Math.pow(angle, nShininess) : 0.0;
     }
 
+    /**
+     * This method receives a list of rays, calculate each ray's color and returns the average color value
+     * of all the rays.
+     * @param rays the list of rays from the camera throw the scene
+     * @return  The final calculated color of the ray, which is the average color of all the rays.
+     */
     public Color traceRays(List<Ray> rays) {
         Color finalColor = Color.BLACK;
         for (Ray ray : rays) {

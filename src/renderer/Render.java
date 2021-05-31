@@ -112,6 +112,8 @@ public class Render {
     public void printGrid(int interval, Color color) {
         if (imageWriter == null)
             throw new MissingResourceException("A", "B", "C");
+        if (interval < 0)
+            throw new IllegalArgumentException("Please don't choose negative interval!");
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();

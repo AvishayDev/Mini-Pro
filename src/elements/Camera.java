@@ -147,6 +147,15 @@ public class Camera {
         return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
     }
 
+    public  List<Ray> constructAntiARays(int nX, int nY, int j, int i, int numOfRays){
+        // First step - find the pixel center on the ViewPlane
+        Point3D centerPixel = findCenterPixel(nX, nY, j, i);
+        // Second step - Create points on the pixel
+        List<Point3D> points = BlackBoard.FindPoints(centerPixel, this.height / (double) nY, this.width / (double) nX, vUp, vRight, numOfRays);
+        // Third step - Create rays from point to the pixel
+        return BlackBoard.raysFromPointToPoints(p0, points, false);
+    }
+
     /***
      * This method receives 2 doubles and inserts them as the camera's width and height values, as long as they're valid (bigger than 0).
      * @param width The width of the View Plane

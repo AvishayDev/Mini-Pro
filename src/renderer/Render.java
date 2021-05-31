@@ -29,10 +29,12 @@ public class Render {
      * This boolean will decide whether do we use depthOfField or not.
      */
     private boolean depthOfField = false;
+
+    private boolean antiAliasing = false;
     /**
      * This is the amount of rays, in case depth of field is on.
      */
-    private int numOfRays =0;
+    private int numOfRays = 0;
 
     /***
      * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic
@@ -47,24 +49,33 @@ public class Render {
         int nY = imageWriter.getNy();
         Color pixelColor;
 
-        if(!depthOfField)
-        {
+        if (depthOfField) {
+            List<Ray> raysTrace;
+            for (int i = 0; i < nY; i++) {
+                for (int j = 0; j < nX; j++) {
+                    raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfRays);
+                    pixelColor = rayTracer.traceRays(raysTrace);
+                    imageWriter.writePixel(j, i, pixelColor);
+                }
+            }
+
+
+        } else if(antiAliasing){
+            List<Ray> raysTrace;
+            for (int i = 0; i < nY; i++) {
+                for (int j = 0; j < nX; j++) {
+                    raysTrace = camera.constructAntiARays(nX, nY, j, i, numOfRays);
+                    pixelColor = rayTracer.traceRays(raysTrace);
+                    imageWriter.writePixel(j, i, pixelColor);
+                }
+            }
+        }
+        else {
             Ray rayTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
                     rayTrace = camera.constructRay(nX, nY, j, i);
                     pixelColor = rayTracer.traceRay(rayTrace);
-                    imageWriter.writePixel(j, i, pixelColor);
-                }
-            }
-        }
-        else
-        {
-            List<Ray> raysTrace;
-            for (int i = 0; i < nY; i++) {
-                for (int j = 0; j < nX; j++) {
-                    raysTrace = camera.constructDOFRays(nX, nY, j, i,numOfRays);
-                    pixelColor = rayTracer.traceRays(raysTrace);
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
@@ -110,8 +121,9 @@ public class Render {
 
     /**
      * Setter for the Camera field of this Render.
-     * @param camera    The updated camera.
-     * @return  This Render, with the updated values.
+     *
+     * @param camera The updated camera.
+     * @return This Render, with the updated values.
      */
     public Render setCamera(Camera camera) {
         this.camera = camera;
@@ -120,8 +132,9 @@ public class Render {
 
     /**
      * Setter for the RayTracer field of this Render.
+     *
      * @param rayTracer The updated rayTracer
-     * @return  This Render, with the updated values.
+     * @return This Render, with the updated values.
      */
     public Render setRayTracer(RayTracerBase rayTracer) {
         this.rayTracer = rayTracer;
@@ -130,8 +143,9 @@ public class Render {
 
     /**
      * Setter for the ImageWriter field of this Render.
-     * @param imageWriter   The updated imageWriter.
-     * @return  This Render, with the updated values.
+     *
+     * @param imageWriter The updated imageWriter.
+     * @return This Render, with the updated values.
      */
     public Render setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
@@ -140,18 +154,25 @@ public class Render {
 
     /**
      * Setter for the depthOfField field of this Render. Send true if you want it activated, false otherwise.
-     * @param depthOfField  Boolean value of whether DOF is on or off.
-     * @return  This Render, with the updated values.
+     *
+     * @param depthOfField Boolean value of whether DOF is on or off.
+     * @return This Render, with the updated values.
      */
     public Render setDepthOfField(boolean depthOfField) {
         this.depthOfField = depthOfField;
         return this;
     }
 
+    public Render setAntiAliasing(boolean antiAliasing) {
+        this.antiAliasing = antiAliasing;
+        return this;
+    }
+
     /**
      * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     *
      * @param numOfRays The amount of rays you want to go through the focal point.
-     * @return  This Render, with the updated values.
+     * @return This Render, with the updated values.
      */
     public Render setNumOfRays(int numOfRays) {
         this.numOfRays = numOfRays;

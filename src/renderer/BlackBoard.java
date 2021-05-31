@@ -34,7 +34,7 @@ public class BlackBoard {
         double rndHeight;
         double rndWeight;
 
-        for (int i = 0; i < numOfPoints; i++) {
+        for (int i = 1; i < numOfPoints; i++) {
 
             pCenter = center;
 

@@ -1,8 +1,6 @@
 package primitives;
 
-import geometries.Intersectable;
 import static geometries.Intersectable.GeoPoint;
-import java.awt.*;
 
 /***
  * Represents 3D point with 3 Coordinates,
@@ -63,21 +61,15 @@ public class Point3D {
     }
 
     /***
-     * Add vector to this point and return it.
+     * Add vector to this point and returns the calculated point.
      * (with no changes in the point)
      * @param vector Vector for adding to the point
      * @return The final point
      */
-    public Point3D add(Vector vector,double t) {
-        Vector vec;
-        try {
-            vec = vector.scale(t);
-        }catch (IllegalArgumentException e){
-            return new Point3D(this.x.coord, this.y.coord, this.z.coord);
-        }
-        return new Point3D(this.x.coord + vec.head.x.coord, this.y.coord + vec.head.y.coord, this.z.coord + vec.head.z.coord);
+    public Point3D add(Vector vector, double t) {
+        return new Point3D(this.x.coord + vector.getX() * t,
+                this.y.coord + vector.getY() * t, this.z.coord + vector.getZ() * t);
     }
-
 
     /***
      * Make's vector from the 1st point to the 2sd point
@@ -113,6 +105,7 @@ public class Point3D {
                 ((this.z.coord - point.point.getZ()) * (this.z.coord - point.point.getZ()));
 
     }
+
     /***
      * Calculate the distance between this point and the
      * get point
@@ -132,6 +125,7 @@ public class Point3D {
     public double distance(GeoPoint point) {
         return Math.sqrt(distanceSquared(point));
     }
+
     /***
      * This function returns a scaled version of the current point
      * @param t The amount of scale we will increase/decrease the vector

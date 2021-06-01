@@ -97,7 +97,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * @return A double value of the transparency.
      */
     @Override
-    protected double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geoPoint, double nv) {
+    protected double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geoPoint) {
         Vector lightDirection = l.scale(-1); // from point to light source
         // creating the center ray
         Ray lightRay = new Ray(geoPoint.point, lightDirection, n); // refactored ray head move

@@ -92,7 +92,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new RayTracerBasic(scene1))//
-        .setAntiAliasing(true).setNumOfRays(50);
+                .setNumOfRaysAA(50);
         render.renderImage();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
@@ -275,11 +275,11 @@ public class LightsTests {
     public void DOFTests() {
         camera1.setFocalDistance(1050).setApertureSize(30, 30);
 
-        Geometry sphere2 = new Sphere(new Point3D(0,0,-200),40)
-                .setEmission(new Color(100,100,100))
+        Geometry sphere2 = new Sphere(new Point3D(0, 0, -200), 40)
+                .setEmission(new Color(100, 100, 100))
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
 
-        scene1.geometries.add(sphere,sphere2);
+        scene1.geometries.add(sphere, sphere2);
         scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(0, 0, -1), new Point3D(100, 40, 700), 1)//
                 .setKl(0.00001).setKq(0.000001));
         ImageWriter imageWriter = new ImageWriter("DOFtest", 500, 500);
@@ -320,4 +320,5 @@ public class LightsTests {
         //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
 
+    }
 }

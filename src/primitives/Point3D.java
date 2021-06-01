@@ -69,7 +69,12 @@ public class Point3D {
      * @return The final point
      */
     public Point3D add(Vector vector,double t) {
-        Vector vec = vector.scale(t);
+        Vector vec;
+        try {
+            vec = vector.scale(t);
+        }catch (IllegalArgumentException e){
+            return new Point3D(this.x.coord, this.y.coord, this.z.coord);
+        }
         return new Point3D(this.x.coord + vec.head.x.coord, this.y.coord + vec.head.y.coord, this.z.coord + vec.head.z.coord);
     }
 

@@ -191,7 +191,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param geoPoint      The intersected GeoPoint
      * @return A double value of the transparency.
      */
-    protected double transparency(LightSource light, Vector l, Vector n, GeoPoint geoPoint,double nv) {
+    protected double transparency(LightSource light, Vector l, Vector n, GeoPoint geoPoint) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(geoPoint.point, lightDirection, n); // refactored ray head move
 

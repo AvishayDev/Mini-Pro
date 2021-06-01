@@ -3,7 +3,6 @@ package renderer;
 import elements.*;
 import primitives.*;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
 
@@ -50,7 +49,7 @@ public class Render {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
         Color pixelColor;
-        if (numOfDOFRays != 0) {
+        if (numOfDOFRays != 0) { // Using DOF only
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -60,7 +59,7 @@ public class Render {
                 }
             }
 
-        } else if (numOfAARays != 0) {
+        } else if (numOfAARays != 0) { // Using AA only
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -69,7 +68,7 @@ public class Render {
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
-        } else {
+        } else { // Normal rendering
             Ray rayTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -79,28 +78,6 @@ public class Render {
                 }
             }
         }
-        /*
-        List<Ray> raysTrace = new LinkedList<>();
-
-        for (int i = 0; i < nY; i++) {
-            for (int j = 0; j < nX; j++) {
-
-                // The ray to the center must be added
-                raysTrace.add(camera.constructRay(nX, nY, j, i));
-
-                // Include all DOF rays only if DOF is on, a.k.a not zero.
-                if(numOfDOFRays != 0)
-                    raysTrace.addAll(raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfDOFRays));
-
-                // Include all Anti Aliasing rays only if AA is on, a.k.a not zero.
-                if(numOfAARays !=0)
-                    raysTrace.addAll(camera.constructAntiARays(nX, nY, j, i, numOfAARays));
-
-
-                pixelColor = rayTracer.traceRays(raysTrace);
-                imageWriter.writePixel(j, i, pixelColor);
-            }
-        }*/
     }
 
     /***
@@ -193,8 +170,8 @@ public class Render {
     /**
      * Setter for the numOfAARays field of this Render. Default value is 0. Initialize this only if you want AA on.
      *
-     * @param numOfAARays
-     * @return
+     * @param numOfAARays The amount of rays you want to go through the area of any point on the object point.
+     * @return This Render, with the updated values.
      */
     public Render setNumOfAARays(int numOfAARays) {
         if (numOfAARays < 0)

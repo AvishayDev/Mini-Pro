@@ -14,17 +14,17 @@ public class Vector {
     /**
      * X-axis unit vector
      */
-    public static final Vector X = new Vector(1,0,0);
+    public static final Vector X = new Vector(1, 0, 0);
 
     /**
      * Y-axis unit vector
      */
-    public static final Vector Y = new Vector(0,1,0);
+    public static final Vector Y = new Vector(0, 1, 0);
 
     /**
      * Z-axis unit vector
      */
-    public static final Vector Z = new Vector(0,0,1);
+    public static final Vector Z = new Vector(0, 0, 1);
 
     /***
      * This constructor gets 3 coordinates and returns a vector that include those values
@@ -62,6 +62,12 @@ public class Vector {
         head = new Point3D(point.x, point.y, point.z);
     }
 
+    public Vector getOrthogonal() {
+        if (Util.isZero(head.getY())&& Util.isZero(head.getZ()))
+            return new Vector(0,1,0);
+        return new Vector(0,-getZ(),getY());
+    }
+
     /***
      * this function take this vector and move it to the
      * point place NOT CHANGE THE VECTOR
@@ -74,12 +80,6 @@ public class Vector {
                 , this.head.getZ() + point.getZ());
     }
 
-    /*
-    public boolean isNormalize(){
-        if(Util.isZero(((getX()*getX())+(getY()*getY())+(getZ()*getZ()))-1))
-            return true;
-        return false;
-    }*/
 
     /***
      * This function sums up between the current vector and the received vector
@@ -164,9 +164,10 @@ public class Vector {
         return Math.sqrt(lengthSquared());
     }
 
-    public Vector divide(Vector vec){
-        return new Vector(getX()/ vec.getX(),getY()/vec.getY(),getZ()/vec.getZ());
+    public Vector divide(Vector vec) {
+        return new Vector(getX() / vec.getX(), getY() / vec.getY(), getZ() / vec.getZ());
     }
+
     /***
      * This function normalize the current vector
      * @return The current vector, but now normalized

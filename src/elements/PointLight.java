@@ -13,6 +13,7 @@ import primitives.Vector;
  */
 public class PointLight extends Light implements LightSource {
 
+    protected double radius;
     /**
      * the position of the light
      */
@@ -99,5 +100,18 @@ public class PointLight extends Light implements LightSource {
     public PointLight setKq(double Kq) {
         kQ = Kq;
         return this;
+    }
+
+    public PointLight setRadius(double radius) {
+        this.radius = radius;
+        return this;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public Point3D getPosition() {
+        return position;
     }
 }

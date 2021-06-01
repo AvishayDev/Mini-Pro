@@ -25,16 +25,13 @@ public class Render {
      */
     private ImageWriter imageWriter = null;
 
-    /**
-     * This boolean will decide whether do we use depthOfField or not.
-     */
-    private boolean depthOfField = false;
 
-    private boolean antiAliasing = false;
     /**
      * This is the amount of rays, in case depth of field is on.
      */
-    private int numOfRays = 0;
+    private int numOfRaysAntiAliasing = 0;
+
+    private int numOfRaysDepthOfField = 0;
 
     /***
      * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic
@@ -49,28 +46,25 @@ public class Render {
         int nY = imageWriter.getNy();
         Color pixelColor;
 
-        if (depthOfField) {
+        if (numOfRaysDepthOfField!=0) {
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
-                    raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfRays);
+                    raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfRaysDepthOfField);
                     pixelColor = rayTracer.traceRays(raysTrace);
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
-
-
-        } else if(antiAliasing){
+        } else if (numOfRaysAntiAliasing!=0) {
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
-                    raysTrace = camera.constructAntiARays(nX, nY, j, i, numOfRays);
+                    raysTrace = camera.constructAntiARays(nX, nY, j, i, numOfRaysAntiAliasing);
                     pixelColor = rayTracer.traceRays(raysTrace);
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
-        }
-        else {
+        } else{// if(rayTracer instanceof RayTracerAdvanced){
             Ray rayTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -153,18 +147,23 @@ public class Render {
     }
 
     /**
-     * Setter for the depthOfField field of this Render. Send true if you want it activated, false otherwise.
+     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
      *
-     * @param depthOfField Boolean value of whether DOF is on or off.
+     * @param numOfRays The amount of rays you want to go through the focal point.
      * @return This Render, with the updated values.
      */
-    public Render setDepthOfField(boolean depthOfField) {
-        this.depthOfField = depthOfField;
+    public Render setNumOfRaysDOF(int numOfRays) {
+        this.numOfRaysDepthOfField = numOfRays;
         return this;
     }
-
-    public Render setAntiAliasing(boolean antiAliasing) {
-        this.antiAliasing = antiAliasing;
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     *
+     * @param numOfRays The amount of rays you want to go through the focal point.
+     * @return This Render, with the updated values.
+     */
+    public Render setNumOfRaysAA(int numOfRays) {
+        this.numOfRaysAntiAliasing = numOfRays;
         return this;
     }
 
@@ -174,8 +173,10 @@ public class Render {
      * @param numOfRays The amount of rays you want to go through the focal point.
      * @return This Render, with the updated values.
      */
-    public Render setNumOfRays(int numOfRays) {
-        this.numOfRays = numOfRays;
+    public Render setNumOfRaysSS(int numOfRays) {
+        if(!(this.rayTracer instanceof RayTracerAdvanced))
+            throw new MissingResourceException("Plase Use RayTracerAdvanced for soft shadows!","RayTracerAdvanced","10");
+        ((RayTracerAdvanced)this.rayTracer).setNumOfRaysSoftShadows(numOfRays);
         return this;
     }
 }

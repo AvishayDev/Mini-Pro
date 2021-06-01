@@ -26,7 +26,9 @@ public class RayTracerBasic extends RayTracerBase {
     /**
      * stop parameter for the recursive functions - minimum level of k effect
      */
-    private static final double MIN_CALC_COLOR_K = 0.001;
+    protected static final double MIN_CALC_COLOR_K = 0.001;
+
+    //private int numOfRaysSoftShadows = 0;
 
     /**
      * Constructor that calls super constructor
@@ -54,7 +56,7 @@ public class RayTracerBasic extends RayTracerBase {
      * It receives the closest intersection point, a ray, int value of level and double value of k and returns the
      * calculated Color.
      * @param intersection  The closest intersection point
-     * @param v           The intersecting ray direction
+     * @param v             The intersecting ray direction
      * @param level         The level of deep (recursive value)
      * @param k             The k value for calculations (recursive value)
      * @return The calculated Color
@@ -157,7 +159,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param v            the ray direction that cross the geometry
      * @return the final color after adding light effects
      */
-    private Color calcLocalEffects(GeoPoint intersection, Vector v, double k) {
+    protected Color calcLocalEffects(GeoPoint intersection, Vector v, double k) {
         Vector n = intersection.getNormal();
         double nv = alignZero(n.dotProduct(v));
         if (nv == 0) return Color.BLACK;
@@ -167,7 +169,7 @@ public class RayTracerBasic extends RayTracerBase {
             Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                double ktr = transparency(lightSource, l, n, intersection);
+                double ktr = transparency(lightSource, l, n, intersection,nv);
                 if (ktr * k > MIN_CALC_COLOR_K) {
                     Color lightIntensity = lightSource.getIntensity(intersection.point) //
                             .scale(ktr * (calcDiffusive(material.kD, nl) //
@@ -189,7 +191,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param geoPoint      The intersected GeoPoint
      * @return A double value of the transparency.
      */
-    private double transparency(LightSource light, Vector l, Vector n, GeoPoint geoPoint) {
+    protected double transparency(LightSource light, Vector l, Vector n, GeoPoint geoPoint,double nv) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(geoPoint.point, lightDirection, n); // refactored ray head move
 
@@ -212,7 +214,7 @@ public class RayTracerBasic extends RayTracerBase {
      *                   the normal of the geometry in intersection point
      * @return the final color attenuation factor of Diffusing
      */
-    private double calcDiffusive(double kd, double dotProCalc) {
+    protected double calcDiffusive(double kd, double dotProCalc) {
         if (dotProCalc < 0) dotProCalc = -dotProCalc;
         return kd * dotProCalc;
     }
@@ -226,12 +228,14 @@ public class RayTracerBasic extends RayTracerBase {
      * @param nShininess the value of Shininess
      * @return the final color attenuation factor on Specular
      */
-    private double calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess) {
+    protected double calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess) {
         Vector r = l.subtract(n.scale(2 * l.dotProduct(n)));
         double angle = -alignZero(v.dotProduct(r));
         return angle > 0 ? ks * Math.pow(angle, nShininess) : 0.0;
     }
 
+
+    @Override
     public Color traceRays(List<Ray> rays) {
         Color finalColor = Color.BLACK;
         for (Ray ray : rays) {
@@ -240,4 +244,11 @@ public class RayTracerBasic extends RayTracerBase {
         finalColor = finalColor.reduce(rays.size());
         return finalColor;
     }
+
+    /*
+    public RayTracerBasic setNumOfRaysSoftShadows(int numOfRaysSoftShadows) {
+        this.numOfRaysSoftShadows = numOfRaysSoftShadows;
+        return this;
+    }
+     */
 }

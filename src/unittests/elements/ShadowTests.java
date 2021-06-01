@@ -41,7 +41,7 @@ public class ShadowTests {
 						.setKl(1E-5).setKq(1.5E-7));
 
 		Render render = new Render(). //
-				setImageWriter(new ImageWriter("shadowSphereTriangleInitial4", 400, 400)) //
+				setImageWriter(new ImageWriter("shadowSphereTriangleInitial5", 400, 400)) //
 				.setCamera(camera) //
 				.setRayTracer(new RayTracerBasic(scene));
 		render.renderImage();

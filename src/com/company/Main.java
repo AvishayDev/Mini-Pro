@@ -22,10 +22,8 @@ public final class Main {
      * @param args irrelevant here
      */
     public static void main(String[] args) {
-
-
-        Vector u = new Vector(1,1,1).normalize();
-
+        if (Util.isZero(1.032039148168894E-12))
+            out.println("yes");
         //if(u.isNormalize())
         //    out.println("yes");
 
@@ -89,6 +87,7 @@ public final class Main {
         out.println("If there were no any other outputs - all tests succeeded!");
     */
     }
-
-
 }
+
+
+

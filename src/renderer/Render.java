@@ -16,10 +16,12 @@ public class Render {
      * The camera view of the scene
      */
     private Camera camera = null;
+
     /**
      * The ray-tracer calculator
      */
     private RayTracerBase rayTracer = null;
+
     /**
      * The image creator
      */
@@ -85,6 +87,8 @@ public class Render {
     public void printGrid(int interval, Color color) {
         if (imageWriter == null)
             throw new MissingResourceException("A", "B", "C");
+        if (interval < 0)
+            throw new IllegalArgumentException("Please don't choose negative interval!");
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();

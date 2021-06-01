@@ -169,7 +169,7 @@ public class RayTracerBasic extends RayTracerBase {
             Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                double ktr = transparency(lightSource, l, n, intersection,nv);
+                double ktr = transparency(lightSource, l, n, intersection);
                 if (ktr * k > MIN_CALC_COLOR_K) {
                     Color lightIntensity = lightSource.getIntensity(intersection.point) //
                             .scale(ktr * (calcDiffusive(material.kD, nl) //
@@ -244,11 +244,4 @@ public class RayTracerBasic extends RayTracerBase {
         finalColor = finalColor.reduce(rays.size());
         return finalColor;
     }
-
-    /*
-    public RayTracerBasic setNumOfRaysSoftShadows(int numOfRaysSoftShadows) {
-        this.numOfRaysSoftShadows = numOfRaysSoftShadows;
-        return this;
-    }
-     */
 }

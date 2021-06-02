@@ -28,6 +28,8 @@ public class Material {
      */
     public double kT = 0.0;
 
+    public double radiusGS = 0;
+    public double radiusDG = 0;
     /*
         for real images:
         kS = 8 * kT
@@ -84,4 +86,13 @@ public class Material {
         return this;
     }
 
+    public Material setRadiusGS(double radiusGS) {
+        this.radiusGS = radiusGS;
+        return this;
+    }
+
+    public Material setRadiusDG(double radiusDG) {
+        this.radiusDG = radiusDG;
+        return this;
+    }
 }

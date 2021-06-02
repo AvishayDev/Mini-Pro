@@ -33,7 +33,7 @@ public class ReflectionRefractionTests {
 		scene.geometries.add( //
 				new Sphere( new Point3D(0, 0, -50),50) //
 						.setEmission(new Color(java.awt.Color.BLUE)) //
-						.setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)),
+						.setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3).setRadiusDG(10)),
 				new Sphere(new Point3D(0, 0, -50),25) //
 						.setEmission(new Color(java.awt.Color.RED)) //
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
@@ -42,9 +42,9 @@ public class ReflectionRefractionTests {
 						.setKl(0.0004).setKq(0.0000006));
 
 		Render render = new Render() //
-				.setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500)) //
+				.setImageWriter(new ImageWriter("Test2", 500, 500)) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysDiffuseGlass(20));
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -78,11 +78,11 @@ public class ReflectionRefractionTests {
 		scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point3D(-750, -750, -150), new Vector(-1, -1, -4),1) //
 				.setKl(0.00001).setKq(0.000005));
 
-		ImageWriter imageWriter = new ImageWriter("reflectionTwoSpheresMirrored", 500, 500);
+		ImageWriter imageWriter = new ImageWriter("Test!!", 500, 500);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysGlossySurface(10).setNumOfRaysDiffuseGlass(10));
 
 		render.renderImage();
 		render.writeToImage();

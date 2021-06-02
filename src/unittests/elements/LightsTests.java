@@ -228,7 +228,7 @@ public class LightsTests {
                 .setKl(0.000005)
                 .setKq(0.00000025));
 
-        ImageWriter imageWriter = new ImageWriter("trianglesSpotSharpTry2", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("trianglesSpotSharp", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
@@ -255,7 +255,7 @@ public class LightsTests {
                 .setKq(0.00000025)
                 .setRadius(40));
 
-        ImageWriter imageWriter = new ImageWriter("trianglesSpotSharpTry1", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("SStest8", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
@@ -263,7 +263,7 @@ public class LightsTests {
                 .setRayTracer(new RayTracerAdvanced(scene2))
                 .setNumOfRaysSS(100);
         render.renderImage();
-        //render.printGrid(50,new Color(300,300,300));
+        render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
 
     }

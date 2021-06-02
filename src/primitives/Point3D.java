@@ -1,6 +1,8 @@
 package primitives;
 
+import geometries.Intersectable;
 import static geometries.Intersectable.GeoPoint;
+import java.awt.*;
 
 /***
  * Represents 3D point with 3 Coordinates,
@@ -63,12 +65,11 @@ public class Point3D {
     /***
      * Add vector to this point and returns the calculated point.
      * (with no changes in the point)
-     * @param vector Vector for adding to the point
+     * @param vec Vector for adding to the point
      * @return The final point
      */
-    public Point3D add(Vector vector, double t) {
-        return new Point3D(this.x.coord + vector.getX() * t,
-                this.y.coord + vector.getY() * t, this.z.coord + vector.getZ() * t);
+    public Point3D add(Vector vec,double t) {
+        return new Point3D(this.x.coord + (vec.getX() *t), this.y.coord + (vec.getY()*t), this.z.coord + (vec.getZ()*t));
     }
 
     /***

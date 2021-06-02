@@ -64,4 +64,7 @@ public class SpotLight extends PointLight {
         //if angle <=0 the color is scaled by 0 so return black(0,0,0) => less calculations
     }
 
+    public Vector getDirection() {
+        return direction;
+    }
 }

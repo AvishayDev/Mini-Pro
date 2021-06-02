@@ -61,7 +61,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param k             The k value for calculations (recursive value)
      * @return The calculated Color
      */
-    private Color calcColor(GeoPoint intersection, Vector v, int level, double k) {
+    protected Color calcColor(GeoPoint intersection, Vector v, int level, double k) {
         Color color = intersection.geometry.getEmission();
         color = color.add(calcLocalEffects(intersection, v, k));
         return level == 1 ? color : color.add(calcGlobalEffects(intersection, v, level, k));
@@ -89,7 +89,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param k     The k value for calculations (recursive value)
      * @return The calculated color.
      */
-    private Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k) {
+    protected Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k) {
         Color color = Color.BLACK;
         Vector n = gp.getNormal();
         Material material = gp.geometry.getMaterial();
@@ -111,7 +111,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param n     The normal of the geometry.
      * @return The refracted ray.
      */
-    private Ray constructRefractedRay(Point3D point, Vector v, Vector n) {
+    protected Ray constructRefractedRay(Point3D point, Vector v, Vector n) {
         return new Ray(point, v, n);
     }
 
@@ -123,7 +123,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param n     The normal of the geometry.
      * @return The reflected ray.
      */
-    private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
+    protected Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
         Vector r = v.subtract(n.scale(v.dotProduct(n) * 2));
         return new Ray(point, r, n);
     }
@@ -134,7 +134,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param ray   The intersect rai
      * @return The closest Intersected GeoPoint
      */
-    private GeoPoint findClosestIntersection(Ray ray) {
+    protected GeoPoint findClosestIntersection(Ray ray) {
         return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
     }
 
@@ -147,7 +147,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param kkx   The recursive value K multiply by kR or kT
      * @return The calculated Color.
      */
-    private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
+    protected Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
         GeoPoint gp = findClosestIntersection(ray);
         return (gp == null ? scene.background : calcColor(gp, ray.getDir(), level - 1, kkx)).scale(kx);
     }

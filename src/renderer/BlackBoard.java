@@ -81,18 +81,6 @@ public class BlackBoard {
         return rays;
     }
 
-    public static List<Ray> raysWithDelta(Point3D point, List<Point3D> points, Vector normal){
-        List<Ray> rays = new LinkedList<>();
-        Ray ray;
-        for (Point3D p : points) {
-            ray = new Ray(point, p.subtract(point),normal);
-            rays.add(ray);
-        }
-        return rays;
-    }
-
-
-
     public static List<Point3D> FindPointsCircle(Point3D center, double radius, Vector vUp, Vector vRight, int numOfPoints) {
 
         /*

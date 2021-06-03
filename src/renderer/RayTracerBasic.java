@@ -169,7 +169,7 @@ public class RayTracerBasic extends RayTracerBase {
             Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                double ktr = transparency(lightSource, l, n, intersection);
+                double ktr = transparency(lightSource, intersection, material, nv, n, l);
                 if (ktr * k > MIN_CALC_COLOR_K) {
                     Color lightIntensity = lightSource.getIntensity(intersection.point) //
                             .scale(ktr * (calcDiffusive(material.kD, nl) //
@@ -186,17 +186,16 @@ public class RayTracerBasic extends RayTracerBase {
      * It receives a light Source, the L vector of light, the normal vector and the GeoPoint of the intersection
      * and returns a double value of the transparency
      * @param light         A LightSource from the current scene
-     * @param l             The L vector of the LightSource
-     * @param n             The normal vector of the geometry
      * @param geoPoint      The intersected GeoPoint
+     * @param material  intesection material
+     * @param nv normal * view direction
+     * @param n normal at intersection
+     * @param l from light to intersection direction
      * @return A double value of the transparency.
      */
-    protected double transparency(LightSource light, Vector l, Vector n, GeoPoint geoPoint) {
-        Vector lightDirection = l.scale(-1); // from point to light source
-        Ray lightRay = new Ray(geoPoint.point, lightDirection, n); // refactored ray head move
-
+    protected double transparency(LightSource light, GeoPoint geoPoint, Material material, double nv, Vector n, Vector l) {
         double lightDistance = light.getDistance(geoPoint.point);
-        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, lightDistance);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(new Ray(geoPoint.point, l.scale(-1), n), lightDistance);
         if (intersections == null) return 1.0;
 
         double ktr = 1.0;

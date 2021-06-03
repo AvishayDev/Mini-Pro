@@ -5,17 +5,23 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
-public abstract class Border {
+public abstract class Borderable {
 
-    /*
 
-    public double[] minPoint = new double[3];
-    public double[] maxPoint = new double[3];
+    // mix point coordinates
+    public double minX;
+    public double minY;
+    public double minZ;
+
+    // max point coordinates
+    public double maxX;
+    public double maxY;
+    public double maxZ;
 
     public abstract void findMinMax();
 
 
-    protected boolean isIntersect(Ray ray) {
+    protected boolean intersectBorder(Ray ray) {
 
         Point3D origin = ray.getP0();
         double originX = origin.getX();
@@ -30,23 +36,23 @@ public abstract class Border {
         double tmax;
 
         if (Util.alignZero(dir.getX()) >= 0) {
-            tmin = (minPoint[0] - originX) / dirX;
-            tmax = (maxPoint[0] - originX) / dirX;
+            tmin = (minX - originX) / dirX;
+            tmax = (maxX - originX) / dirX;
         }
         else {
-            tmin = (maxPoint[0] - originX) / dirX;
-            tmax = (minPoint[0] - originX) / dirX;
+            tmin = (maxX - originX) / dirX;
+            tmax = (minX - originX) / dirX;
         }
 
         double tymin;
         double tymax;
         if (Util.alignZero(dir.getY()) >= 0) {
-            tymin = (minPoint[1] - originY) / dirY;
-            tymax = (maxPoint[1] - originY) / dirY;
+            tymin = (minY - originY) / dirY;
+            tymax = (maxY - originY) / dirY;
         }
         else {
-            tymin = (maxPoint[1] - originY) / dirY;
-            tymax = (minPoint[1] - originY) / dirY;
+            tymin = (maxY - originY) / dirY;
+            tymax = (minY - originY) / dirY;
         }
 
 
@@ -63,12 +69,12 @@ public abstract class Border {
         double tzmax;
 
         if (Util.alignZero(dir.getZ()) >= 0) {
-            tzmin = (minPoint[2] - originZ) / dirZ;
-            tzmax = (maxPoint[2] - originZ) / dirZ;
+            tzmin = (minZ - originZ) / dirZ;
+            tzmax = (maxZ - originZ) / dirZ;
         }
         else {
-            tzmin = (maxPoint[2] - originZ) / dirZ;
-            tzmax = (minPoint[2] - originZ) / dirZ;
+            tzmin = (maxZ - originZ) / dirZ;
+            tzmax = (minZ - originZ) / dirZ;
         }
 
         if ((tmin > tzmax) || (tzmin > tmax))
@@ -82,5 +88,5 @@ public abstract class Border {
 
         return true;
     }
-*/
+
 }

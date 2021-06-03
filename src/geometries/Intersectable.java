@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * This interface includes one method that finds the intersections between the current object a ray
  */
-public interface Intersectable{
+public abstract class Intersectable extends Borderable {
 
     /**
      * This class represents a point on some geometry and the geometry that the point is on it.
@@ -46,22 +46,6 @@ public interface Intersectable{
         }
 
         /***
-         * Getter for the Kt field of the geometry's material of this object.
-         * @return The double value of Kt.
-         */
-        public double getKt() {
-            return geometry.getMaterial().kT;
-        }
-
-        public double getRadiusGS() {
-            return geometry.getMaterial().radiusGS;
-        }
-
-        public double getRadiusDG() {
-            return geometry.getMaterial().radiusDG;
-        }
-
-        /***
          * Override of the equals method, receives some object and checks if it's from the same type (GeoPoint) and not null,
          * checks if geometry's field class are equal and if the points fields are equal
          * @param o The object we're comparing against
@@ -87,7 +71,7 @@ public interface Intersectable{
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
      */
-    default List<Point3D> findIntersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
         List<GeoPoint> geoList = findGeoIntersections(ray);
         return geoList == null ? null
                 : geoList.stream()
@@ -102,7 +86,7 @@ public interface Intersectable{
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    default public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 

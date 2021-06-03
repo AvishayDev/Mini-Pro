@@ -34,11 +34,6 @@ public class Triangle extends Polygon {
                 '}';
     }
 
-
-    @Override
-    public void findMinMax() {
-
-    }
     /**
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.

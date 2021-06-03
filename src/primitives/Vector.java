@@ -63,9 +63,9 @@ public class Vector {
     }
 
     public Vector getOrthogonal() {
-        if (Util.isZero(head.getY())&& Util.isZero(head.getZ()))
-            return new Vector(0,1,0);
-        return new Vector(0,-getZ(),getY());
+        if (Util.isZero(head.y.coord)&& Util.isZero(head.z.coord))
+            return Vector.Y;
+        return new Vector(0,-head.z.coord,head.y.coord).normalize();
     }
 
     /***
@@ -75,9 +75,9 @@ public class Vector {
      * @return new vector with the add of the point
      */
     public Vector add(Point3D point) {
-        return new Vector(this.head.getX() + point.getX()
-                , this.head.getY() + point.getY()
-                , this.head.getZ() + point.getZ());
+        return new Vector(this.head.x.coord + point.x.coord
+                , this.head.y.coord + point.y.coord
+                , this.head.z.coord + point.z.coord);
     }
 
 
@@ -87,9 +87,9 @@ public class Vector {
      * @return The sum of the two vectors
      */
     public Vector add(Vector vec) {
-        return new Vector(this.head.getX() + vec.head.getX(),
-                this.head.getY() + vec.head.getY(),
-                this.head.getZ() + vec.head.getZ());
+        return new Vector(this.head.x.coord + vec.head.x.coord,
+                this.head.y.coord + vec.head.y.coord,
+                this.head.z.coord + vec.head.z.coord);
     }
 
     /***
@@ -98,9 +98,9 @@ public class Vector {
      * @return The subtraction of the 2 vectors
      */
     public Vector subtract(Vector vec) {
-        return new Vector(this.head.getX() - vec.head.getX(),
-                this.head.getY() - vec.head.getY(),
-                this.head.getZ() - vec.head.getZ());
+        return new Vector(this.head.x.coord - vec.head.x.coord,
+                this.head.y.coord - vec.head.y.coord,
+                this.head.z.coord - vec.head.z.coord);
     }
 
     /***
@@ -109,9 +109,9 @@ public class Vector {
      * @return The scaled vector
      */
     public Vector scale(double Num) {
-        return new Vector(this.head.getX() * Num,
-                this.head.getY() * Num,
-                this.head.getZ() * Num);
+        return new Vector(this.head.x.coord * Num,
+                this.head.y.coord * Num,
+                this.head.z.coord * Num);
     }
 
     /***
@@ -120,9 +120,9 @@ public class Vector {
      * @return The result of the cross product action.
      */
     public Vector crossProduct(Vector vec) {
-        return new Vector((this.head.getY() * vec.head.getZ()) - (this.head.getZ() * vec.head.getY()),
-                (this.head.getZ() * vec.head.getX()) - (this.head.getX() * vec.head.getZ()),
-                (this.head.getX() * vec.head.getY()) - (this.head.getY() * vec.head.getX()));
+        return new Vector((this.head.y.coord * vec.head.z.coord) - (this.head.z.coord * vec.head.y.coord),
+                (this.head.z.coord * vec.head.x.coord) - (this.head.x.coord * vec.head.z.coord),
+                (this.head.x.coord * vec.head.y.coord) - (this.head.y.coord * vec.head.x.coord));
     }
 
     /***
@@ -131,9 +131,9 @@ public class Vector {
      * @return The result of the dot product action.
      */
     public double dotProduct(Vector vec) {
-        return (this.head.getX() * vec.head.getX()) +
-                (this.head.getY() * vec.head.getY()) +
-                (this.head.getZ() * vec.head.getZ());
+        return (this.head.x.coord * vec.head.x.coord) +
+                (this.head.y.coord * vec.head.y.coord) +
+                (this.head.z.coord * vec.head.z.coord);
     }
 
 
@@ -143,9 +143,9 @@ public class Vector {
      * @return The result of the dot product action.
      */
     public double dotProduct(Point3D point) {
-        return (this.head.getX() * point.getX()) +
-                (this.head.getY() * point.getY()) +
-                (this.head.getZ() * point.getZ());
+        return (this.head.x.coord * point.x.coord) +
+                (this.head.y.coord * point.y.coord) +
+                (this.head.z.coord * point.z.coord);
     }
 
     /***
@@ -164,17 +164,13 @@ public class Vector {
         return Math.sqrt(lengthSquared());
     }
 
-    public Vector divide(Vector vec) {
-        return new Vector(getX() / vec.getX(), getY() / vec.getY(), getZ() / vec.getZ());
-    }
-
     /***
      * This function normalize the current vector
      * @return The current vector, but now normalized
      */
     public Vector normalize() {
         double size = length();
-        this.head = new Point3D(head.getX() / size, head.getY() / size, head.getZ() / size);
+        this.head = new Point3D(head.x.coord / size, head.y.coord / size, head.z.coord / size);
         return this;
     }
 
@@ -219,27 +215,13 @@ public class Vector {
         return head;
     }
 
-    /***
-     * This method is a getter for the X value of the head of this Vector.
-     * @return the X value of the head of this vector, in form of a double.
-     */
     public double getX() {
-        return this.head.getX();
+        return head.x.coord;
     }
-
-    /***
-     * This method is a getter for the Y value of the head of this Vector.
-     * @return the Y value of the head of this vector, in form of a double.
-     */
     public double getY() {
-        return this.head.getY();
+        return head.y.coord;
     }
-
-    /***
-     * This method is a getter for the Z value of the head of this Vector.
-     * @return the Z value of the head of this vector, in form of a double.
-     */
     public double getZ() {
-        return this.head.getZ();
+        return head.z.coord;
     }
 }

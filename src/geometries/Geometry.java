@@ -2,23 +2,15 @@ package geometries;
 
 import primitives.*;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * An interface that extends the interface Intersectable, and adds another method that returns the normal
  */
-public abstract class Geometry extends Border implements Intersectable {
+public abstract class Geometry extends Intersectable {
 
     /**
      * The color that is being returned from the 3D model object. Default color is black.
      */
     protected Color emission = Color.BLACK;
-
-    //public double[] minPoint = new double[3];
-    //public double[] maxPoint = new double[3];
-
-    public abstract void findMinMax();
 
     /**
      * The material type of the 3D model object.

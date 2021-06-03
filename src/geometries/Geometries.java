@@ -12,8 +12,9 @@ import java.util.*;
 /***
  * Represents list of geometries from all the types we have
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
 
+    public static int raysCheck = 0;
     /**
      * List that have all the geometries
      */
@@ -23,7 +24,6 @@ public class Geometries implements Intersectable {
      * create EMPTY list of geometries
      */
     public Geometries() {
-        //findMinMax();
     }
 
     /***
@@ -32,8 +32,8 @@ public class Geometries implements Intersectable {
      * @param geometries all the geometries
      */
     public Geometries(Intersectable... geometries) {
-        this();
         add(geometries);
+        findMinMax();
     }
 
     /***
@@ -42,6 +42,7 @@ public class Geometries implements Intersectable {
      */
     public void add(Intersectable... geometries) {
         this.geometries.addAll(List.of(geometries));
+        findMinMax();
     }
 
     /**
@@ -57,84 +58,51 @@ public class Geometries implements Intersectable {
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
-            //if (isIntersect((Geometry)g,ray)) {
-            saveList = g.findGeoIntersections(ray, maxDistance);
-            if (saveList != null)
-                if (returnList == null)
-                    returnList = new LinkedList<>(saveList);
-                else
-                    returnList.addAll(saveList);
-            //}
+            if (g.intersectBorder(ray)) {
+                saveList = g.findGeoIntersections(ray, maxDistance);
+                if (saveList != null)
+                    if (returnList == null)
+                        returnList = new LinkedList<>(saveList);
+                    else
+                        returnList.addAll(saveList);
+            }
         }
         return returnList;
     }
 
-/*
-    public boolean isIntersect(Geometry geo, Ray ray) {
+    @Override
+    public void findMinMax() {
 
-        Point3D origin = ray.getP0();
-        double originX = origin.getX();
-        double originY = origin.getY();
-        double originZ = origin.getZ();
-        Vector dir = ray.getDir();
-        double dirX = dir.getX();
-        double dirY = dir.getY();
-        double dirZ = dir.getZ();
+        // mix point coordinates
+        minX = Double.POSITIVE_INFINITY;
+        minY = Double.POSITIVE_INFINITY;
+        minZ = Double.POSITIVE_INFINITY;
 
-        double tmin;
-        double tmax;
+        // max point coordinates
+        maxX = Double.NEGATIVE_INFINITY;
+        maxY = Double.NEGATIVE_INFINITY;
+        maxZ = Double.NEGATIVE_INFINITY;
 
-        if (Util.alignZero(dir.getX()) >= 0) {
-            tmin = (geo.minPoint[0] - originX) / dirX;
-            tmax = (geo.maxPoint[0] - originX) / dirX;
-        } else {
-            tmin = (geo.maxPoint[0] - originX) / dirX;
-            tmax = (geo.minPoint[0] - originX) / dirX;
+        for (Intersectable g: geometries) {
+            g.findMinMax();
+
+            //calc min
+            if (g.minX < minX)
+                minX = g.minX;
+            if (g.minY < minY)
+                minY = g.minY;
+            if (g.minZ < minZ)
+                minZ = g.minZ;
+
+            //calc max
+            if (g.maxX > maxX)
+                maxX = g.maxX;
+            if (g.maxY > maxY)
+                maxY = g.maxY;
+            if (g.maxZ > maxZ)
+                maxZ = g.maxZ;
         }
 
-        double tymin;
-        double tymax;
-        if (Util.alignZero(dir.getY()) >= 0) {
-            tymin = (geo.minPoint[1] - originY) / dirY;
-            tymax = (geo.maxPoint[1] - originY) / dirY;
-        } else {
-            tymin = (geo.maxPoint[1] - originY) / dirY;
-            tymax = (geo.minPoint[1] - originY) / dirY;
-        }
-
-
-        if ((tmin > tymax) || (tymin > tmax))
-            return false;
-
-        if (tymin > tmin)
-            tmin = tymin;
-
-        if (tymax < tmax)
-            tmax = tymax;
-
-        double tzmin;
-        double tzmax;
-
-        if (Util.alignZero(dir.getZ()) >= 0) {
-            tzmin = (geo.minPoint[2] - originZ) / dirZ;
-            tzmax = (geo.maxPoint[2] - originZ) / dirZ;
-        } else {
-            tzmin = (geo.maxPoint[2] - originZ) / dirZ;
-            tzmax = (geo.minPoint[2] - originZ) / dirZ;
-        }
-
-        if ((tmin > tzmax) || (tzmin > tmax))
-            return false;
-
-        if (tzmin > tmin)
-            tmin = tzmin;
-
-        if (tzmax < tmax)
-            tmax = tzmax;
-
-        return true;
     }
-
- */
 }
 

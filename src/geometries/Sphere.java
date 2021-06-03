@@ -28,8 +28,8 @@ public class Sphere extends Geometry {
         this.center = center;
         if (Util.isZero(radius) || radius < 0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
+
         this.radius = radius;
-        findMinMax();
     }
 
     /***
@@ -43,15 +43,15 @@ public class Sphere extends Geometry {
 
     @Override
     public void findMinMax() {
-        /*
-        minPoint[0] = center.getX() - radius;
-        minPoint[1] = center.getY() - radius;
-        minPoint[2] = center.getZ() - radius;
 
-        maxPoint[0] = center.getX() + radius;
-        maxPoint[1] = center.getY() + radius;
-        maxPoint[2] = center.getZ() + radius;
-         */
+        minX = center.getX() - radius;
+        minY = center.getY() - radius;
+        minZ = center.getZ() - radius;
+
+        maxX = center.getX() + radius;
+        maxY = center.getY() + radius;
+        maxZ = center.getZ() + radius;
+
     }
 
     /***
@@ -126,6 +126,7 @@ public class Sphere extends Geometry {
         if (Util.alignZero(t1) <= 0)
             //if true, p0 is on the sphere or out of it => no points
             return null;
+
         boolean checkMaxT1 = Util.alignZero(t1 - maxDistance) < 0;
 
         double t2 = tm - th;
@@ -133,8 +134,10 @@ public class Sphere extends Geometry {
             return null;
         //if t2 <=0 don't take, else take both
         if (Util.alignZero(t2) <= 0)
+
             //if true, p0 on the sphere or in it => one point
             return checkMaxT1 ? List.of(new GeoPoint(this, ray.getPoint(t1))) : null;
+
 
         //if pass all of this it mean p0 cross twice the sphere
         return checkMaxT1 //

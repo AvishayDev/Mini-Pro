@@ -1,14 +1,13 @@
 package renderer;
 
-import elements.DirectionalLight;
 import elements.LightSource;
-import elements.PointLight;
-import elements.SpotLight;
 import geometries.Intersectable;
+
+import static geometries.Intersectable.*;
+
 import primitives.*;
 import scene.Scene;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -53,53 +52,49 @@ public class RayTracerAdvanced extends RayTracerBasic {
         Material material = intersection.geometry.getMaterial();
         Color color = Color.BLACK;
         for (LightSource lightSource : scene.lights) {
-            //we want to calc the same calculations for a bin of rays
             Vector l = lightSource.getL(intersection.point);
-            if (!(lightSource instanceof DirectionalLight) && numOfRaysSoftShadows != 0) {
-                Vector orthogonal;
-                List<Point3D> point3DS;
-                //if (lightSource instanceof PointLight) {
-                orthogonal = l.getOrthogonal().normalize();
-                //create the points on the light
-                point3DS = BlackBoard.FindPointsCircle(((PointLight) lightSource).getPosition(), ((PointLight) lightSource).getRadius(), orthogonal, l.crossProduct(orthogonal).normalize(), numOfRaysSoftShadows);
-                //}else{
-                //    orthogonal = ((SpotLight) lightSource).getDirection().getOrthogonal().normalize();
-                //create the points on the light
-                //    point3DS = BlackBoard.FindPointsCircle(((PointLight) lightSource).getPosition(), ((PointLight) lightSource).getRadius(), orthogonal, ((SpotLight) lightSource).getDirection().crossProduct(orthogonal).normalize(), numOfRaysSoftShadows);
-
-                //}
-
-                //create bin of rays from the light to the intersection
-                List<Ray> rays = BlackBoard.raysFromPointToPoints(intersection.point, point3DS, true);
-
-                //the calculation of the transparency
-                Color lightIntensity = lightSource.getIntensity(intersection.point);
-                for (Ray ray : rays) {
-                    double nl = alignZero(n.dotProduct(ray.getDir()));
-                    if (nl * nv > 0) { // sign(nl) == sing(nv)
-                        double ktr = transparency(lightSource, ray.getDir(), n, intersection);
-                        if (ktr * k > MIN_CALC_COLOR_K) {
-                            color = color.add(lightIntensity.scale(ktr * (calcDiffusive(material.kD, nl) //
-                                    + calcSpecular(material.kS, l, n, v, material.nShininess))));
-                        }
-                    }
-                }
-                //do average of the values
-                return color.reduce(rays.size());
-            } else {
-                double nl = alignZero(n.dotProduct(l));
-                if (nl * nv > 0) { // sign(nl) == sing(nv)
-                    double ktr = transparency(lightSource, l, n, intersection);
-                    if (ktr * k > MIN_CALC_COLOR_K) {
-                        Color lightIntensity = lightSource.getIntensity(intersection.point) //
-                                .scale(ktr * (calcDiffusive(material.kD, nl) //
-                                        + calcSpecular(material.kS, l, n, v, material.nShininess)));
-                        color = color.add(lightIntensity);
-                    }
-                }
+            double nl = alignZero(n.dotProduct(l));
+            double ktr = transparency(lightSource, intersection, material, nv, n, l);
+            if (ktr * k > MIN_CALC_COLOR_K) {
+                Color lightIntensity = lightSource.getIntensity(intersection.point) //
+                        .scale(ktr * (calcDiffusive(material.kD, nl) //
+                                + calcSpecular(material.kS, l, n, v, material.nShininess)));
+                color = color.add(lightIntensity);
             }
         }
         return color;
+    }
+
+    /***
+     * This is a private function that is being used by the function calcLocalEffects.
+     * It receives a light Source, the L vector of light, the normal vector and the GeoPoint of the intersection
+     * and returns a double value of the transparency
+     * @param light         A LightSource from the current scene
+     * @param geoPoint      The intersected GeoPoint
+     * @param material  intesection material
+     * @param nv normal * view direction
+     * @param n normal at intersection
+     * @param l from light to intersection direction
+     * @return A double value of the transparency.
+     */
+    @Override
+    protected double transparency(LightSource light, GeoPoint geoPoint, Material material, double nv, Vector n, Vector l) {
+        double lightDistance = light.getDistance(geoPoint.point);
+        List<Ray> shadowRays = light.getTargetRays(geoPoint.point, n, numOfRaysSoftShadows);
+        double finalKTr = 0;
+
+        for (var shadowRay : shadowRays) {
+            Vector lightDir = shadowRay.getDir(); // opposite to l actually
+            List<GeoPoint> intersections = scene.geometries.findGeoIntersections(shadowRay, lightDistance);
+            double ktr = nv * n.dotProduct(lightDir) >= 0 ? material.kT : 1.0;
+            if (ktr > MIN_CALC_COLOR_K && intersections != null) {
+                for (GeoPoint gp : intersections)
+                    ktr *= gp.geometry.getMaterial().kT;
+            }
+            finalKTr += ktr;
+        }
+
+        return finalKTr / shadowRays.size();
     }
 
     /***
@@ -119,14 +114,14 @@ public class RayTracerAdvanced extends RayTracerBasic {
         Material material = gp.geometry.getMaterial();
         double kkr = k * material.kR;
         if (kkr > MIN_CALC_COLOR_K)
-            if (numOfRaysGlossySurface == 0)
+            if (numOfRaysGlossySurface == 0 || material.radiusGS == 0)
                 color = calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.kR, kkr);
             else
                 color = calcGlobalEffect(constructReflectedRays(gp, v, n), level, material.kR, kkr);
 
         double kkt = k * material.kT;
         if (kkt > MIN_CALC_COLOR_K)
-            if (numOfRaysDiffuseGlass == 0)
+            if (numOfRaysDiffuseGlass == 0 || material.radiusDG == 0)
                 color = color.add(calcGlobalEffect(constructRefractedRay(gp.point, v, n), level, material.kT, kkt));
             else
                 color = color.add(calcGlobalEffect(constructRefractedRays(gp, v, n), level, material.kT, kkt));
@@ -137,15 +132,15 @@ public class RayTracerAdvanced extends RayTracerBasic {
     private List<Ray> constructReflectedRays(Intersectable.GeoPoint gp, Vector v, Vector n) {
         Vector r = v.subtract(n.scale(v.dotProduct(n) * 2));
         Ray centerRay = new Ray(gp.point, r, n);
-        Vector orthogonal = r.getOrthogonal().normalize();
-        List<Point3D> point3DS = BlackBoard.FindPointsCircle(gp.point.add(r, GlossyDiffusiveDistance), gp.getRadiusGS(), orthogonal, orthogonal.crossProduct(r).normalize(), numOfRaysGlossySurface);
+        Vector orthogonal = r.getOrthogonal();
+        List<Point3D> point3DS = BlackBoard.findPoints(gp.point.add(r, GlossyDiffusiveDistance), gp.geometry.getMaterial().radiusGS, orthogonal, orthogonal.crossProduct(r).normalize(), numOfRaysGlossySurface);
         return BlackBoard.raysFromPointToPoints(centerRay.getP0(), point3DS, false);
     }
 
     private List<Ray> constructRefractedRays(Intersectable.GeoPoint gp, Vector v, Vector n) {
         Ray centerRay = new Ray(gp.point, v, n);
-        Vector orthogonal = v.getOrthogonal().normalize();
-        List<Point3D> point3DS = BlackBoard.FindPointsCircle(gp.point.add(v, GlossyDiffusiveDistance),gp.getRadiusDG() , orthogonal, orthogonal.crossProduct(v).normalize(), numOfRaysDiffuseGlass);
+        Vector orthogonal = v.getOrthogonal();
+        List<Point3D> point3DS = BlackBoard.findPoints(gp.point.add(v, GlossyDiffusiveDistance), gp.geometry.getMaterial().radiusDG, orthogonal, orthogonal.crossProduct(v).normalize(), numOfRaysDiffuseGlass);
         return BlackBoard.raysFromPointToPoints(centerRay.getP0(), point3DS, false);
     }
 
@@ -158,11 +153,11 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * @param kkx   The recursive value K multiply by kR or kT
      * @return The calculated Color.
      */
-    protected Color calcGlobalEffect(List<Ray> rays, int level, double kx, double kkx) {
-        Color color =Color.BLACK;
+    private Color calcGlobalEffect(List<Ray> rays, int level, double kx, double kkx) {
+        Color color = Color.BLACK;
         for (Ray ray : rays) {
             Intersectable.GeoPoint gp = findClosestIntersection(ray);
-            color = color.add ((gp == null ? scene.background : calcColor(gp, ray.getDir(), level - 1, kkx)).scale(kx));
+            color = color.add((gp == null ? scene.background : calcColor(gp, ray.getDir(), level - 1, kkx)).scale(kx));
         }
         return color.reduce(rays.size());
     }

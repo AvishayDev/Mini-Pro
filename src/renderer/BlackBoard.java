@@ -16,43 +16,67 @@ public class BlackBoard {
      * It returns a list of the generated points.
      *
      * @param center      This point represents the center of the received board.
-     * @param height      Double that represents the height of the board.
-     * @param width       Double that represents the width of the board.
+     * @param halfHeight  Double that represents the half of height of the board.
+     * @param halfWidth   Double that represents the half of width of the board.
      * @param vUp         Vector that represent the Y axis of the board.
      * @param vRight      Vector that represent the X axis of the board.
      * @param numOfPoints The amount of generated points on the board.
      * @return A list of all the generated points.
      */
-    public static List<Point3D> FindPointsRectangle(Point3D center, double height, double width, Vector vUp, Vector vRight, int numOfPoints) {
-        List<Point3D> points3D = new LinkedList<>();
-        points3D.add(center); // The center point must be included
-
-
-        double halfHeight = height / 2;
-        double halfWeight = width / 2;
-        Point3D pCenter;
-
-        double rndHeight;
-        double rndWeight;
+    public static List<Point3D> findPoints(Point3D center, double halfHeight, double halfWidth, Vector vUp, Vector vRight, int numOfPoints) {
+        List<Point3D> points = new LinkedList<>();
+        points.add(center); // The center point must be included
 
         for (int i = 1; i < numOfPoints; i++) {
+            double x = Util.random(-halfWidth, halfWidth);
+            double y = Util.random(-halfHeight, halfHeight);
 
-            pCenter = center;
-
-            rndWeight = Util.random(-halfWeight, halfWeight);
-            rndHeight = Util.random(-halfHeight, halfHeight);
-
-            if (!Util.isZero(rndWeight))
+            Point3D pCenter = center;
+            if (!Util.isZero(x))
                 //use pC instead of pIJ
-                pCenter = pCenter.add(vRight.scale(rndWeight));
-            if (!Util.isZero(rndHeight))
-                pCenter = pCenter.add(vUp.scale(rndHeight));
-
-            points3D.add(pCenter);
-
+                pCenter = pCenter.add(vRight.scale(x));
+            if (!Util.isZero(y))
+                pCenter = pCenter.add(vUp.scale(y));
+            points.add(pCenter);
         }
-        return points3D;
+        return points;
     }
+
+    /**
+     * This method receives a point of the center of the board, the board's height and weight, its direction vectors
+     * and the amount of different points you want to generate on that board.
+     * It returns a list of the generated points.
+     *
+     * @param center      This point represents the center of the received board.
+     * @param radius      Double that represents the radius of the board.
+     * @param vUp         Vector that represent the Y axis of the board.
+     * @param vRight      Vector that represent the X axis of the board.
+     * @param numOfPoints The amount of generated points on the board.
+     * @return A list of all the generated points.
+     */
+    public static List<Point3D> findPoints(Point3D center, double radius, Vector vUp, Vector vRight, int numOfPoints) {
+        List<Point3D> points = new LinkedList<>();
+        points.add(center); // The center point must be included
+        double radiusSquared = radius * radius;
+
+        for (int i = 1; i < numOfPoints; i++) {
+            double x, y;
+            do {
+                x = Util.random(-radius, radius);
+                y = Util.random(-radius, radius);
+            } while (x * x + y * y >= radiusSquared);
+
+            Point3D pCenter = center;
+            if (!Util.isZero(x))
+                //use pC instead of pIJ
+                pCenter = pCenter.add(vRight.scale(x));
+            if (!Util.isZero(y))
+                pCenter = pCenter.add(vUp.scale(y));
+            points.add(pCenter);
+        }
+        return points;
+    }
+
 
     /**
      * Method that receives a point and a list of points, and returns a list of rays from the point to the
@@ -80,24 +104,4 @@ public class BlackBoard {
 
         return rays;
     }
-
-    public static List<Point3D> FindPointsCircle(Point3D center, double radius, Vector vUp, Vector vRight, int numOfPoints) {
-
-        /*
-        we sent 2*radius to make the points choose by the size of the circle
-        we sent 1.27*numOfPoints to cover the size differences between rectangle and circle
-         */
-        List<Point3D> point3DS = FindPointsRectangle(center, 2*radius, 2*radius, vUp, vRight, (int) (numOfPoints * 1.27d));
-
-        //erase the points out of the circle
-        for (int i = 0; i < point3DS.size(); i++) {
-            if (point3DS.get(i).distance(center) > radius) {
-                point3DS.remove(i);
-                i--;
-            }
-        }
-
-        return point3DS;
-    }
-
 }

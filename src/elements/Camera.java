@@ -142,7 +142,7 @@ public class Camera {
         // Second step - calculate focal point
         Point3D focalPoint = findFocalPoint(centerRay);
         // Third step - Create points on the aperture
-        List<Point3D> points = BlackBoard.FindPointsRectangle(apertureCenter, apertureHeight,apertureWidth, vUp, vRight, numOfRays);
+        List<Point3D> points = BlackBoard.findPoints(apertureCenter, apertureHeight/2,apertureWidth/2, vUp, vRight, numOfRays);
         // Fourth step - Create rays from points to the focal point.
         return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
     }
@@ -151,7 +151,7 @@ public class Camera {
         // First step - find the pixel center on the ViewPlane
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
         // Second step - Create points on the pixel
-        List<Point3D> points = BlackBoard.FindPointsRectangle(centerPixel, this.height / (double) nY, this.width / (double) nX, vUp, vRight, numOfRays);
+        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.height / ((double) nY*2), this.width / ((double) nX*2), vUp, vRight, numOfRays);
         // Third step - Create rays from point to the pixel
         return BlackBoard.raysFromPointToPoints(p0, points, false);
     }

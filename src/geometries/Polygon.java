@@ -90,12 +90,16 @@ public class Polygon extends Geometry {
 
     @Override
     public void findMinMax() {
-        double minX = Double.POSITIVE_INFINITY;
-        double minY = Double.POSITIVE_INFINITY;
-        double minZ = Double.POSITIVE_INFINITY;
-        double maxX = Double.NEGATIVE_INFINITY;
-        double maxY = Double.NEGATIVE_INFINITY;
-        double maxZ = Double.NEGATIVE_INFINITY;
+
+        // mix point coordinates
+        minX = Double.POSITIVE_INFINITY;
+        minY = Double.POSITIVE_INFINITY;
+        minZ = Double.POSITIVE_INFINITY;
+
+        // max point coordinates
+        maxX = Double.NEGATIVE_INFINITY;
+        maxY = Double.NEGATIVE_INFINITY;
+        maxZ = Double.NEGATIVE_INFINITY;
 
         for (Point3D p : vertices) {
             double pX = p.getX();
@@ -118,17 +122,6 @@ public class Polygon extends Geometry {
                 maxZ = pZ;
         }
 
-        /*
-        //reset min
-        minPoint[0] = minX;
-        minPoint[1] = minY;
-        minPoint[2] = minZ;
-
-        //reset max
-        maxPoint[0] = minX;
-        maxPoint[1] = minY;
-        maxPoint[2] = minZ;
-*/
     }
 
     /***

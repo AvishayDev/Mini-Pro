@@ -41,10 +41,7 @@ public class Tube extends Geometry {
      * @param radius radius of the Tube
      */
     public Tube(Vector vec, Point3D point, double radius) {
-        this.axisRay = new Ray(vec, point);
-        if (Util.isZero(radius) || radius < 0)
-            throw new IllegalArgumentException("Please Don't Choose radius zero");
-        this.radius = radius;
+        this(new Ray(vec, point),radius);
     }
 
 

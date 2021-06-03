@@ -1,9 +1,9 @@
 package elements;
 
-import primitives.Color;
-import primitives.Point3D;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
+import renderer.BlackBoard;
+
+import java.util.List;
 
 /**
  * The class "SpotLight" extends the class "PointLight".
@@ -64,7 +64,14 @@ public class SpotLight extends PointLight {
         //if angle <=0 the color is scaled by 0 so return black(0,0,0) => less calculations
     }
 
-    public Vector getDirection() {
-        return direction;
+    @Override
+    public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
+        Ray ray = new Ray(point, position.subtract(point), n);
+        if (radius == 0.0)
+            return List.of(ray);
+        Vector orthogonal = direction.getOrthogonal();
+        return BlackBoard.raysFromPointToPoints(ray.getP0(), //
+                BlackBoard.findPoints(position, radius, orthogonal, direction.crossProduct(orthogonal).normalize(), amount), //
+                false);
     }
 }

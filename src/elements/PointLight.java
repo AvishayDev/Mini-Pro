@@ -1,9 +1,9 @@
 package elements;
 
-import geometries.Intersectable;
-import primitives.Color;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
+import renderer.BlackBoard;
+
+import java.util.List;
 
 /**
  * The class PointLight is an extension of the class Light and implements the class LightSource.
@@ -13,7 +13,7 @@ import primitives.Vector;
  */
 public class PointLight extends Light implements LightSource {
 
-    protected double radius;
+    protected double radius = 0.0;
     /**
      * the position of the light
      */
@@ -72,6 +72,18 @@ public class PointLight extends Light implements LightSource {
         return position.distance(point);
     }
 
+    @Override
+    public List<Ray> getTargetRays(Point3D point, Vector n,int amount ) {
+        Ray ray = new Ray(point, position.subtract(point), n);
+        if (radius == 0.0)
+            return List.of(ray);
+        Vector l =getL(point);
+        Vector orthogonal = l.getOrthogonal();
+        return BlackBoard.raysFromPointToPoints(ray.getP0(), //
+                BlackBoard.findPoints(position, radius, orthogonal, l.crossProduct(orthogonal).normalize(), amount), //
+                false);
+    }
+
     /***
      * reset the value of kC in builderType
      * @param Kc the kC value
@@ -105,13 +117,5 @@ public class PointLight extends Light implements LightSource {
     public PointLight setRadius(double radius) {
         this.radius = radius;
         return this;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public Point3D getPosition() {
-        return position;
     }
 }

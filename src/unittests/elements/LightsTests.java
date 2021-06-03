@@ -117,6 +117,34 @@ public class LightsTests {
         render.writeToImage();
     }
 
+
+    /**
+     * Produce a picture of a sphere lighted by a point light
+     */
+    @Test
+    public void BorderTests() {
+
+        Point3D point3D = new Point3D(-50,-50,-100);
+        Vector v= new Vector(10,10,20);
+        Geometry sphereAdd;
+        for(int i=1;i<20;i++){
+            sphereAdd = new Sphere(point3D,3*i).setEmission(new Color(10*i,7*i,12*i)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+            scene1.geometries.add(sphereAdd);
+            point3D =point3D.add(v);
+        }
+
+        scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-50, -50, 50))//
+                .setKl(0.00001).setKq(0.000001));
+
+        ImageWriter imageWriter = new ImageWriter("WithBorder", 500, 500);
+        Render render = new Render()//
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new RayTracerBasic(scene1));
+        render.renderImage();
+        render.writeToImage();
+    }
+
     /**
      * Produce a picture of a sphere lighted by a spot light
      */
@@ -205,7 +233,7 @@ public class LightsTests {
                 .setKl(0.000005)
                 .setKq(0.00000025));
 
-        ImageWriter imageWriter = new ImageWriter("sphereSpotSharpTry2", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("sphereSpotSharp", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
@@ -253,9 +281,9 @@ public class LightsTests {
                 .setKc(1)
                 .setKl(0.000005)
                 .setKq(0.00000025)
-                .setRadius(40));
+                .setRadius(20));
 
-        ImageWriter imageWriter = new ImageWriter("SStest8", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("SStest9", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //

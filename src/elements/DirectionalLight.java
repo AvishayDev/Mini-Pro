@@ -1,9 +1,8 @@
 package elements;
 
-import geometries.Intersectable;
-import primitives.Color;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
+
+import java.util.List;
 
 /**
  * The class DirectionalLight is an extension of the class Light and implements the class LightSource
@@ -16,6 +15,7 @@ public class DirectionalLight extends Light implements LightSource {
      * the direction of the light
      */
     private Vector direction;
+    private Vector oppositeDirection;
 
     /***
      * constructor for the DirectionLight. reset the parameters
@@ -25,6 +25,7 @@ public class DirectionalLight extends Light implements LightSource {
     public DirectionalLight(Color light, Vector directionLight) {
         super(light);
         direction = directionLight.normalized();
+        oppositeDirection = direction.scale(-1);
     }
 
     /**
@@ -51,5 +52,10 @@ public class DirectionalLight extends Light implements LightSource {
     @Override
     public double getDistance(Point3D point) {
         return Double.POSITIVE_INFINITY;
+    }
+
+    @Override
+    public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
+        return List.of(new Ray(point, oppositeDirection, n));
     }
 }

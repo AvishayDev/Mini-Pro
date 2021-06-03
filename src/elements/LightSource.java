@@ -3,6 +3,8 @@ package elements;
 import geometries.Intersectable;
 import primitives.*;
 
+import java.util.List;
+
 /***
  * LightSource is an interface that includes 2 methods.
  * The first method is "getIntensity" which calculates the Il of point in the scene, receives a Point3D and returns the Color
@@ -32,4 +34,13 @@ public interface LightSource {
      * @return the final distance
      */
     double getDistance(Point3D point);
+
+    /**
+     *
+     * @param point
+     * @param n
+     * @param amount
+     * @return
+     */
+    List<Ray> getTargetRays(Point3D point, Vector n, int amount);
 }

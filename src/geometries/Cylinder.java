@@ -29,7 +29,6 @@ public class Cylinder extends Tube {
         if (Util.alignZero(height) <= 0)
             throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
-        findMinMax();
     }
 
     /***
@@ -45,7 +44,6 @@ public class Cylinder extends Tube {
         if (Util.alignZero(height) <= 0)
             throw new IllegalArgumentException("Please Don't Choose height zero\n");
         this.height = height;
-        //findMinMax();
     }
 
     /***
@@ -198,16 +196,16 @@ public class Cylinder extends Tube {
 
     @Override
     public void findMinMax() {
-        /*
-        minPoint[0] = axisRay.getP0().getX()-radius;
-        minPoint[1] = axisRay.getP0().getY()-radius;
-        minPoint[2] = axisRay.getP0().getZ()-radius;
 
-        maxPoint[0] = axisRay.getP0().getX()+radius;
-        maxPoint[1] = axisRay.getP0().getY()+radius;
-        maxPoint[2] = axisRay.getP0().getZ()+radius;
+        Point3D p0 =axisRay.getP0();
 
-         */
+        minX = p0.getX()-radius;
+        minY = p0.getY()-radius;
+        minZ = p0.getZ()-radius;
+
+        maxX = p0.getX()+radius;
+        maxY = p0.getY()+radius;
+        maxZ = p0.getZ()+radius;
 
     }
 

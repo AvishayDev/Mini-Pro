@@ -27,12 +27,14 @@ public class Render {
      */
     private ImageWriter imageWriter = null;
 
+    /**
+     * This is the amount of rays, in case anti aliasing is on.
+     */
+    private int numOfRaysAntiAliasing = 0;
 
     /**
      * This is the amount of rays, in case depth of field is on.
      */
-    private int numOfRaysAntiAliasing = 0;
-
     private int numOfRaysDepthOfField = 0;
 
     /***
@@ -48,7 +50,7 @@ public class Render {
         int nY = imageWriter.getNy();
         Color pixelColor;
 
-        if (numOfRaysDepthOfField!=0) {
+        if (numOfRaysDepthOfField != 0) {
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -57,7 +59,7 @@ public class Render {
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
-        } else if (numOfRaysAntiAliasing!=0) {
+        } else if (numOfRaysAntiAliasing != 0) {
             List<Ray> raysTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -66,7 +68,7 @@ public class Render {
                     imageWriter.writePixel(j, i, pixelColor);
                 }
             }
-        } else{// if(rayTracer instanceof RayTracerAdvanced){
+        } else {// if(rayTracer instanceof RayTracerAdvanced){
             Ray rayTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
@@ -160,6 +162,7 @@ public class Render {
         this.numOfRaysDepthOfField = numOfRays;
         return this;
     }
+
     /**
      * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
      *
@@ -172,40 +175,41 @@ public class Render {
     }
 
     /**
-     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     * Setter for the numOfRays field of this Render. It's relevant only if Soft Shadows is on.
      *
      * @param numOfRays The amount of rays you want to go through the focal point.
      * @return This Render, with the updated values.
      */
     public Render setNumOfRaysSS(int numOfRays) {
-        if(!(this.rayTracer instanceof RayTracerAdvanced))
-            throw new MissingResourceException("Plase Use RayTracerAdvanced for soft shadows!","RayTracerAdvanced","10");
-        ((RayTracerAdvanced)this.rayTracer).setNumOfRaysSoftShadows(numOfRays);
+        if (!(this.rayTracer instanceof RayTracerAdvanced))
+            throw new MissingResourceException("Please Use RayTracerAdvanced for soft shadows!", "RayTracerAdvanced", "10");
+        ((RayTracerAdvanced) this.rayTracer).setNumOfRaysSoftShadows(numOfRays);
         return this;
     }
 
     /**
-     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     * Setter for the numOfRays field of this Render. It's relevant only if Glossy Surface is on.
      *
      * @param numOfRays The amount of rays you want to go through the focal point.
      * @return This Render, with the updated values.
      */
     public Render setNumOfRaysGS(int numOfRays) {
-        if(!(this.rayTracer instanceof RayTracerAdvanced))
-            throw new MissingResourceException("Plase Use RayTracerAdvanced for soft shadows!","RayTracerAdvanced","10");
-        ((RayTracerAdvanced)this.rayTracer).setNumOfRaysGlossySurface(numOfRays);
+        if (!(this.rayTracer instanceof RayTracerAdvanced))
+            throw new MissingResourceException("Please Use RayTracerAdvanced for Glossy Surface!", "RayTracerAdvanced", "10");
+        ((RayTracerAdvanced) this.rayTracer).setNumOfRaysGlossySurface(numOfRays);
         return this;
     }
+
     /**
-     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     * Setter for the numOfRays field of this Render. It's relevant only if Diffuse Glass is on.
      *
      * @param numOfRays The amount of rays you want to go through the focal point.
      * @return This Render, with the updated values.
      */
     public Render setNumOfRaysDG(int numOfRays) {
-        if(!(this.rayTracer instanceof RayTracerAdvanced))
-            throw new MissingResourceException("Plase Use RayTracerAdvanced for soft shadows!","RayTracerAdvanced","10");
-        ((RayTracerAdvanced)this.rayTracer).setNumOfRaysDiffuseGlass(numOfRays);
+        if (!(this.rayTracer instanceof RayTracerAdvanced))
+            throw new MissingResourceException("Please Use RayTracerAdvanced for Diffuse Glass!", "RayTracerAdvanced", "10");
+        ((RayTracerAdvanced) this.rayTracer).setNumOfRaysDiffuseGlass(numOfRays);
         return this;
     }
 

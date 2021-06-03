@@ -15,7 +15,7 @@ public interface Intersectable{
     /**
      * This class represents a point on some geometry and the geometry that the point is on it.
      */
-    public static class GeoPoint {
+    class GeoPoint {
 
         /**
          * 3D model object.
@@ -102,7 +102,7 @@ public interface Intersectable{
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    default public List<GeoPoint> findGeoIntersections(Ray ray) {
+    default List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
@@ -114,5 +114,5 @@ public interface Intersectable{
      * @param maxDistance the maximum distance for the ray to go
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    public abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 }

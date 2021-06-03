@@ -3,12 +3,10 @@ package renderer;
 import elements.DirectionalLight;
 import elements.LightSource;
 import elements.PointLight;
-import elements.SpotLight;
 import geometries.Intersectable;
 import primitives.*;
 import scene.Scene;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -31,11 +29,6 @@ public class RayTracerAdvanced extends RayTracerBasic {
      */
     public RayTracerAdvanced(Scene scene) {
         super(scene);
-    }
-
-    public RayTracerAdvanced setNumOfRaysSoftShadows(int numOfRaysSoftShadows) {
-        this.numOfRaysSoftShadows = numOfRaysSoftShadows;
-        return this;
     }
 
     /**
@@ -145,7 +138,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
     private List<Ray> constructRefractedRays(Intersectable.GeoPoint gp, Vector v, Vector n) {
         Ray centerRay = new Ray(gp.point, v, n);
         Vector orthogonal = v.getOrthogonal().normalize();
-        List<Point3D> point3DS = BlackBoard.FindPointsCircle(gp.point.add(v, GlossyDiffusiveDistance),gp.getRadiusDG() , orthogonal, orthogonal.crossProduct(v).normalize(), numOfRaysDiffuseGlass);
+        List<Point3D> point3DS = BlackBoard.FindPointsCircle(gp.point.add(v, GlossyDiffusiveDistance), gp.getRadiusDG(), orthogonal, orthogonal.crossProduct(v).normalize(), numOfRaysDiffuseGlass);
         return BlackBoard.raysFromPointToPoints(centerRay.getP0(), point3DS, false);
     }
 
@@ -159,20 +152,42 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * @return The calculated Color.
      */
     protected Color calcGlobalEffect(List<Ray> rays, int level, double kx, double kkx) {
-        Color color =Color.BLACK;
+        Color color = Color.BLACK;
         for (Ray ray : rays) {
             Intersectable.GeoPoint gp = findClosestIntersection(ray);
-            color = color.add ((gp == null ? scene.background : calcColor(gp, ray.getDir(), level - 1, kkx)).scale(kx));
+            color = color.add((gp == null ? scene.background : calcColor(gp, ray.getDir(), level - 1, kkx)).scale(kx));
         }
         return color.reduce(rays.size());
     }
 
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if Soft Shadows is on.
+     *
+     * @param numOfRaysSoftShadows The amount of rays you want to go through the focal point.
+     * @return This RayTracerAdvanced, with the updated values.
+     */
+    public RayTracerAdvanced setNumOfRaysSoftShadows(int numOfRaysSoftShadows) {
+        this.numOfRaysSoftShadows = numOfRaysSoftShadows;
+        return this;
+    }
 
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if Glossy Surface is on.
+     *
+     * @param numOfRaysGlossySurface The amount of rays you want to go through the focal point.
+     * @return This RayTracerAdvanced, with the updated values.
+     */
     public RayTracerAdvanced setNumOfRaysGlossySurface(int numOfRaysGlossySurface) {
         this.numOfRaysGlossySurface = numOfRaysGlossySurface;
         return this;
     }
 
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if Diffuse Glass is on.
+     *
+     * @param numOfRaysDiffuseGlass The amount of rays you want to go through the focal point.
+     * @return This RayTracerAdvanced, with the updated values.
+     */
     public RayTracerAdvanced setNumOfRaysDiffuseGlass(int numOfRaysDiffuseGlass) {
         this.numOfRaysDiffuseGlass = numOfRaysDiffuseGlass;
         return this;

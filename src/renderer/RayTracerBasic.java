@@ -28,8 +28,6 @@ public class RayTracerBasic extends RayTracerBase {
      */
     protected static final double MIN_CALC_COLOR_K = 0.001;
 
-    //private int numOfRaysSoftShadows = 0;
-
     /**
      * Constructor that calls super constructor
      *
@@ -131,7 +129,7 @@ public class RayTracerBasic extends RayTracerBase {
     /***
      * This is a private function that is being used by the functions TraceRay and calcGlobalEffect.
      * It receives a ray and returns the closest intersection GeoPoint of the geometry.
-     * @param ray   The intersect rai
+     * @param ray   The intersect ray
      * @return The closest Intersected GeoPoint
      */
     protected GeoPoint findClosestIntersection(Ray ray) {

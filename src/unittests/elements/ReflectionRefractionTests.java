@@ -1,6 +1,3 @@
-/**
- * 
- */
 package unittests.elements;
 
 import geometries.Polygon;
@@ -16,7 +13,7 @@ import scene.Scene;
 /**
  * Tests for reflection and transparency functionality, test for partial shadows
  * (with transparency)
- * 
+ *
  * @author dzilb
  */
 public class ReflectionRefractionTests {
@@ -44,7 +41,8 @@ public class ReflectionRefractionTests {
 		Render render = new Render() //
 				.setImageWriter(new ImageWriter("Test2", 500, 500)) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysDiffuseGlass(20));
+				.setRayTracer(new RayTracerAdvanced(scene))
+				.setNumOfRaysDG(20);
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -82,7 +80,8 @@ public class ReflectionRefractionTests {
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysGlossySurface(10).setNumOfRaysDiffuseGlass(10));
+				.setRayTracer(new RayTracerAdvanced(scene))
+				.setNumOfRaysGS(10).setNumOfRaysDG(10);
 
 		render.renderImage();
 		render.writeToImage();

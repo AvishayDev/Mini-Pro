@@ -291,7 +291,7 @@ public class LightsTests {
                 .setRayTracer(new RayTracerAdvanced(scene2))
                 .setNumOfRaysSS(100);
         render.renderImage();
-        render.printGrid(50,new Color(300,300,300));
+        //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
 
     }

@@ -32,10 +32,6 @@ public class RayTracerAdvanced extends RayTracerBasic {
         super(scene);
     }
 
-    public RayTracerAdvanced setNumOfRaysSoftShadows(int numOfRaysSoftShadows) {
-        this.numOfRaysSoftShadows = numOfRaysSoftShadows;
-        return this;
-    }
 
     /**
      * Calculates the final color of point in geometry with all the light effects
@@ -162,12 +158,34 @@ public class RayTracerAdvanced extends RayTracerBasic {
         return color.reduce(rays.size());
     }
 
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if Soft Shadows is on.
+     *
+     * @param numOfRaysSoftShadows The amount of rays you want to go through the focal point.
+     * @return This RayTracerAdvanced, with the updated values.
+     */
+    public RayTracerAdvanced setNumOfRaysSoftShadows(int numOfRaysSoftShadows) {
+        this.numOfRaysSoftShadows = numOfRaysSoftShadows;
+        return this;
+    }
 
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if Glossy Surface is on.
+     *
+     * @param numOfRaysGlossySurface The amount of rays you want to go through the focal point.
+     * @return This RayTracerAdvanced, with the updated values.
+     */
     public RayTracerAdvanced setNumOfRaysGlossySurface(int numOfRaysGlossySurface) {
         this.numOfRaysGlossySurface = numOfRaysGlossySurface;
         return this;
     }
 
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if Diffuse Glass is on.
+     *
+     * @param numOfRaysDiffuseGlass The amount of rays you want to go through the focal point.
+     * @return This RayTracerAdvanced, with the updated values.
+     */
     public RayTracerAdvanced setNumOfRaysDiffuseGlass(int numOfRaysDiffuseGlass) {
         this.numOfRaysDiffuseGlass = numOfRaysDiffuseGlass;
         return this;

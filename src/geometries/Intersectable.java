@@ -53,6 +53,14 @@ public interface Intersectable{
             return geometry.getMaterial().kT;
         }
 
+        public double getRadiusGS() {
+            return geometry.getMaterial().radiusGS;
+        }
+
+        public double getRadiusDG() {
+            return geometry.getMaterial().radiusDG;
+        }
+
         /***
          * Override of the equals method, receives some object and checks if it's from the same type (GeoPoint) and not null,
          * checks if geometry's field class are equal and if the points fields are equal
@@ -94,7 +102,7 @@ public interface Intersectable{
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    default List<GeoPoint> findGeoIntersections(Ray ray) {
+    default public List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
@@ -106,5 +114,5 @@ public interface Intersectable{
      * @param maxDistance the maximum distance for the ray to go
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+    public abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 }

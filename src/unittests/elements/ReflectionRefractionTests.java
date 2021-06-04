@@ -41,8 +41,7 @@ public class ReflectionRefractionTests {
 		Render render = new Render() //
 				.setImageWriter(new ImageWriter("Test2", 500, 500)) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene))
-				.setNumOfRaysDG(20);
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysDiffuseGlass(20));
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -80,8 +79,7 @@ public class ReflectionRefractionTests {
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene))
-				.setNumOfRaysGS(10).setNumOfRaysDG(10);
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysGlossySurface(10).setNumOfRaysDiffuseGlass(10));
 
 		render.renderImage();
 		render.writeToImage();

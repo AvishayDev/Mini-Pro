@@ -288,8 +288,7 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 //.setRayTracer(new RayTracerBasic(scene2));
-                .setRayTracer(new RayTracerAdvanced(scene2))
-                .setNumOfRaysSS(100);
+                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(100));
         render.renderImage();
         //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
@@ -342,8 +341,7 @@ public class LightsTests {
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
-                .setRayTracer(new RayTracerAdvanced(scene2))
-                .setNumOfRaysSS(100);
+                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(100));
         render.renderImage();
         //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();

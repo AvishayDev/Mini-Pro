@@ -47,7 +47,19 @@ public class Tube extends Geometry {
 
     @Override
     public void findMinMax() {
+        Vector dir =axisRay.getDir();
+        Vector orthogonal1 = dir.getOrthogonal();
+        Vector orthogonal2 = orthogonal1.crossProduct(dir).normalize();
+        Point3D center = axisRay.getP0();
 
+        Point3D minP = center.add(orthogonal1,-radius).add(orthogonal2,-radius);
+        minX = minP.getX();
+        minY = minP.getY();
+        minZ = minP.getZ();
+        Point3D maxP = center.add(orthogonal1,radius).add(orthogonal2,radius);
+        maxX = maxP.getX();
+        maxY = maxP.getY();
+        maxZ = maxP.getZ();
     }
 
     /***
@@ -200,6 +212,17 @@ public class Tube extends Geometry {
         return axisRay;
     }
 
+    @Override
+    protected boolean intersectBorder(Ray ray){
+
+        //u := (as.y*bd.x + bd.y*bs.x - bs.y*bd.x - bd.y*as.x )
+        //                (ad.x*bd.y - ad.y*bd.x)
+
+        //v := (as.x + ad.x * u - bs.x) / bd.x
+
+        // as.z + ad.z * u =?= bs.z + bd.z * v
+        return true;
+    }
     /***
      * Getter for the tube's radius
      * @return The radius variable

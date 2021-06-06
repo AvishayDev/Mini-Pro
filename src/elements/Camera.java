@@ -4,7 +4,6 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
-import renderer.BlackBoard;
 
 import java.util.List;
 
@@ -33,8 +32,6 @@ public class Camera {
     private double height;
     // This Point3D will store the center of the view plane
     private Point3D viewPlaneCenter;
-    // This variable stores the focal distance, which is the distance between p0 to the focal board.
-    //todo note - (add later) private double viewPlaneDistance;
 
     // ----------- focalPlane variables -------------
     // This variable stores the focal distance, which is completely virtual
@@ -118,8 +115,9 @@ public class Camera {
 
     /**
      * This method receives a ray and calculates the point it intersects the virtual focal plane
-     * @param ray   A ray, usually sent from the view plane
-     * @return  The intersection point between the ray and the virtual focal point.
+     *
+     * @param ray A ray, usually sent from the view plane
+     * @return The intersection point between the ray and the virtual focal point.
      */
     public Point3D findFocalPoint(Ray ray) {
         double t = focalDistance / (ray.getDir().dotProduct(vTo));
@@ -129,12 +127,13 @@ public class Camera {
     /**
      * This method receives the amount of pixel and the pixel we want to send a ray through, and the amount of different
      * rays to send through the area of it to the focal point. It will return a list of rays that go through this pixel.
+     *
      * @param nX        number of pixels in X axis
      * @param nY        number of pixels in Y axis
      * @param j         place form center pixel in X axis
      * @param i         place form center pixel in Y axis
      * @param numOfRays The amount of rays we want to go through the focal point from the area of the received pixel.
-     * @return  A list of rays that go from the received pixel area to the focal point.
+     * @return A list of rays that go from the received pixel area to the focal point.
      */
     public List<Ray> constructDOFRays(int nX, int nY, int j, int i, int numOfRays) {
         // First step - create the ray to center of the pixel
@@ -142,16 +141,16 @@ public class Camera {
         // Second step - calculate focal point
         Point3D focalPoint = findFocalPoint(centerRay);
         // Third step - Create points on the aperture
-        List<Point3D> points = BlackBoard.findPoints(apertureCenter, apertureHeight/2,apertureWidth/2, vUp, vRight, numOfRays);
+        List<Point3D> points = BlackBoard.findPoints(apertureCenter, apertureHeight / 2, apertureWidth / 2, vUp, vRight, numOfRays);
         // Fourth step - Create rays from points to the focal point.
         return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
     }
 
-    public  List<Ray> constructAntiARays(int nX, int nY, int j, int i, int numOfRays){
+    public List<Ray> constructAntiARays(int nX, int nY, int j, int i, int numOfRays) {
         // First step - find the pixel center on the ViewPlane
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
         // Second step - Create points on the pixel
-        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.height / ((double) nY*2), this.width / ((double) nX*2), vUp, vRight, numOfRays);
+        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.height / ((double) nY * 2), this.width / ((double) nX * 2), vUp, vRight, numOfRays);
         // Third step - Create rays from point to the pixel
         return BlackBoard.raysFromPointToPoints(p0, points, false);
     }
@@ -219,7 +218,7 @@ public class Camera {
      */
     public Camera changeDirection(Point3D newPositionPoint, Point3D newDirectionPoint) {
 
-        Point3D oldP0 =p0;
+        Point3D oldP0 = p0;
         //replace camera position
         p0 = newPositionPoint;
 
@@ -311,8 +310,14 @@ public class Camera {
         return vRight;
     }
 
-    public Camera setViewPlaneDistance(double viewPlaneDistance) {
-
+    /**
+     * This is a setter for the viewPlaneCenter field of the camera. It must be positive, bigger than 0.
+     * Insert the View Plane Distance and the view plane center will be calculated.
+     *
+     * @param viewPlaneDistance The new double value of the viewPlaneDistance.
+     * @return This camera, with the updated values.
+     */
+    public Camera setViewPlaneCenter(double viewPlaneDistance) {
         if (viewPlaneDistance <= 0)
             throw new IllegalArgumentException("View Plane distance must be positive!");
         this.viewPlaneCenter = this.p0.add(vTo, viewPlaneDistance);

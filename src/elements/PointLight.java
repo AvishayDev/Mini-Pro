@@ -1,7 +1,6 @@
 package elements;
 
 import primitives.*;
-import renderer.BlackBoard;
 
 import java.util.List;
 
@@ -13,19 +12,26 @@ import java.util.List;
  */
 public class PointLight extends Light implements LightSource {
 
+    /**
+     * The radius of the PointLight
+     */
     protected double radius = 0.0;
+
     /**
      * the position of the light
      */
     protected Point3D position;
+
     /**
      * the value of light by kC
      */
     protected double kC = 1.0;
+
     /**
      * the value of light by kL
      */
     protected double kL = 0.0;
+
     /**
      * the value of light by kQ
      */
@@ -67,17 +73,32 @@ public class PointLight extends Light implements LightSource {
         return point.subtract(position).normalize();
     }
 
+    /**
+     * This method calculates the distance between the point light and received point and returns it
+     *
+     * @param point the point to find distance from
+     * @return The distance from point light to the received point
+     */
     @Override
     public double getDistance(Point3D point) {
         return position.distance(point);
     }
 
+    /**
+     * This method receives a point, a normal from this point and and number and returns a list of rays
+     * from the point to the area of the position of the light.
+     *
+     * @param point  Intersection point
+     * @param n      The normal vector to the point
+     * @param amount The amount of rays you want to be returned
+     * @return A list of rays from the intersection point, changed by delta, to the area of the point Light
+     */
     @Override
-    public List<Ray> getTargetRays(Point3D point, Vector n,int amount ) {
+    public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
         Ray ray = new Ray(point, position.subtract(point), n);
         if (radius == 0.0)
             return List.of(ray);
-        Vector l =getL(point);
+        Vector l = getL(point);
         Vector orthogonal = l.getOrthogonal();
         return BlackBoard.raysFromPointToPoints(ray.getP0(), //
                 BlackBoard.findPoints(position, radius, orthogonal, l.crossProduct(orthogonal).normalize(), amount), //
@@ -87,7 +108,7 @@ public class PointLight extends Light implements LightSource {
     /***
      * reset the value of kC in builderType
      * @param Kc the kC value
-     * @return this object
+     * @return this object, with the updated values.
      */
     public PointLight setKc(double Kc) {
         kC = Kc;
@@ -97,7 +118,7 @@ public class PointLight extends Light implements LightSource {
     /***
      * reset the value of kL in builderType
      * @param Kl the kL value
-     * @return this object
+     * @return this object, with the updated values.
      */
     public PointLight setKl(double Kl) {
         kL = Kl;
@@ -107,13 +128,19 @@ public class PointLight extends Light implements LightSource {
     /***
      * reset the value of kQ in builderType
      * @param Kq the kQ value
-     * @return this object
+     * @return this object, with the updated values.
      */
     public PointLight setKq(double Kq) {
         kQ = Kq;
         return this;
     }
 
+    /**
+     * Setter for the radius value in this point light
+     *
+     * @param radius The new value of the radius
+     * @return This object, with the updated values.
+     */
     public PointLight setRadius(double radius) {
         this.radius = radius;
         return this;

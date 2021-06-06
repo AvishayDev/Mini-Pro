@@ -1,9 +1,10 @@
 package geometries;
 
-import primitives.*;
-import primitives.Color;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Util;
+import primitives.Vector;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class Cylinder extends Tube {
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
 
-        List<GeoPoint> points = super.findGeoIntersections(ray,maxDistance);
+        List<GeoPoint> points = super.findGeoIntersections(ray, maxDistance);
 
         //p1 = axisRay.getP0
         //p2 = same as p1 but in upper base
@@ -161,14 +162,14 @@ public class Cylinder extends Tube {
             if (Util.alignZero(t1) > 0 && Util.alignZero(t1 - maxDistance) <= 0) {
                 q = ray.getPoint(t1);
                 if (q.distanceSquared(p1) < radiusSquare)
-                    points = new LinkedList<GeoPoint>(List.of(new GeoPoint(this, q)));
+                    points = new LinkedList<>(List.of(new GeoPoint(this, q)));
             }
 
             if (Util.alignZero(t2) > 0 && Util.alignZero(t2 - maxDistance) <= 0) {
                 q = ray.getPoint(t2);
                 if (q.distanceSquared(p2) < radiusSquare)
                     if (points == null)
-                        points = new LinkedList<GeoPoint>(List.of(new GeoPoint(this, q)));
+                        points = new LinkedList<>(List.of(new GeoPoint(this, q)));
                     else
                         points.add(new GeoPoint(this, q));
             }
@@ -193,19 +194,21 @@ public class Cylinder extends Tube {
         return points;
     }
 
-
+    /**
+     * todo write notes
+     */
     @Override
     public void findMinMax() {
 
-        Point3D p0 =axisRay.getP0();
+        Point3D p0 = axisRay.getP0();
 
-        minX = p0.getX()-radius;
-        minY = p0.getY()-radius;
-        minZ = p0.getZ()-radius;
+        minX = p0.getX() - radius;
+        minY = p0.getY() - radius;
+        minZ = p0.getZ() - radius;
 
-        maxX = p0.getX()+radius;
-        maxY = p0.getY()+radius;
-        maxZ = p0.getZ()+radius;
+        maxX = p0.getX() + radius;
+        maxY = p0.getY() + radius;
+        maxZ = p0.getZ() + radius;
 
     }
 

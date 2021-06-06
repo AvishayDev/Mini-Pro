@@ -1,10 +1,10 @@
 package scene;
 
-import geometries.*;
-import primitives.*;
-import elements.*;
+import elements.AmbientLight;
+import elements.LightSource;
+import geometries.Geometries;
+import primitives.Color;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class Scene {
     /**
      * A list of all the light sources.
      */
-    public List<LightSource> lights = new LinkedList<LightSource>();
+    public List<LightSource> lights = new LinkedList<>();
 
     /***
      * A simple constructor, receives name only. It also initializing the geometries object with to be empty 3D model rather than null

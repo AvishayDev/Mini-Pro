@@ -28,7 +28,13 @@ public class Material {
      */
     public double kT = 0.0;
 
+    /**
+     * todo add note
+     */
     public double radiusGS = 0;
+    /**
+     * todo add note
+     */
     public double radiusDG = 0;
     /*
         for real images:
@@ -86,11 +92,23 @@ public class Material {
         return this;
     }
 
+    /**
+     * This method is a setter for the field RadiusGS
+     *
+     * @param radiusGS The double value of radiusGS
+     * @return This object of material, with the updated values.
+     */
     public Material setRadiusGS(double radiusGS) {
         this.radiusGS = radiusGS;
         return this;
     }
 
+    /**
+     * This method is a setter for the field RadiusDG
+     *
+     * @param radiusDG The double value of RadiusDG
+     * @return This object of material, with the updated values.
+     */
     public Material setRadiusDG(double radiusDG) {
         this.radiusDG = radiusDG;
         return this;

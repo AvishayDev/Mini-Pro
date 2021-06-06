@@ -1,7 +1,6 @@
 package elements;
 
 import primitives.*;
-import renderer.BlackBoard;
 
 import java.util.List;
 
@@ -12,12 +11,14 @@ import java.util.List;
  */
 public class SpotLight extends PointLight {
 
-
     /**
      * the direction of the light
      */
     private Vector direction;
 
+    /**
+     * todo write notes
+     */
     private final int narrow;
 
     /***
@@ -64,6 +65,15 @@ public class SpotLight extends PointLight {
         //if angle <=0 the color is scaled by 0 so return black(0,0,0) => less calculations
     }
 
+    /**
+     * This method receives a point, a normal from this point and and number and returns a list of rays
+     * from the point to the area of the position of the light.
+     *
+     * @param point  Intersection point
+     * @param n      The normal vector to the point
+     * @param amount The amount of rays you want to be returned
+     * @return A list of rays from the intersection point, changed by delta, to the area of the Spot Light
+     */
     @Override
     public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
         Ray ray = new Ray(point, position.subtract(point), n);

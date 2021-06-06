@@ -41,22 +41,24 @@ public class Tube extends Geometry {
      * @param radius radius of the Tube
      */
     public Tube(Vector vec, Point3D point, double radius) {
-        this(new Ray(vec, point),radius);
+        this(new Ray(vec, point), radius);
     }
 
-
+    /**
+     * todo write notes
+     */
     @Override
     public void findMinMax() {
-        Vector dir =axisRay.getDir();
+        Vector dir = axisRay.getDir();
         Vector orthogonal1 = dir.getOrthogonal();
         Vector orthogonal2 = orthogonal1.crossProduct(dir).normalize();
         Point3D center = axisRay.getP0();
 
-        Point3D minP = center.add(orthogonal1,-radius).add(orthogonal2,-radius);
+        Point3D minP = center.add(orthogonal1, -radius).add(orthogonal2, -radius);
         minX = minP.getX();
         minY = minP.getY();
         minZ = minP.getZ();
-        Point3D maxP = center.add(orthogonal1,radius).add(orthogonal2,radius);
+        Point3D maxP = center.add(orthogonal1, radius).add(orthogonal2, radius);
         maxX = maxP.getX();
         maxY = maxP.getY();
         maxZ = maxP.getZ();
@@ -212,8 +214,11 @@ public class Tube extends Geometry {
         return axisRay;
     }
 
+    /**
+     * todo write notes and implement method
+     */
     @Override
-    protected boolean intersectBorder(Ray ray){
+    protected boolean intersectBorder(Ray ray) {
 
         //u := (as.y*bd.x + bd.y*bs.x - bs.y*bd.x - bd.y*as.x )
         //                (ad.x*bd.y - ad.y*bd.x)
@@ -223,6 +228,7 @@ public class Tube extends Geometry {
         // as.z + ad.z * u =?= bs.z + bd.z * v
         return true;
     }
+
     /***
      * Getter for the tube's radius
      * @return The radius variable

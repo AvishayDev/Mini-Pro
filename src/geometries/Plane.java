@@ -45,7 +45,9 @@ public class Plane extends Geometry {
     }
 
 
-
+    /**
+     * todo write notes and implement method
+     */
     @Override
     public void findMinMax() {
 

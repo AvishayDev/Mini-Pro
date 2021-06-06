@@ -1,27 +1,40 @@
 package renderer;
 
+import elements.BlackBoard;
 import elements.LightSource;
-import geometries.Intersectable;
-
-import static geometries.Intersectable.*;
-
 import primitives.*;
 import scene.Scene;
 
 import java.util.List;
 
+import static geometries.Intersectable.GeoPoint;
 import static primitives.Util.alignZero;
 
+/**
+ * This class extends RayTracerBasic class
+ * and have support for Soft Shadows, Glossy Surface and Diffuse Glass
+ */
 public class RayTracerAdvanced extends RayTracerBasic {
 
+    /**
+     * This is the amount of rays, in case Soft Shadow  is on.
+     */
     private int numOfRaysSoftShadows = 0;
 
+    /**
+     * This is the amount of rays, in case Glossy Surface  is on.
+     */
     private int numOfRaysGlossySurface = 0;
 
+    /**
+     * This is the amount of rays, in case Diffuse Glass  is on.
+     */
     private int numOfRaysDiffuseGlass = 0;
 
+    /**
+     * This is the diffusive distance, relevant only if diffusive glass is on.
+     */
     private static final int GlossyDiffusiveDistance = 100;
-
 
     /**
      * Constructor that calls super constructor
@@ -32,7 +45,6 @@ public class RayTracerAdvanced extends RayTracerBasic {
         super(scene);
     }
 
-
     /**
      * Calculates the final color of point in geometry with all the light effects
      *
@@ -41,7 +53,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * @return the final color after adding light effects
      */
     @Override
-    protected Color calcLocalEffects(Intersectable.GeoPoint intersection, Vector v, double k) {
+    protected Color calcLocalEffects(GeoPoint intersection, Vector v, double k) {
         Vector n = intersection.getNormal();
         double nv = alignZero(n.dotProduct(v));
         if (nv == 0) return Color.BLACK;
@@ -67,7 +79,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * and returns a double value of the transparency
      * @param light         A LightSource from the current scene
      * @param geoPoint      The intersected GeoPoint
-     * @param material  intesection material
+     * @param material  intersection material
      * @param nv normal * view direction
      * @param n normal at intersection
      * @param l from light to intersection direction
@@ -104,7 +116,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * @return The calculated color.
      */
     @Override
-    protected Color calcGlobalEffects(Intersectable.GeoPoint gp, Vector v, int level, double k) {
+    protected Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k) {
         Color color = Color.BLACK;
         Vector n = gp.getNormal();
         Material material = gp.geometry.getMaterial();
@@ -125,7 +137,16 @@ public class RayTracerAdvanced extends RayTracerBasic {
         return color;
     }
 
-    private List<Ray> constructReflectedRays(Intersectable.GeoPoint gp, Vector v, Vector n) {
+    /**
+     * This method receives an intersection GeoPoint, the intersecting vector and the normal vector of gp
+     * It returns a list of rays that represents the reflected rays.
+     *
+     * @param gp The closest intersection point
+     * @param v  The vector of the intersecting ray
+     * @param n  The normal of gp
+     * @return A list of the reflected rays
+     */
+    private List<Ray> constructReflectedRays(GeoPoint gp, Vector v, Vector n) {
         Vector r = v.subtract(n.scale(v.dotProduct(n) * 2));
         Ray centerRay = new Ray(gp.point, r, n);
         Vector orthogonal = r.getOrthogonal();
@@ -133,7 +154,16 @@ public class RayTracerAdvanced extends RayTracerBasic {
         return BlackBoard.raysFromPointToPoints(centerRay.getP0(), point3DS, false);
     }
 
-    private List<Ray> constructRefractedRays(Intersectable.GeoPoint gp, Vector v, Vector n) {
+    /**
+     * This method receives an intersection GeoPoint, the intersecting vector and the normal vector of gp
+     * It returns a list of rays that represents the refracted rays.
+     *
+     * @param gp The closest intersection point
+     * @param v  The vector of the intersecting ray
+     * @param n  The normal of gp
+     * @return A list of the refracted rays
+     */
+    private List<Ray> constructRefractedRays(GeoPoint gp, Vector v, Vector n) {
         Ray centerRay = new Ray(gp.point, v, n);
         Vector orthogonal = v.getOrthogonal();
         List<Point3D> point3DS = BlackBoard.findPoints(gp.point.add(v, GlossyDiffusiveDistance), gp.geometry.getMaterial().radiusDG, orthogonal, orthogonal.crossProduct(v).normalize(), numOfRaysDiffuseGlass);
@@ -152,7 +182,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
     private Color calcGlobalEffect(List<Ray> rays, int level, double kx, double kkx) {
         Color color = Color.BLACK;
         for (Ray ray : rays) {
-            Intersectable.GeoPoint gp = findClosestIntersection(ray);
+            GeoPoint gp = findClosestIntersection(ray);
             color = color.add((gp == null ? scene.background : calcColor(gp, ray.getDir(), level - 1, kkx)).scale(kx));
         }
         return color.reduce(rays.size());

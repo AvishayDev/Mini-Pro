@@ -41,6 +41,9 @@ public class Sphere extends Geometry {
         this(center, radius);
     }
 
+    /**
+     * todo write notes
+     */
     @Override
     public void findMinMax() {
 

@@ -185,7 +185,7 @@ public class RayTracerBasic extends RayTracerBase {
      * and returns a double value of the transparency
      * @param light         A LightSource from the current scene
      * @param geoPoint      The intersected GeoPoint
-     * @param material  intesection material
+     * @param material  intersection material
      * @param nv normal * view direction
      * @param n normal at intersection
      * @param l from light to intersection direction
@@ -231,7 +231,12 @@ public class RayTracerBasic extends RayTracerBase {
         return angle > 0 ? ks * Math.pow(angle, nShininess) : 0.0;
     }
 
-
+    /**
+     * This method receives a list of rays, calculates each ray's color and returns the average color of them all
+     *
+     * @param rays the list of rays from the camera throw the scene
+     * @return The calculated average color of all the rays.
+     */
     @Override
     public Color traceRays(List<Ray> rays) {
         Color finalColor = Color.BLACK;

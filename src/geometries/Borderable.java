@@ -5,10 +5,13 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
+/**
+ * todo write notes, explaining this class
+ */
 public abstract class Borderable {
 
 
-    // mix point coordinates
+    // min point coordinates
     public double minX;
     public double minY;
     public double minZ;
@@ -18,9 +21,17 @@ public abstract class Borderable {
     public double maxY;
     public double maxZ;
 
+    /**
+     * todo write notes
+     */
     public abstract void findMinMax();
 
-
+    /**
+     * todo write notes
+     *
+     * @param ray
+     * @return
+     */
     protected boolean intersectBorder(Ray ray) {
 
         Point3D origin = ray.getP0();
@@ -38,8 +49,7 @@ public abstract class Borderable {
         if (Util.alignZero(dir.getX()) >= 0) {
             tmin = (minX - originX) / dirX;
             tmax = (maxX - originX) / dirX;
-        }
-        else {
+        } else {
             tmin = (maxX - originX) / dirX;
             tmax = (minX - originX) / dirX;
         }
@@ -49,8 +59,7 @@ public abstract class Borderable {
         if (Util.alignZero(dir.getY()) >= 0) {
             tymin = (minY - originY) / dirY;
             tymax = (maxY - originY) / dirY;
-        }
-        else {
+        } else {
             tymin = (maxY - originY) / dirY;
             tymax = (minY - originY) / dirY;
         }
@@ -71,8 +80,7 @@ public abstract class Borderable {
         if (Util.alignZero(dir.getZ()) >= 0) {
             tzmin = (minZ - originZ) / dirZ;
             tzmax = (maxZ - originZ) / dirZ;
-        }
-        else {
+        } else {
             tzmin = (maxZ - originZ) / dirZ;
             tzmax = (minZ - originZ) / dirZ;
         }
@@ -80,6 +88,7 @@ public abstract class Borderable {
         if ((tmin > tzmax) || (tzmin > tmax))
             return false;
 
+        // todo check warnings here, it might be important
         if (tzmin > tmin)
             tmin = tzmin;
 

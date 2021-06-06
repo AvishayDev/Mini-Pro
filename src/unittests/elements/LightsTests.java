@@ -19,12 +19,12 @@ public class LightsTests {
             .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
     private Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1),
             new Vector(0, 1, 0))//
-            .setViewPlaneDistance(1000) //
+            .setViewPlaneCenter(1000) //
             .setViewPlaneSize(150, 150);
 
     private Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1),
             new Vector(0, 1, 0)) //
-            .setViewPlaneDistance(1000)//
+            .setViewPlaneCenter(1000)//
             .setViewPlaneSize(200, 200); //
 
     private static Geometry triangle1 = new Triangle( //
@@ -124,13 +124,13 @@ public class LightsTests {
     @Test
     public void BorderTests() {
 
-        Point3D point3D = new Point3D(-50,-50,-100);
-        Vector v= new Vector(10,10,20);
+        Point3D point3D = new Point3D(-50, -50, -100);
+        Vector v = new Vector(10, 10, 20);
         Geometry sphereAdd;
-        for(int i=1;i<20;i++){
-            sphereAdd = new Sphere(point3D,3*i).setEmission(new Color(10*i,7*i,12*i)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+        for (int i = 1; i < 20; i++) {
+            sphereAdd = new Sphere(point3D, 3 * i).setEmission(new Color(10 * i, 7 * i, 12 * i)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
             scene1.geometries.add(sphereAdd);
-            point3D =point3D.add(v);
+            point3D = point3D.add(v);
         }
 
         scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-50, -50, 50))//

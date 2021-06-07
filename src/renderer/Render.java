@@ -25,7 +25,7 @@ public class Render {
      */
     public Render setMultithreading(int threads) {
         if (threads < 0) throw new IllegalArgumentException("Multithreading must be 0 or higher");
-        if (threads != 0) _threads = threads;
+        if (threads != 0) threads = threads;
         else {
             int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
             threads = cores <= 2 ? 1 : cores;
@@ -98,15 +98,34 @@ public class Render {
                 }
             }
         } else {// if(rayTracer instanceof RayTracerAdvanced){
-            Ray rayTrace;
+            /*Ray rayTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
                     rayTrace = camera.constructRay(nX, nY, j, i);
                     pixelColor = rayTracer.traceRay(rayTrace);
-                    imageWriter.writePixel(j, i, pixelColor);
-                }
-            }
+                    imageWriter.writePixel(j, i, pixelColor);*/
+                    renderImage(nY, nX);
+               // }
+            //}
         }
+    }
+
+    public void renderImage(int nY, int nX) {
+        final Pixel thePixel = new Pixel(nY, nX); // Main pixel management object
+        Thread[] threads = new Thread[threadsNumber];
+        for (int i = threadsNumber - 1; i >= 0; --i) { // create all threads
+            threads[i] = new Thread(() -> {
+                Pixel pixel = new Pixel(); // Auxiliary thread’s pixel object
+                while (thePixel.nextPixel(pixel)) {
+                    Ray rayTrace = camera.constructRay(nX, nY, pixel.col, pixel.row);
+                    Color pixelColor = rayTracer.traceRay(rayTrace);
+                    imageWriter.writePixel(pixel.col, pixel.row, pixelColor);
+                }});
+        }
+        for (Thread thread : threads) thread.start(); // Start all the threads
+        // Wait for all threads to finish
+        for (Thread thread : threads) try { thread.join(); } catch (Exception e) {}
+        if (print) System.out.printf("\r100%%\n"); // Print 100%
     }
 
     /***
@@ -218,15 +237,16 @@ public class Render {
         private long counter = 0; // Total number of pixels processed
         private int percents = 0; // Percent of pixels processed
         private long nextCounter = 0; // Next amount of processed pixels for percent progress
+
         /**
          * The constructor for initializing the main follow up Pixel object
          * @param maxRows the amount of pixel rows
          * @param maxCols the amount of pixel columns
          */
         public Pixel(int maxRows, int maxCols) {
-            maxRows = maxRows;maxCols = maxCols; pixels = maxRows * maxCols;
-            nextCounter = _pixels / 100;
-            if (Render.this.print) System.out.printf("\r %02d%%", _percents);
+            maxRows = maxRows;
+            maxCols = maxCols;
+            pixels = maxRows * maxCols;
         }
         /**
          * Default constructor for secondary Pixel objects
@@ -273,4 +293,5 @@ public class Render {
             }
             return -1;
         }
+}
 }

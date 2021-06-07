@@ -32,67 +32,6 @@ public abstract class Util {
 
 
 
-    /***
-     * This functions finds the determinant of Matrix
-     * @param mat Two-dimensional array of doubles that simulates a matrix
-     * @return The double value of the determinant of the simulated matrix
-     */
-    private static double determinantOfMatrix(double mat[][]) {
-        double ans;
-        ans = mat[0][0] * (mat[1][1] * mat[2][2] - mat[2][1] * mat[1][2])
-                - mat[0][1] * (mat[1][0] * mat[2][2] - mat[1][2] * mat[2][0])
-                + mat[0][2] * (mat[1][0] * mat[2][1] - mat[1][1] * mat[2][0]);
-        return ans;
-    }
-
-    /***
-     * This function finds the solution of system of linear equations using cramer's rule. Receives the coefficient values of the
-     * linear equations in a form of simulated matrix and returns a Vector that contains the values of X,Y,Z that will solve the equations.
-     * @param coeff mat Two-dimensional array of doubles that simulates a matrix, contains the coefficient values of the equations
-     * @return Vector that contains the values of X,Y,Z that will solve the equations.
-     */
-    public static double[] findSolution(double coeff[][]) {
-        // Matrix d using coeff as given in cramer's rule
-        double d[][] = {
-                {coeff[0][0], coeff[0][1], coeff[0][2]},
-                {coeff[1][0], coeff[1][1], coeff[1][2]},
-                {coeff[2][0], coeff[2][1], coeff[2][2]},
-        };
-
-        // Matrix d1 using coeff as given in cramer's rule
-        double d1[][] = {
-                {coeff[0][3], coeff[0][1], coeff[0][2]},
-                {coeff[1][3], coeff[1][1], coeff[1][2]},
-                {coeff[2][3], coeff[2][1], coeff[2][2]},
-        };
-
-        // Matrix d2 using coeff as given in cramer's rule
-        double d2[][] = {
-                {coeff[0][0], coeff[0][3], coeff[0][2]},
-                {coeff[1][0], coeff[1][3], coeff[1][2]},
-                {coeff[2][0], coeff[2][3], coeff[2][2]},
-        };
-
-        // Matrix d3 using coeff as given in cramer's rule
-        double d3[][] = {
-                {coeff[0][0], coeff[0][1], coeff[0][3]},
-                {coeff[1][0], coeff[1][1], coeff[1][3]},
-                {coeff[2][0], coeff[2][1], coeff[2][3]},
-        };
-
-        // Calculating Determinant of Matrices d, d1, d2, d3
-        double det = determinantOfMatrix(d);
-        double det1 = determinantOfMatrix(d1);
-        double det2 = determinantOfMatrix(d2);
-        double det3 = determinantOfMatrix(d3);
-
-        double x = det1 / det;
-        double y = det2 / det;
-        double z = det3 / det;
-        return new double[]{x, y, z};
-
-    }
-
     /**
      * Checks whether the number is [almost] zero
      *

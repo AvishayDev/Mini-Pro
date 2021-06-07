@@ -30,7 +30,7 @@ public class ReflectionRefractionTests {
         scene.geometries.add( //
                 new Sphere(new Point3D(0, 0, -50), 50) //
                         .setEmission(new Color(java.awt.Color.BLUE)) //
-                        .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3).setRadiusDG(10)),
+                        .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3).setRadiusDG(5)),
                 new Sphere(new Point3D(0, 0, -50), 25) //
                         .setEmission(new Color(java.awt.Color.RED)) //
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
@@ -41,8 +41,8 @@ public class ReflectionRefractionTests {
 		Render render = new Render() //
 				.setImageWriter(new ImageWriter("refractionTwoSpheres2", 500, 500)) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
-				//.setNumOfRaysDG(20);
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysDiffuseGlass(20));
+
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -60,7 +60,7 @@ public class ReflectionRefractionTests {
 		scene.geometries.add( //
 				new Sphere(400, new Point3D(-950, -900, -1000)) //
 						.setEmission(new Color(0, 0, 100)) //
-						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20).setKt(0.5)),
+						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20).setKt(0.5).setRadiusDG(10)),
 				new Sphere(200, new Point3D(-950, -900, -1000)) //
 						.setEmission(new Color(100, 20, 20)) //
 						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20)),

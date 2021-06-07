@@ -12,6 +12,7 @@ import java.util.MissingResourceException;
  */
 public class Render {
 
+
     private int threadsNumber = 1;
 
     private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
@@ -25,10 +26,10 @@ public class Render {
      */
     public Render setMultithreading(int threads) {
         if (threads < 0) throw new IllegalArgumentException("Multithreading must be 0 or higher");
-        if (threads != 0) threads = threads;
+        if (threads != 0) threadsNumber = threads;
         else {
             int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
-            threads = cores <= 2 ? 1 : cores;
+            threadsNumber = cores <= 2 ? 1 : cores;
         }
         return this;
     }
@@ -75,6 +76,7 @@ public class Render {
         if (camera == null || rayTracer == null || imageWriter == null)
             throw new MissingResourceException("A", "B", "C");
 
+
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
         Color pixelColor;
@@ -98,15 +100,15 @@ public class Render {
                 }
             }
         } else {// if(rayTracer instanceof RayTracerAdvanced){
-            /*Ray rayTrace;
+            Ray rayTrace;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
                     rayTrace = camera.constructRay(nX, nY, j, i);
                     pixelColor = rayTracer.traceRay(rayTrace);
-                    imageWriter.writePixel(j, i, pixelColor);*/
-                    renderImage(nY, nX);
-               // }
-            //}
+                    imageWriter.writePixel(j, i, pixelColor);
+                    //renderImage(nY, nX);
+                }
+            }
         }
     }
 
@@ -240,6 +242,7 @@ public class Render {
 
         /**
          * The constructor for initializing the main follow up Pixel object
+         *
          * @param maxRows the amount of pixel rows
          * @param maxCols the amount of pixel columns
          */
@@ -247,14 +250,20 @@ public class Render {
             maxRows = maxRows;
             maxCols = maxCols;
             pixels = maxRows * maxCols;
+            //nextCounter = _pixels / 100;
+          //  if (Render.this.print) System.out.printf("\r %02d%%", _percents);
         }
+
         /**
          * Default constructor for secondary Pixel objects
          */
-        public Pixel() {}
+        public Pixel() {
+        }
+
         /**
          * Public function for getting next pixel number into secondary Pixel object.
          * The function prints also progress percentage in the console window.
+         *
          * @param target target secondary Pixel object to copy the row/column of the next pixel
          * @return true if the work still in progress, -1 if it's done
          */
@@ -265,21 +274,27 @@ public class Render {
             if (print) System.out.printf("\r %02d%%", 100);
             return false;
         }
+
         /**
          * Internal function for thread-safe manipulating of main follow up Pixel object - this function is
          * critical section for all the threads, and main Pixel object data is the shared data of this critical
          * section.<br/>
          * The function provides next pixel number each call.
+         *
          * @param target target secondary Pixel object to copy the row/column of the next pixel
          * @return the progress percentage for follow up: if it is 0 - nothing to print, if it is -1 - the task is
          * finished, any other value - the progress percentage (only when it changes)
          */
         private synchronized int nextP(Pixel target) {
-            ++col; ++counter;
+            ++col;
+            ++counter;
             if (col < maxCols) {
-                target.row = this.row; target.col = this.col;
+                target.row = this.row;
+                target.col = this.col;
                 if (print && counter == nextCounter) {
-                    ++percents; nextCounter = pixels * (percents + 1) / 100; return percents;
+                    ++percents;
+                    nextCounter = pixels * (percents + 1) / 100;
+                    return percents;
                 }
                 return 0;
             }
@@ -287,7 +302,9 @@ public class Render {
             if (row < maxRows) {
                 col = 0;
                 if (print && counter == nextCounter) {
-                    ++percents; nextCounter = pixels * (percents + 1) / 100; return percents;
+                    ++percents;
+                    nextCounter = pixels * (percents + 1) / 100;
+                    return percents;
                 }
                 return 0;
             }

@@ -6,7 +6,7 @@ import primitives.Util;
 import primitives.Vector;
 
 /**
- * todo write notes, explaining this class
+ * this class represent the option of border-able for the geometries
  */
 public abstract class Borderable {
 
@@ -22,15 +22,15 @@ public abstract class Borderable {
     public double maxZ;
 
     /**
-     * todo write notes
+     * find the minimum and the maximum of the geometry border
      */
     public abstract void findMinMax();
 
     /**
-     * todo write notes
      *
-     * @param ray
-     * @return
+     * this function calculate if the ray trace the border of the geometry
+     * @param ray the crosses ray
+     * @return true for intersection, false for not intersection
      */
     protected boolean intersectBorder(Ray ray) {
 

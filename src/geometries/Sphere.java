@@ -42,7 +42,7 @@ public class Sphere extends Geometry {
     }
 
     /**
-     * todo write notes
+     * find the minimum and the maximum of the geometry border
      */
     @Override
     public void findMinMax() {

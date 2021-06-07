@@ -31,7 +31,6 @@ public abstract class Util {
     }
 
 
-
     /**
      * Checks whether the number is [almost] zero
      *
@@ -54,14 +53,13 @@ public abstract class Util {
 
     /**
      * Check whether two numbers have the same sign
-     * todo check if we actually need this method anywhere, remove it in case there's no need
      *
      * @param n1 1st number
      * @param n2 2nd number
      * @return true if the numbers have the same sign
      */
     public static boolean checkSign(double n1, double n2) {
-        return (n1 < 0 && n2 < 0) || (n1 > 0 && n2 > 0);
+        return n1 * n2 > 0;
     }
 
     /**

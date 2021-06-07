@@ -54,11 +54,11 @@ public class Plane extends Geometry {
         return true;
     }
     /**
-     * todo write notes and implement method
+     * find the minimum and the maximum of the geometry border
      */
     @Override
     public void findMinMax() {
-
+        // there is nothing to calc
     }
 
     /***

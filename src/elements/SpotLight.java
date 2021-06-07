@@ -17,7 +17,7 @@ public class SpotLight extends PointLight {
     private Vector direction;
 
     /**
-     * todo write notes
+     * How match narrow the spot will be
      */
     private final int narrow;
 

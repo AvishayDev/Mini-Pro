@@ -194,13 +194,18 @@ public class Tube extends Geometry {
         return axisRay;
     }
 
+    /**
+     * find the minimum and the maximum of the geometry border
+     */
     @Override
     public void findMinMax() {
         // there is nothing to calc
     }
 
     /**
-     * todo write notes and implement method
+     * unique method to calc the prev intersection with Tube
+     * @param ray the optional cross ray
+     * @return true for intersection, false for not
      */
     @Override
     protected boolean intersectBorder(Ray ray) {

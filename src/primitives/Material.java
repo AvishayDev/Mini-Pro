@@ -29,11 +29,11 @@ public class Material {
     public double kT = 0.0;
 
     /**
-     * todo add note
+     * how big the radius of the spread rays will be for Glossy Surface
      */
     public double radiusGS = 0;
     /**
-     * todo add note
+     * how big the radius of the spread rays will be for Diffusive Glass
      */
     public double radiusDG = 0;
     /*

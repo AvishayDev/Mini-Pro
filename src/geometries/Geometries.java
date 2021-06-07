@@ -53,7 +53,7 @@ public class Geometries extends Intersectable {
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
-            if (g.intersectBorder(ray)) {
+           // if (g.intersectBorder(ray)) {
                 num++;
                 saveList = g.findGeoIntersections(ray, maxDistance);
                 if (saveList != null)
@@ -61,13 +61,13 @@ public class Geometries extends Intersectable {
                         returnList = new LinkedList<>(saveList);
                     else
                         returnList.addAll(saveList);
-            }
+          //  }
         }
         return returnList;
     }
 
     /**
-     * todo write notes
+     * find the minimum and the maximum of the geometry border
      */
     @Override
     public void findMinMax() {

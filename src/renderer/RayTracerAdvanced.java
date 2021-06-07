@@ -51,7 +51,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * @param intersection the geometry with the point needs to be colorized
      * @param v            the ray direction that cross the geometry
      * @return the final color after adding light effects
-     */
+     *
     @Override
     protected Color calcLocalEffects(GeoPoint intersection, Vector v, double k) {
         Vector n = intersection.getNormal();
@@ -72,7 +72,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
         }
         return color;
     }
-
+*/
     /***
      * This is a private function that is being used by the function calcLocalEffects.
      * It receives a light Source, the L vector of light, the normal vector and the GeoPoint of the intersection

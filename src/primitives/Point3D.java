@@ -62,6 +62,9 @@ public class Point3D {
         return new Point3D(this.x.coord + vec.head.x.coord, this.y.coord + vec.head.y.coord, this.z.coord + vec.head.z.coord);
     }
 
+    public Point3D add(Point3D point) {
+        return new Point3D(this.x.coord + point.x.coord, this.y.coord + point.y.coord, this.z.coord + point.z.coord);
+    }
     /***
      * Add vector to this point and returns the calculated point.
      * (with no changes in the point)

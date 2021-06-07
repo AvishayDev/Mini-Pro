@@ -39,10 +39,10 @@ public class ReflectionRefractionTests {
 						.setKl(0.0004).setKq(0.0000006));
 
 		Render render = new Render() //
-				.setImageWriter(new ImageWriter("Test2", 500, 500)) //
+				.setImageWriter(new ImageWriter("refractionTwoSpheres2", 500, 500)) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene))
-				.setNumOfRaysDG(20);
+				.setRayTracer(new RayTracerBasic(scene));
+				//.setNumOfRaysDG(20);
 		render.renderImage();
 		render.writeToImage();
 	}

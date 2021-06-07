@@ -48,9 +48,9 @@ public class Sphere extends Geometry {
         minY = center.getY() - radius;
         minZ = center.getZ() - radius;
 
-        maxX = center.getX() + radius;
-        maxY = center.getY() + radius;
-        maxZ = center.getZ() + radius;
+        maxX =+ 2*radius;
+        maxY =+ 2*radius;
+        maxZ =+ 2*radius;
 
     }
 

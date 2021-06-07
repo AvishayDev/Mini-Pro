@@ -16,6 +16,7 @@ import static primitives.Util.*;
  */
 public final class Main {
 
+
     /**
      * Main program to tests initial functionality of the 1st stage
      *
@@ -24,68 +25,62 @@ public final class Main {
     public static void main(String[] args) {
         if (Util.isZero(1.032039148168894E-12))
             out.println("yes");
-        //if(u.isNormalize())
-        //    out.println("yes");
 
-        /*
-        Vector u = new Vector(-1,-7,7);
-        Vector w = new Vector(2,4,-8);
-        u.normalize();
-        double num1 = u.dotProduct(w);
-        num1 = num1*num1;
-        double num2 = w.dotProduct(w);
-        num2 = num2 - num1;
-        num2 = num2 * u.dotProduct(u);
-        num2 = 0;
+        Ray ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 2, 1));
+        Ray axis = new Ray(new Point3D(0.5, 0, 0), new Vector(-1, 1, 1));
+        //intersectBorder(axis,ray);
+
+        double[][] matrix = new double[3][3];
+        matrix[0] = new double[]{-2, 3, -1};
+        matrix[1] = new double[]{5, -1, 4};
+        matrix[2] = new double[]{4, -8, 2};
+
+        out.println(matrix3Det(matrix));
+
+    }
+
+    public static boolean intersectBorder(Ray axisRay, Ray ray) {
+
+        Point3D p0Axis = axisRay.getP0();
+        Vector dirAxis = axisRay.getDir();
+
+        Point3D p0Ray = ray.getP0();
+        Vector dirRay = ray.getDir();
+
+        if (p0Axis.equals(p0Ray)) // same position - that is the point of intersection
+            return true;
+
+        boolean goDot = false;
+
+        try {
+            dirAxis.crossProduct(dirRay);
+        } catch (IllegalArgumentException e) {
+            goDot = true;
+        }
+
+        if (!goDot) {
+            return true;
+        }
+        return true;
+    }
 
 
+    public static double[] MatrixSolve(double[][] matrix) {
 
+        double[] returnValues = new double[3];
 
-        Vector v1 = new Vector(1, 2, 3);
-        Vector v2 = new Vector(-2, -4, -6);
-        Vector v3 = new Vector(0, 3, -2);
+        double a = matrix3Det();
+    }
 
-        // test length..
-        if (!isZero(v1.lengthSquared() - 14))
-            out.println("ERROR: lengthSquared() wrong value");
-        if (!isZero(new Vector(0, 3, 4).length() - 5))
-            out.println("ERROR: length() wrong value");
+    public static double matrix3Det(double[][] matrix) {
+        //   | a1  b1  c1 |
+        //   | a2  b2  c2 |
+        //   | a3  b3  c3 |
 
-        // test Dot-Product
-        if (!isZero(v1.dotProduct(v3)))
-            out.println("ERROR: dotProduct() for orthogonal vectors is not zero");
-        if (!isZero(v1.dotProduct(v2) + 28))
-            out.println("ERROR: dotProduct() wrong value");
-
-        // test Cross-Product
-        try { // test zero vector
-            v1.crossProduct(v2);
-            out.println("ERROR: crossProduct() for parallel vectors does not throw an exception");
-        } catch (Exception e) {}
-        Vector vr = v1.crossProduct(v3);
-        if (!isZero(vr.length() - v1.length() * v3.length()))
-            out.println("ERROR: crossProduct() wrong result length");
-        if (!isZero(vr.dotProduct(v1)) || !isZero(vr.dotProduct(v3)))
-            out.println("ERROR: crossProduct() result is not orthogonal to its operands");
-
-        // test vector normalization vs vector length and cross-product
-        Vector v = new Vector(1, 2, 3);
-        Vector vCopy = new Vector(v.getHead());
-        Vector vCopyNormalize = vCopy.normalize();
-        if (vCopy != vCopyNormalize)
-            out.println("ERROR: normalize() function creates a new vector");
-        if (!isZero(vCopyNormalize.length() - 1))
-            out.println("ERROR: normalize() result is not a unit vector");
-
-        // Test operations with points and vectors
-        Point3D p1 = new Point3D(1, 2, 3); 
-        if (!Point3D.ZERO.equals(p1.add(new Vector(-1, -2, -3))))
-            out.println("ERROR: Point + primitives.Vector does not work correctly");
-        if (!new Vector(1, 1, 1).equals(new Point3D(2, 3, 4).subtract(p1)))
-             out.println("ERROR: Point - Point does not work correctly");
-
-        out.println("If there were no any other outputs - all tests succeeded!");
-    */
+        double returnValue = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]);
+        returnValue = returnValue - matrix[1][0] * (matrix[0][1] * matrix[2][2] - matrix[2][1] * matrix[0][2]);
+        returnValue = returnValue + matrix[2][0] * (matrix[0][1] * matrix[1][2] - matrix[1][1] * matrix[0][2]);
+        return returnValue;
     }
 }
 

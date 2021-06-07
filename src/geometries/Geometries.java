@@ -14,7 +14,6 @@ import java.util.*;
  */
 public class Geometries extends Intersectable {
 
-    public static int raysCheck = 0;
     /**
      * List that have all the geometries
      */
@@ -33,7 +32,6 @@ public class Geometries extends Intersectable {
      */
     public Geometries(Intersectable... geometries) {
         add(geometries);
-        findMinMax();
     }
 
     /***

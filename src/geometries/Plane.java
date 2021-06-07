@@ -44,9 +44,13 @@ public class Plane extends Geometry {
         normal = vec1.crossProduct(vec2).normalize();
     }
 
-
-
     @Override
+    protected boolean intersectBorder(Ray ray) {
+
+        return true;
+    }
+
+        @Override
     public void findMinMax() {
 
     }

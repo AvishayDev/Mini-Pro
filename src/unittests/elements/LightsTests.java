@@ -136,11 +136,12 @@ public class LightsTests {
         scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(-50, -50, 50))//
                 .setKl(0.00001).setKq(0.000001));
 
-        ImageWriter imageWriter = new ImageWriter("WithBorder", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Border2", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
-                .setRayTracer(new RayTracerBasic(scene1));
+                .setRayTracer(new RayTracerBasic(scene1))
+                .setNumOfRaysAA(50);
         render.renderImage();
         render.writeToImage();
     }

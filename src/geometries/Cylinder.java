@@ -203,6 +203,8 @@ public class Cylinder extends Tube {
         minY = p0.getY()-radius;
         minZ = p0.getZ()-radius;
 
+        p0 =axisRay.getPoint(height);
+
         maxX = p0.getX()+radius;
         maxY = p0.getY()+radius;
         maxZ = p0.getZ()+radius;

@@ -1,7 +1,9 @@
 package elements;
 
-import geometries.Intersectable;
-import primitives.*;
+import primitives.Color;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.List;
 
@@ -36,11 +38,13 @@ public interface LightSource {
     double getDistance(Point3D point);
 
     /**
+     * This method receives a point, a normal from this point and and number and returns a list of rays
+     * from the point to the area of the position of the light.
      *
-     * @param point
-     * @param n
-     * @param amount
-     * @return
+     * @param point  Intersection point
+     * @param n      The normal vector to the point
+     * @param amount The amount of rays you want to be returned
+     * @return A list of rays from the intersection point, changed by delta, to the area of the Light
      */
     List<Ray> getTargetRays(Point3D point, Vector n, int amount);
 }

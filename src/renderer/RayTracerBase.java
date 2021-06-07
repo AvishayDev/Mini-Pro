@@ -1,8 +1,7 @@
 package renderer;
 
-import elements.AmbientLight;
-import geometries.Geometries;
-import primitives.*;
+import primitives.Color;
+import primitives.Ray;
 import scene.Scene;
 
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
  * the image
  */
 public abstract class RayTracerBase {
-
 
     /**
      * the scene we work on

@@ -1,13 +1,9 @@
 package geometries;
 
-import primitives.Point3D;
 import primitives.Ray;
-import geometries.*;
-import primitives.Util;
-import primitives.Vector;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /***
  * Represents list of geometries from all the types we have
@@ -68,6 +64,9 @@ public class Geometries extends Intersectable {
         return returnList;
     }
 
+    /**
+     * todo write notes
+     */
     @Override
     public void findMinMax() {
 
@@ -81,7 +80,7 @@ public class Geometries extends Intersectable {
         maxY = Double.NEGATIVE_INFINITY;
         maxZ = Double.NEGATIVE_INFINITY;
 
-        for (Intersectable g: geometries) {
+        for (Intersectable g : geometries) {
             g.findMinMax();
 
             //calc min

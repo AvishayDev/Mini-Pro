@@ -1,11 +1,9 @@
 package primitives;
 
-import static geometries.Intersectable.GeoPoint;
-
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static geometries.Intersectable.GeoPoint;
 
 /***
  * Represents Ray with vector and 3D point.
@@ -20,7 +18,6 @@ public class Ray {
      */
     private final Vector dir;
 
-
     /**
      * the Delta to move the vector if needed
      */
@@ -28,7 +25,8 @@ public class Ray {
 
     /**
      * Make's a Ray using vector and 3D point
-     * @param vec vector for the ray
+     *
+     * @param vec   vector for the ray
      * @param point point for the ray
      */
     public Ray(Vector vec, Point3D point) {
@@ -38,8 +36,9 @@ public class Ray {
 
     /**
      * Make's a Ray using vector and 3D point
+     *
      * @param point point for the ray
-     * @param vec vector for the ray
+     * @param vec   vector for the ray
      */
     public Ray(Point3D point, Vector vec) {
         this(vec, point);
@@ -48,8 +47,9 @@ public class Ray {
     /**
      * Constructor for a secondary Ray using a vector, a 3D point and a normal vector.
      * by delta with the normal vector
-     * @param point Intersection point
-     * @param vec Original Vector - must be normalized
+     *
+     * @param point  Intersection point
+     * @param vec    Original Vector - must be normalized
      * @param normal The normal from the intersection point
      */
     public Ray(Point3D point, Vector vec, Vector normal) {
@@ -72,7 +72,6 @@ public class Ray {
         return p0.equals(ray.p0) && dir.equals(ray.dir);
     }
 
-
     /***
      * This method receives a list of Point3Ds, and returns the point that have the lowest distance from the head of the ray
      * If list is empty or null sent, null will be returned
@@ -84,7 +83,7 @@ public class Ray {
             return null;
 
         return findClosestGeoPoint( //
-                points.stream().map(p -> new GeoPoint(null,p)) //
+                points.stream().map(p -> new GeoPoint(null, p)) //
                         .collect(Collectors.toList()) //
         ).point;
     }
@@ -123,9 +122,8 @@ public class Ray {
      */
     public Point3D getPoint(double t) {
 
-        return p0.add(dir,t);
+        return p0.add(dir, t);
     }
-
 
     /***
      * Getter for the Point3D field of the ray
@@ -154,5 +152,4 @@ public class Ray {
                 ", dir=" + dir +
                 '}';
     }
-
 }

@@ -87,7 +87,9 @@ public class Polygon extends Geometry {
         }
     }
 
-
+    /**
+     * todo write notes
+     */
     @Override
     public void findMinMax() {
 

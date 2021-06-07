@@ -15,7 +15,6 @@ import static org.junit.Assert.*;
  * Testing Camera Class
  *
  * @author Dan
- *
  */
 public class CameraTests {
 
@@ -26,7 +25,8 @@ public class CameraTests {
     @Test
     public void constructRay() {
 
-        Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)).setViewPlaneDistance(10);
+        Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0))
+                .setViewPlaneCenter(10);
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: 3X3 Corner (0,0)
@@ -64,20 +64,22 @@ public class CameraTests {
 
         Scene scene1 = new Scene("Test scene");
 
-        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)).setViewPlaneDistance(1000) //
+        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1),
+                new Vector(0, 1, 0)).setViewPlaneCenter(1000) //
                 .setViewPlaneSize(150, 150) //
                 //.changeAngle(0)
-                .changeDirection(new Point3D(0,0,-1000),new Point3D(0,0,-120));
+                .changeDirection(new Point3D(0, 0, -1000), new Point3D(0, 0, -120));
 
         Geometry sphere = new Sphere(new Point3D(0, 0, -120), 50) //
                 .setEmission(new Color(java.awt.Color.BLUE)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
-        Geometry square1 = new Polygon(new Point3D(60,0,-120),new Point3D(0,60,-120),new Point3D(-60,0,-120),new Point3D(0,-60,-120))
+        Geometry square1 = new Polygon(new Point3D(60, 0, -120),
+                new Point3D(0, 60, -120), new Point3D(-60, 0, -120), new Point3D(0, -60, -120))
                 .setEmission(new Color(java.awt.Color.GREEN)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
-        scene1.geometries.add(sphere,square1);
+        scene1.geometries.add(sphere, square1);
         scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
 
         ImageWriter imageWriter = new ImageWriter("lightSphereDirectional2", 500, 500);
@@ -87,8 +89,5 @@ public class CameraTests {
                 .setRayTracer(new RayTracerBasic(scene1));
         render.renderImage();
         render.writeToImage();
-
-
-
     }
 }

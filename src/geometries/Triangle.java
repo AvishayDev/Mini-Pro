@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class Triangle extends Polygon {
 
-
     /***
      * Triangle constructor based on vertices list. The list have 3 points
      * and more can't be added. The polygon must be convex.
@@ -45,7 +44,7 @@ public class Triangle extends Polygon {
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
-        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray,maxDistance);
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxDistance);
         //because we care about the distance in the plane we
         //don't need to care about it here
 

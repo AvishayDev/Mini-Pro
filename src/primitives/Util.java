@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Random;
-
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
  *
@@ -35,7 +33,7 @@ public abstract class Util {
     /**
      * Checks whether the number is [almost] zero
      *
-     * @param number
+     * @param number The number that is being checked
      * @return true if the number is zero or almost zero, false otherwise
      */
     public static boolean isZero(double number) {
@@ -45,7 +43,7 @@ public abstract class Util {
     /**
      * Aligns the number to zero if it is almost zero
      *
-     * @param number
+     * @param number The number that is being aligned
      * @return 0.0 if the number is very close to zero, the number itself otherwise
      */
     public static double alignZero(double number) {
@@ -53,21 +51,8 @@ public abstract class Util {
     }
 
     /**
-     * Aligns the number to num of places
-     * after the zero if it is almost there
-     *
-     * @param num the value of the number
-     * @return the number round
-     */
-    public static double alignNumber(double num) {
-        double num1 = (Math.round(num * 10d) / 10d);
-        return getExp(num1 - num) < ACCURACY ? num1 : num;
-
-    }
-
-
-    /**
      * Check whether two numbers have the same sign
+     * todo check if we actually need this method anywhere, remove it in case there's no need
      *
      * @param n1 1st number
      * @param n2 2nd number
@@ -80,8 +65,8 @@ public abstract class Util {
     /**
      * Provide a real random number in range between min and max
      *
-     * @param min
-     * @param max
+     * @param min The minimum barrier
+     * @param max The maximum barrier
      * @return the random value
      */
     public static double random(double min, double max) {

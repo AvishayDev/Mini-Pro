@@ -174,44 +174,4 @@ public class Render {
         return this;
     }
 
-    /**
-     * Setter for the numOfRays field of this Render. It's relevant only if Soft Shadows is on.
-     *
-     * @param numOfRays The amount of rays you want to go through the focal point.
-     * @return This Render, with the updated values.
-     */
-    public Render setNumOfRaysSS(int numOfRays) {
-        if (!(this.rayTracer instanceof RayTracerAdvanced))
-            throw new MissingResourceException("Please Use RayTracerAdvanced for soft shadows!", "RayTracerAdvanced", "10");
-        ((RayTracerAdvanced) this.rayTracer).setNumOfRaysSoftShadows(numOfRays);
-        return this;
-    }
-
-    /**
-     * Setter for the numOfRays field of this Render. It's relevant only if Glossy Surface is on.
-     *
-     * @param numOfRays The amount of rays you want to go through the focal point.
-     * @return This Render, with the updated values.
-     */
-    public Render setNumOfRaysGS(int numOfRays) {
-        if (!(this.rayTracer instanceof RayTracerAdvanced))
-            throw new MissingResourceException("Please Use RayTracerAdvanced for Glossy Surface!", "RayTracerAdvanced", "10");
-        ((RayTracerAdvanced) this.rayTracer).setNumOfRaysGlossySurface(numOfRays);
-        return this;
-    }
-
-    /**
-     * Setter for the numOfRays field of this Render. It's relevant only if Diffuse Glass is on.
-     *
-     * @param numOfRays The amount of rays you want to go through the focal point.
-     * @return This Render, with the updated values.
-     */
-    public Render setNumOfRaysDG(int numOfRays) {
-        if (!(this.rayTracer instanceof RayTracerAdvanced))
-            throw new MissingResourceException("Please Use RayTracerAdvanced for Diffuse Glass!", "RayTracerAdvanced", "10");
-        ((RayTracerAdvanced) this.rayTracer).setNumOfRaysDiffuseGlass(numOfRays);
-        return this;
-    }
-
-
 }

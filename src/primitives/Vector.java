@@ -63,9 +63,9 @@ public class Vector {
     }
 
     public Vector getOrthogonal() {
-        if (Util.isZero(head.y.coord)&& Util.isZero(head.z.coord))
+        if (Util.isZero(head.y.coord) && Util.isZero(head.z.coord))
             return Vector.Y;
-        return new Vector(0,-head.z.coord,head.y.coord).normalize();
+        return new Vector(0, -head.z.coord, head.y.coord).normalize();
     }
 
     /***
@@ -215,12 +215,26 @@ public class Vector {
         return head;
     }
 
+    /***
+     * This method is a getter for the X value of the head of this Vector.
+     * @return the X value of the head of this vector, in form of a double.
+     */
     public double getX() {
         return head.x.coord;
     }
+
+    /***
+     * This method is a getter for the Y value of the head of this Vector.
+     * @return the Y value of the head of this vector, in form of a double.
+     */
     public double getY() {
         return head.y.coord;
     }
+
+    /***
+     * This method is a getter for the Z value of the head of this Vector.
+     * @return the Z value of the head of this vector, in form of a double.
+     */
     public double getZ() {
         return head.z.coord;
     }

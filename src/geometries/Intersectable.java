@@ -94,7 +94,7 @@ public abstract class Intersectable extends Borderable {
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.
      *
-     * @param ray The ray which we find the intersections to the object.
+     * @param ray         The ray which we find the intersections to the object.
      * @param maxDistance the maximum distance for the ray to go
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */

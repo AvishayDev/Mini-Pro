@@ -1,4 +1,4 @@
-package renderer;
+package elements;
 
 import primitives.Point3D;
 import primitives.Ray;
@@ -8,6 +8,10 @@ import primitives.Vector;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This is a class dedicated for bonuses calculations on a virtual board, such as generating random points on a board,
+ * creating rays from point to points etc.
+ */
 public class BlackBoard {
 
     /**

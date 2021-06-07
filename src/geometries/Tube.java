@@ -44,7 +44,9 @@ public class Tube extends Geometry {
         this(new Ray(vec, point), radius);
     }
 
-
+    /**
+     * todo write notes
+     */
     @Override
     public void findMinMax() {
         Vector dir = axisRay.getDir();
@@ -212,6 +214,9 @@ public class Tube extends Geometry {
         return axisRay;
     }
 
+    /**
+     * todo write notes and implement method
+     */
     @Override
     protected boolean intersectBorder(Ray ray) {
 

@@ -12,6 +12,35 @@ import java.util.MissingResourceException;
  */
 public class Render {
 
+    private int threadsNumber = 1;
+
+    private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
+
+    private boolean print = false; // printing progress percentage
+    /**
+     * Set multithreading <br>
+     * - if the parameter is 0 - number of coress less SPARE (2) is taken
+     * @param threads number of threads
+     * @return the Render object itself
+     */
+    public Render setMultithreading(int threads) {
+        if (threads < 0) throw new IllegalArgumentException("Multithreading must be 0 or higher");
+        if (threads != 0) _threads = threads;
+        else {
+            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+            threads = cores <= 2 ? 1 : cores;
+        }
+        return this;
+    }
+
+    /**
+     * Set debug printing on
+     * @return the Render object itself
+     */
+    public Render setDebugPrint() { print = true; return this; }
+
+
+
     /**
      * The camera view of the scene
      */

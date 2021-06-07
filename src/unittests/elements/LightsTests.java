@@ -284,12 +284,12 @@ public class LightsTests {
                 .setKq(0.00000025)
                 .setRadius(20));
 
-        ImageWriter imageWriter = new ImageWriter("SStest9", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("SStest10", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 //.setRayTracer(new RayTracerBasic(scene2));
-                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(100));
+                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(0));
         render.renderImage();
         //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();

@@ -211,14 +211,16 @@ public class Tube extends Geometry {
         //ray 2
         Point3D p0Ray = ray.getP0();
         Vector dirRay = ray.getDir();
+        boolean flag = false;
 
         Vector n;
         try {
             n = dirAxis.crossProduct(dirRay);
+            flag = true; // Means that the vectors aren't parallel
             return n.dotProduct(p0Axis.subtract(p0Ray)) / n.length() <= radius;
         } catch (IllegalArgumentException e) {
             //if catch or parallel or p0Axis==p0Ray
-            return p0Axis.distance(p0Ray) <= radius;
+            return flag;
         }
 
     }

@@ -45,34 +45,6 @@ public class RayTracerAdvanced extends RayTracerBasic {
         super(scene);
     }
 
-    /**
-     * Calculates the final color of point in geometry with all the light effects
-     *
-     * @param intersection the geometry with the point needs to be colorized
-     * @param v            the ray direction that cross the geometry
-     * @return the final color after adding light effects
-     */
-    @Override
-    protected Color calcLocalEffects(GeoPoint intersection, Vector v, double k) {
-        Vector n = intersection.getNormal();
-        double nv = alignZero(n.dotProduct(v));
-        if (nv == 0) return Color.BLACK;
-        Material material = intersection.geometry.getMaterial();
-        Color color = Color.BLACK;
-        for (LightSource lightSource : scene.lights) {
-            Vector l = lightSource.getL(intersection.point);
-            double nl = alignZero(n.dotProduct(l));
-            double ktr = transparency(lightSource, intersection, material, nv, n, l);
-            if (ktr * k > MIN_CALC_COLOR_K) {
-                Color lightIntensity = lightSource.getIntensity(intersection.point) //
-                        .scale(ktr * (calcDiffusive(material.kD, nl) //
-                                + calcSpecular(material.kS, l, n, v, material.nShininess)));
-                color = color.add(lightIntensity);
-            }
-        }
-        return color;
-    }
-
     /***
      * This is a private function that is being used by the function calcLocalEffects.
      * It receives a light Source, the L vector of light, the normal vector and the GeoPoint of the intersection

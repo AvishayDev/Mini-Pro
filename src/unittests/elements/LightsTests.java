@@ -81,22 +81,22 @@ public class LightsTests {
     @Test
     public void FunTests() {
 
-        //camera1.changeAngle(30);
+        camera1.changeDirection(new Point3D(200,200,900),new Point3D(0,0,-50));
         scene1.geometries.add(square);
-        scene1.geometries.add(cylinder);
+        scene1.geometries.add(cylinder,tube);
         //scene1.geometries.add(tube);
         scene1.lights.add(new PointLight(new Color(100, 400, 100), new Point3D(50, 50, -50)));
         scene1.lights.add(new PointLight(new Color(500, 300, 100), new Point3D(-30, -30, -20)));
-        ImageWriter imageWriter = new ImageWriter("cylinderPoint1", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("A2", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
-                .setRayTracer(new RayTracerBasic(scene1))//
-                .setNumOfRaysAA(50);
+                .setRayTracer(new RayTracerBasic(scene1));//
+                //.setNumOfRaysAA(50);
         render.renderImage();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
-
+        System.out.println(scene1.geometries.num);
     }
 
     /**

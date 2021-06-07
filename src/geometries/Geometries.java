@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Geometries extends Intersectable {
 
+    public static int num=0;
     /**
      * List that have all the geometries
      */
@@ -53,6 +54,7 @@ public class Geometries extends Intersectable {
         List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
             if (g.intersectBorder(ray)) {
+                num++;
                 saveList = g.findGeoIntersections(ray, maxDistance);
                 if (saveList != null)
                     if (returnList == null)

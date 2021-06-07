@@ -17,6 +17,8 @@ import static primitives.Util.*;
 public final class Main {
 
 
+    public static int radius = 3;
+
     /**
      * Main program to tests initial functionality of the 1st stage
      *
@@ -30,58 +32,27 @@ public final class Main {
         Ray axis = new Ray(new Point3D(0.5, 0, 0), new Vector(-1, 1, 1));
         //intersectBorder(axis,ray);
 
-        double[][] matrix = new double[3][3];
-        matrix[0] = new double[]{-2, 3, -1};
-        matrix[1] = new double[]{5, -1, 4};
-        matrix[2] = new double[]{4, -8, 2};
-
-        out.println(matrix3Det(matrix));
-
     }
 
     public static boolean intersectBorder(Ray axisRay, Ray ray) {
 
+        // ray1
         Point3D p0Axis = axisRay.getP0();
         Vector dirAxis = axisRay.getDir();
-
+        //ray 2
         Point3D p0Ray = ray.getP0();
         Vector dirRay = ray.getDir();
 
-        if (p0Axis.equals(p0Ray)) // same position - that is the point of intersection
-            return true;
-
-        boolean goDot = false;
-
+        Vector n;
         try {
-            dirAxis.crossProduct(dirRay);
+            n = dirAxis.crossProduct(dirRay);
+            return n.dotProduct(p0Axis.subtract(p0Ray)) / n.length() <= radius;
         } catch (IllegalArgumentException e) {
-            goDot = true;
+            //if catch or parallel or p0Axis==p0Ray
+            return p0Axis.distance(p0Ray) <= radius;
         }
-
-        if (!goDot) {
-            return true;
-        }
-        return true;
     }
 
-
-    public static double[] MatrixSolve(double[][] matrix) {
-
-        double[] returnValues = new double[3];
-
-        double a = matrix3Det();
-    }
-
-    public static double matrix3Det(double[][] matrix) {
-        //   | a1  b1  c1 |
-        //   | a2  b2  c2 |
-        //   | a3  b3  c3 |
-
-        double returnValue = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]);
-        returnValue = returnValue - matrix[1][0] * (matrix[0][1] * matrix[2][2] - matrix[2][1] * matrix[0][2]);
-        returnValue = returnValue + matrix[2][0] * (matrix[0][1] * matrix[1][2] - matrix[1][1] * matrix[0][2]);
-        return returnValue;
-    }
 }
 
 

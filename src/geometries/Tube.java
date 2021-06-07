@@ -44,26 +44,6 @@ public class Tube extends Geometry {
         this(new Ray(vec, point), radius);
     }
 
-    /**
-     * todo write notes
-     */
-    @Override
-    public void findMinMax() {
-        Vector dir = axisRay.getDir();
-        Vector orthogonal1 = dir.getOrthogonal();
-        Vector orthogonal2 = orthogonal1.crossProduct(dir).normalize();
-        Point3D center = axisRay.getP0();
-
-        Point3D minP = center.add(orthogonal1, -radius).add(orthogonal2, -radius);
-        minX = minP.getX();
-        minY = minP.getY();
-        minZ = minP.getZ();
-        Point3D maxP = center.add(orthogonal1, radius).add(orthogonal2, radius);
-        maxX = maxP.getX();
-        maxY = maxP.getY();
-        maxZ = maxP.getZ();
-    }
-
     /***
      * Getter for the Normal vector of the tube? Null for now
      * @param point Point3D object
@@ -214,29 +194,33 @@ public class Tube extends Geometry {
         return axisRay;
     }
 
+    @Override
+    public void findMinMax() {
+        // there is nothing to calc
+    }
+
     /**
      * todo write notes and implement method
      */
     @Override
     protected boolean intersectBorder(Ray ray) {
 
-        // a+tb
-        Point3D a = ray.getP0();
-        Vector b = ray.getDir();
-        // c+sd
-        Point3D c = axisRay.getP0();
-        Vector d = axisRay.getDir();
+        // ray1
+        Point3D p0Axis = axisRay.getP0();
+        Vector dirAxis = axisRay.getDir();
+        //ray 2
+        Point3D p0Ray = ray.getP0();
+        Vector dirRay = ray.getDir();
 
-        double bd = b.dotProduct(d);
-        double ad = d.dotProduct(a);
-        double bc = b.dotProduct(c);
-        double cd = d.dotProduct(c);
-        double ab = b.dotProduct(a);
+        Vector n;
+        try {
+            n = dirAxis.crossProduct(dirRay);
+            return n.dotProduct(p0Axis.subtract(p0Ray)) / n.length() <= radius;
+        } catch (IllegalArgumentException e) {
+            //if catch or parallel or p0Axis==p0Ray
+            return p0Axis.distance(p0Ray) <= radius;
+        }
 
-        double s = ((bd*(ad-bc))-(ad*cd))/((bd*bd)-1);
-        double t = ((bd*(cd-ad))-(bc*ab))/((bd*bd)-1);
-
-        return true;
     }
 
     /***

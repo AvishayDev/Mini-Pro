@@ -88,7 +88,6 @@ public abstract class Borderable {
         if ((tmin > tzmax) || (tzmin > tmax))
             return false;
 
-        // todo check warnings here, it might be important
         if (tzmin > tmin)
             tmin = tzmin;
 

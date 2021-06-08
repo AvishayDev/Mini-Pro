@@ -13,33 +13,11 @@ import java.util.MissingResourceException;
 public class Render {
 
 
-    private int threadsNumber = 1;
+    private int threadsCount = 0;
 
     private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
 
     private boolean print = false; // printing progress percentage
-    /**
-     * Set multithreading <br>
-     * - if the parameter is 0 - number of coress less SPARE (2) is taken
-     * @param threads number of threads
-     * @return the Render object itself
-     */
-    public Render setMultithreading(int threads) {
-        if (threads < 0) throw new IllegalArgumentException("Multithreading must be 0 or higher");
-        if (threads != 0) threadsNumber = threads;
-        else {
-            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
-            threadsNumber = cores <= 2 ? 1 : cores;
-        }
-        return this;
-    }
-
-    /**
-     * Set debug printing on
-     * @return the Render object itself
-     */
-    public Render setDebugPrint() { print = true; return this; }
-
 
 
     /**
@@ -73,10 +51,19 @@ public class Render {
      * @throws MissingResourceException in case the any of the fields is null.
      */
     public void renderImage() {
+
         if (camera == null || rayTracer == null || imageWriter == null)
             throw new MissingResourceException("A", "B", "C");
 
-
+        final int nX = imageWriter.getNx();
+        final int nY = imageWriter.getNy();
+        if (threadsCount == 0)
+            for (int i = 0; i < nY; ++i)
+                for (int j = 0; j < nX; ++j)
+                    castRay(nX, nY, j, i);
+        else
+            renderImageThreaded();
+/*
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
         Color pixelColor;
@@ -106,29 +93,14 @@ public class Render {
                     rayTrace = camera.constructRay(nX, nY, j, i);
                     pixelColor = rayTracer.traceRay(rayTrace);
                     imageWriter.writePixel(j, i, pixelColor);
-                    //renderImage(nY, nX);
+
                 }
             }
         }
+
+ */
     }
 
-    public void renderImage(int nY, int nX) {
-        final Pixel thePixel = new Pixel(nY, nX); // Main pixel management object
-        Thread[] threads = new Thread[threadsNumber];
-        for (int i = threadsNumber - 1; i >= 0; --i) { // create all threads
-            threads[i] = new Thread(() -> {
-                Pixel pixel = new Pixel(); // Auxiliary thread’s pixel object
-                while (thePixel.nextPixel(pixel)) {
-                    Ray rayTrace = camera.constructRay(nX, nY, pixel.col, pixel.row);
-                    Color pixelColor = rayTracer.traceRay(rayTrace);
-                    imageWriter.writePixel(pixel.col, pixel.row, pixelColor);
-                }});
-        }
-        for (Thread thread : threads) thread.start(); // Start all the threads
-        // Wait for all threads to finish
-        for (Thread thread : threads) try { thread.join(); } catch (Exception e) {}
-        if (print) System.out.printf("\r100%%\n"); // Print 100%
-    }
 
     /***
      * This method receives an interval of distance and a color to draw lines on the image, mostly used to testing purposes.
@@ -224,21 +196,48 @@ public class Render {
         return this;
     }
 
+    //     -------------- Multi Threads Area ------------------
     /**
-     * Pixel is an internal helper class whose objects are associated with a Render object that
-     * they are generated in scope of. It is used for multithreading in the Renderer and for follow up
-     * its progress.<br/>
-     * There is a main follow up object and several secondary objects - one in each thread.
+     * Set multithreading
+     * - if the parameter is 0 - number of coress less SPARE (2) is taken
+     * @param threads number of threads
+     * @return the Render object itself
+     */
+    public Render setMultithreading(int threads) {
+        if (threads < 0) throw new IllegalArgumentException("Multithreading must be 0 or higher");
+        if (threads != 0) threadsCount = threads;
+        else {
+            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+            threadsCount = cores <= 2 ? 1 : cores;
+        }
+        return this;
+    }
+
+    /**
+     * Set debug printing on
+     * @return the Render object itself
+     */
+    public Render setDebugPrint() { print = true; return this; }
+
+    /**
+     * Pixel is an internal helper class whose objects are associated with a Render
+     * object that they are generated in scope of. It is used for multithreading in
+     * the Renderer and for follow up its progress.<br/>
+     * There is a main follow up object and several secondary objects - one in each
+     * thread.
+     *
+     * @author Dan
+     *
      */
     private class Pixel {
-        private long maxRows = 0; // Ny
-        private long maxCols = 0; // Nx
-        private long pixels = 0; // Total number of pixels: Nx*Ny
-        public volatile int row = 0; // Last processed row
-        public volatile int col = -1; // Last processed column
-        private long counter = 0; // Total number of pixels processed
-        private int percents = 0; // Percent of pixels processed
-        private long nextCounter = 0; // Next amount of processed pixels for percent progress
+        private long maxRows = 0;
+        private long maxCols = 0;
+        private long pixels = 0;
+        public volatile int row = 0;
+        public volatile int col = -1;
+        private long counter = 0;
+        private int percents = 0;
+        private long nextCounter = 0;
 
         /**
          * The constructor for initializing the main follow up Pixel object
@@ -247,11 +246,12 @@ public class Render {
          * @param maxCols the amount of pixel columns
          */
         public Pixel(int maxRows, int maxCols) {
-            maxRows = maxRows;
-            maxCols = maxCols;
-            pixels = maxRows * maxCols;
-            //nextCounter = _pixels / 100;
-          //  if (Render.this.print) System.out.printf("\r %02d%%", _percents);
+            this.maxRows = maxRows;
+            this.maxCols = maxCols;
+            this.pixels = (long) maxRows * maxCols;
+            this.nextCounter = this.pixels / 100;
+            if (Render.this.print)
+                System.out.printf("\r %02d%%", this.percents);
         }
 
         /**
@@ -261,54 +261,132 @@ public class Render {
         }
 
         /**
-         * Public function for getting next pixel number into secondary Pixel object.
-         * The function prints also progress percentage in the console window.
-         *
-         * @param target target secondary Pixel object to copy the row/column of the next pixel
-         * @return true if the work still in progress, -1 if it's done
-         */
-        public boolean nextPixel(Pixel target) {
-            int percents = nextP(target);
-            if (print && percents > 0) System.out.printf("\r %02d%%", percents);
-            if (percents >= 0) return true;
-            if (print) System.out.printf("\r %02d%%", 100);
-            return false;
-        }
-
-        /**
-         * Internal function for thread-safe manipulating of main follow up Pixel object - this function is
-         * critical section for all the threads, and main Pixel object data is the shared data of this critical
-         * section.<br/>
+         * Internal function for thread-safe manipulating of main follow up Pixel object
+         * - this function is critical section for all the threads, and main Pixel
+         * object data is the shared data of this critical section.<br/>
          * The function provides next pixel number each call.
          *
-         * @param target target secondary Pixel object to copy the row/column of the next pixel
-         * @return the progress percentage for follow up: if it is 0 - nothing to print, if it is -1 - the task is
-         * finished, any other value - the progress percentage (only when it changes)
+         * @param target target secondary Pixel object to copy the row/column of the
+         *               next pixel
+         * @return the progress percentage for follow up: if it is 0 - nothing to print,
+         *         if it is -1 - the task is finished, any other value - the progress
+         *         percentage (only when it changes)
          */
         private synchronized int nextP(Pixel target) {
             ++col;
-            ++counter;
-            if (col < maxCols) {
+            ++this.counter;
+            if (col < this.maxCols) {
                 target.row = this.row;
                 target.col = this.col;
-                if (print && counter == nextCounter) {
-                    ++percents;
-                    nextCounter = pixels * (percents + 1) / 100;
-                    return percents;
+                if (Render.this.print && this.counter == this.nextCounter) {
+                    ++this.percents;
+                    this.nextCounter = this.pixels * (this.percents + 1) / 100;
+                    return this.percents;
                 }
                 return 0;
             }
             ++row;
-            if (row < maxRows) {
+            if (row < this.maxRows) {
                 col = 0;
-                if (print && counter == nextCounter) {
-                    ++percents;
-                    nextCounter = pixels * (percents + 1) / 100;
-                    return percents;
+                target.row = this.row;
+                target.col = this.col;
+                if (Render.this.print && this.counter == this.nextCounter) {
+                    ++this.percents;
+                    this.nextCounter = this.pixels * (this.percents + 1) / 100;
+                    return this.percents;
                 }
                 return 0;
             }
             return -1;
         }
-}
+
+        /**
+         * Public function for getting next pixel number into secondary Pixel object.
+         * The function prints also progress percentage in the console window.
+         *
+         * @param target target secondary Pixel object to copy the row/column of the
+         *               next pixel
+         * @return true if the work still in progress, -1 if it's done
+         */
+        public boolean nextPixel(Pixel target) {
+            int percent = nextP(target);
+            if (Render.this.print && percent > 0)
+                synchronized (this) {
+                    notifyAll();
+                }
+            if (percent >= 0)
+                return true;
+            if (Render.this.print)
+                synchronized (this) {
+                    notifyAll();
+                }
+            return false;
+        }
+
+        /**
+         * Debug print of progress percentage - must be run from the main thread
+         */
+        public void print() {
+            if (Render.this.print)
+                while (this.percents < 100)
+                    try {
+                        synchronized (this) {
+                            wait();
+                        }
+                        System.out.printf("\r %02d%%", this.percents);
+                        System.out.flush();
+                    } catch (Exception e) {
+                    }
+        }
+    }
+
+
+    /**
+     * Cast ray from camera in order to color a pixel
+     * @param nX resolution on X axis (number of pixels in row)
+     * @param nY resolution on Y axis (number of pixels in column)
+     * @param col pixel's column number (pixel index in row)
+     * @param row pixel's row number (pixel index in column)
+     */
+    private void castRay(int nX, int nY, int col, int row) {
+        Ray ray = camera.constructRay(nX, nY, col, row);
+        Color color = rayTracer.traceRay(ray);
+        imageWriter.writePixel(col, row, color);
+    }
+
+    /**
+     * This function renders image's pixel color map from the scene included with
+     * the Renderer object - with multi-threading
+     */
+    private void renderImageThreaded() {
+        final int nX = imageWriter.getNx();
+        final int nY = imageWriter.getNy();
+        final Pixel thePixel = new Pixel(nY, nX);
+        // Generate threads
+        Thread[] threads = new Thread[threadsCount];
+        for (int i = threadsCount - 1; i >= 0; --i) {
+            threads[i] = new Thread(() -> {
+                Pixel pixel = new Pixel();
+                while (thePixel.nextPixel(pixel))
+                    castRay(nX, nY, pixel.col, pixel.row);
+            });
+        }
+        // Start threads
+        for (Thread thread : threads)
+            thread.start();
+
+        // Print percents on the console
+        thePixel.print();
+
+        // Ensure all threads have finished
+        for (Thread thread : threads)
+            try {
+                thread.join();
+            } catch (Exception e) {
+            }
+
+        if (print)
+            System.out.print("\r100%");
+    }
+
 }

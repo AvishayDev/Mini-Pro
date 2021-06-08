@@ -39,11 +39,11 @@ public class ThreadsTests {
     public void teapot() {
         scene.geometries.add(sphere);
         scene.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
-        ImageWriter imageWriter = new ImageWriter("teapot", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("teapot1", 500, 500);
         Render render = new Render().setImageWriter(imageWriter).setCamera(camera).setRayTracer(new RayTracerBasic(scene)) //
                 .setMultithreading(3).setDebugPrint();
         render.renderImage(); //render.printGrid(50, java.awt.Color.YELLOW);
-        render.printGrid(50, new Color(256,256,256));
+        //render.printGrid(50, new Color(256,256,256));
         render.writeToImage();
     }
 

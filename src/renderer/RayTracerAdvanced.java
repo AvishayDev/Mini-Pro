@@ -122,17 +122,17 @@ public class RayTracerAdvanced extends RayTracerBasic {
         Material material = gp.geometry.getMaterial();
         double kkr = k * material.kR;
         if (kkr > MIN_CALC_COLOR_K)
-            if (numOfRaysGlossySurface == 0 || material.radiusGS == 0)
+            if (numOfRaysGlossySurface == 0)
                 color = calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.kR, kkr);
             else
-                color = calcGlobalEffect(constructReflectedRays(gp, v, n), level, material.kR, kkr);
+                color = calcGlobalEffect(constructReflectedRays(gp.point, v, n,material.radiusGS), level, material.kR, kkr);
 
         double kkt = k * material.kT;
         if (kkt > MIN_CALC_COLOR_K)
-            if (numOfRaysDiffuseGlass == 0 || material.radiusDG == 0)
+            if (numOfRaysDiffuseGlass == 0)
                 color = color.add(calcGlobalEffect(constructRefractedRay(gp.point, v, n), level, material.kT, kkt));
             else
-                color = color.add(calcGlobalEffect(constructRefractedRays(gp, v, n), level, material.kT, kkt));
+                color = color.add(calcGlobalEffect(constructRefractedRays(gp.point, v, n,material.radiusDG), level, material.kT, kkt));
 
         return color;
     }
@@ -141,16 +141,18 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * This method receives an intersection GeoPoint, the intersecting vector and the normal vector of gp
      * It returns a list of rays that represents the reflected rays.
      *
-     * @param gp The closest intersection point
+     * @param point The closest intersection point
      * @param v  The vector of the intersecting ray
      * @param n  The normal of gp
      * @return A list of the reflected rays
      */
-    private List<Ray> constructReflectedRays(GeoPoint gp, Vector v, Vector n) {
+    private List<Ray> constructReflectedRays(Point3D point, Vector v, Vector n, double radiusGS) {
         Vector r = v.subtract(n.scale(v.dotProduct(n) * 2));
-        Ray centerRay = new Ray(gp.point, r, n);
+        Ray centerRay = new Ray(point, r, n);
+        if(radiusGS ==0)
+            return List.of(centerRay);
         Vector orthogonal = r.getOrthogonal();
-        List<Point3D> point3DS = BlackBoard.findPoints(gp.point.add(r, GlossyDiffusiveDistance), gp.geometry.getMaterial().radiusGS, orthogonal, orthogonal.crossProduct(r).normalize(), numOfRaysGlossySurface);
+        List<Point3D> point3DS = BlackBoard.findPoints(point.add(r, GlossyDiffusiveDistance), radiusGS, orthogonal, orthogonal.crossProduct(r).normalize(), numOfRaysGlossySurface);
         return BlackBoard.raysFromPointToPoints(centerRay.getP0(), point3DS, false);
     }
 
@@ -158,15 +160,17 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * This method receives an intersection GeoPoint, the intersecting vector and the normal vector of gp
      * It returns a list of rays that represents the refracted rays.
      *
-     * @param gp The closest intersection point
+     * @param point The closest intersection point
      * @param v  The vector of the intersecting ray
      * @param n  The normal of gp
      * @return A list of the refracted rays
      */
-    private List<Ray> constructRefractedRays(GeoPoint gp, Vector v, Vector n) {
-        Ray centerRay = new Ray(gp.point, v, n);
+    private List<Ray> constructRefractedRays(Point3D point, Vector v, Vector n, double radiusDG) {
+        Ray centerRay = new Ray(point, v, n);
+        if(radiusDG ==0)
+            return List.of(centerRay);
         Vector orthogonal = v.getOrthogonal();
-        List<Point3D> point3DS = BlackBoard.findPoints(gp.point.add(v, GlossyDiffusiveDistance), gp.geometry.getMaterial().radiusDG, orthogonal, orthogonal.crossProduct(v).normalize(), numOfRaysDiffuseGlass);
+        List<Point3D> point3DS = BlackBoard.findPoints(point.add(v, GlossyDiffusiveDistance), radiusDG, orthogonal, orthogonal.crossProduct(v).normalize(), numOfRaysDiffuseGlass);
         return BlackBoard.raysFromPointToPoints(centerRay.getP0(), point3DS, false);
     }
 

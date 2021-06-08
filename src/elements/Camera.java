@@ -4,7 +4,9 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
+import renderer.Render;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /***
@@ -45,6 +47,15 @@ public class Camera {
     // This variable stores the center point of the aperture. It will usually just be the center of the camera.
     private Point3D apertureCenter;
 
+    /**
+     * This is the amount of rays, in case anti aliasing is on.
+     */
+    private int numOfRaysAntiAliasing = 0;
+
+    /**
+     * This is the amount of rays, in case depth of field is on.
+     */
+    private int numOfRaysDepthOfField = 0;
 
     /***
      * Constructor for Camera, that receives initial starting point, VectorTo (Z axis), VectorUp (Y axis)
@@ -132,25 +143,42 @@ public class Camera {
      * @param nY        number of pixels in Y axis
      * @param j         place form center pixel in X axis
      * @param i         place form center pixel in Y axis
-     * @param numOfRays The amount of rays we want to go through the focal point from the area of the received pixel.
      * @return A list of rays that go from the received pixel area to the focal point.
      */
-    public List<Ray> constructDOFRays(int nX, int nY, int j, int i, int numOfRays) {
-        // First step - create the ray to center of the pixel
-        Ray centerRay = constructRay(nX, nY, j, i);
+    public List<Ray> constructRays(int nX, int nY, int j, int i) {
+        List<Ray> rays1 = numOfRaysAntiAliasing <= 1 ? //
+                List.of(constructRay(nX, nY, j, i)) :
+                constructAntiARays(nX, nY, j, i);
+
+        if (numOfRaysDepthOfField <= 1)  return rays1;
+
+        List<Ray> rays2 = new LinkedList<>();
+        for (var ray : rays1)
+            rays2.addAll(constructDOFRays(ray));
+        return rays2;
+    }
+
+    /**
+     * This method receives the amount of pixel and the pixel we want to send a ray through, and the amount of different
+     * rays to send through the area of it to the focal point. It will return a list of rays that go through this pixel.
+     *
+     * @param ray       pixel ray for DOF
+     * @return A list of rays that go from the received pixel area to the focal point.
+     */
+    public List<Ray> constructDOFRays(Ray ray) {
         // Second step - calculate focal point
-        Point3D focalPoint = findFocalPoint(centerRay);
+        Point3D focalPoint = findFocalPoint(ray);
         // Third step - Create points on the aperture
-        List<Point3D> points = BlackBoard.findPoints(apertureCenter, apertureHeight / 2, apertureWidth / 2, vUp, vRight, numOfRays);
+        List<Point3D> points = BlackBoard.findPoints(apertureCenter, apertureHeight / 2, apertureWidth / 2, vUp, vRight, numOfRaysDepthOfField);
         // Fourth step - Create rays from points to the focal point.
         return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
     }
 
-    public List<Ray> constructAntiARays(int nX, int nY, int j, int i, int numOfRays) {
+    public List<Ray> constructAntiARays(int nX, int nY, int j, int i) {
         // First step - find the pixel center on the ViewPlane
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
         // Second step - Create points on the pixel
-        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.height / ((double) nY * 2), this.width / ((double) nX * 2), vUp, vRight, numOfRays);
+        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.height / ((double) nY * 2), this.width / ((double) nX * 2), vUp, vRight, numOfRaysAntiAliasing);
         // Third step - Create rays from point to the pixel
         return BlackBoard.raysFromPointToPoints(p0, points, false);
     }
@@ -321,6 +349,28 @@ public class Camera {
         if (viewPlaneDistance <= 0)
             throw new IllegalArgumentException("View Plane distance must be positive!");
         this.viewPlaneCenter = this.p0.add(vTo, viewPlaneDistance);
+        return this;
+    }
+
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     *
+     * @param numOfRays The amount of rays you want to go through the focal point.
+     * @return This Render, with the updated values.
+     */
+    public Camera setNumOfRaysDOF(int numOfRays) {
+        this.numOfRaysDepthOfField = numOfRays;
+        return this;
+    }
+
+    /**
+     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
+     *
+     * @param numOfRays The amount of rays you want to go through the focal point.
+     * @return This Render, with the updated values.
+     */
+    public Camera setNumOfRaysAA(int numOfRays) {
+        this.numOfRaysAntiAliasing = numOfRays;
         return this;
     }
 }

@@ -42,7 +42,7 @@ public class ThreadsTests {
         ImageWriter imageWriter = new ImageWriter("teapot1", 500, 500);
         Render render = new Render().setImageWriter(imageWriter).setCamera(camera).setRayTracer(new RayTracerBasic(scene)) //
                 .setMultithreading(3).setDebugPrint();
-        render.renderImage(); //render.printGrid(50, java.awt.Color.YELLOW);
+        render.renderImageAdvanced(); //render.printGrid(50, java.awt.Color.YELLOW);
         //render.printGrid(50, new Color(256,256,256));
         render.writeToImage();
     }

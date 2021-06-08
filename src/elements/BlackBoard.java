@@ -81,7 +81,6 @@ public class BlackBoard {
         return points;
     }
 
-
     /**
      * Method that receives a point and a list of points, and returns a list of rays from the point to the
      * list of points, or from the list of points to the points, depends whether you send reversed or not.
@@ -93,19 +92,13 @@ public class BlackBoard {
      */
     public static List<Ray> raysFromPointToPoints(Point3D point, List<Point3D> points, boolean reversed) {
         List<Ray> rays = new LinkedList<>();
-        Ray ray;
-        if (!reversed) {
-            for (Point3D p : points) {
-                ray = new Ray(point, p.subtract(point));
-                rays.add(ray);
-            }
-        } else {
-            for (Point3D p : points) {
-                ray = new Ray(p, point.subtract(p));
-                rays.add(ray);
-            }
-        }
-
+        for (Point3D p : points)
+            rays.add(new Ray(p, reversed ? point.subtract(p) : p.subtract(point)));
         return rays;
+    }
+
+    public static List<Ray> raysWithDelta(Point3D pIntersection) {
+        //todo all
+        return null;
     }
 }

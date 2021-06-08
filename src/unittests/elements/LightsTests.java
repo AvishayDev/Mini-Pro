@@ -123,7 +123,6 @@ public class LightsTests {
      */
     @Test
     public void BorderTests() {
-
         Point3D point3D = new Point3D(-50, -50, -100);
         Vector v = new Vector(10, 10, 20);
         Geometry sphereAdd;
@@ -139,10 +138,11 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("Border2", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
-                .setCamera(camera1) //
-                .setRayTracer(new RayTracerBasic(scene1))
-                .setNumOfRaysAA(50);
-        render.renderImage();
+                .setCamera(camera1.setNumOfRaysAA(50)) //
+                .setRayTracer(new RayTracerBasic(scene1)) //
+                .setMultithreading(3).setDebugPrint()
+                ;
+        render.renderImageAdvanced();
         render.writeToImage();
     }
 
@@ -288,11 +288,12 @@ public class LightsTests {
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
-                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(20));
-        render.renderImage();
+                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(20)) //
+                .setMultithreading(3).setDebugPrint() //
+                ;
+        render.renderImageAdvanced();
         //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
-
     }
 
     /**
@@ -300,7 +301,7 @@ public class LightsTests {
      */
     @Test
     public void DOFTests() {
-        camera1.setFocalDistance(1050).setApertureSize(30, 30);
+        camera1.setFocalDistance(1050).setApertureSize(30, 30).setNumOfRaysDOF(50);
 
         Geometry sphere2 = new Sphere(new Point3D(0, 0, -200), 40)
                 .setEmission(new Color(100, 100, 100))
@@ -313,9 +314,10 @@ public class LightsTests {
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
-                .setRayTracer(new RayTracerBasic(scene1))//;
-                .setNumOfRaysDOF(50);
-        render.renderImage();
+                .setRayTracer(new RayTracerBasic(scene1)) //
+                .setMultithreading(3).setDebugPrint() //
+                ;
+        render.renderImageAdvanced();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
     }
@@ -341,8 +343,10 @@ public class LightsTests {
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
-                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(100));
-        render.renderImage();
+                .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(100)) //
+                .setMultithreading(3).setDebugPrint()
+                ;
+        render.renderImageAdvanced();
         //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
 

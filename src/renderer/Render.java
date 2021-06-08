@@ -35,16 +35,6 @@ public class Render {
      */
     private ImageWriter imageWriter = null;
 
-    /**
-     * This is the amount of rays, in case anti aliasing is on.
-     */
-    private int numOfRaysAntiAliasing = 0;
-
-    /**
-     * This is the amount of rays, in case depth of field is on.
-     */
-    private int numOfRaysDepthOfField = 0;
-
     /***
      * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic
      * then draws the checked pixel with the color we received.
@@ -57,50 +47,53 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
+        for (int i = 0; i < nY; ++i)
+            for (int j = 0; j < nX; ++j)
+                castRay(nX, nY, j, i);
+    }
+
+    /***
+     * This method get all the rays from the camera to each pixel, for each ray receives a color from the RayTracerBasic
+     * then draws the checked pixel with the color we received.
+     * @throws MissingResourceException in case the any of the fields is null.
+     */
+    public void renderImageAdvanced() {
+        if (camera == null || rayTracer == null || imageWriter == null)
+            throw new MissingResourceException("A", "B", "C");
+
+        final int nX = imageWriter.getNx();
+        final int nY = imageWriter.getNy();
         if (threadsCount == 0)
             for (int i = 0; i < nY; ++i)
                 for (int j = 0; j < nX; ++j)
-                    castRay(nX, nY, j, i);
+                    castRays(nX, nY, j, i);
         else
             renderImageThreaded();
-/*
-        int nX = imageWriter.getNx();
-        int nY = imageWriter.getNy();
-        Color pixelColor;
-
-        if (numOfRaysDepthOfField != 0) {
-            List<Ray> raysTrace;
-            for (int i = 0; i < nY; i++) {
-                for (int j = 0; j < nX; j++) {
-                    raysTrace = camera.constructDOFRays(nX, nY, j, i, numOfRaysDepthOfField);
-                    pixelColor = rayTracer.traceRays(raysTrace);
-                    imageWriter.writePixel(j, i, pixelColor);
-                }
-            }
-        } else if (numOfRaysAntiAliasing != 0) {
-            List<Ray> raysTrace;
-            for (int i = 0; i < nY; i++) {
-                for (int j = 0; j < nX; j++) {
-                    raysTrace = camera.constructAntiARays(nX, nY, j, i, numOfRaysAntiAliasing);
-                    pixelColor = rayTracer.traceRays(raysTrace);
-                    imageWriter.writePixel(j, i, pixelColor);
-                }
-            }
-        } else {// if(rayTracer instanceof RayTracerAdvanced){
-            Ray rayTrace;
-            for (int i = 0; i < nY; i++) {
-                for (int j = 0; j < nX; j++) {
-                    rayTrace = camera.constructRay(nX, nY, j, i);
-                    pixelColor = rayTracer.traceRay(rayTrace);
-                    imageWriter.writePixel(j, i, pixelColor);
-
-                }
-            }
-        }
-
- */
     }
 
+    /**
+     * Cast ray from camera in order to color a pixel
+     *
+     * @param nX  resolution on X axis (number of pixels in row)
+     * @param nY  resolution on Y axis (number of pixels in column)
+     * @param col pixel's column number (pixel index in row)
+     * @param row pixel's row number (pixel index in column)
+     */
+    private void castRay(int nX, int nY, int col, int row) {
+        imageWriter.writePixel(col, row, rayTracer.traceRay(camera.constructRay(nX, nY, col, row)));
+    }
+
+    /**
+     * Cast ray from camera in order to color a pixel
+     *
+     * @param nX  resolution on X axis (number of pixels in row)
+     * @param nY  resolution on Y axis (number of pixels in column)
+     * @param col pixel's column number (pixel index in row)
+     * @param row pixel's row number (pixel index in column)
+     */
+    private void castRays(int nX, int nY, int col, int row) {
+        imageWriter.writePixel(col, row, rayTracer.traceRays(camera.constructRays(nX, nY, col, row)));
+    }
 
     /***
      * This method receives an interval of distance and a color to draw lines on the image, mostly used to testing purposes.
@@ -174,32 +167,12 @@ public class Render {
         return this;
     }
 
-    /**
-     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
-     *
-     * @param numOfRays The amount of rays you want to go through the focal point.
-     * @return This Render, with the updated values.
-     */
-    public Render setNumOfRaysDOF(int numOfRays) {
-        this.numOfRaysDepthOfField = numOfRays;
-        return this;
-    }
-
-    /**
-     * Setter for the numOfRays field of this Render. It's relevant only if DOF is on.
-     *
-     * @param numOfRays The amount of rays you want to go through the focal point.
-     * @return This Render, with the updated values.
-     */
-    public Render setNumOfRaysAA(int numOfRays) {
-        this.numOfRaysAntiAliasing = numOfRays;
-        return this;
-    }
-
     //     -------------- Multi Threads Area ------------------
+
     /**
      * Set multithreading
      * - if the parameter is 0 - number of coress less SPARE (2) is taken
+     *
      * @param threads number of threads
      * @return the Render object itself
      */
@@ -215,9 +188,13 @@ public class Render {
 
     /**
      * Set debug printing on
+     *
      * @return the Render object itself
      */
-    public Render setDebugPrint() { print = true; return this; }
+    public Render setDebugPrint() {
+        print = true;
+        return this;
+    }
 
     /**
      * Pixel is an internal helper class whose objects are associated with a Render
@@ -227,7 +204,6 @@ public class Render {
      * thread.
      *
      * @author Dan
-     *
      */
     private class Pixel {
         private long maxRows = 0;
@@ -269,8 +245,8 @@ public class Render {
          * @param target target secondary Pixel object to copy the row/column of the
          *               next pixel
          * @return the progress percentage for follow up: if it is 0 - nothing to print,
-         *         if it is -1 - the task is finished, any other value - the progress
-         *         percentage (only when it changes)
+         * if it is -1 - the task is finished, any other value - the progress
+         * percentage (only when it changes)
          */
         private synchronized int nextP(Pixel target) {
             ++col;
@@ -335,23 +311,9 @@ public class Render {
                         }
                         System.out.printf("\r %02d%%", this.percents);
                         System.out.flush();
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
         }
-    }
-
-
-    /**
-     * Cast ray from camera in order to color a pixel
-     * @param nX resolution on X axis (number of pixels in row)
-     * @param nY resolution on Y axis (number of pixels in column)
-     * @param col pixel's column number (pixel index in row)
-     * @param row pixel's row number (pixel index in column)
-     */
-    private void castRay(int nX, int nY, int col, int row) {
-        Ray ray = camera.constructRay(nX, nY, col, row);
-        Color color = rayTracer.traceRay(ray);
-        imageWriter.writePixel(col, row, color);
     }
 
     /**
@@ -368,7 +330,7 @@ public class Render {
             threads[i] = new Thread(() -> {
                 Pixel pixel = new Pixel();
                 while (thePixel.nextPixel(pixel))
-                    castRay(nX, nY, pixel.col, pixel.row);
+                    castRays(nX, nY, pixel.col, pixel.row);
             });
         }
         // Start threads
@@ -382,7 +344,7 @@ public class Render {
         for (Thread thread : threads)
             try {
                 thread.join();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
 
         if (print)

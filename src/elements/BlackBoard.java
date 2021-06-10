@@ -93,12 +93,18 @@ public class BlackBoard {
     public static List<Ray> raysFromPointToPoints(Point3D point, List<Point3D> points, boolean reversed) {
         List<Ray> rays = new LinkedList<>();
         for (Point3D p : points)
-            rays.add(new Ray(p, reversed ? point.subtract(p) : p.subtract(point)));
+            rays.add(reversed ? new Ray(p, point.subtract(p)) : new Ray(point, p.subtract(point)));
+
         return rays;
     }
 
-    public static List<Ray> raysWithDelta(Point3D pIntersection) {
-        //todo all
-        return null;
+    public static List<Ray> raysWithDelta(Point3D pStart, Point3D pCenter, Vector direction, Vector normal, double radius, int numOfRays) {
+        Ray centerRay = new Ray(pStart, direction, normal);
+        if (radius == 0.0)
+            return List.of(centerRay);
+        Vector orthogonal = direction.getOrthogonal();
+        return BlackBoard.raysFromPointToPoints(centerRay.getP0(), //
+                BlackBoard.findPoints(pCenter, radius, orthogonal, direction.crossProduct(orthogonal).normalize(), numOfRays), //
+                false);
     }
 }

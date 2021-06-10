@@ -13,6 +13,7 @@ import java.util.MissingResourceException;
 public class Render {
 
 
+    private boolean stop = false;
     private int threadsCount = 0;
 
     private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
@@ -92,6 +93,8 @@ public class Render {
      * @param row pixel's row number (pixel index in column)
      */
     private void castRays(int nX, int nY, int col, int row) {
+        if (col == 200 && row == 300)
+            stop = true;
         imageWriter.writePixel(col, row, rayTracer.traceRays(camera.constructRays(nX, nY, col, row)));
     }
 

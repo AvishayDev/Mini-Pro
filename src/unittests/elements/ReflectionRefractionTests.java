@@ -39,7 +39,7 @@ public class ReflectionRefractionTests {
                         .setKl(0.0004).setKq(0.0000006));
 
 		Render render = new Render() //
-				.setImageWriter(new ImageWriter("refractionTwoSpheres3", 500, 500)) //
+				.setImageWriter(new ImageWriter("refractionTwoSpheres4", 500, 500)) //
 				.setCamera(camera) //
 				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysDiffuseGlass(20));
 
@@ -80,7 +80,8 @@ public class ReflectionRefractionTests {
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysGlossySurface(10).setNumOfRaysDiffuseGlass(10));
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysGlossySurface(3).setNumOfRaysDiffuseGlass(3))
+				.setMultithreading(3).setDebugPrint();
 
 
 		render.renderImage();
@@ -110,13 +111,15 @@ public class ReflectionRefractionTests {
 		scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(60, 50, 0), new Vector(0, 0, -1),1) //
 				.setKl(4E-5).setKq(2E-7));
 
-		ImageWriter imageWriter = new ImageWriter("refractionShadow1", 600, 600);
+		ImageWriter imageWriter = new ImageWriter("refractionShadow10", 600, 600);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracer(new RayTracerAdvanced(scene))//todo
+				.setMultithreading(3).setDebugPrint();
 
-		render.renderImage();
+		render.renderImageAdvanced();
+		//render.printGrid(50,new Color(300,300,300));
 		render.writeToImage();
 	}
 

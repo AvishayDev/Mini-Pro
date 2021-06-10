@@ -95,14 +95,7 @@ public class PointLight extends Light implements LightSource {
      */
     @Override
     public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
-        Ray ray = new Ray(point, position.subtract(point), n);
-        if (radius == 0.0)
-            return List.of(ray);
-        Vector l = getL(point);
-        Vector orthogonal = l.getOrthogonal();
-        return BlackBoard.raysFromPointToPoints(ray.getP0(), //
-                BlackBoard.findPoints(position, radius, orthogonal, l.crossProduct(orthogonal).normalize(), amount), //
-                false);
+        return BlackBoard.raysWithDelta(point,position,position.subtract(point).normalized(),n,radius,amount);
     }
 
     /***

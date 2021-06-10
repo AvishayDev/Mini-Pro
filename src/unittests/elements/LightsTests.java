@@ -82,8 +82,7 @@ public class LightsTests {
     public void FunTests() {
 
         camera1.changeDirection(new Point3D(200,200,900),new Point3D(0,0,-50));
-        scene1.geometries.add(square);
-        scene1.geometries.add(cylinder,tube);
+        scene1.geometries.add(square,cylinder,tube);
         //scene1.geometries.add(tube);
         scene1.lights.add(new PointLight(new Color(100, 400, 100), new Point3D(50, 50, -50)));
         scene1.lights.add(new PointLight(new Color(500, 300, 100), new Point3D(-30, -30, -20)));

@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Color;
 import primitives.Ray;
 
 import java.util.LinkedList;
@@ -103,5 +104,6 @@ public class Geometries extends Intersectable {
         }
 
     }
+
 }
 

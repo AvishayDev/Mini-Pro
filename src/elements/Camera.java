@@ -99,9 +99,9 @@ public class Camera {
 
         if (!Util.isZero(xJ))
             //use pC instead of pIJ
-            pixelCenter = pixelCenter.add(vRight.scale(xJ));
+            pixelCenter = pixelCenter.add(vRight,xJ);
         if (!Util.isZero(yI))
-            pixelCenter = pixelCenter.add(vUp.scale(yI));
+            pixelCenter = pixelCenter.add(vUp,yI);
 
         return pixelCenter;
     }

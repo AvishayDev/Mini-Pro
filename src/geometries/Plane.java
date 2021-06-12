@@ -121,13 +121,13 @@ public class Plane extends Geometry {
 
         try {
             u = q0.subtract(ray.getP0());
-            t = normal.dotProduct(u);
-            t = t / t1;
 
         } catch (IllegalArgumentException e) {
             //its mean p0==q0 => no intersections
             return null;
         }
+        t = normal.dotProduct(u);
+        t = t / t1;
 
         if (Util.alignZero(t) > 0 && Util.alignZero(t - maxDistance) <= 0)
             //if t==0 its mean p0 on the plane

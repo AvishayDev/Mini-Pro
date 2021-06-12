@@ -1,77 +1,203 @@
 package unittests.elements;
 
 
-import elements.AmbientLight;
 import elements.Camera;
+import elements.LightSource;
 import elements.PointLight;
 import geometries.*;
 import org.junit.Test;
 import primitives.*;
 import renderer.ImageWriter;
+import renderer.RayTracerAdvanced;
 import renderer.RayTracerBasic;
 import renderer.Render;
 import scene.Scene;
 
 public class FunTest {
-    private Scene scene1 = new Scene("Test scene");
-    private Scene scene2 = new Scene("Test scene") //
-            .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
-    private Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1),
+    private Scene scene2 = new Scene("Test scene");
+    private Camera camera2 = new Camera(new Point3D(0, 0, 1200), new Vector(0, 0, 1),
             new Vector(0, 1, 0))//
             .setViewPlaneCenter(1000) //
             .setViewPlaneSize(150, 150);
 
-    private Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1),
-            new Vector(0, 1, 0)) //
-            .setViewPlaneCenter(1000)//
-            .setViewPlaneSize(200, 200); //
+    //--------------- Lights --------------------
+    LightSource centralLight =new PointLight(new Color(500, 500, 500), new Point3D(100, 30, 100)) //
+            .setKl(0.0005).setKq(0.0005).setRadius(5);
+    //-------------- Materials --------------------
 
-    private static Geometry triangle1 = new Triangle( //
-            new Point3D(-150, -150, -150), new Point3D(150, -150, -150), new Point3D(75, 75, -150));
-    private static Geometry triangle2 = new Triangle( //
-            new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
-    private static Geometry sphere = new Sphere(new Point3D(-50, -50, -100), 50) //
-            .setEmission(new Color(java.awt.Color.BLUE)) //
-            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
-    private static Geometries square = new Geometries(new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, 50, -150), new Point3D(0, 50, -100))
-            .setEmission(new Color(java.awt.Color.BLUE)) //
-            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-            new Polygon(new Point3D(0, 0, -50), new Point3D(-50, 0, -100), new Point3D(-50, 50, -150), new Point3D(0, 50, -100))
-                    .setEmission(new Color(java.awt.Color.BLUE)) //
-                    .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-            new Polygon(new Point3D(0, 0, -50), new Point3D(-50, 0, -100), new Point3D(-50, -50, -150), new Point3D(0, -50, -100))
-                    .setEmission(new Color(java.awt.Color.BLUE)) //
-                    .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)),
-            new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, -50, -150), new Point3D(0, -50, -100))
-                    .setEmission(new Color(java.awt.Color.BLUE)) //
-                    .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100))
-    );
+    Material boxMaterial = new Material().setKd(0.5).setKs(0.5).setShininess(100);
+    Material handHeldMaterial = new Material().setKd(1.0).setShininess(100);
+    Material MiddleMaterial = new Material().setKd(0.2).setKs(0.8).setShininess(100);
+    Material EnergyMaterial = new Material().setKd(0.2).setKs(0.8).setKt(0.4).setShininess(300);
+    Material swordMaterial = new Material().setKd(0.2).setKs(0.8).setShininess(300);
 
-    private static Geometry cylinder = new Cylinder(new Ray(new Point3D(-50, -50, -100), new Vector(1, 2, 3)), 50, 50) //
-            .setEmission(new Color(java.awt.Color.BLUE)) //
-            .setMaterial(new Material().setKd(0.3).setKs(0.7).setShininess(200));
+    //-------------- Emotions ---------------------
 
-    private static Geometry tube = new Tube(new Ray(new Point3D(50, 50, -150), new Vector(1, 2, 3)), 50) //
-            .setEmission(new Color(java.awt.Color.BLUE)) //
-            .setMaterial(new Material().setKd(0.4).setKs(0.6).setShininess(200));
+    Color boxColor = new Color(90, 90, 90);
+    Color handHeldColor = new Color(92,64,51);
+    Color MiddleGoldColor = new Color(225,193,110);
+    Color EnergyColor = new Color(135,206,250);
+    Color swordColor = new Color(180,180,180);
+    Color white = new Color(256,256,256);
+    //-------------- Geometries --------------------
 
+    // ************* Box Creating ******************
+    Geometry underPlate = new Polygon(new Point3D(0, 0, 0), new Point3D(200, 0, 0), new Point3D(200, 100, 0), new Point3D(0, 100, 0))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry oneSide = new Polygon(new Point3D(0, 0, 0), new Point3D(0, 100, 0), new Point3D(0, 100, 20), new Point3D(0, 0, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry twoSide = new Polygon(new Point3D(0, 0, 0), new Point3D(200, 0, 0), new Point3D(200, 0, 20), new Point3D(0, 0, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry thirdSide = new Polygon(new Point3D(200, 0, 0), new Point3D(200, 100, 0), new Point3D(200, 100, 20), new Point3D(200, 0, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry fourSide = new Polygon(new Point3D(0, 100, 0), new Point3D(200, 100, 0), new Point3D(200, 100, 20), new Point3D(0, 100, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry upperPlate1 = new Polygon(new Point3D(0, 0, 20), new Point3D(200, 0, 20), new Point3D(200, 5, 20), new Point3D(0, 5, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry upperPlate2 = new Polygon(new Point3D(0, 100, 20), new Point3D(200, 100, 20), new Point3D(200, 95, 20), new Point3D(0, 95, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry upperPlate3 = new Polygon(new Point3D(0, 0, 20), new Point3D(5, 0, 20), new Point3D(5, 100, 20), new Point3D(0, 100, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry upperPlate4 = new Polygon(new Point3D(200, 0, 20), new Point3D(195, 0, 20), new Point3D(195, 100, 20), new Point3D(200, 100, 20))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry insidePlate1 = new Polygon(new Point3D(5, 5, 20), new Point3D(195, 5, 20), new Point3D(195, 5, 5), new Point3D(5, 5, 5))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry insidePlate2 = new Polygon(new Point3D(5, 5, 20), new Point3D(5, 95, 20), new Point3D(5, 95, 5), new Point3D(5, 5, 5))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry insidePlate3 = new Polygon(new Point3D(5, 95, 20), new Point3D(195, 95, 20), new Point3D(195, 95, 5), new Point3D(5, 95, 5))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry insidePlate4 = new Polygon(new Point3D(195, 5, 20), new Point3D(195, 95, 20), new Point3D(195, 95, 5), new Point3D(195, 5, 5))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
+    Geometry insidePlate5 = new Polygon(new Point3D(5, 5, 5), new Point3D(195, 5, 5), new Point3D(195, 95, 5), new Point3D(5, 95, 5))
+            .setEmission(boxColor) //
+            .setMaterial(boxMaterial);
 
+    Geometries swordBox = new Geometries(underPlate, oneSide, twoSide, thirdSide, fourSide, upperPlate1, upperPlate2, upperPlate3, upperPlate4,
+            insidePlate1, insidePlate2, insidePlate3, insidePlate4,insidePlate5);
+
+    //************** Hand Held *****************
+    Geometry startBall = new Sphere(new Point3D(13,50,9),4)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    // Vector vec, Point3D point, double radius, double height
+    Vector swordDir = new Vector(1,0,0);
+    double lowHandSize = 2;
+    double highHandSize =4;
+    Geometry cylinder1 = new Cylinder(swordDir,new Point3D(16,50,9),lowHandSize,highHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder2 = new Cylinder(swordDir,new Point3D(20,50,9),highHandSize,highHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder3 = new Cylinder(swordDir,new Point3D(24,50,9),lowHandSize,lowHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder4 = new Cylinder(swordDir,new Point3D(26,50,9),highHandSize,highHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder5 = new Cylinder(swordDir,new Point3D(30,50,9),lowHandSize,lowHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder6 = new Cylinder(swordDir,new Point3D(32,50,9),highHandSize,highHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder7 = new Cylinder(swordDir,new Point3D(36,50,9),lowHandSize,lowHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder8 = new Cylinder(swordDir,new Point3D(38,50,9),highHandSize,highHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder9 = new Cylinder(swordDir,new Point3D(42,50,9),lowHandSize,lowHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+    Geometry cylinder10 = new Cylinder(swordDir,new Point3D(44,50,9),highHandSize,highHandSize)
+            .setEmission(handHeldColor) //
+            .setMaterial(handHeldMaterial);
+
+    Geometries HandHeld = new Geometries(startBall,cylinder1,cylinder2,cylinder3,cylinder4,cylinder5,
+            cylinder6,cylinder7,cylinder8,cylinder9,cylinder10);
+
+    // ****************** Middle Sword *******************
+
+    Geometry toMiddle1 = new Polygon(new Point3D(48,50+Math.sqrt(7),12),new Point3D(48,50-Math.sqrt(7),12),new Point3D(56,38,22),new Point3D(56,62,22))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry toMiddle2 = new Polygon(new Point3D(48,50+Math.sqrt(7),6),new Point3D(48,50+Math.sqrt(7),12),new Point3D(56,62,22),new Point3D(56,62,0))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry toMiddle3 = new Polygon(new Point3D(48,50-Math.sqrt(7),6),new Point3D(48,50-Math.sqrt(7),12),new Point3D(56,38,22),new Point3D(56,38,0))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry EnergyBall = new Sphere(new Point3D(64,50,10),14)
+            .setEmission(EnergyColor) //
+            .setMaterial(EnergyMaterial);
+    Geometries Middle = new Geometries(toMiddle1,toMiddle2,toMiddle3,EnergyBall);
+
+    // ****************** Sword *******************
+
+    double startSward = 4*Math.sqrt(10);
+    Geometry right = new Polygon(new Point3D(64+startSward,50,13),new Point3D(170,50,13),new Point3D(170,57,10),new Point3D(60+startSward,57,10))
+            .setEmission(swordColor)//
+            .setMaterial(swordMaterial);
+    Geometry left = new Polygon(new Point3D(64+startSward,50,13),new Point3D(170,50,13),new Point3D(170,43,10),new Point3D(60+startSward,43,10))
+            .setEmission(swordColor)//
+            .setMaterial(swordMaterial);
+    Geometry topRight = new Triangle(new Point3D(170,50,13),new Point3D(190,50,10),new Point3D(170,57,10))
+            .setEmission(swordColor)//
+            .setMaterial(swordMaterial);
+    Geometry topLeft = new Triangle(new Point3D(170,50,13),new Point3D(190,50,10),new Point3D(170,43,10))
+            .setEmission(swordColor)//
+            .setMaterial(swordMaterial);
+    double startSine = 13-(12d/7d)+0.01;
+    Geometry swordSineRight = new Polygon(new Point3D(64+startSward,54,startSine),new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(64+startSward,55.5,startSine-(4.5d/7d)))
+            .setEmission(white)//
+            .setMaterial(swordMaterial);
+    Geometry swordSineRightTop = new Polygon(new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(175,54,11.7))
+            .setEmission(white)//
+            .setMaterial(swordMaterial);
+
+    Geometries sword = new Geometries(right,topRight,swordSineRight,swordSineRightTop,left,topLeft);
 
     @Test
-    public void FunSwordTest(){
+    public void FunSwordTest() {
 
+        camera2.changeDirection(new Point3D(-300, -300, 1500), new Point3D(100, 50, 0));
+        scene2.geometries.add(swordBox,HandHeld,Middle,sword);
+        scene2.lights.add(centralLight);
+        boolean AdvancedRun = false;
 
+        ImageWriter imageWriter = new ImageWriter("SwordTests1", 1000, 1000);
+        Render render;
+        if(AdvancedRun) {
+            render = new Render()//
+                    .setImageWriter(imageWriter) //
+                    .setCamera(camera2.setNumOfRaysAA(30)) //
+                    .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(50))
+                    .setMultithreading(3).setDebugPrint();
 
-        scene2.geometries.add();
-        scene2.lights.add(new PointLight(new Color(500, 250, 250), new Point3D(10, -10, -130)) //
-                .setKl(0.0005).setKq(0.0005));
+            render.renderImageAdvanced();
+        }else{
+            render = new Render()//
+                    .setImageWriter(imageWriter) //
+                    .setCamera(camera2) //
+                    .setRayTracer(new RayTracerBasic(scene2));
 
-        ImageWriter imageWriter = new ImageWriter("SwordTests", 500, 500);
-        Render render = new Render()//
-                .setImageWriter(imageWriter) //
-                .setCamera(camera2) //
-                .setRayTracer(new RayTracerBasic(scene2));
-        render.renderImage();
+            render.renderImage();
+        }
+
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
     }

@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -99,4 +100,5 @@ public abstract class Intersectable extends Borderable {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     public abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+
 }

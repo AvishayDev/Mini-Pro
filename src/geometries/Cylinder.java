@@ -214,7 +214,7 @@ public class Cylinder extends Tube {
 
     }
 
-    /*
+
     @Override
     protected boolean intersectBorder(Ray ray) {
 
@@ -281,7 +281,7 @@ public class Cylinder extends Tube {
         return true;
     }
 
-     */
+
     /***
      * This function returns the height of the cylinder
      * @return The height of the Cylinder

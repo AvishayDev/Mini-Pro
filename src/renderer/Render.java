@@ -48,6 +48,7 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
+
         for (int i = 0; i < nY; ++i)
             for (int j = 0; j < nX; ++j)
                 castRay(nX, nY, j, i);

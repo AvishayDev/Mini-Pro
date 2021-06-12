@@ -38,9 +38,9 @@ public class BlackBoard {
             Point3D pCenter = center;
             if (!Util.isZero(x))
                 //use pC instead of pIJ
-                pCenter = pCenter.add(vRight.scale(x));
+                pCenter = pCenter.add(vRight,x);
             if (!Util.isZero(y))
-                pCenter = pCenter.add(vUp.scale(y));
+                pCenter = pCenter.add(vUp,y);
             points.add(pCenter);
         }
         return points;
@@ -73,9 +73,9 @@ public class BlackBoard {
             Point3D pCenter = center;
             if (!Util.isZero(x))
                 //use pC instead of pIJ
-                pCenter = pCenter.add(vRight.scale(x));
+                pCenter = pCenter.add(vRight,x);
             if (!Util.isZero(y))
-                pCenter = pCenter.add(vUp.scale(y));
+                pCenter = pCenter.add(vUp,y);
             points.add(pCenter);
         }
         return points;

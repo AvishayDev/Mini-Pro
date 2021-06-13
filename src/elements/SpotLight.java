@@ -76,13 +76,13 @@ public class SpotLight extends PointLight {
      */
     @Override
     public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
-        Ray ray = new Ray(point, position.subtract(point).normalize(), n);
+        Ray ray = new Ray(point, position.subtract(point).normalized(), n);
         if (radius == 0.0)
             return List.of(ray);
         Vector orthogonal = direction.getOrthogonal();
         return BlackBoard.raysFromPointToPoints(ray.getP0(), //
                 BlackBoard.findPoints(position, radius, orthogonal, direction.crossProduct(orthogonal).normalize(), amount), //
                 false);
-     //   return BlackBoard.raysWithDelta(point,position,direction,n,radius,amount);
+       // return BlackBoard.raysWithDelta(point,position,direction,n,radius,amount);
     }
 }

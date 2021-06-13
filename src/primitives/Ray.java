@@ -53,10 +53,8 @@ public class Ray {
      * @param normal The normal from the intersection point
      */
     public Ray(Point3D point, Vector vec, Vector normal) {
-        double normalDirAngle = normal.dotProduct(vec);
-        Vector delta = normal.scale(normalDirAngle > 0 ? DELTA : -DELTA);
         dir = vec;
-        p0 = point.add(delta);
+        p0 = point.add(normal,normal.dotProduct(vec) > 0 ? DELTA : -DELTA);
     }
 
     /***

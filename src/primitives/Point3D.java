@@ -21,6 +21,7 @@ public class Point3D {
      */
     final Coordinate z;
 
+
     /***
      * This point is the center of our coordinate system
      */
@@ -63,6 +64,7 @@ public class Point3D {
     public Point3D add(Point3D point) {
         return new Point3D(this.x.coord + point.x.coord, this.y.coord + point.y.coord, this.z.coord + point.z.coord);
     }
+
     /***
      * Add vector to this point and returns the calculated point.
      * (with no changes in the point)
@@ -72,6 +74,7 @@ public class Point3D {
     public Point3D add(Vector vec, double t) {
         return new Point3D(this.x.coord + (vec.getX() * t), this.y.coord + (vec.getY() * t), this.z.coord + (vec.getZ() * t));
     }
+
 
     /***
      * Make's vector from the 1st point to the 2sd point

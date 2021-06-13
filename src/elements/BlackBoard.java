@@ -82,6 +82,42 @@ public class BlackBoard {
     }
 
     /**
+     * This method receives a point of the center of the board, the board's height and weight, its direction vectors
+     * and the amount of different points you want to generate on that board.
+     * It returns a list of the generated points.
+     *
+     * @param centerPlate      This point represents the center of the received board.
+     * @param radius      Double that represents the radius of the board.
+     * @param vUp         Vector that represent the Y axis of the board.
+     * @param vRight      Vector that represent the X axis of the board.
+     * @param numOfPoints The amount of generated points on the board.
+     * @return A list of all the generated points.
+     */
+    public static List<Ray> findRays(Point3D sourcePoint,Point3D centerPlate, double radius, Vector vUp, Vector vRight, int numOfPoints) {
+        List<Ray> rays = new LinkedList<>();
+        rays.add(new Ray(sourcePoint,centerPlate.subtract(sourcePoint))); // The center point must be included
+        double radiusSquared = radius * radius;
+
+        for (int i = 1; i < numOfPoints; i++) {
+            double x, y;
+            do {
+                x = Util.random(-radius, radius);
+                y = Util.random(-radius, radius);
+            } while (x * x + y * y >= radiusSquared);
+
+            Point3D pCenter = centerPlate;
+            if (!Util.isZero(x))
+                //use pC instead of pIJ
+                pCenter = pCenter.add(vRight,x);
+            if (!Util.isZero(y))
+                pCenter = pCenter.add(vUp,y);
+
+            rays.add(new Ray(sourcePoint,pCenter.subtract(sourcePoint)));
+        }
+        return rays;
+    }
+
+    /**
      * Method that receives a point and a list of points, and returns a list of rays from the point to the
      * list of points, or from the list of points to the points, depends whether you send reversed or not.
      *
@@ -102,9 +138,9 @@ public class BlackBoard {
         Ray centerRay = new Ray(pStart, direction, normal);
         if (radius == 0.0)
             return List.of(centerRay);
+
         Vector orthogonal = direction.getOrthogonal();
-        return BlackBoard.raysFromPointToPoints(centerRay.getP0(), //
-                BlackBoard.findPoints(pCenter, radius, orthogonal, direction.crossProduct(orthogonal).normalize(), numOfRays), //
-                false);
+        return findRays(centerRay.getP0(),pCenter,radius,orthogonal,direction.crossProduct(orthogonal).normalize(),numOfRays);
+
     }
 }

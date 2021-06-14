@@ -27,8 +27,8 @@ public abstract class Borderable {
     public abstract void findMinMax();
 
     /**
-     *
      * this function calculate if the ray trace the border of the geometry
+     *
      * @param ray the crosses ray
      * @return true for intersection, false for not intersection
      */

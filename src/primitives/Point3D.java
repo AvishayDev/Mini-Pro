@@ -61,6 +61,11 @@ public class Point3D {
         return new Point3D(this.x.coord + vec.head.x.coord, this.y.coord + vec.head.y.coord, this.z.coord + vec.head.z.coord);
     }
 
+    /**
+     * Add the values of a point to the current point and returns it.
+     * @param point Received point, which we take its coordinates to sum them up with the current point ones
+     * @return  The calculated new point
+     */
     public Point3D add(Point3D point) {
         return new Point3D(this.x.coord + point.x.coord, this.y.coord + point.y.coord, this.z.coord + point.z.coord);
     }
@@ -74,7 +79,6 @@ public class Point3D {
     public Point3D add(Vector vec, double t) {
         return new Point3D(this.x.coord + (vec.getX() * t), this.y.coord + (vec.getY() * t), this.z.coord + (vec.getZ() * t));
     }
-
 
     /***
      * Make's vector from the 1st point to the 2sd point

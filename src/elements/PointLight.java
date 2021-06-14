@@ -95,7 +95,7 @@ public class PointLight extends Light implements LightSource {
      */
     @Override
     public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
-        return BlackBoard.raysWithDelta(point,position,position.subtract(point).normalized(),n,radius,amount);
+        return BlackBoard.raysWithDelta(point, position, position.subtract(point).normalized(), n, radius, amount);
     }
 
     /***

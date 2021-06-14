@@ -125,7 +125,6 @@ public class Sphere extends Geometry {
         double th = Math.sqrt(checkValue);
         double t1 = tm + th;
 
-        List<GeoPoint> returnList;
         if (Util.alignZero(t1) <= 0)
             //if true, p0 is on the sphere or out of it => no points
             return null;

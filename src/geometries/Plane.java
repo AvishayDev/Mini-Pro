@@ -46,15 +46,19 @@ public class Plane extends Geometry {
 
 
     /**
-     * todo write notes and implement method
+     * Most of the rays will intersect the plane, and the calculation is fairly simple, so no implementation here
+     *
+     * @param ray the crosses ray
+     * @return True will always be returned
      */
     @Override
     protected boolean intersectBorder(Ray ray) {
-
         return true;
     }
+
     /**
-     * find the minimum and the maximum of the geometry border
+     * Find the minimum and the maximum of the geometry border
+     * Same as stated above, we don't create border for Plane so implementation is unnecessary
      */
     @Override
     public void findMinMax() {

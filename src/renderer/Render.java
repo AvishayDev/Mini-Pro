@@ -109,6 +109,7 @@ public class Render {
         imageWriter.writePixel(col, row, rayTracer.traceRays(camera.constructRays(nX, nY, col, row)));
     }
 
+
     /***
      * This method receives an interval of distance and a color to draw lines on the image, mostly used to testing purposes.
      * @param interval The amount of pixels between each line in the grid.

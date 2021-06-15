@@ -35,11 +35,11 @@ public class FunTest {
             .setKl(0.0005).setKq(0.0005).setRadius(20);
     //-------------- Materials --------------------
 
-    Material boxMaterial = new Material().setKd(0.5).setKs(0.5).setShininess(100);
+    Material boxMaterial = new Material().setKd(0.7).setKs(0.5).setShininess(100);
     Material handHeldMaterial = new Material().setKd(1.0).setShininess(100);
-    Material MiddleMaterial = new Material().setKd(0.2).setKs(0.8).setShininess(100);
-    Material EnergyMaterial = new Material().setKd(0.2).setKs(0.8).setKt(0.4).setShininess(300);
-    Material swordMaterial = new Material().setKd(0.2).setKs(0.8).setShininess(300);
+    Material MiddleMaterial = new Material().setKd(0.5).setKs(0.8).setShininess(100);
+    Material EnergyMaterial = new Material().setKd(0.5).setKs(0.8).setKt(0.4).setShininess(300);
+    Material swordMaterial = new Material().setKd(0.5).setKs(0.8).setShininess(300);
 
     //-------------- Emotions ---------------------
 

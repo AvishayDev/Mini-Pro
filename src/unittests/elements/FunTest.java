@@ -14,13 +14,16 @@ import renderer.RayTracerBasic;
 import renderer.Render;
 import scene.Scene;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class FunTest {
     private Scene scene2 = new Scene("Test scene").setBackground(new Color(102,0,0));
     private Camera camera2 = new Camera(new Point3D(0, 0, 1200), new Vector(0, 0, 1),
             new Vector(0, 1, 0))//
             .setViewPlaneCenter(1000) //
             .setViewPlaneSize(150, 150)
-            ;//.setApertureSize(10,10).setFocalDistance(1100).setApertureDistance(100).setNumOfRaysDOF(30);
+            .setApertureSize(5,5).setFocalDistance(1000).setNumOfRaysDOF(30);
 
     //--------------- Lights --------------------
     LightSource centerLight =new PointLight(new Color(225, 225, 153), new Point3D(150, 50, 100)) //
@@ -138,6 +141,75 @@ public class FunTest {
             cylinder6,cylinder7,cylinder8,cylinder9,cylinder10);
 
     // ****************** Middle Sword *******************
+    double height=10;
+    List<Point3D> points = new LinkedList<Point3D>(List.of(new Point3D(53,41.34,height),new Point3D(68.2,37.44,height),new Point3D(68.7,34.94,height),new Point3D(52.2,37.34,height),
+            new Point3D(51.9,32.34,height),new Point3D(69.2,30.94,height),new Point3D(70.2,26.94,height),new Point3D(52.4,29.34,height),
+            new Point3D(53.4,25.34,height),new Point3D(71.9,23.94,height),new Point3D(74.6,19.94,height),new Point3D(55.1,21.34,height),
+            new Point3D(57.6,17.34,height),new Point3D(78.6,16.94,height),new Point3D(82.6,13.94,height),new Point3D(60.6,14.34,height),
+            new Point3D(64.6,10.84,height),new Point3D(86.6,10.94,height),new Point3D(91.6,7.94,height),new Point3D(69.6,8.34,height)));
+
+    Geometry middle1 = new Polygon(points.get(0),points.get(1),points.get(2),points.get(3))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle2 = new Polygon(points.get(2),points.get(3),points.get(4),points.get(5))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle3 = new Polygon(points.get(4),points.get(5),points.get(6),points.get(7))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle4 = new Polygon(points.get(6),points.get(7),points.get(8),points.get(9))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle5 = new Polygon(points.get(8),points.get(9),points.get(10),points.get(11))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle6 = new Polygon(points.get(10),points.get(11),points.get(12),points.get(13))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle7 = new Polygon(points.get(12),points.get(13),points.get(14),points.get(15))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle8 = new Polygon(points.get(14),points.get(15),points.get(16),points.get(17))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle9 = new Polygon(points.get(16),points.get(17),points.get(18),points.get(19))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+
+    List<Point3D> points1 = new LinkedList<Point3D>(List.of(new Point3D(53,50+50-41.34,height),new Point3D(68.2,50+50-37.44,height),new Point3D(68.7,50+50-34.94,height),new Point3D(52.2,50+50-37.34,height),
+            new Point3D(51.9,50+50-32.34,height),new Point3D(69.2,50+50-30.94,height),new Point3D(70.2,50+50-26.94,height),new Point3D(52.4,50+50-29.34,height),
+            new Point3D(53.4,50+50-25.34,height),new Point3D(71.9,50+50-23.94,height),new Point3D(74.6,50+50-19.94,height),new Point3D(55.1,50+50-21.34,height),
+            new Point3D(57.6,50+50-17.34,height),new Point3D(78.6,50+50-16.94,height),new Point3D(82.6,50+50-13.94,height),new Point3D(60.6,50+50-14.34,height),
+            new Point3D(64.6,50+50-10.84,height),new Point3D(86.6,50+50-10.94,height),new Point3D(91.6,50+50-7.94,height),new Point3D(69.6,50+50-8.34,height)));
+
+    Geometry middle11 = new Polygon(points1.get(0),points1.get(1),points1.get(2),points1.get(3))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle21 = new Polygon(points1.get(2),points1.get(3),points1.get(4),points1.get(5))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle31 = new Polygon(points1.get(4),points1.get(5),points1.get(6),points1.get(7))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle41 = new Polygon(points1.get(6),points1.get(7),points1.get(8),points1.get(9))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle51 = new Polygon(points1.get(8),points1.get(9),points1.get(10),points1.get(11))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle61 = new Polygon(points1.get(10),points1.get(11),points1.get(12),points1.get(13))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle71 = new Polygon(points1.get(12),points1.get(13),points1.get(14),points1.get(15))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle81 = new Polygon(points1.get(14),points1.get(15),points1.get(16),points1.get(17))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle91 = new Polygon(points1.get(16),points1.get(17),points1.get(18),points1.get(19))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+
     Geometry toMiddle1 = new Polygon(new Point3D(48,50+Math.sqrt(7),12),new Point3D(48,50-Math.sqrt(7),12),new Point3D(56,38,22),new Point3D(56,62,22))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
@@ -152,6 +224,8 @@ public class FunTest {
             .setMaterial(EnergyMaterial);
 
     Geometries Middle = new Geometries(toMiddle1,toMiddle2,toMiddle3,EnergyBall);
+    Geometries MiddleRight = new Geometries(middle1,middle2,middle3,middle4,middle5,middle6,middle7,middle8,middle9);
+    Geometries MiddleLeft = new Geometries(middle11,middle21,middle31,middle41,middle51,middle61,middle71,middle81,middle91);
 
     // ****************** Sword *******************
 
@@ -172,7 +246,7 @@ public class FunTest {
     Geometry swordSineRight = new Polygon(new Point3D(64+startSward,54,startSine),new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(64+startSward,55.5,startSine-(4.5d/7d)))
             .setEmission(white)//
             .setMaterial(swordMaterial);
-    Geometry swordSineRightTop = new Polygon(new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(175,54,11))
+    Geometry swordSineRightTop = new Polygon(new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(175,54,10.5))
             .setEmission(white)//
             .setMaterial(swordMaterial);
 
@@ -184,17 +258,17 @@ public class FunTest {
        // double distance = Math.sqrt(500);
         camera2.changeDirection(new Point3D(-350, -100, 120), new Point3D(100, 50, 10));
         camera2.rotate(-270);
-        scene2.geometries.add(swordBox,HandHeld,Middle,sword);
+        scene2.geometries.add(swordBox,HandHeld,Middle,MiddleRight,MiddleLeft,sword);
         scene2.lights.add(leftLight);scene2.lights.add(rightLight);scene2.lights.add(centerLight);
         boolean AdvancedRun = false;
 
-        ImageWriter imageWriter = new ImageWriter("SwordTestsNew", 1000, 1000);
+        ImageWriter imageWriter = new ImageWriter("SwordBasic1", 1000, 1000);
         Render render;
         if(AdvancedRun) {
             render = new Render()//
                     .setImageWriter(imageWriter) //
-                    .setCamera(camera2.setNumOfRaysAA(30)) //
-                    .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(30))
+                    .setCamera(camera2) //
+                    .setRayTracer(new RayTracerAdvanced(scene2))
                     .setMultithreading(3).setDebugPrint();
 
             render.renderImageAdvanced();

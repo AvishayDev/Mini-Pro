@@ -99,8 +99,8 @@ public class Render {
      * @param row pixel's row number (pixel index in column)
      */
     private void castRays(int nX, int nY, int col, int row) {
-        if(col==150 && row==350)
-            stop=false;
+//        if(col==150 && row==350)
+//            stop=false;
         imageWriter.writePixel(col, row, rayTracer.traceRays(camera.constructRays(nX, nY, col, row)));
     }
 

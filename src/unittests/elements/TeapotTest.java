@@ -1,21 +1,15 @@
-package unittests.geometries;
+package unittests.elements;
 
-import elements.Camera;
-import elements.PointLight;
-import geometries.Triangle;
+import elements.*;
+import geometries.*;
 import org.junit.Test;
-import primitives.Color;
-import primitives.Material;
-import primitives.Point3D;
-import primitives.Vector;
-import renderer.ImageWriter;
-import renderer.RayTracerBasic;
-import renderer.Render;
+import primitives.*;
+import renderer.*;
 import scene.Scene;
 
 /**
  * Test rendering an image
- * 
+ *
  * @author Dan
  */
 public class TeapotTest {
@@ -1568,8 +1562,7 @@ public class TeapotTest {
 				.setRayTracer(new RayTracerBasic(scene)) //
 				.setMultithreading(3).setDebugPrint();
 		render.renderImage();
-		render.printGrid(50, new Color(java.awt.Color.YELLOW));
+		//render.printGrid(50, new Color(java.awt.Color.YELLOW));
 		render.writeToImage();
 	}
-
 }

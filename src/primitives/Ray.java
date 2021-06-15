@@ -9,10 +9,12 @@ import static geometries.Intersectable.GeoPoint;
  * Represents Ray with vector and 3D point.
  */
 public class Ray {
+
     /**
      * the start of the ray
      */
     private final Point3D p0;
+
     /**
      * the direction of the ray
      */
@@ -54,7 +56,7 @@ public class Ray {
      */
     public Ray(Point3D point, Vector vec, Vector normal) {
         dir = vec;
-        p0 = point.add(normal,normal.dotProduct(vec) > 0 ? DELTA : -DELTA);
+        p0 = point.add(normal, normal.dotProduct(vec) > 0 ? DELTA : -DELTA);
     }
 
     /***

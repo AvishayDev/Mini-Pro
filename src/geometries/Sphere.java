@@ -113,7 +113,6 @@ public class Sphere extends Geometry {
             return List.of(new GeoPoint(this, ray.getPoint(radius)));
         }
 
-        //double tm = Math.abs(u.dotProduct(ray.getDir()));
         double tm = u.dotProduct(ray.getDir());
         double d2 = u.lengthSquared() - (tm * tm);
         double checkValue = (radius * radius) - d2;
@@ -125,7 +124,6 @@ public class Sphere extends Geometry {
         double th = Math.sqrt(checkValue);
         double t1 = tm + th;
 
-        List<GeoPoint> returnList;
         if (Util.alignZero(t1) <= 0)
             //if true, p0 is on the sphere or out of it => no points
             return null;

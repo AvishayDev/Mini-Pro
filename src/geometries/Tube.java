@@ -204,6 +204,7 @@ public class Tube extends Geometry {
 
     /**
      * unique method to calc the prev intersection with Tube
+     *
      * @param ray the optional cross ray
      * @return true for intersection, false for not
      */

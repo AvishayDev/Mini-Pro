@@ -206,7 +206,7 @@ public class Cylinder extends Tube {
         minY = p0.getY() - radius;
         minZ = p0.getZ() - radius;
 
-        p0 =axisRay.getPoint(height);
+        p0 = axisRay.getPoint(height);
 
         maxX = p0.getX() + radius;
         maxY = p0.getY() + radius;
@@ -214,7 +214,13 @@ public class Cylinder extends Tube {
 
     }
 
-
+    /**
+     * this function calculate if the ray trace the border of the geometry
+     * We override this method to the original implementation so it won't use the override of Tube instead.
+     *
+     * @param ray the optional cross ray
+     * @return true for intersection, false for not intersection
+     */
     @Override
     protected boolean intersectBorder(Ray ray) {
 
@@ -227,58 +233,54 @@ public class Cylinder extends Tube {
         double dirY = dir.getY();
         double dirZ = dir.getZ();
 
-        double tmin;
-        double tmax;
+        // Initially will receive the values of tMinX and tMaxX
+        double tMin;
+        double tMax;
 
-        if (Util.alignZero(dir.getX()) >= 0) {
-            tmin = (minX - originX) / dirX;
-            tmax = (maxX - originX) / dirX;
+        if (Util.alignZero(dirX) >= 0) {
+            tMin = (minX - originX) / dirX;
+            tMax = (maxX - originX) / dirX;
         } else {
-            tmin = (maxX - originX) / dirX;
-            tmax = (minX - originX) / dirX;
+            tMin = (maxX - originX) / dirX;
+            tMax = (minX - originX) / dirX;
         }
 
-        double tymin;
-        double tymax;
-        if (Util.alignZero(dir.getY()) >= 0) {
-            tymin = (minY - originY) / dirY;
-            tymax = (maxY - originY) / dirY;
+        double tMinY;
+        double tMaxY;
+        if (Util.alignZero(dirY) >= 0) {
+            tMinY = (minY - originY) / dirY;
+            tMaxY = (maxY - originY) / dirY;
         } else {
-            tymin = (maxY - originY) / dirY;
-            tymax = (minY - originY) / dirY;
+            tMinY = (maxY - originY) / dirY;
+            tMaxY = (minY - originY) / dirY;
         }
 
-
-        if ((tmin > tymax) || (tymin > tmax))
+        // If either the max value of Y is smaller than overall min value, or min value of Y is bigger than the overall
+        // max, we can already return false.
+        // Otherwise we'll update the overall min and max values and perform the same check on the Z values.
+        if ((tMin > tMaxY) || (tMinY > tMax))
             return false;
 
-        if (tymin > tmin)
-            tmin = tymin;
+        if (tMinY > tMin)
+            tMin = tMinY;
 
-        if (tymax < tmax)
-            tmax = tymax;
+        if (tMaxY < tMax)
+            tMax = tMaxY;
 
-        double tzmin;
-        double tzmax;
+        double tMinZ;
+        double tMaxZ;
 
-        if (Util.alignZero(dir.getZ()) >= 0) {
-            tzmin = (minZ - originZ) / dirZ;
-            tzmax = (maxZ - originZ) / dirZ;
+        if (Util.alignZero(dirZ) >= 0) {
+            tMinZ = (minZ - originZ) / dirZ;
+            tMaxZ = (maxZ - originZ) / dirZ;
         } else {
-            tzmin = (maxZ - originZ) / dirZ;
-            tzmax = (minZ - originZ) / dirZ;
+            tMinZ = (maxZ - originZ) / dirZ;
+            tMaxZ = (minZ - originZ) / dirZ;
         }
 
-        if ((tmin > tzmax) || (tzmin > tmax))
-            return false;
-
-        if (tzmin > tmin)
-            tmin = tzmin;
-
-        if (tzmax < tmax)
-            tmax = tzmax;
-
-        return true;
+        // If either the max value of Z is smaller than overall min value, or min value of Z is bigger than the overall
+        // max, we can already return false. Otherwise we can return true since no other coordinate checks are needed.
+        return (!(tMin > tMaxZ)) && (!(tMinZ > tMax));
     }
 
 

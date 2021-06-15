@@ -62,6 +62,11 @@ public class Vector {
         head = new Point3D(point.x, point.y, point.z);
     }
 
+    /**
+     * This method returns an orthogonal vector to the current vector, using a simple calculation
+     *
+     * @return A orthogonal vector to the current one
+     */
     public Vector getOrthogonal() {
         if (Util.isZero(head.y.coord) && Util.isZero(head.z.coord))
             return Vector.Y;
@@ -79,7 +84,6 @@ public class Vector {
                 , this.head.y.coord + point.y.coord
                 , this.head.z.coord + point.z.coord);
     }
-
 
     /***
      * This function sums up between the current vector and the received vector
@@ -135,7 +139,6 @@ public class Vector {
                 (this.head.y.coord * vec.head.y.coord) +
                 (this.head.z.coord * vec.head.z.coord);
     }
-
 
     /***
      * This function performs a dot product between the current vector and a received point

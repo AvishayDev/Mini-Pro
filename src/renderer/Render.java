@@ -1,9 +1,8 @@
 package renderer;
 
-import elements.*;
-import primitives.*;
+import elements.Camera;
+import primitives.Color;
 
-import java.util.List;
 import java.util.MissingResourceException;
 
 /***
@@ -12,14 +11,20 @@ import java.util.MissingResourceException;
  */
 public class Render {
 
-
-    private boolean stop = false;
+    /**
+     * This variable stores the amount of threads we want to use during the rendering
+     */
     private int threadsCount = 0;
 
-    private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
+    /**
+     * Spare threads if trying to use all the cores
+     */
+    private final int SPARE_THREADS = 2;
 
-    private boolean print = false; // printing progress percentage
-
+    /**
+     * printing progress percentage
+     */
+    private boolean print = false;
 
     /**
      * The camera view of the scene

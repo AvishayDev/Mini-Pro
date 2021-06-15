@@ -50,6 +50,18 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /***
+     * This is a private function that is being used by the function traceRay.
+     * It receives a point and a ray, and returns the calculated color.
+     * @param geoPoint  The closest intersection point
+     * @param v       The intersecting ray direction
+     * @return The calculated color.
+     */
+    private Color calcColor(GeoPoint geoPoint, Vector v) {
+        return calcColor(geoPoint, v, MAX_CALC_COLOR_LEVEL, INITIAL_K)
+                .add(scene.ambientGetIntensity());
+    }
+
+    /***
      * This is a private function that is being used by the other calcColor function below here
      * It receives the closest intersection point, a ray, int value of level and double value of k and returns the
      * calculated Color.
@@ -63,18 +75,6 @@ public class RayTracerBasic extends RayTracerBase {
         Color color = intersection.geometry.getEmission();
         color = color.add(calcLocalEffects(intersection, v, k));
         return level == 1 ? color : color.add(calcGlobalEffects(intersection, v, level, k));
-    }
-
-    /***
-     * This is a private function that is being used by the function traceRay.
-     * It receives a point and a ray, and returns the calculated color.
-     * @param geoPoint  The closest intersection point
-     * @param v       The intersecting ray direction
-     * @return The calculated color.
-     */
-    private Color calcColor(GeoPoint geoPoint, Vector v) {
-        return calcColor(geoPoint, v, MAX_CALC_COLOR_LEVEL, INITIAL_K)
-                .add(scene.ambientGetIntensity());
     }
 
     /***

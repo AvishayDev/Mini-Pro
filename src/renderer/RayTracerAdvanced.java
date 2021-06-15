@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.function.Function;
 
 import static geometries.Intersectable.GeoPoint;
-import static primitives.Util.alignZero;
 
 /**
  * This class extends RayTracerBasic class

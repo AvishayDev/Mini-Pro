@@ -206,7 +206,7 @@ public class Cylinder extends Tube {
         minY = p0.getY() - radius;
         minZ = p0.getZ() - radius;
 
-        p0 =axisRay.getPoint(height);
+        p0 = axisRay.getPoint(height);
 
         maxX = p0.getX() + radius;
         maxY = p0.getY() + radius;
@@ -214,7 +214,11 @@ public class Cylinder extends Tube {
 
     }
 
-
+    /**
+     * this function calculate if the ray trace the border of the geometry
+     * @param ray the optional cross ray
+     * @return true for intersection, false for not intersection
+     */
     @Override
     protected boolean intersectBorder(Ray ray) {
 

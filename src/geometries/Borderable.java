@@ -28,6 +28,7 @@ public abstract class Borderable {
 
     /**
      * this function calculate if the ray trace the border of the geometry
+     * https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
      *
      * @param ray the crosses ray
      * @return true for intersection, false for not intersection

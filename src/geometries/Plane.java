@@ -138,7 +138,7 @@ public class Plane extends Geometry {
             //and if t<0 its mean p0 is over the plane
             return List.of(new GeoPoint(this, ray.getPoint(t)));
 
-        //if pass all of this, there is intersection in the plane
+        //if pass all of this, there is no intersection with the plane
         return null;
     }
 }

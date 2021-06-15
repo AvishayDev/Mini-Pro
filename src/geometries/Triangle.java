@@ -61,13 +61,14 @@ public class Triangle extends Polygon {
         //calc signs
         double checkSign1 = Util.alignZero(normal1.dotProduct(rayDir));
         if (checkSign1 == 0)
+            //if zero => outside triangle
             return null;
 
         Vector vec3 = vertices.get(2).subtract(point0);
         Vector normal2 = vec2.crossProduct(vec3).normalize();
         double checkSign2 = Util.alignZero(normal2.dotProduct(rayDir));
         if (checkSign1 * checkSign2 <= 0)
-            //if least from zero => not equal signs
+            //if less than zero => not equal signs
             //if zero => outside triangle
             return null;
 
@@ -75,7 +76,7 @@ public class Triangle extends Polygon {
         //so use N1 sign to calc the N3 sign (don't care because N2 same sign)
         checkSign1 = Util.alignZero(normal3.dotProduct(rayDir));
         if (checkSign1 * checkSign2 <= 0)
-            //if least from zero => not equal signs
+            //if less than zero => not equal signs
             //if zero => outside triangle
             return null;
 

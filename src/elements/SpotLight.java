@@ -81,8 +81,7 @@ public class SpotLight extends PointLight {
             return List.of(ray);
         Vector orthogonal = direction.getOrthogonal();
         return BlackBoard.raysFromPointToPoints(ray.getP0(), //
-                BlackBoard.findPoints(position, radius, orthogonal, direction.crossProduct(orthogonal).normalize(), amount), //
+               BlackBoard.findPoints(position, radius, orthogonal, direction.crossProduct(orthogonal).normalize(), amount), //
                 false);
-       // return BlackBoard.raysWithDelta(point,position,direction,n,radius,amount);
     }
 }

@@ -270,6 +270,8 @@ public class Camera {
         if (!Util.isZero(distances))
             //check for zero distance for setting aperture point on p0
             this.apertureCenter = p0.add(vTo, distances);
+        else
+            this.apertureCenter=p0;
 
         return this;
     }

@@ -4,6 +4,7 @@ package unittests.elements;
 import elements.Camera;
 import elements.LightSource;
 import elements.PointLight;
+import elements.SpotLight;
 import geometries.*;
 import org.junit.Test;
 import primitives.*;
@@ -14,15 +15,21 @@ import renderer.Render;
 import scene.Scene;
 
 public class FunTest {
-    private Scene scene2 = new Scene("Test scene");
+    private Scene scene2 = new Scene("Test scene").setBackground(new Color(102,0,0));
     private Camera camera2 = new Camera(new Point3D(0, 0, 1200), new Vector(0, 0, 1),
             new Vector(0, 1, 0))//
             .setViewPlaneCenter(1000) //
-            .setViewPlaneSize(150, 150);
+            .setViewPlaneSize(150, 150)
+            ;//.setApertureSize(10,10).setFocalDistance(1100).setApertureDistance(100).setNumOfRaysDOF(30);
 
     //--------------- Lights --------------------
-    LightSource centralLight =new PointLight(new Color(500, 500, 500), new Point3D(100, 30, 100)) //
-            .setKl(0.0005).setKq(0.0005).setRadius(5);
+    LightSource centerLight =new PointLight(new Color(225, 225, 153), new Point3D(150, 50, 100)) //
+            .setKl(0.0005).setKq(0.0005).setRadius(20);
+
+    LightSource rightLight =new SpotLight(new Color(225, 225, 153), new Point3D(150, 0, 30),new Vector(0,2,-1),1) //
+            .setKl(0.0005).setKq(0.0005).setRadius(20);
+    LightSource leftLight =new SpotLight(new Color(225, 225, 153), new Point3D(50, 100, 30),new Vector(0,-2,-1),1)//
+            .setKl(0.0005).setKq(0.0005).setRadius(20);
     //-------------- Materials --------------------
 
     Material boxMaterial = new Material().setKd(0.5).setKs(0.5).setShininess(100);
@@ -131,7 +138,6 @@ public class FunTest {
             cylinder6,cylinder7,cylinder8,cylinder9,cylinder10);
 
     // ****************** Middle Sword *******************
-
     Geometry toMiddle1 = new Polygon(new Point3D(48,50+Math.sqrt(7),12),new Point3D(48,50-Math.sqrt(7),12),new Point3D(56,38,22),new Point3D(56,62,22))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
@@ -144,6 +150,7 @@ public class FunTest {
     Geometry EnergyBall = new Sphere(new Point3D(64,50,10),14)
             .setEmission(EnergyColor) //
             .setMaterial(EnergyMaterial);
+
     Geometries Middle = new Geometries(toMiddle1,toMiddle2,toMiddle3,EnergyBall);
 
     // ****************** Sword *******************
@@ -165,7 +172,7 @@ public class FunTest {
     Geometry swordSineRight = new Polygon(new Point3D(64+startSward,54,startSine),new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(64+startSward,55.5,startSine-(4.5d/7d)))
             .setEmission(white)//
             .setMaterial(swordMaterial);
-    Geometry swordSineRightTop = new Polygon(new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(175,54,11.7))
+    Geometry swordSineRightTop = new Polygon(new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(175,54,11))
             .setEmission(white)//
             .setMaterial(swordMaterial);
 
@@ -174,18 +181,20 @@ public class FunTest {
     @Test
     public void FunSwordTest() {
 
-        camera2.changeDirection(new Point3D(-300, -300, 1500), new Point3D(100, 50, 0));
+       // double distance = Math.sqrt(500);
+        camera2.changeDirection(new Point3D(-350, -100, 120), new Point3D(100, 50, 10));
+        camera2.rotate(-270);
         scene2.geometries.add(swordBox,HandHeld,Middle,sword);
-        scene2.lights.add(centralLight);
+        scene2.lights.add(leftLight);scene2.lights.add(rightLight);scene2.lights.add(centerLight);
         boolean AdvancedRun = false;
 
-        ImageWriter imageWriter = new ImageWriter("SwordTests1", 1000, 1000);
+        ImageWriter imageWriter = new ImageWriter("SwordTestsNew", 1000, 1000);
         Render render;
         if(AdvancedRun) {
             render = new Render()//
                     .setImageWriter(imageWriter) //
                     .setCamera(camera2.setNumOfRaysAA(30)) //
-                    .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(50))
+                    .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(30))
                     .setMultithreading(3).setDebugPrint();
 
             render.renderImageAdvanced();
@@ -198,7 +207,6 @@ public class FunTest {
             render.renderImage();
         }
 
-        //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
     }
 }

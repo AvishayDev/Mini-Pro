@@ -282,8 +282,6 @@ public class LightsTests {
                 .setKq(0.00000025)
                 .setRadius(20));
 
-        camera2.setFocalDistance(1050).setApertureSize(30, 30).setNumOfRaysDOF(50);
-
 
         ImageWriter imageWriter = new ImageWriter("SStest10", 500, 500);
         Render render = new Render()//
@@ -293,7 +291,7 @@ public class LightsTests {
                 .setMultithreading(3).setDebugPrint(); //
 
         render.renderImageAdvanced();
-        render.printGrid(50,new Color(300,300,300));
+        //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
     }
 

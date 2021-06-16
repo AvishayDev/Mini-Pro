@@ -14,7 +14,7 @@ public class Render {
     /**
      * This boolean is for debugging purposes only.
      */
-    //private boolean stop = false;
+    private boolean stop = false;
 
     /**
      * This variable stores the amount of threads we want to use during the rendering
@@ -58,6 +58,7 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
+        camera.resetPixelSize(nX,nY);
 
         for (int i = 0; i < nY; ++i)
             for (int j = 0; j < nX; ++j)
@@ -75,6 +76,8 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
+        camera.resetPixelSize(nX,nY);
+
         if (threadsCount == 0)
             for (int i = 0; i < nY; ++i)
                 for (int j = 0; j < nX; ++j)
@@ -104,11 +107,10 @@ public class Render {
      * @param row pixel's row number (pixel index in column)
      */
     private void castRays(int nX, int nY, int col, int row) {
-//        if(col==150 && row==350) // for debugging purposes only
+//        if(col==250 && row==250) // for debugging purposes only
 //            stop=false;
         imageWriter.writePixel(col, row, rayTracer.traceRays(camera.constructRays(nX, nY, col, row)));
     }
-
 
     /***
      * This method receives an interval of distance and a color to draw lines on the image, mostly used to testing purposes.

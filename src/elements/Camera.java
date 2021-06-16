@@ -4,7 +4,6 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
-import renderer.Render;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,9 +28,9 @@ public class Camera {
 
     // ----------- viewPlane variables -------------
     // width is a double value that indicates the width of the view plane
-    private double width;
+    private double pixelWidth;
     // height is a double value that indicates the height of the view plane
-    private double height;
+    private double pixelHeight;
     // This Point3D will store the center of the view plane
     private Point3D viewPlaneCenter;
 
@@ -85,23 +84,19 @@ public class Camera {
      * @param i  place form center pixel in Y axis
      * @return The Point3D of the Center of the pixel.
      */
-    private Point3D findCenterPixel(int nX, int nY, int j, int i) {
+    public Point3D findCenterPixel(int nX, int nY, int j, int i) {
 
         Point3D pixelCenter = viewPlaneCenter;
 
-        // Ratio (pixel width & height)
-        double rY = this.height / (double) nY;
-        double rX = this.width / (double) nX;
-
         // Pixel[i,j] center
-        double yI = -(i - ((nY - 1) / 2d)) * rY;
-        double xJ = (j - ((nX - 1) / 2d)) * rX;
+        double yI = -(i - ((nY - 1) / 2d)) * this.pixelHeight;
+        double xJ = (j - ((nX - 1) / 2d)) * this.pixelWidth;
 
         if (!Util.isZero(xJ))
             //use pC instead of pIJ
-            pixelCenter = pixelCenter.add(vRight,xJ);
+            pixelCenter = pixelCenter.add(vRight, xJ);
         if (!Util.isZero(yI))
-            pixelCenter = pixelCenter.add(vUp,yI);
+            pixelCenter = pixelCenter.add(vUp, yI);
 
         return pixelCenter;
     }
@@ -139,10 +134,10 @@ public class Camera {
      * This method receives the amount of pixel and the pixel we want to send a ray through, and the amount of different
      * rays to send through the area of it to the focal point. It will return a list of rays that go through this pixel.
      *
-     * @param nX        number of pixels in X axis
-     * @param nY        number of pixels in Y axis
-     * @param j         place form center pixel in X axis
-     * @param i         place form center pixel in Y axis
+     * @param nX number of pixels in X axis
+     * @param nY number of pixels in Y axis
+     * @param j  place form center pixel in X axis
+     * @param i  place form center pixel in Y axis
      * @return A list of rays that go from the received pixel area to the focal point.
      */
     public List<Ray> constructRays(int nX, int nY, int j, int i) {
@@ -150,7 +145,7 @@ public class Camera {
                 List.of(constructRay(nX, nY, j, i)) :
                 constructAntiARays(nX, nY, j, i);
 
-        if (numOfRaysDepthOfField <= 1)  return rays1;
+        if (numOfRaysDepthOfField <= 1) return rays1;
 
         List<Ray> rays2 = new LinkedList<>();
         for (var ray : rays1)
@@ -162,7 +157,7 @@ public class Camera {
      * This method receives the amount of pixel and the pixel we want to send a ray through, and the amount of different
      * rays to send through the area of it to the focal point. It will return a list of rays that go through this pixel.
      *
-     * @param ray       pixel ray for DOF
+     * @param ray pixel ray for DOF
      * @return A list of rays that go from the received pixel area to the focal point.
      */
     public List<Ray> constructDOFRays(Ray ray) {
@@ -178,7 +173,7 @@ public class Camera {
         // First step - find the pixel center on the ViewPlane
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
         // Second step - Create points on the pixel
-        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.height / ((double) nY * 2), this.width / ((double) nX * 2), vUp, vRight, numOfRaysAntiAliasing);
+        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.pixelHeight / 2d, this.pixelWidth / 2d, vUp, vRight, numOfRaysAntiAliasing);
         // Third step - Create rays from point to the pixel
         return BlackBoard.raysFromPointToPoints(p0, points, false);
     }
@@ -193,9 +188,17 @@ public class Camera {
         if (Util.alignZero(width) <= 0 || Util.alignZero(height) <= 0)
             throw new IllegalArgumentException("ViewPlane size must be positive!");
 
-        this.width = width;
-        this.height = height;
+        this.pixelWidth = width;
+        this.pixelHeight = height;
         return this;
+    }
+
+    public void resetPixelSize(int nX, int nY) {
+        if (nX <= 0 || nY <= 0)
+            throw new IllegalArgumentException("pixel size must be positive!");
+
+        this.pixelHeight = this.pixelHeight / (double) nY;
+        this.pixelWidth = this.pixelWidth / (double) nX;
     }
 
     /***
@@ -271,7 +274,7 @@ public class Camera {
             //check for zero distance for setting aperture point on p0
             this.apertureCenter = p0.add(vTo, distances);
         else
-            this.apertureCenter=p0;
+            this.apertureCenter = p0;
 
         return this;
     }

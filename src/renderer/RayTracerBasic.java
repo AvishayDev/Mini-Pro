@@ -194,6 +194,7 @@ public class RayTracerBasic extends RayTracerBase {
     protected double transparency(LightSource light, GeoPoint geoPoint, Material material, double nv, Vector n, Vector l) {
         double lightDistance = light.getDistance(geoPoint.point);
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(new Ray(geoPoint.point, l.scale(-1), n), lightDistance);
+
         if (intersections == null) return 1.0;
 
         double ktr = 1.0;

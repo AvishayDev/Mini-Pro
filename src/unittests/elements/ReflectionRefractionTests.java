@@ -36,14 +36,15 @@ public class ReflectionRefractionTests {
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
         scene.lights.add( //
                 new SpotLight(new Color(1000, 600, 0), new Point3D(-100, -100, 500), new Vector(-1, -1, -2), 1) //
-                        .setKl(0.0004).setKq(0.0000006));
+                        .setKl(0.0004).setKq(0.0000006).setRadius(20));
 
 		Render render = new Render() //
 				.setImageWriter(new ImageWriter("refractionTwoSpheres4", 500, 500)) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysDiffuseGlass(20));
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysSoftShadows(70))
+				.setMultithreading(3).setDebugPrint();
 
-		render.renderImage();
+		render.renderImageAdvanced();
 		render.writeToImage();
 	}
 

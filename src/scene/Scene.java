@@ -37,6 +37,7 @@ public class Scene {
      */
     public List<LightSource> lights = new LinkedList<>();
 
+
     /***
      * A simple constructor, receives name only. It also initializing the geometries object with to be empty 3D model rather than null
      * All the other values shall be initialized or set with their setter methods

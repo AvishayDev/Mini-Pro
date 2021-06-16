@@ -16,6 +16,9 @@ public class SpotLight extends PointLight {
      */
     private Vector direction;
 
+    private Vector orthogonalDir1;
+
+    private Vector orthogonalDir2;
     /**
      * How much narrow the spot will be
      */
@@ -32,6 +35,8 @@ public class SpotLight extends PointLight {
         super(light, point);
         narrow = narrowLight;
         direction = directionLight.normalized();
+        orthogonalDir1 = direction.getOrthogonal();
+        orthogonalDir2 = direction.crossProduct(orthogonalDir1).normalize();
     }
 
     /***
@@ -42,9 +47,7 @@ public class SpotLight extends PointLight {
      * @param narrowLight the narrow of the light (bigger then 1!)
      */
     public SpotLight(Color light, Point3D point, Vector directionLight, int narrowLight) {
-        super(light, point);
-        narrow = narrowLight;
-        direction = directionLight.normalized();
+        this(light,directionLight,point,narrowLight);
     }
 
     /**
@@ -79,9 +82,10 @@ public class SpotLight extends PointLight {
         Ray ray = new Ray(point, position.subtract(point).normalized(), n);
         if (radius == 0.0)
             return List.of(ray);
-        Vector orthogonal = direction.getOrthogonal();
-        return BlackBoard.raysFromPointToPoints(ray.getP0(), //
-               BlackBoard.findPoints(position, radius, orthogonal, direction.crossProduct(orthogonal).normalize(), amount), //
-                false);
+
+        //return BlackBoard.raysFromPointToPoints(ray.getP0(), //
+          //     BlackBoard.findPoints(position, radius, orthogonalDir1, direction.crossProduct(orthogonalDir1).normalize(), amount), //
+            //    false);
+        return BlackBoard.findRays(ray.getP0(),position,radius,orthogonalDir1,orthogonalDir2,amount);
     }
 }

@@ -16,9 +16,16 @@ public class SpotLight extends PointLight {
      */
     private Vector direction;
 
+    /**
+     * First orthogonal vector to the direction of the light
+     */
     private Vector orthogonalDir1;
 
+    /**
+     * Second orthogonal vector to the direction of the light
+     */
     private Vector orthogonalDir2;
+
     /**
      * How much narrow the spot will be
      */
@@ -83,9 +90,6 @@ public class SpotLight extends PointLight {
         if (radius == 0.0)
             return List.of(ray);
 
-        //return BlackBoard.raysFromPointToPoints(ray.getP0(), //
-          //     BlackBoard.findPoints(position, radius, orthogonalDir1, direction.crossProduct(orthogonalDir1).normalize(), amount), //
-            //    false);
         return BlackBoard.findRays(ray.getP0(),position,radius,orthogonalDir1,orthogonalDir2,amount);
     }
 }

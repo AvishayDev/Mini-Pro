@@ -334,7 +334,7 @@ public class LightsTests {
         scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(1, 1, -2), new Point3D(-50, -50, 50), 3) //
                 .setKl(0.00001).setKq(0.00000001));
 
-        camera1.setNumOfRaysAA(100);
+        camera1.setNumOfRaysAA(50);
 
         ImageWriter imageWriter = new ImageWriter("AA 100 Rays", 250, 250);
         Render render = new Render()//

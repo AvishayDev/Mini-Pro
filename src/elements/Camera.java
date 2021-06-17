@@ -169,6 +169,15 @@ public class Camera {
         return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
     }
 
+    /**
+     * This method receives the pixel we want to send a ray through, and returns a list of anti aliasing rays
+     *
+     * @param nX number of pixels in X axis
+     * @param nY number of pixels in Y axis
+     * @param j  place form center pixel in X axis
+     * @param i  place form center pixel in Y axis
+     * @return  A list of AA rays to the area of the point.
+     */
     public List<Ray> constructAntiARays(int nX, int nY, int j, int i) {
         // First step - find the pixel center on the ViewPlane
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
@@ -193,6 +202,11 @@ public class Camera {
         return this;
     }
 
+    /**
+     * Stores the values of pixel height and width so we don't have to calculate it many times
+     * @param nX number of pixels in X axis
+     * @param nY number of pixels in Y axis
+     */
     public void resetPixelSize(int nX, int nY) {
         if (nX <= 0 || nY <= 0)
             throw new IllegalArgumentException("pixel size must be positive!");

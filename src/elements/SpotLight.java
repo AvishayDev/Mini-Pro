@@ -16,9 +16,16 @@ public class SpotLight extends PointLight {
      */
     private Vector direction;
 
+    /**
+     * First orthogonal vector to the direction of the light
+     */
     private Vector orthogonalDir1;
 
+    /**
+     * Second orthogonal vector to the direction of the light
+     */
     private Vector orthogonalDir2;
+
     /**
      * How much narrow the spot will be
      */

@@ -14,8 +14,6 @@ import renderer.RayTracerBasic;
 import renderer.Render;
 import scene.Scene;
 
-import static org.junit.Assert.*;
-
 /**
  * Test rendering an image
  */
@@ -28,7 +26,7 @@ public class ThreadsTests {
     private static final Color color = new Color(200, 0, 0);
     private static final Material mat = new Material() //
             .setKd(0.5).setKs(0.5).setShininess(60);
-    private static Geometry sphere = new Sphere(new Point3D(-50, -50, -100), 50) //
+    private static Geometry sphere = new Sphere(new Point3D(0, 0, -100), 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
@@ -39,7 +37,7 @@ public class ThreadsTests {
     public void teapot() {
         scene.geometries.add(sphere);
         scene.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
-        ImageWriter imageWriter = new ImageWriter("teapot1", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("sphere", 500, 500);
         Render render = new Render().setImageWriter(imageWriter).setCamera(camera).setRayTracer(new RayTracerBasic(scene)) //
                 .setMultithreading(3).setDebugPrint();
         render.renderImageAdvanced(); //render.printGrid(50, java.awt.Color.YELLOW);

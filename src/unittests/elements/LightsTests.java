@@ -31,7 +31,7 @@ public class LightsTests {
             new Point3D(-150, -150, -150), new Point3D(150, -150, -150), new Point3D(75, 75, -150));
     private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
-    private static Geometry sphere = new Sphere(new Point3D(-50, -50, -100), 50) //
+    private static Geometry sphere = new Sphere(new Point3D(0, 0, -200), 50) //
             .setEmission(new Color(java.awt.Color.BLUE)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
     private static Geometries square = new Geometries(new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, 50, -150), new Point3D(0, 50, -100))
@@ -91,7 +91,6 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new RayTracerBasic(scene1));//
-                //.setNumOfRaysAA(50);
         render.renderImage();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
@@ -283,15 +282,16 @@ public class LightsTests {
                 .setKq(0.00000025)
                 .setRadius(20));
 
+
         ImageWriter imageWriter = new ImageWriter("SStest10", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 .setRayTracer(new RayTracerAdvanced(scene2).setNumOfRaysSoftShadows(20)) //
-                .setMultithreading(3).setDebugPrint() //
-                ;
+                .setMultithreading(3).setDebugPrint(); //
+
         render.renderImageAdvanced();
-        render.printGrid(50,new Color(300,300,300));
+        //render.printGrid(50,new Color(300,300,300));
         render.writeToImage();
     }
 
@@ -300,6 +300,10 @@ public class LightsTests {
      */
     @Test
     public void DOFTests() {
+        Geometry sphere = new Sphere(new Point3D(-50, -50, -100), 50) //
+                .setEmission(new Color(java.awt.Color.BLUE)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
+
         camera1.setFocalDistance(1050).setApertureSize(30, 30).setNumOfRaysDOF(50);
 
         Geometry sphere2 = new Sphere(new Point3D(0, 0, -200), 40)
@@ -314,10 +318,32 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
-                .setMultithreading(3).setDebugPrint() //
-                ;
+                .setMultithreading(3).setDebugPrint();
+
         render.renderImageAdvanced();
         //render.printGrid(100,new Color(256,256,256));
+        render.writeToImage();
+    }
+
+    /**
+     * Produce a picture of a sphere lighted by a spot light
+     */
+    @Test
+    public void AATest() {
+        scene1.geometries.add(sphere);
+        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Vector(1, 1, -2), new Point3D(-50, -50, 50), 3) //
+                .setKl(0.00001).setKq(0.00000001));
+
+        camera1.setNumOfRaysAA(50);
+
+        ImageWriter imageWriter = new ImageWriter("AA 100 Rays", 250, 250);
+        Render render = new Render()//
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new RayTracerBasic(scene1)) //
+                .setMultithreading(3).setDebugPrint();
+
+        render.renderImageAdvanced();
         render.writeToImage();
     }
 

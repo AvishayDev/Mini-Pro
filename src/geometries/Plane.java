@@ -44,7 +44,6 @@ public class Plane extends Geometry {
         normal = vec1.crossProduct(vec2).normalize();
     }
 
-
     /**
      * Most of the rays will intersect the plane, and the calculation is fairly simple, so no implementation here
      *
@@ -61,7 +60,7 @@ public class Plane extends Geometry {
      * Same as stated above, we don't create border for Plane so implementation is unnecessary
      */
     @Override
-    public void findMinMax() {
+    public void findMinMaxParticular() {
         // there is nothing to calc
     }
 
@@ -112,7 +111,7 @@ public class Plane extends Geometry {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
 
         Vector u;
         double t;

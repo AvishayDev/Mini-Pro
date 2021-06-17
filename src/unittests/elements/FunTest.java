@@ -23,7 +23,7 @@ public class FunTest {
             new Vector(0, 1, 0))//
             .setViewPlaneCenter(1000) //
             .setViewPlaneSize(150, 150)
-            .setApertureSize(5,5).setFocalDistance(1000).setNumOfRaysDOF(30);
+            .setApertureSize(5,5).setFocalDistance(1000).setNumOfRaysAA(100);
 
     //--------------- Lights --------------------
     LightSource centerLight =new PointLight(new Color(225, 225, 153), new Point3D(150, 50, 100)) //
@@ -260,15 +260,15 @@ public class FunTest {
         camera2.rotate(-270);
         scene2.geometries.add(swordBox,HandHeld,Middle,MiddleRight,MiddleLeft,sword);
         scene2.lights.add(leftLight);scene2.lights.add(rightLight);scene2.lights.add(centerLight);
-        boolean AdvancedRun = false;
+        boolean AdvancedRun = true;
 
-        ImageWriter imageWriter = new ImageWriter("SwordBasic1", 1000, 1000);
+        ImageWriter imageWriter = new ImageWriter("SwordBasic2", 1000, 1000);
         Render render;
         if(AdvancedRun) {
             render = new Render()//
                     .setImageWriter(imageWriter) //
                     .setCamera(camera2) //
-                    .setRayTracer(new RayTracerAdvanced(scene2))
+                    .setRayTracer(new RayTracerAdvanced(scene2).setVBH())
                     .setMultithreading(3).setDebugPrint();
 
             render.renderImageAdvanced();
@@ -276,7 +276,7 @@ public class FunTest {
             render = new Render()//
                     .setImageWriter(imageWriter) //
                     .setCamera(camera2) //
-                    .setRayTracer(new RayTracerBasic(scene2));
+                    .setRayTracer(new RayTracerBasic(scene2).setVBH());
 
             render.renderImage();
         }

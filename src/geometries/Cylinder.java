@@ -96,10 +96,10 @@ public class Cylinder extends Tube {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
 
 
-        List<GeoPoint> points = super.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> points = super.findGeoIntersectionsParticular(ray, maxDistance);
 
         //p1 = axisRay.getP0
         //p2 = same as p1 but in upper base
@@ -198,7 +198,7 @@ public class Cylinder extends Tube {
      * find the minimum and the maximum of the geometry border
      */
     @Override
-    public void findMinMax() {
+    public void findMinMaxParticular() {
 
         Point3D p0 = axisRay.getP0();
 

@@ -9,14 +9,21 @@ import primitives.Vector;
  * this class represent the option of border-able for the geometries
  */
 public abstract class Borderable {
+    static protected boolean borderEnabled = false;
+    public static void setEnabled() { borderEnabled = true; }
 
+    protected boolean boxed = false;
 
-    // min point coordinates
+    /**
+     * this values represent the minimum point of the geometry
+     */
     public double minX;
     public double minY;
     public double minZ;
 
-    // max point coordinates
+    /**
+     * this values represent the maximum point of the geometry
+     */
     public double maxX;
     public double maxY;
     public double maxZ;
@@ -24,7 +31,20 @@ public abstract class Borderable {
     /**
      * find the minimum and the maximum of the geometry border
      */
-    public abstract void findMinMax();
+    public final synchronized void findMinMax() {
+        if (!boxed) {
+            findMinMaxParticular();
+            boxed = true;
+        }
+    }
+
+    protected abstract void findMinMaxParticular();
+
+    protected boolean intersectBorderHelper(Ray ray) {
+        if (!boxed)
+            findMinMax();
+        return intersectBorder(ray);
+    }
 
     /**
      * this function calculate if the ray trace the border of the geometry
@@ -34,7 +54,6 @@ public abstract class Borderable {
      * @return true for intersection, false for not intersection
      */
     protected boolean intersectBorder(Ray ray) {
-
         Point3D origin = ray.getP0();
         double originX = origin.getX();
         double originY = origin.getY();
@@ -91,7 +110,7 @@ public abstract class Borderable {
 
         // If either the max value of Z is smaller than overall min value, or min value of Z is bigger than the overall
         // max, we can already return false. Otherwise we can return true since no other coordinate checks are needed.
-        return (!(tMin > tMaxZ)) && (!(tMinZ > tMax));
+        return tMin <= tMaxZ && tMinZ <= tMax;
     }
 
 }

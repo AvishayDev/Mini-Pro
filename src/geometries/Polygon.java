@@ -92,7 +92,7 @@ public class Polygon extends Geometry {
      * find the minimum and the maximum of the geometry border
      */
     @Override
-    public void findMinMax() {
+    public void findMinMaxParticular() {
 
         // mix point coordinates
         minX = Double.POSITIVE_INFINITY;
@@ -146,9 +146,9 @@ public class Polygon extends Geometry {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
 
-        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> planeIntersections = plane.findGeoIntersectionsParticular(ray, maxDistance);
         //because we care about the distance in the plane we
         //don't need to care about it here
 

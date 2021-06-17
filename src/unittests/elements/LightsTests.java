@@ -95,7 +95,7 @@ public class LightsTests {
         render.renderImage();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
-        System.out.println(scene1.geometries.num);
+        //System.out.println(scene1.geometries.num);
     }
 
     /**
@@ -137,10 +137,10 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("Border2", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
-                .setCamera(camera1.setNumOfRaysAA(50)) //
-                .setRayTracer(new RayTracerBasic(scene1)) //
-                .setMultithreading(3).setDebugPrint()
-                ;
+                .setCamera(camera1.setNumOfRaysDOF(50).setFocalDistance(1030).setApertureSize(40,40)) //
+                .setRayTracer(new RayTracerAdvanced(scene1)) //
+                .setMultithreading(3).setDebugPrint();
+
         render.renderImageAdvanced();
         render.writeToImage();
     }

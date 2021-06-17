@@ -42,9 +42,9 @@ public class Triangle extends Polygon {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
 
-        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> planeIntersections = plane.findGeoIntersectionsParticular(ray, maxDistance);
         //because we care about the distance in the plane we
         //don't need to care about it here
 

@@ -71,7 +71,7 @@ public abstract class Intersectable extends Borderable {
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
      */
-    public List<Point3D> findIntersections(Ray ray) {
+    public final List<Point3D> findIntersections(Ray ray) {
         List<GeoPoint> geoList = findGeoIntersections(ray);
         return geoList == null ? null
                 : geoList.stream()
@@ -86,7 +86,7 @@ public abstract class Intersectable extends Borderable {
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
@@ -98,6 +98,18 @@ public abstract class Intersectable extends Borderable {
      * @param maxDistance the maximum distance for the ray to go
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    public abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return borderEnabled && !intersectBorderHelper(ray) ? null : findGeoIntersectionsParticular(ray, maxDistance);
+    }
+
+    /**
+     * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
+     * In case there are none or pass the max distance, null will be returned.
+     *
+     * @param ray         The ray which we find the intersections to the object.
+     * @param maxDistance the maximum distance for the ray to go
+     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
+     */
+    protected abstract List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance);
 
 }

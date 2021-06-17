@@ -46,52 +46,19 @@ public class BlackBoard {
         return points;
     }
 
-    /**
-     * This method receives a point of the center of the board, the board's height and weight, its direction vectors
-     * and the amount of different points you want to generate on that board.
-     * It returns a list of the generated points.
-     *
-     * @param center      This point represents the center of the received board.
-     * @param radius      Double that represents the radius of the board.
-     * @param vUp         Vector that represent the Y axis of the board.
-     * @param vRight      Vector that represent the X axis of the board.
-     * @param numOfPoints The amount of generated points on the board.
-     * @return A list of all the generated points.
-     */
-    public static List<Point3D> findPoints(Point3D center, double radius, Vector vUp, Vector vRight, int numOfPoints) {
-        List<Point3D> points = new LinkedList<>();
-        points.add(center); // The center point must be included
-        double radiusSquared = radius * radius;
-
-        for (int i = 1; i < numOfPoints; i++) {
-            double x, y;
-            do {
-                x = Util.random(-radius, radius);
-                y = Util.random(-radius, radius);
-            } while (x * x + y * y >= radiusSquared);
-
-            Point3D pCenter = center;
-            if (!Util.isZero(x))
-                //use pC instead of pIJ
-                pCenter = pCenter.add(vRight, x);
-            if (!Util.isZero(y))
-                pCenter = pCenter.add(vUp, y);
-            points.add(pCenter);
-        }
-        return points;
-    }
 
     /**
-     * This method receives a point of the center of the board, the board's height and weight, its direction vectors
+     * This method receives a source point ,point of the center of the board, the board's height and weight, its direction vectors
      * and the amount of different points you want to generate on that board.
-     * It returns a list of the generated points.
+     * It returns a list of the generated rays.
      *
+     * @param sourcePoint This is the start point of the rays
      * @param centerPlate This point represents the center of the received board.
      * @param radius      Double that represents the radius of the board.
      * @param vUp         Vector that represent the Y axis of the board.
      * @param vRight      Vector that represent the X axis of the board.
      * @param numOfPoints The amount of generated points on the board.
-     * @return A list of all the generated points.
+     * @return A list of rays, from the pStart to the pCenter, changed by Delta.
      */
     public static List<Ray> findRays(Point3D sourcePoint, Point3D centerPlate, double radius, Vector vUp, Vector vRight, int numOfPoints) {
         List<Ray> rays = new LinkedList<>();

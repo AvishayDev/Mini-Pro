@@ -56,6 +56,7 @@ public class Camera {
      */
     private int numOfRaysDepthOfField = 0;
 
+
     /***
      * Constructor for Camera, that receives initial starting point, VectorTo (Z axis), VectorUp (Y axis)
      * VectorRight (X axis) will be calculated inside the constructor
@@ -138,11 +139,13 @@ public class Camera {
      * @param nY number of pixels in Y axis
      * @param j  place form center pixel in X axis
      * @param i  place form center pixel in Y axis
+     * @param first this check for the first rays to make or all of them
      * @return A list of rays that go from the received pixel area to the focal point.
      */
-    public List<Ray> constructRays(int nX, int nY, int j, int i) {
+    public List<Ray> constructRays(int nX, int nY, int j, int i, boolean first) {
         List<Ray> rays1 = numOfRaysAntiAliasing <= 1 ? //
                 List.of(constructRay(nX, nY, j, i)) :
+                first ? constructFirstRays(nX, nY, j, i) :
                 constructAntiARays(nX, nY, j, i);
 
         if (numOfRaysDepthOfField <= 1) return rays1;
@@ -160,8 +163,8 @@ public class Camera {
      * @param ray pixel ray for DOF
      * @return A list of rays that go from the received pixel area to the focal point.
      */
-    public List<Ray> constructDOFRays(Ray ray) {
-        // Second step - calculate focal point
+    private List<Ray> constructDOFRays(Ray ray) {
+        // First step - calculate focal point
         Point3D focalPoint = findFocalPoint(ray);
         // Third step - Create points on the aperture
         List<Point3D> points = BlackBoard.findPoints(apertureCenter, apertureHeight / 2, apertureWidth / 2, vUp, vRight, numOfRaysDepthOfField);
@@ -169,13 +172,41 @@ public class Camera {
         return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
     }
 
-    public List<Ray> constructAntiARays(int nX, int nY, int j, int i) {
+    /***
+     * make a Rays from the p0 to random intersection points in
+     * the pixel j,i
+     * @param nX    number of pixels in X axis
+     * @param nY    number of pixels in Y axis
+     * @param j     place form center pixel in X axis
+     * @param i     place form center pixel in Y axis
+     * @return ray from p0 to center of pixel place
+     */
+    private List<Ray> constructAntiARays(int nX, int nY, int j, int i) {
         // First step - find the pixel center on the ViewPlane
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
         // Second step - Create points on the pixel
         List<Point3D> points = BlackBoard.findPoints(centerPixel, this.pixelHeight / 2d, this.pixelWidth / 2d, vUp, vRight, numOfRaysAntiAliasing);
         // Third step - Create rays from point to the pixel
         return BlackBoard.raysFromPointToPoints(p0, points, false);
+    }
+
+    /***
+     * make a Rays from the p0 to bounds intersection points in
+     * the pixel j,i
+     * @param nX    number of pixels in X axis
+     * @param nY    number of pixels in Y axis
+     * @param j     place form center pixel in X axis
+     * @param i     place form center pixel in Y axis
+     * @return ray from p0 to center of pixel place
+     */
+    private List<Ray> constructFirstRays(int nX, int nY, int j, int i) {
+
+        Point3D centerPixel = findCenterPixel(nX, nY, j, i);
+
+        return List.of(new Ray(p0, centerPixel.add(vRight, pixelWidth).add(vUp, pixelHeight).subtract(p0)),
+                new Ray(p0, centerPixel.add(vRight, -pixelWidth).add(vUp, pixelHeight).subtract(p0)),
+                new Ray(p0, centerPixel.add(vRight, pixelWidth).add(vUp, -pixelHeight).subtract(p0)),
+                new Ray(p0, centerPixel.add(vRight, -pixelWidth).add(vUp, -pixelHeight).subtract(p0)));
     }
 
     /***
@@ -193,6 +224,11 @@ public class Camera {
         return this;
     }
 
+    /***
+     * this method reset the size of a pixel in our viewPlane
+     * @param nX the number of pixels in X axis
+     * @param nY the number of pixels in Y axis
+     */
     public void resetPixelSize(int nX, int nY) {
         if (nX <= 0 || nY <= 0)
             throw new IllegalArgumentException("pixel size must be positive!");

@@ -1,5 +1,6 @@
 package renderer;
 
+import geometries.Borderable;
 import primitives.Color;
 import primitives.Ray;
 import scene.Scene;
@@ -24,6 +25,11 @@ public abstract class RayTracerBase {
      */
     public RayTracerBase(Scene scene) {
         this.scene = scene;
+    }
+
+    public RayTracerBase setVBH() {
+        Borderable.setEnabled();
+        return this;
     }
 
     /***

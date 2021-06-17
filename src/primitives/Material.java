@@ -36,6 +36,7 @@ public class Material {
      * how big the radius of the spread rays will be for Diffusive Glass
      */
     public double radiusDG = 0;
+
     /*
         for real images:
         kS = 8 * kT

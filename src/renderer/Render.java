@@ -2,7 +2,9 @@ package renderer;
 
 import elements.Camera;
 import primitives.Color;
+import primitives.Ray;
 
+import java.util.List;
 import java.util.MissingResourceException;
 
 /***
@@ -58,7 +60,7 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
-        camera.resetPixelSize(nX,nY);
+        camera.resetPixelSize(nX, nY);
 
         for (int i = 0; i < nY; ++i)
             for (int j = 0; j < nX; ++j)
@@ -76,7 +78,7 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
-        camera.resetPixelSize(nX,nY);
+        camera.resetPixelSize(nX, nY);
 
         if (threadsCount == 0)
             for (int i = 0; i < nY; ++i)
@@ -109,8 +111,22 @@ public class Render {
     private void castRays(int nX, int nY, int col, int row) {
 //        if(col==250 && row==250) // for debugging purposes only
 //            stop=false;
-        imageWriter.writePixel(col, row, rayTracer.traceRays(camera.constructRays(nX, nY, col, row)));
+
+        //First step calc the First Rays:
+        List<Ray> rays = camera.constructRays(nX, nY, col, row, true);
+
+        //Second step calc color of first ray and other rays:
+        Color finalColor = rayTracer.traceRay(rays.get(0));
+        Color sumColor = rayTracer.traceRays(rays);
+
+        //check if colors are equal:
+        if (!finalColor.equals(sumColor))
+            finalColor = rayTracer.traceRays(camera.constructRays(nX, nY, col, row, false));
+
+        imageWriter.writePixel(col, row, finalColor);
+
     }
+
 
     /***
      * This method receives an interval of distance and a color to draw lines on the image, mostly used to testing purposes.

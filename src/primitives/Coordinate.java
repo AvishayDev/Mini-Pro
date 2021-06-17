@@ -36,6 +36,7 @@ public final class Coordinate {
         return isZero(coord - other.coord);
     }
 
+    /*************** Admin *****************/
     @Override
     public String toString() {
         return "" + coord;

@@ -80,7 +80,7 @@ public class Tube extends Geometry {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
         Vector v = ray.getDir();
         Vector va = axisRay.getDir();
         Point3D p = ray.getP0();
@@ -198,7 +198,7 @@ public class Tube extends Geometry {
      * find the minimum and the maximum of the geometry border
      */
     @Override
-    public void findMinMax() {
+    public void findMinMaxParticular() {
         // there is nothing to calc
     }
 

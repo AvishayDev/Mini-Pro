@@ -71,9 +71,10 @@ public class Point3D {
     }
 
     /***
-     * Add vector to this point and returns the calculated point.
+     * Add vector scaled by t to this point and returns the calculated point.
      * (with no changes in the point)
-     * @param vec Vector for adding to the point
+     * @param vec Vector for adding to the point MUST be normalized
+     * @param t the scale value
      * @return The final point
      */
     public Point3D add(Vector vec, double t) {

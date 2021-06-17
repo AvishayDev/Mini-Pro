@@ -116,16 +116,28 @@ public class Color {
         return new Color(r / k, g / k, b / k);
     }
 
+    /***
+     * this method calc if the numbers is equals or almost equals,
+     *
+     * @param o the color to check
+     * @return true for almost equals or equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof Color)) return false;
 
         Color color = (Color) o;
 
-        if (color.r != r) return false;
-        if (color.g != g) return false;
-        return color.b == b;
+        double dr = color.r - r;
+        if ((dr < 0? -dr : dr) > 0.71) return false;
+
+        double dg = color.g - g;
+        if ((dg < 0 ? -dg : dg) > 0.71) return false;
+
+        double db = color.b - b;
+        return (db < 0 ? -db : db) <= 0.71;
+
     }
 
 }

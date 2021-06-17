@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Geometries extends Intersectable {
 
-    public static int num = 0;
+
     /**
      * List that have all the geometries
      */
@@ -37,7 +37,6 @@ public class Geometries extends Intersectable {
      */
     public void add(Intersectable... geometries) {
         this.geometries.addAll(List.of(geometries));
-        findMinMax();
     }
 
     /**
@@ -49,19 +48,16 @@ public class Geometries extends Intersectable {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = null;
         for (Intersectable g : geometries) {
-            if (g.intersectBorder(ray)) {
-                num++;
-                saveList = g.findGeoIntersections(ray, maxDistance);
-                if (saveList != null)
-                    if (returnList == null)
-                        returnList = new LinkedList<>(saveList);
-                    else
-                        returnList.addAll(saveList);
-            }
+            saveList = g.findGeoIntersections(ray, maxDistance);
+            if (saveList != null)
+                if (returnList == null)
+                    returnList = new LinkedList<>(saveList);
+                else
+                    returnList.addAll(saveList);
         }
         return returnList;
     }
@@ -70,7 +66,7 @@ public class Geometries extends Intersectable {
      * find the minimum and the maximum of the geometry border
      */
     @Override
-    public void findMinMax() {
+    public void findMinMaxParticular() {
 
         // mix point coordinates
         minX = Double.POSITIVE_INFINITY;

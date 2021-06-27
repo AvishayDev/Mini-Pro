@@ -229,12 +229,13 @@ public class Camera {
      * @param nX the number of pixels in X axis
      * @param nY the number of pixels in Y axis
      */
-    public void resetPixelSize(int nX, int nY) {
+    public Camera resetPixelSize(int nX, int nY) {
         if (nX <= 0 || nY <= 0)
             throw new IllegalArgumentException("pixel size must be positive!");
 
         this.pixelHeight = this.pixelHeight / (double) nY;
         this.pixelWidth = this.pixelWidth / (double) nX;
+        return this;
     }
 
     /***

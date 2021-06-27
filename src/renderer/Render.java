@@ -60,7 +60,7 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
-        camera.resetPixelSize(nX, nY);
+     //   camera.resetPixelSize(nX, nY);
 
         for (int i = 0; i < nY; ++i)
             for (int j = 0; j < nX; ++j)
@@ -78,7 +78,7 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
-        camera.resetPixelSize(nX, nY);
+       // camera.resetPixelSize(nX, nY);
 
         if (threadsCount == 0)
             for (int i = 0; i < nY; ++i)
@@ -174,7 +174,7 @@ public class Render {
      * @return This Render, with the updated values.
      */
     public Render setCamera(Camera camera) {
-        this.camera = camera;
+        this.camera =  camera.resetPixelSize(imageWriter.getNx(), imageWriter.getNy());
         return this;
     }
 
@@ -199,6 +199,7 @@ public class Render {
         this.imageWriter = imageWriter;
         return this;
     }
+
 
     //     -------------- Multi Threads Area ------------------
 

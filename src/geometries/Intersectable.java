@@ -111,3 +111,4 @@ public interface Intersectable {
     List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance);
 
 }
+

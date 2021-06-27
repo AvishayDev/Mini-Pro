@@ -119,4 +119,11 @@ public abstract class Borderable implements Intersectable{
             return borderEnabled && !intersectBorderHelper(ray) ? null : findGeoIntersectionsParticular(ray, maxDistance);
     }
 
+
+    public void moveObject(Vector direction, double t){
+        move(direction,t);
+        if(boxed)
+            findMinMax();
+    }
+    public abstract void move(Vector direction, double t);
 }

@@ -5,7 +5,7 @@ import primitives.*;
 /**
  * An interface that extends the interface Intersectable, and adds another method that returns the normal
  */
-public abstract class Geometry extends Intersectable {
+public abstract class Geometry extends Borderable {
 
     /**
      * The color that is being returned from the 3D model object. Default color is black.

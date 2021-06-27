@@ -104,7 +104,7 @@ public class Sphere extends Geometry {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
+    public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
         Vector u;
         try {
             u = center.subtract(ray.getP0());

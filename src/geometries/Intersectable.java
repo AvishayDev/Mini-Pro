@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 /**
  * This interface includes one method that finds the intersections between the current object a ray
  */
-public abstract class Intersectable extends Borderable {
+public interface Intersectable {
 
     /**
      * This class represents a point on some geometry and the geometry that the point is on it.
      */
-    public static class GeoPoint {
+    static class GeoPoint {
 
         /**
          * 3D model object.
@@ -71,7 +71,7 @@ public abstract class Intersectable extends Borderable {
      * @param ray The ray which we find the intersections to the object
      * @return A list of the intersection points in form of Point3D. In case there are no intersections, null will be returned
      */
-    public final List<Point3D> findIntersections(Ray ray) {
+    default List<Point3D> findIntersections(Ray ray) {
         List<GeoPoint> geoList = findGeoIntersections(ray);
         return geoList == null ? null
                 : geoList.stream()
@@ -86,7 +86,7 @@ public abstract class Intersectable extends Borderable {
      * @param ray The ray which we find the intersections to the object.
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    public final List<GeoPoint> findGeoIntersections(Ray ray) {
+    default List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
@@ -98,9 +98,7 @@ public abstract class Intersectable extends Borderable {
      * @param maxDistance the maximum distance for the ray to go
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-        return borderEnabled && !intersectBorderHelper(ray) ? null : findGeoIntersectionsParticular(ray, maxDistance);
-    }
+    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
     /**
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
@@ -110,6 +108,6 @@ public abstract class Intersectable extends Borderable {
      * @param maxDistance the maximum distance for the ray to go
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
-    protected abstract List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance);
+    List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance);
 
 }

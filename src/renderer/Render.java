@@ -169,7 +169,7 @@ public class Render {
 
     /**
      * Setter for the Camera field of this Render.
-     *
+     * set ImageWriter first!!
      * @param camera The updated camera.
      * @return This Render, with the updated values.
      */

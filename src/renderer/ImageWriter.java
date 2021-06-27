@@ -78,6 +78,10 @@ public class ImageWriter {
         return nX;
     }
 
+
+    public void setImageName(String name){
+        imageName=name;
+    }
     // ***************** Operations ******************** //
 
     /**

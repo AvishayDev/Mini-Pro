@@ -146,7 +146,7 @@ public class Polygon extends Geometry {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
+    public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
 
         List<GeoPoint> planeIntersections = plane.findGeoIntersectionsParticular(ray, maxDistance);
         //because we care about the distance in the plane we

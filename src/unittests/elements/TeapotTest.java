@@ -1557,8 +1557,8 @@ public class TeapotTest {
 
 		ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
 		Render render = new Render() //
-				.setCamera(camera) //
 				.setImageWriter(imageWriter) //
+				.setCamera(camera) //
 				.setRayTracer(new RayTracerBasic(scene)) //
 				.setMultithreading(3).setDebugPrint();
 		render.renderImage();

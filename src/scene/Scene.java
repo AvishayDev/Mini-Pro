@@ -4,6 +4,7 @@ import elements.AmbientLight;
 import elements.LightSource;
 import geometries.Geometries;
 import primitives.Color;
+import primitives.Point3D;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -92,6 +93,17 @@ public class Scene {
      */
     public Color ambientGetIntensity() {
         return ambientLight.getIntensity();
+    }
+
+    public List<Point3D> getScenePoints() {
+        double minX = geometries.minX;
+        double minY = geometries.minY;
+        double minZ = geometries.minZ;
+        double maxX = geometries.maxX;
+        double maxY = geometries.maxY;
+        double maxZ = geometries.maxZ;
+        return List.of(new Point3D(minX, minY, minZ),new Point3D(maxX,minY,minZ),new Point3D(minX,maxY,minZ),new Point3D(minX,minY,maxZ),
+                        new Point3D(maxX,maxY,maxZ),new Point3D(minX,maxY,maxZ),new Point3D(maxX,minY,maxZ),new Point3D(maxX,maxY,minZ));
     }
 }
 

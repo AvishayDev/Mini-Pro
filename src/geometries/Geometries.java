@@ -8,13 +8,13 @@ import java.util.List;
 /***
  * Represents list of geometries from all the types we have
  */
-public class Geometries extends Intersectable {
+public class Geometries extends Borderable {
 
 
     /**
      * List that have all the geometries
      */
-    private List<Intersectable> geometries = new LinkedList<>();
+    private List<Borderable> geometries = new LinkedList<>();
 
     /***
      * create EMPTY list of geometries
@@ -27,7 +27,7 @@ public class Geometries extends Intersectable {
      * it get
      * @param geometries all the geometries
      */
-    public Geometries(Intersectable... geometries) {
+    public Geometries(Borderable... geometries) {
         add(geometries);
     }
 
@@ -35,7 +35,7 @@ public class Geometries extends Intersectable {
      * adding number of geometries to the list
      * @param geometries the adding geometries
      */
-    public void add(Intersectable... geometries) {
+    public void add(Borderable... geometries) {
         this.geometries.addAll(List.of(geometries));
     }
 
@@ -48,10 +48,10 @@ public class Geometries extends Intersectable {
      * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
+    public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
         List<GeoPoint> saveList;
         List<GeoPoint> returnList = null;
-        for (Intersectable g : geometries) {
+        for (Borderable g : geometries) {
             saveList = g.findGeoIntersections(ray, maxDistance);
             if (saveList != null)
                 if (returnList == null)
@@ -78,7 +78,7 @@ public class Geometries extends Intersectable {
         maxY = Double.NEGATIVE_INFINITY;
         maxZ = Double.NEGATIVE_INFINITY;
 
-        for (Intersectable g : geometries) {
+        for (Borderable g : geometries) {
             g.findMinMax();
 
             //calc min

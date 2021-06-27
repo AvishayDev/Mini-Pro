@@ -141,6 +141,7 @@ public class Ray {
         return dir;
     }
 
+
     /***
      * To string function
      * @return Information about the Point3D's coordinates

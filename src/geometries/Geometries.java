@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Ray;
+import primitives.Vector;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -98,6 +99,13 @@ public class Geometries extends Borderable {
                 maxZ = g.maxZ;
         }
 
+    }
+
+    @Override
+    protected void move(Vector direction, double t) {
+        for(Borderable g: geometries){
+            g.move(direction, t);
+        }
     }
 
 }

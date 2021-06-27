@@ -127,6 +127,15 @@ public class Polygon extends Geometry {
 
     }
 
+    @Override
+    protected void move(Vector direction, double t) {
+
+        int size = vertices.size();
+        for (int i = 0; i < size; i++)
+            vertices.set(i, vertices.get(i).add(direction, t));
+
+    }
+
     /***
      * This function returns the normal of the Polygon? Null for now
      * @param point A point3D object

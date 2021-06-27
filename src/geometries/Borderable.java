@@ -10,9 +10,12 @@ import java.util.List;
 /**
  * this class represent the option of border-able for the geometries
  */
-public abstract class Borderable implements Intersectable{
+public abstract class Borderable implements Intersectable {
     static protected boolean borderEnabled = false;
-    public static void setEnabled() { borderEnabled = true; }
+
+    public static void setEnabled() {
+        borderEnabled = true;
+    }
 
     protected boolean boxed = false;
 
@@ -115,15 +118,16 @@ public abstract class Borderable implements Intersectable{
         return tMin <= tMaxZ && tMinZ <= tMax;
     }
 
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance){
-            return borderEnabled && !intersectBorderHelper(ray) ? null : findGeoIntersectionsParticular(ray, maxDistance);
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return borderEnabled && !intersectBorderHelper(ray) ? null : findGeoIntersectionsParticular(ray, maxDistance);
     }
 
 
-    public void moveObject(Vector direction, double t){
-        move(direction,t);
-        if(boxed)
+    public void moveObject(Vector direction, double t) {
+        move(direction, t);
+        if (boxed)
             findMinMax();
     }
-    public abstract void move(Vector direction, double t);
+
+    protected abstract void move(Vector direction, double t);
 }

@@ -57,6 +57,11 @@ public class Sphere extends Geometry {
 
     }
 
+    @Override
+    protected void move(Vector direction, double t) {
+        center = center.add(direction, t);
+    }
+
     /***
      * This function returns the normal of the sphere? Null for now
      * @param point A point3D object

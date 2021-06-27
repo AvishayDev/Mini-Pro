@@ -231,6 +231,11 @@ public class Tube extends Geometry {
 
     }
 
+    @Override
+    protected void move(Vector direction, double t) {
+        axisRay = new Ray(axisRay.getP0().add(direction,t),axisRay.getDir());
+    }
+
     /***
      * Getter for the tube's radius
      * @return The radius variable

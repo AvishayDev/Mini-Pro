@@ -55,6 +55,11 @@ public class Plane extends Geometry {
         return true;
     }
 
+    @Override
+    protected void move(Vector direction, double t) {
+        q0 = q0.add(direction,t);
+    }
+
     /**
      * Find the minimum and the maximum of the geometry border
      * Same as stated above, we don't create border for Plane so implementation is unnecessary

@@ -137,7 +137,7 @@ public class LightsTests {
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1.setNumOfRaysDOF(50).setFocalDistance(1030).setApertureSize(40,40)) //
-                .setRayTracer(new RayTracerAdvanced(scene1)) //
+                .setRayTracer(new RayTracerAdvanced(scene1).setVBH()) //
                 .setMultithreading(3).setDebugPrint();
 
         render.renderImageAdvanced();

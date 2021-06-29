@@ -16,7 +16,7 @@ public class Render {
     /**
      * This boolean is for debugging purposes only.
      */
-    private boolean stop = false;
+    private int stop = 0;
 
     /**
      * This variable stores the amount of threads we want to use during the rendering
@@ -124,7 +124,6 @@ public class Render {
             finalColor = rayTracer.traceRays(camera.constructRays(nX, nY, col, row, false));
 
         imageWriter.writePixel(col, row, finalColor);
-
     }
 
 

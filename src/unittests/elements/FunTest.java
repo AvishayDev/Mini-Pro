@@ -40,7 +40,7 @@ public class FunTest {
     Material MiddleMaterial = new Material().setKd(0.5).setKs(0.8).setShininess(100);
     Material EnergyMaterial = new Material().setKd(0.5).setKs(0.8).setKt(0.4).setShininess(300);
     Material swordMaterial = new Material().setKd(0.5).setKs(0.8).setShininess(300);
-
+    Material transparentM = new Material().setKr(0.8);
     //-------------- Emotions ---------------------
 
     Color boxColor = new Color(90, 90, 90);
@@ -49,6 +49,7 @@ public class FunTest {
     Color EnergyColor = new Color(135,206,250);
     Color swordColor = new Color(180,180,180);
     Color white = new Color(256,256,256);
+    Color transparent = new Color(30,40,50);
     //-------------- Geometries --------------------
 
     // ************* Box Creating ******************
@@ -260,9 +261,9 @@ public class FunTest {
         camera2.rotate(-270);
         scene2.geometries.add(swordBox,HandHeld,Middle,MiddleRight,MiddleLeft,sword);
         scene2.lights.add(leftLight);scene2.lights.add(rightLight);scene2.lights.add(centerLight);
-        boolean AdvancedRun = true;
+        boolean AdvancedRun = false;
 
-        ImageWriter imageWriter = new ImageWriter("SwordBasic2", 1000, 1000);
+        ImageWriter imageWriter = new ImageWriter("Test3", 1000, 1000);
         Render render;
         if(AdvancedRun) {
             render = new Render()//

@@ -19,11 +19,11 @@ public class Camera {
     // p0 is a Point3D value, it shows the exact location of the camera, it is the head point of all the rays coming out of the camera.
     private Point3D p0;
     // vUp is a Vector value, the emulated Y axis of the camera.
-    private Vector vUp;
+    private Vector vUp = Vector.Y;
     // vTo is a Vector value, the emulated Z axis of the camera.
-    private Vector vTo;
+    private Vector vTo = Vector.Z;
     // vRight is a Vector value, the emulated  X axis of the camera.
-    private Vector vRight;
+    private Vector vRight = Vector.X;
 
 
     // ----------- viewPlane variables -------------
@@ -73,6 +73,12 @@ public class Camera {
         this.vTo = vTo.normalized();
         this.vRight = vTo.crossProduct(vUp).normalize(); // Vector of emulated X axis
         apertureCenter = p0;
+    }
+
+    public Camera(Point3D p0, Point3D lookingPoint) {
+        this.p0 = p0;
+        apertureCenter = p0;
+        changeDirection(lookingPoint);
     }
 
     /**
@@ -135,10 +141,10 @@ public class Camera {
      * This method receives the amount of pixel and the pixel we want to send a ray through, and the amount of different
      * rays to send through the area of it to the focal point. It will return a list of rays that go through this pixel.
      *
-     * @param nX number of pixels in X axis
-     * @param nY number of pixels in Y axis
-     * @param j  place form center pixel in X axis
-     * @param i  place form center pixel in Y axis
+     * @param nX    number of pixels in X axis
+     * @param nY    number of pixels in Y axis
+     * @param j     place form center pixel in X axis
+     * @param i     place form center pixel in Y axis
      * @param first this check for the first rays to make or all of them
      * @return A list of rays that go from the received pixel area to the focal point.
      */
@@ -146,7 +152,7 @@ public class Camera {
         List<Ray> rays1 = numOfRaysAntiAliasing <= 1 ? //
                 List.of(constructRay(nX, nY, j, i)) :
                 first ? constructFirstRays(nX, nY, j, i) :
-                constructAntiARays(nX, nY, j, i);
+                        constructAntiARays(nX, nY, j, i);
 
         if (numOfRaysDepthOfField <= 1) return rays1;
 
@@ -166,10 +172,8 @@ public class Camera {
     private List<Ray> constructDOFRays(Ray ray) {
         // First step - calculate focal point
         Point3D focalPoint = findFocalPoint(ray);
-        // Third step - Create points on the aperture
-        List<Point3D> points = BlackBoard.findPoints(apertureCenter, apertureHeight / 2, apertureWidth / 2, vUp, vRight, numOfRaysDepthOfField);
-        // Fourth step - Create rays from points to the focal point.
-        return BlackBoard.raysFromPointToPoints(focalPoint, points, true);
+        // Second step - Create rays from apertureCenter to the focal point
+        return BlackBoard.findRays(focalPoint, apertureCenter, apertureHeight / 2, apertureWidth / 2, vUp, vRight, numOfRaysDepthOfField, true);
     }
 
     /***
@@ -184,10 +188,8 @@ public class Camera {
     private List<Ray> constructAntiARays(int nX, int nY, int j, int i) {
         // First step - find the pixel center on the ViewPlane
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
-        // Second step - Create points on the pixel
-        List<Point3D> points = BlackBoard.findPoints(centerPixel, this.pixelHeight / 2d, this.pixelWidth / 2d, vUp, vRight, numOfRaysAntiAliasing);
-        // Third step - Create rays from point to the pixel
-        return BlackBoard.raysFromPointToPoints(p0, points, false);
+        // Second step - Create rays from point to the pixel
+        return BlackBoard.findRays(p0, centerPixel, this.pixelHeight / 2d, this.pixelWidth / 2d, vUp, vRight, numOfRaysAntiAliasing, false);
     }
 
     /***
@@ -203,7 +205,8 @@ public class Camera {
 
         Point3D centerPixel = findCenterPixel(nX, nY, j, i);
 
-        return List.of(new Ray(p0, centerPixel.add(vRight, pixelWidth).add(vUp, pixelHeight).subtract(p0)),
+        return List.of(new Ray(p0, centerPixel.subtract(p0)),
+                new Ray(p0, centerPixel.add(vRight, pixelWidth).add(vUp, pixelHeight).subtract(p0)),
                 new Ray(p0, centerPixel.add(vRight, -pixelWidth).add(vUp, pixelHeight).subtract(p0)),
                 new Ray(p0, centerPixel.add(vRight, pixelWidth).add(vUp, -pixelHeight).subtract(p0)),
                 new Ray(p0, centerPixel.add(vRight, -pixelWidth).add(vUp, -pixelHeight).subtract(p0)));
@@ -292,6 +295,7 @@ public class Camera {
 
         // 1) we calc the direction
         vTo = newDirectionPoint.subtract(p0).normalize();
+
         // 2) we calc the axisDir
         try {
             vRight = vTo.crossProduct(Vector.Y).normalize();
@@ -314,6 +318,26 @@ public class Camera {
             this.apertureCenter = p0;
 
         return this;
+    }
+
+    /***
+     * Helper function for the constructor
+     * this function will change the direction and the angle of the camera
+     * @param DirectionPoint the point to look at
+     */
+    private void changeDirection(Point3D DirectionPoint) {
+
+        // 1) we calc the direction
+        vTo = DirectionPoint.subtract(p0).normalize();
+
+        // 2) we calc the axisDir
+        try {
+            vRight = vTo.crossProduct(Vector.Y).normalize();
+            vUp = vRight.crossProduct(vTo).normalize();
+        } catch (IllegalArgumentException e) {
+            vUp = Vector.Z;
+            vRight = vTo.crossProduct(vUp).normalize();
+        }
     }
 
     /***

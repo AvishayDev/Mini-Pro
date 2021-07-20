@@ -59,7 +59,7 @@ public class Polygon extends Geometry {
         if (vertices.length == 3)
             return; // no need for more tests for a Triangle
 
-        Vector n = plane.getNormal();
+        Vector n = plane.getNormal(Point3D.ZERO);
 
         // Subtracting any subsequent points will throw an IllegalArgumentException
         // because of Zero Vector if they are in the same point
@@ -143,7 +143,7 @@ public class Polygon extends Geometry {
      */
     @Override
     public Vector getNormal(Point3D point) {
-        return plane.getNormal();
+        return plane.getNormal(point);
     }
 
     /**
@@ -183,7 +183,8 @@ public class Polygon extends Geometry {
         for (int i = 2; i < verticesSize; i++) {
             vec1 = vertices.get(i).subtract(point0);
             Ni = vec2.crossProduct(vec1);
-            vec2 = vec1.scale(1);
+            //vec2 = vec1.scale(1);
+            vec2 = new Vector(vec1.getHead());
             signI = Util.alignZero(rayDir.dotProduct(Ni));
             if (sign * signI <= 0)
                 //its mean the sign is different or zero

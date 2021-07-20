@@ -41,15 +41,15 @@ public class Triangle extends Polygon {
         vertices.set(2, vertices.get(2).add(direction, t));
     }
 
-        /**
-         * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
-         * In case there are none or pass the max distance, null will be returned.
-         *
-         * @param ray         The ray which we find the intersections to the object.
-         * @param maxDistance the maximum distance for the ray to go
-         * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
-         */
-    @Override
+    /**
+     * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
+     * In case there are none or pass the max distance, null will be returned.
+     *
+     * @param ray         The ray which we find the intersections to the object.
+     * @param maxDistance the maximum distance for the ray to go
+     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
+     */
+  /*  @Override
     public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
 
         List<GeoPoint> planeIntersections = plane.findGeoIntersectionsParticular(ray, maxDistance);
@@ -59,7 +59,7 @@ public class Triangle extends Polygon {
         if (planeIntersections == null)
             return null;
 
-        //create vectors
+       //create vectors
         Point3D point0 = ray.getP0();
         Vector rayDir = ray.getDir();
         Vector vec1 = vertices.get(0).subtract(point0);
@@ -72,7 +72,7 @@ public class Triangle extends Polygon {
             //if zero => outside triangle
             return null;
 
-        Vector vec3 = vertices.get(2).subtract(point0);
+          Vector vec3 = vertices.get(2).subtract(point0);
         Vector normal2 = vec2.crossProduct(vec3).normalize();
         double checkSign2 = Util.alignZero(normal2.dotProduct(rayDir));
         if (checkSign1 * checkSign2 <= 0)
@@ -90,5 +90,41 @@ public class Triangle extends Polygon {
 
         planeIntersections.get(0).geometry = this;
         return planeIntersections;
+    }
+    */
+    @Override
+    public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersectionsParticular(ray, maxDistance);
+        //because we care about the distance in the plane we
+        //don't need to care about it here
+
+        if (planeIntersections == null)
+            return null;
+
+        Vector u;
+        Vector v;
+        Vector w;
+        try {
+            //make vectors from the cross point to the Triangle points
+            Point3D p0 = planeIntersections.get(0).point;
+            u = vertices.get(0).subtract(p0).normalize();
+            v = vertices.get(1).subtract(p0).normalize();
+            w = vertices.get(2).subtract(p0).normalize();
+        } catch (IllegalArgumentException e) {
+            //if catch so the cross point is in the same of the Triangle points
+            return null;
+        }
+
+        //
+        double dotProUV = u.dotProduct(v);
+        double dotProVW = v.dotProduct(w);
+        if (Util.alignZero(dotProUV) >= 0 && Util.alignZero(dotProVW) >= 0)
+            return null;
+
+        if (u.dotProduct(w)+dotProUV+dotProVW <= -1) {
+            planeIntersections.get(0).geometry = this;
+            return planeIntersections;
+        } else
+            return null;
     }
 }

@@ -51,10 +51,14 @@ public class Tube extends Geometry {
      */
     @Override
     public Vector getNormal(Point3D point) {
-        double t = axisRay.getDir().dotProduct(point.subtract(axisRay.getP0()));
+
+        Vector rayDir = axisRay.getDir();
+        Point3D rayP0 = axisRay.getP0();
+
+        double t = rayDir.dotProduct(point.subtract(rayP0));
         if (Util.isZero(t))
-            return point.subtract(axisRay.getP0()).normalize();
-        Point3D o = axisRay.getP0().add(axisRay.getDir().scale(t));
+            return point.subtract(rayP0).normalize();
+        Point3D o = rayP0.add(rayDir.scale(t));
         return point.subtract(o).normalize();
     }
 
@@ -233,7 +237,7 @@ public class Tube extends Geometry {
 
     @Override
     protected void move(Vector direction, double t) {
-        axisRay = new Ray(axisRay.getP0().add(direction,t),axisRay.getDir());
+        axisRay = new Ray(axisRay.getP0().add(direction, t), axisRay.getDir());
     }
 
     /***

@@ -41,7 +41,7 @@ public class SpotLight extends PointLight {
     public SpotLight(Color light, Vector directionLight, Point3D point, int narrowLight) {
         super(light, point);
         narrow = narrowLight;
-        direction = directionLight.normalized();
+        direction = directionLight.normalize();
         orthogonalDir1 = direction.getOrthogonal();
         orthogonalDir2 = direction.crossProduct(orthogonalDir1).normalize();
     }
@@ -86,7 +86,7 @@ public class SpotLight extends PointLight {
      */
     @Override
     public List<Ray> getTargetRays(Point3D point, Vector n, int amount) {
-        Ray ray = new Ray(point, position.subtract(point).normalized(), n);
+        Ray ray = new Ray(point, position.subtract(point).normalize(), n);
         if (radius == 0.0)
             return List.of(ray);
 

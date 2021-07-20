@@ -25,33 +25,28 @@ public final class Main {
      * @param args irrelevant here
      */
     public static void main(String[] args) {
-        if (Util.isZero(1.032039148168894E-12))
-            out.println("yes");
 
-        Ray ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 2, 1));
-        Ray axis = new Ray(new Point3D(0.5, 0, 0), new Vector(-1, 1, 1));
-        //intersectBorder(axis,ray);
+
+        double V = 0.26;
+        Point3D p0 = new Point3D(-0.001,-0.001,0.998);
+        Point3D p1 = new Point3D(0,0,1);
+        Point3D p2 = new Point3D(-1,0,0);
+        Point3D p3 = new Point3D(0,-1,0);
+        Point3D p4 = new Point3D(-2,2,1);
+        Vector u = p1.subtract(p0).normalize();
+        Vector v = p2.subtract(p0).normalize();
+        Vector w = p3.subtract(p0).normalize();
+        Vector e = p4.subtract(p0).normalize();
+        out.println("uv = "+u.dotProduct(v));
+        out.println("vw = "+v.dotProduct(w));
+        out.println("uw = "+w.dotProduct(e));
+        out.println("vw = "+e.dotProduct(u));
+        out.println("sum = "+(u.dotProduct(v)+v.dotProduct(w)+w.dotProduct(e)+e.dotProduct(u)));
+
+        out.println(new Vector(1,1,2).dotProduct(Vector.Z));
 
     }
 
-    public static boolean intersectBorder(Ray axisRay, Ray ray) {
-
-        // ray1
-        Point3D p0Axis = axisRay.getP0();
-        Vector dirAxis = axisRay.getDir();
-        //ray 2
-        Point3D p0Ray = ray.getP0();
-        Vector dirRay = ray.getDir();
-
-        Vector n;
-        try {
-            n = dirAxis.crossProduct(dirRay);
-            return n.dotProduct(p0Axis.subtract(p0Ray)) / n.length() <= radius;
-        } catch (IllegalArgumentException e) {
-            //if catch or parallel or p0Axis==p0Ray
-            return p0Axis.distance(p0Ray) <= radius;
-        }
-    }
 
 }
 

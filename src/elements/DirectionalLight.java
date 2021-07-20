@@ -28,7 +28,7 @@ public class DirectionalLight extends Light implements LightSource {
      */
     public DirectionalLight(Color light, Vector directionLight) {
         super(light);
-        direction = directionLight.normalized();
+        direction = directionLight.normalize();
         oppositeDirection = direction.scale(-1);
     }
 

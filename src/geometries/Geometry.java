@@ -29,7 +29,7 @@ public abstract class Geometry extends Borderable {
      * Getter for the Color emission field of the Geometry
      * @return The emission
      */
-    public Color getEmission() {
+    public Color getEmission(Point3D point) {
         return emission;
     }
 

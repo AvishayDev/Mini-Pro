@@ -32,7 +32,7 @@ public class LightsTests {
     private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
     private static Geometry sphere = new Sphere(new Point3D(0, 0, -200), 50) //
-            .setEmission(new Color(java.awt.Color.BLUE)) //
+            .setEmission(new Color(java.awt.Color.BLUE),new Color(200,100,12)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
     private static Geometries square = new Geometries(new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, 50, -150), new Point3D(0, 50, -100))
             .setEmission(new Color(java.awt.Color.BLUE)) //
@@ -68,9 +68,9 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("lightSphereDirectional", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
-                .setCamera(camera1) //
+                .setCamera(camera1.changeDirection(new Point3D(1000,0,0),new Point3D(0, 0, -200)).setNumOfRaysAA(100)) //
                 .setRayTracer(new RayTracerBasic(scene1));
-        render.renderImage();
+        render.renderImageAdvanced();
         render.writeToImage();
     }
 
@@ -171,12 +171,13 @@ public class LightsTests {
                 triangle2.setMaterial(new Material().setKd(0.8).setKs(0.2).setShininess(300)));
         scene2.lights.add(new DirectionalLight(new Color(300, 150, 150), new Vector(0, 0, -1)));
 
-        ImageWriter imageWriter = new ImageWriter("lightTrianglesDirectional", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("lightTrianglesDirectional1", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 .setRayTracer(new RayTracerBasic(scene2));
         render.renderImage();
+       // render.printGrid(50,new Color(256,256,256));
         render.writeToImage();
     }
 

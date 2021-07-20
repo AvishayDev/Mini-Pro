@@ -26,7 +26,7 @@ public class Plane extends Geometry {
      */
     public Plane(Point3D q0, Vector normal) {
         this.q0 = q0;
-        this.normal = normal.normalized();
+        this.normal = normal.normalize();
     }
 
     /***
@@ -66,7 +66,12 @@ public class Plane extends Geometry {
      */
     @Override
     public void findMinMaxParticular() {
-        // there is nothing to calc
+        minX = Double.NEGATIVE_INFINITY;
+        minY = Double.NEGATIVE_INFINITY;
+        minZ = Double.NEGATIVE_INFINITY;
+        maxX = Double.POSITIVE_INFINITY;
+        maxY = Double.POSITIVE_INFINITY;
+        maxZ = Double.POSITIVE_INFINITY;
     }
 
     /***
@@ -76,7 +81,7 @@ public class Plane extends Geometry {
      */
     @Override
     public Vector getNormal(Point3D point) {
-        return getNormal();
+        return normal;
     }
 
     /***
@@ -97,14 +102,6 @@ public class Plane extends Geometry {
      */
     public Point3D getQ0() {
         return q0;
-    }
-
-    /***
-     * This method is a getter for the field normal
-     * @return The vector of the Plane
-     */
-    public Vector getNormal() {
-        return normal;
     }
 
     /**

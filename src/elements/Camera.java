@@ -69,8 +69,8 @@ public class Camera {
             throw new IllegalArgumentException("Only vUp orthogonal to vTo accepted!");
 
         this.p0 = p0;
-        this.vUp = vUp.normalized();
-        this.vTo = vTo.normalized();
+        this.vUp = vUp.normalize();
+        this.vTo = vTo.normalize();
         this.vRight = vTo.crossProduct(vUp).normalize(); // Vector of emulated X axis
         apertureCenter = p0;
     }

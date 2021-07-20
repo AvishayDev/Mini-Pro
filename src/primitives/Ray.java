@@ -32,7 +32,7 @@ public class Ray {
      * @param point point for the ray
      */
     public Ray(Vector vec, Point3D point) {
-        dir = vec.normalized();
+        dir = vec.normalize();
         p0 = point;
     }
 

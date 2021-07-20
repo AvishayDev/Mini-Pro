@@ -14,7 +14,7 @@ import scene.Scene;
  */
 public class TeapotTest {
 	private final Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
-			.setViewPlaneCenter(1000).setViewPlaneSize(200, 200).setNumOfRaysAA(100);
+			.setViewPlaneCenter(1000).setViewPlaneSize(200, 200);
 	private final Scene scene = new Scene("Test scene");
 
 	private static final Color color = new Color(200, 0, 0);

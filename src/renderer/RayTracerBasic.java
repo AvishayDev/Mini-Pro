@@ -72,7 +72,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @return The calculated Color
      */
     protected Color calcColor(GeoPoint intersection, Vector v, int level, double k) {
-        Color color = intersection.geometry.getEmission();
+        Color color = intersection.geometry.getEmission(intersection.point);
         color = color.add(calcLocalEffects(intersection, v, k));
         return level == 1 ? color : color.add(calcGlobalEffects(intersection, v, level, k));
     }
@@ -133,7 +133,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @return The closest Intersected GeoPoint
      */
     protected GeoPoint findClosestIntersection(Ray ray) {
-        return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
+        return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray,Double.POSITIVE_INFINITY));
     }
 
     /***

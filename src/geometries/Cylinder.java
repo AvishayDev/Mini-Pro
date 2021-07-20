@@ -106,9 +106,9 @@ public class Cylinder extends Tube {
 
         boolean nullCheck = true;
         Point3D p1 = axisRay.getP0();
-        Point3D p2 = p1.add(axisRay.getDir().scale(height));
-        Vector v = ray.getDir();
         Vector va = axisRay.getDir();
+        Point3D p2 = p1.add(va.scale(height));
+        Vector v = ray.getDir();
         Point3D p = ray.getP0();
         if (points != null) {
             nullCheck = false;

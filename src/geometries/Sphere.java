@@ -18,6 +18,8 @@ public class Sphere extends Geometry {
      */
     private double radius;
 
+    private Color underColor = Color.BLACK;
+
     /***
      * Make's Sphere from 3D point that
      * represents the center of the Sphere and radius
@@ -150,4 +152,34 @@ public class Sphere extends Geometry {
                 ? List.of(new GeoPoint(this, ray.getPoint(t2)), new GeoPoint(this, ray.getPoint(t1))) //
                 : List.of(new GeoPoint(this, ray.getPoint(t2)));
     }
+
+    /***
+     * Setter for the Color emission field of the Geometry
+     * @return This object, the geometry
+     */
+    public Geometry setEmission(Color color) {
+        emission = color;
+        underColor = color;
+        return this;
+    }
+
+    /***
+     * Setter for the Color emission field of the Geometry
+     * @return This object, the geometry
+     */
+    public Geometry setEmission(Color upperColor, Color underColor) {
+        emission = upperColor;
+        this.underColor = underColor;
+        return this;
+    }
+
+    /***
+     * Getter for the Color emission field of the Geometry
+     * @return The emission
+     */
+    public Color getEmission(Point3D point) {
+        return point.getZ() > center.getZ() ? emission : underColor;
+
+    }
+
 }

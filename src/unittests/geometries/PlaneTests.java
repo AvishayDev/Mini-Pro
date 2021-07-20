@@ -27,7 +27,7 @@ public class PlaneTests {
         Plane plane = new Plane(new Point3D(-1, 1, 2), new Point3D(-4, 2, 2), new Point3D(-2, 1, 5));
         Vector normal = new Vector(3, 9, 1).normalize();
 
-        assertEquals("Bad normal to plane", normal, plane.getNormal());
+        assertEquals("Bad normal to plane", normal, plane.getNormal(Point3D.ZERO));
         assertEquals("Bad normal to plane", normal, plane.getNormal(new Point3D(-1, 1, 2)));
     }
 
@@ -64,17 +64,17 @@ public class PlaneTests {
         assertEquals("Ray is parallel to the plane included dont work", null, plane.findIntersections(rayCheck));
 
         // TC13: Ray is orthogonal to the plane and cross the plane
-        rayCheck = new Ray(plane.getNormal(), new Point3D(0.25d, 0.25d, 0.75d));
+        rayCheck = new Ray(plane.getNormal(Point3D.ZERO), new Point3D(0.25d, 0.25d, 0.75d));
         pointCheck = new Point3D(0, 0, 1);
         assertEquals(" POINT Ray is orthogonal to the plane included dont work", pointCheck, plane.findIntersections(rayCheck).get(0));
         assertEquals("NUM OF POINTS Ray is orthogonal to the plane included dont work", 1, plane.findIntersections(rayCheck).size());
 
         // TC14: Ray is orthogonal to the plane start on plane
-        rayCheck = new Ray(plane.getNormal(), new Point3D(0, 0, 1));
+        rayCheck = new Ray(plane.getNormal(Point3D.ZERO), new Point3D(0, 0, 1));
         assertEquals("Ray is orthogonal to the plane start on plane dont work", null, plane.findIntersections(rayCheck));
 
         // TC15: Ray is orthogonal to the plane not on plane
-        rayCheck = new Ray(plane.getNormal(), new Point3D(0, 0, 2));
+        rayCheck = new Ray(plane.getNormal(Point3D.ZERO), new Point3D(0, 0, 2));
         assertEquals("Ray is orthogonal to the plane not included dont work", null, plane.findIntersections(rayCheck));
 
         // TC16: Ray is neither orthogonal nor parallel to and begins at the plane

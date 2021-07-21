@@ -32,7 +32,8 @@ public class LightsTests {
     private static Geometry triangle2 = new Triangle( //
             new Point3D(-150, -150, -150), new Point3D(-70, 70, -50), new Point3D(75, 75, -150));
     private static Geometry sphere = new Sphere(new Point3D(0, 0, -200), 50) //
-            .setEmission(new Color(java.awt.Color.BLUE),new Color(200,100,12)) //
+            .setEmission(new Color(java.awt.Color.BLUE),new Color(200,100,12),new Color(140,130,10),new Color(137,275,12),
+                    new Color(249,16,93)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
     private static Geometries square = new Geometries(new Polygon(new Point3D(0, 0, -50), new Point3D(50, 0, -100), new Point3D(50, 50, -150), new Point3D(0, 50, -100))
             .setEmission(new Color(java.awt.Color.BLUE)) //

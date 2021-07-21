@@ -24,12 +24,12 @@ public class ReflectionRefractionTests {
      */
     @Test
     public void twoSpheres() {
-        Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+        Camera camera = new Camera(new Point3D(1000, 0, -50), new Point3D(0,0,-50)) //
                 .setViewPlaneSize(150, 150).setViewPlaneCenter(1000);
 
         scene.geometries.add( //
                 new Sphere(new Point3D(0, 0, -50), 50) //
-                        .setEmission(new Color(java.awt.Color.BLUE)) //
+                        .setEmission(new Color(java.awt.Color.BLUE),new Color(200,100,12),new Color(140,130,10),new Color(137,275,12)) //
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3).setRadiusDG(5)),
                 new Sphere(new Point3D(0, 0, -50), 25) //
                         .setEmission(new Color(java.awt.Color.RED)) //

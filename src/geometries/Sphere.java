@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /***
@@ -18,7 +19,16 @@ public class Sphere extends Geometry {
      */
     private double radius;
 
-    private Color underColor = Color.BLACK;
+    /**
+     * the multi-Colors List, contains all the colors of the sphere
+     */
+    private List<Color> colorList = null;
+
+    /**
+     * the Z value for the bottom of the sphere
+     */
+    private double bottomBall;
+    private double sizeOfColor;
 
     /***
      * Make's Sphere from 3D point that
@@ -27,11 +37,12 @@ public class Sphere extends Geometry {
      * @param radius radius of the sphere
      */
     public Sphere(Point3D center, double radius) {
-        this.center = center;
         if (Util.isZero(radius) || radius < 0)
             throw new IllegalArgumentException("Please Don't Choose radius zero");
 
+        this.center = center;
         this.radius = radius;
+        bottomBall = center.getZ() - radius;
     }
 
     /***
@@ -154,32 +165,21 @@ public class Sphere extends Geometry {
     }
 
     /***
-     * Setter for the Color emission field of the Geometry
+     * Setter for the Colors of the Sphere
      * @return This object, the geometry
      */
-    public Geometry setEmission(Color color) {
-        emission = color;
-        underColor = color;
+    public Geometry setEmission(Color... colors) {
+        colorList = List.of(colors);
+        sizeOfColor = (2 * radius) / colorList.size();
         return this;
     }
 
     /***
-     * Setter for the Color emission field of the Geometry
-     * @return This object, the geometry
-     */
-    public Geometry setEmission(Color upperColor, Color underColor) {
-        emission = upperColor;
-        this.underColor = underColor;
-        return this;
-    }
-
-    /***
-     * Getter for the Color emission field of the Geometry
+     * Getter for the Color emission field of the Sphere
      * @return The emission
      */
     public Color getEmission(Point3D point) {
-        return point.getZ() > center.getZ() ? emission : underColor;
-
+        return colorList == null ? emission : colorList.get((int) ((point.getZ() - bottomBall) /sizeOfColor));
     }
 
 }

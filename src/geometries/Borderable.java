@@ -11,11 +11,6 @@ import java.util.List;
  * this class represent the option of border-able for the geometries
  */
 public abstract class Borderable implements Intersectable {
-    static protected boolean borderEnabled = false;
-
-    public static void setEnabled() {
-        borderEnabled = true;
-    }
 
     protected boolean boxed = false;
 
@@ -116,17 +111,18 @@ public abstract class Borderable implements Intersectable {
         // If either the max value of Z is smaller than overall min value, or min value of Z is bigger than the overall
         // max, we can already return false. Otherwise we can return true since no other coordinate checks are needed.
         return tMin <= tMaxZ && tMinZ <= tMax;
+
     }
 
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-        return borderEnabled && !intersectBorderHelper(ray) ? null : findGeoIntersectionsParticular(ray, maxDistance);
+        return !intersectBorderHelper(ray) ? null : findGeoIntersectionsParticular(ray, maxDistance);
     }
 
 
     public void moveObject(Vector direction, double t) {
         move(direction, t);
         if (boxed)
-            findMinMax();
+            findMinMaxParticular();
     }
 
     protected abstract void move(Vector direction, double t);

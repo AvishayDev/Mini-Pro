@@ -1,6 +1,7 @@
 package com.company;
 
 import geometries.Plane;
+import geometries.Polygon;
 import geometries.Sphere;
 import geometries.Triangle;
 import primitives.*;
@@ -28,22 +29,29 @@ public final class Main {
 
 
         double V = 0.26;
-        Point3D p0 = new Point3D(-0.001,-0.001,0.998);
+        Point3D p0 = new Point3D(1.74,-0.5,1.5);
         Point3D p1 = new Point3D(0,0,1);
-        Point3D p2 = new Point3D(-1,0,0);
-        Point3D p3 = new Point3D(0,-1,0);
-        Point3D p4 = new Point3D(-2,2,1);
+        Point3D p2 = new Point3D(1.5,0,1);
+        Point3D p3 = new Point3D(2,-1,2);
+        Point3D p4 = new Point3D(0,1,0);
+        Point3D p5 = new Point3D(0.5,-1,2);
         Vector u = p1.subtract(p0).normalize();
         Vector v = p2.subtract(p0).normalize();
         Vector w = p3.subtract(p0).normalize();
         Vector e = p4.subtract(p0).normalize();
+        Vector f = p5.subtract(p0).normalize();
+
+        //check
+        Polygon poly = new Polygon(p3,p2,p4,p1,p5);
+
         out.println("uv = "+u.dotProduct(v));
         out.println("vw = "+v.dotProduct(w));
-        out.println("uw = "+w.dotProduct(e));
-        out.println("vw = "+e.dotProduct(u));
-        out.println("sum = "+(u.dotProduct(v)+v.dotProduct(w)+w.dotProduct(e)+e.dotProduct(u)));
+        out.println("wa = "+w.dotProduct(e));
+        out.println("ef = "+e.dotProduct(f));
+        out.println("fu = "+f.dotProduct(u));
+        out.println("sum = "+(u.dotProduct(v)+v.dotProduct(w)+w.dotProduct(e)+e.dotProduct(f)+f.dotProduct(u)));
 
-        out.println(new Vector(1,1,2).dotProduct(Vector.Z));
+       // out.println(new Vector(1,1,2).dotProduct(Vector.Z));
 
     }
 

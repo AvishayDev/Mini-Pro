@@ -18,20 +18,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FunTest {
-    private Scene scene2 = new Scene("Test scene").setBackground(new Color(102,0,0));
+    private Scene scene2 = new Scene("Test scene").setBackground(new Color(102, 0, 0));
     private Camera camera2 = new Camera(new Point3D(0, 0, 1200), new Vector(0, 0, 1),
             new Vector(0, 1, 0))//
             .setViewPlaneCenter(1000) //
             .setViewPlaneSize(150, 150)
-            .setApertureSize(5,5).setFocalDistance(1000).setNumOfRaysAA(100);
+            .setApertureSize(5, 5).setFocalDistance(1000).setNumOfRaysAA(100);
 
     //--------------- Lights --------------------
-    LightSource centerLight =new PointLight(new Color(225, 225, 153), new Point3D(150, 50, 100)) //
+    LightSource centerLight = new PointLight(new Color(225, 225, 153), new Point3D(150, 50, 100)) //
             .setKl(0.0005).setKq(0.0005).setRadius(20);
 
-    LightSource rightLight =new SpotLight(new Color(225, 225, 153), new Point3D(150, 0, 30),new Vector(0,2,-1),1) //
+    LightSource rightLight = new SpotLight(new Color(225, 225, 153), new Point3D(150, 0, 30), new Vector(0, 2, -1), 1) //
             .setKl(0.0005).setKq(0.0005).setRadius(20);
-    LightSource leftLight =new SpotLight(new Color(225, 225, 153), new Point3D(50, 100, 30),new Vector(0,-2,-1),1)//
+    LightSource leftLight = new SpotLight(new Color(225, 225, 153), new Point3D(50, 100, 30), new Vector(0, -2, -1), 1)//
             .setKl(0.0005).setKq(0.0005).setRadius(20);
     //-------------- Materials --------------------
 
@@ -44,12 +44,12 @@ public class FunTest {
     //-------------- Emotions ---------------------
 
     Color boxColor = new Color(90, 90, 90);
-    Color handHeldColor = new Color(92,64,51);
-    Color MiddleGoldColor = new Color(225,193,110);
-    Color EnergyColor = new Color(135,206,250);
-    Color swordColor = new Color(180,180,180);
-    Color white = new Color(256,256,256);
-    Color transparent = new Color(30,40,50);
+    Color handHeldColor = new Color(92, 64, 51);
+    Color MiddleGoldColor = new Color(225, 193, 110);
+    Color EnergyColor = new Color(135, 206, 250);
+    Color swordColor = new Color(180, 180, 180);
+    Color white = new Color(256, 256, 256);
+    Color transparent = new Color(30, 40, 50);
     //-------------- Geometries --------------------
 
     // ************* Box Creating ******************
@@ -97,191 +97,272 @@ public class FunTest {
             .setMaterial(boxMaterial);
 
     Geometries swordBox = new Geometries(underPlate, oneSide, twoSide, thirdSide, fourSide, upperPlate1, upperPlate2, upperPlate3, upperPlate4,
-            insidePlate1, insidePlate2, insidePlate3, insidePlate4,insidePlate5);
+            insidePlate1, insidePlate2, insidePlate3, insidePlate4, insidePlate5);
 
     //************** Hand Held *****************
-    Geometry startBall = new Sphere(new Point3D(13,50,9),4)
+    Geometry startBall = new Sphere(new Point3D(13, 50, 9), 4)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
     // Vector vec, Point3D point, double radius, double height
-    Vector swordDir = new Vector(1,0,0);
+    Vector swordDir = new Vector(1, 0, 0);
     double lowHandSize = 2;
-    double highHandSize =4;
-    Geometry cylinder1 = new Cylinder(swordDir,new Point3D(16,50,9),lowHandSize,highHandSize)
+    double highHandSize = 4;
+    Geometry cylinder1 = new Cylinder(swordDir, new Point3D(16, 50, 9), lowHandSize, highHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder2 = new Cylinder(swordDir,new Point3D(20,50,9),highHandSize,highHandSize)
+    Geometry cylinder2 = new Cylinder(swordDir, new Point3D(20, 50, 9), highHandSize, highHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder3 = new Cylinder(swordDir,new Point3D(24,50,9),lowHandSize,lowHandSize)
+    Geometry cylinder3 = new Cylinder(swordDir, new Point3D(24, 50, 9), lowHandSize, lowHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder4 = new Cylinder(swordDir,new Point3D(26,50,9),highHandSize,highHandSize)
+    Geometry cylinder4 = new Cylinder(swordDir, new Point3D(26, 50, 9), highHandSize, highHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder5 = new Cylinder(swordDir,new Point3D(30,50,9),lowHandSize,lowHandSize)
+    Geometry cylinder5 = new Cylinder(swordDir, new Point3D(30, 50, 9), lowHandSize, lowHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder6 = new Cylinder(swordDir,new Point3D(32,50,9),highHandSize,highHandSize)
+    Geometry cylinder6 = new Cylinder(swordDir, new Point3D(32, 50, 9), highHandSize, highHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder7 = new Cylinder(swordDir,new Point3D(36,50,9),lowHandSize,lowHandSize)
+    Geometry cylinder7 = new Cylinder(swordDir, new Point3D(36, 50, 9), lowHandSize, lowHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder8 = new Cylinder(swordDir,new Point3D(38,50,9),highHandSize,highHandSize)
+    Geometry cylinder8 = new Cylinder(swordDir, new Point3D(38, 50, 9), highHandSize, highHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder9 = new Cylinder(swordDir,new Point3D(42,50,9),lowHandSize,lowHandSize)
+    Geometry cylinder9 = new Cylinder(swordDir, new Point3D(42, 50, 9), lowHandSize, lowHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
-    Geometry cylinder10 = new Cylinder(swordDir,new Point3D(44,50,9),highHandSize,highHandSize)
+    Geometry cylinder10 = new Cylinder(swordDir, new Point3D(44, 50, 9), highHandSize, highHandSize)
             .setEmission(handHeldColor) //
             .setMaterial(handHeldMaterial);
 
-    Geometries HandHeld = new Geometries(startBall,cylinder1,cylinder2,cylinder3,cylinder4,cylinder5,
-            cylinder6,cylinder7,cylinder8,cylinder9,cylinder10);
+    Geometries HandHeld = new Geometries(startBall, cylinder1, cylinder2, cylinder3, cylinder4, cylinder5,
+            cylinder6, cylinder7, cylinder8, cylinder9, cylinder10);
 
     // ****************** Middle Sword *******************
-    double height=10;
-    List<Point3D> points = new LinkedList<Point3D>(List.of(new Point3D(53,41.34,height),new Point3D(68.2,37.44,height),new Point3D(68.7,34.94,height),new Point3D(52.2,37.34,height),
-            new Point3D(51.9,32.34,height),new Point3D(69.2,30.94,height),new Point3D(70.2,26.94,height),new Point3D(52.4,29.34,height),
-            new Point3D(53.4,25.34,height),new Point3D(71.9,23.94,height),new Point3D(74.6,19.94,height),new Point3D(55.1,21.34,height),
-            new Point3D(57.6,17.34,height),new Point3D(78.6,16.94,height),new Point3D(82.6,13.94,height),new Point3D(60.6,14.34,height),
-            new Point3D(64.6,10.84,height),new Point3D(86.6,10.94,height),new Point3D(91.6,7.94,height),new Point3D(69.6,8.34,height)));
+    double height = 10;
+    List<Point3D> points = new LinkedList<Point3D>(List.of(new Point3D(53, 41.34, height), new Point3D(68.2, 37.44, height), new Point3D(68.7, 34.94, height), new Point3D(52.2, 37.34, height),
+            new Point3D(51.9, 32.34, height), new Point3D(69.2, 30.94, height), new Point3D(70.2, 26.94, height), new Point3D(52.4, 29.34, height),
+            new Point3D(53.4, 25.34, height), new Point3D(71.9, 23.94, height), new Point3D(74.6, 19.94, height), new Point3D(55.1, 21.34, height),
+            new Point3D(57.6, 17.34, height), new Point3D(78.6, 16.94, height), new Point3D(82.6, 13.94, height), new Point3D(60.6, 14.34, height),
+            new Point3D(64.6, 10.84, height), new Point3D(86.6, 10.94, height), new Point3D(91.6, 7.94, height), new Point3D(69.6, 8.34, height)));
 
-    Geometry middle1 = new Polygon(points.get(0),points.get(1),points.get(2),points.get(3))
+    Geometry middle1 = new Polygon(points.get(0), points.get(1), points.get(2), points.get(3))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle2 = new Polygon(points.get(2),points.get(3),points.get(4),points.get(5))
+    Geometry middle2 = new Polygon(points.get(2), points.get(3), points.get(4), points.get(5))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle3 = new Polygon(points.get(4),points.get(5),points.get(6),points.get(7))
+    Geometry middle3 = new Polygon(points.get(4), points.get(5), points.get(6), points.get(7))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle4 = new Polygon(points.get(6),points.get(7),points.get(8),points.get(9))
+    Geometry middle4 = new Polygon(points.get(6), points.get(7), points.get(8), points.get(9))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle5 = new Polygon(points.get(8),points.get(9),points.get(10),points.get(11))
+    Geometry middle5 = new Polygon(points.get(8), points.get(9), points.get(10), points.get(11))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle6 = new Polygon(points.get(10),points.get(11),points.get(12),points.get(13))
+    Geometry middle6 = new Polygon(points.get(10), points.get(11), points.get(12), points.get(13))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle7 = new Polygon(points.get(12),points.get(13),points.get(14),points.get(15))
+    Geometry middle7 = new Polygon(points.get(12), points.get(13), points.get(14), points.get(15))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle8 = new Polygon(points.get(14),points.get(15),points.get(16),points.get(17))
+    Geometry middle8 = new Polygon(points.get(14), points.get(15), points.get(16), points.get(17))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry middle9 = new Polygon(points.get(16),points.get(17),points.get(18),points.get(19))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-
-    List<Point3D> points1 = new LinkedList<Point3D>(List.of(new Point3D(53,50+50-41.34,height),new Point3D(68.2,50+50-37.44,height),new Point3D(68.7,50+50-34.94,height),new Point3D(52.2,50+50-37.34,height),
-            new Point3D(51.9,50+50-32.34,height),new Point3D(69.2,50+50-30.94,height),new Point3D(70.2,50+50-26.94,height),new Point3D(52.4,50+50-29.34,height),
-            new Point3D(53.4,50+50-25.34,height),new Point3D(71.9,50+50-23.94,height),new Point3D(74.6,50+50-19.94,height),new Point3D(55.1,50+50-21.34,height),
-            new Point3D(57.6,50+50-17.34,height),new Point3D(78.6,50+50-16.94,height),new Point3D(82.6,50+50-13.94,height),new Point3D(60.6,50+50-14.34,height),
-            new Point3D(64.6,50+50-10.84,height),new Point3D(86.6,50+50-10.94,height),new Point3D(91.6,50+50-7.94,height),new Point3D(69.6,50+50-8.34,height)));
-
-    Geometry middle11 = new Polygon(points1.get(0),points1.get(1),points1.get(2),points1.get(3))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle21 = new Polygon(points1.get(2),points1.get(3),points1.get(4),points1.get(5))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle31 = new Polygon(points1.get(4),points1.get(5),points1.get(6),points1.get(7))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle41 = new Polygon(points1.get(6),points1.get(7),points1.get(8),points1.get(9))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle51 = new Polygon(points1.get(8),points1.get(9),points1.get(10),points1.get(11))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle61 = new Polygon(points1.get(10),points1.get(11),points1.get(12),points1.get(13))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle71 = new Polygon(points1.get(12),points1.get(13),points1.get(14),points1.get(15))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle81 = new Polygon(points1.get(14),points1.get(15),points1.get(16),points1.get(17))
-            .setEmission(MiddleGoldColor) //
-            .setMaterial(MiddleMaterial);
-    Geometry middle91 = new Polygon(points1.get(16),points1.get(17),points1.get(18),points1.get(19))
+    Geometry middle9 = new Polygon(points.get(16), points.get(17), points.get(18), points.get(19))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
 
-    Geometry toMiddle1 = new Polygon(new Point3D(48,50+Math.sqrt(7),12),new Point3D(48,50-Math.sqrt(7),12),new Point3D(56,38,22),new Point3D(56,62,22))
+    List<Point3D> points1 = new LinkedList<Point3D>(List.of(new Point3D(53, 50 + 50 - 41.34, height), new Point3D(68.2, 50 + 50 - 37.44, height), new Point3D(68.7, 50 + 50 - 34.94, height), new Point3D(52.2, 50 + 50 - 37.34, height),
+            new Point3D(51.9, 50 + 50 - 32.34, height), new Point3D(69.2, 50 + 50 - 30.94, height), new Point3D(70.2, 50 + 50 - 26.94, height), new Point3D(52.4, 50 + 50 - 29.34, height),
+            new Point3D(53.4, 50 + 50 - 25.34, height), new Point3D(71.9, 50 + 50 - 23.94, height), new Point3D(74.6, 50 + 50 - 19.94, height), new Point3D(55.1, 50 + 50 - 21.34, height),
+            new Point3D(57.6, 50 + 50 - 17.34, height), new Point3D(78.6, 50 + 50 - 16.94, height), new Point3D(82.6, 50 + 50 - 13.94, height), new Point3D(60.6, 50 + 50 - 14.34, height),
+            new Point3D(64.6, 50 + 50 - 10.84, height), new Point3D(86.6, 50 + 50 - 10.94, height), new Point3D(91.6, 50 + 50 - 7.94, height), new Point3D(69.6, 50 + 50 - 8.34, height)));
+
+    Geometry middle11 = new Polygon(points1.get(0), points1.get(1), points1.get(2), points1.get(3))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry toMiddle2 = new Polygon(new Point3D(48,50+Math.sqrt(7),6),new Point3D(48,50+Math.sqrt(7),12),new Point3D(56,62,22),new Point3D(56,62,0))
+    Geometry middle21 = new Polygon(points1.get(2), points1.get(3), points1.get(4), points1.get(5))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry toMiddle3 = new Polygon(new Point3D(48,50-Math.sqrt(7),6),new Point3D(48,50-Math.sqrt(7),12),new Point3D(56,38,22),new Point3D(56,38,0))
+    Geometry middle31 = new Polygon(points1.get(4), points1.get(5), points1.get(6), points1.get(7))
             .setEmission(MiddleGoldColor) //
             .setMaterial(MiddleMaterial);
-    Geometry EnergyBall = new Sphere(new Point3D(64,50,10),14)
+    Geometry middle41 = new Polygon(points1.get(6), points1.get(7), points1.get(8), points1.get(9))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle51 = new Polygon(points1.get(8), points1.get(9), points1.get(10), points1.get(11))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle61 = new Polygon(points1.get(10), points1.get(11), points1.get(12), points1.get(13))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle71 = new Polygon(points1.get(12), points1.get(13), points1.get(14), points1.get(15))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle81 = new Polygon(points1.get(14), points1.get(15), points1.get(16), points1.get(17))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry middle91 = new Polygon(points1.get(16), points1.get(17), points1.get(18), points1.get(19))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+
+    Geometry toMiddle1 = new Polygon(new Point3D(48, 50 + Math.sqrt(7), 12), new Point3D(48, 50 - Math.sqrt(7), 12), new Point3D(56, 38, 22), new Point3D(56, 62, 22))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry toMiddle2 = new Polygon(new Point3D(48, 50 + Math.sqrt(7), 6), new Point3D(48, 50 + Math.sqrt(7), 12), new Point3D(56, 62, 22), new Point3D(56, 62, 0))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry toMiddle3 = new Polygon(new Point3D(48, 50 - Math.sqrt(7), 6), new Point3D(48, 50 - Math.sqrt(7), 12), new Point3D(56, 38, 22), new Point3D(56, 38, 0))
+            .setEmission(MiddleGoldColor) //
+            .setMaterial(MiddleMaterial);
+    Geometry EnergyBall = new Sphere(new Point3D(64, 50, 10), 14)
             .setEmission(EnergyColor) //
             .setMaterial(EnergyMaterial);
 
-    Geometries Middle = new Geometries(toMiddle1,toMiddle2,toMiddle3,EnergyBall);
-    Geometries MiddleRight = new Geometries(middle1,middle2,middle3,middle4,middle5,middle6,middle7,middle8,middle9);
-    Geometries MiddleLeft = new Geometries(middle11,middle21,middle31,middle41,middle51,middle61,middle71,middle81,middle91);
+    Geometries Middle = new Geometries(toMiddle1, toMiddle2, toMiddle3, EnergyBall);
+    Geometries MiddleRight = new Geometries(middle1, middle2, middle3, middle4, middle5, middle6, middle7, middle8, middle9);
+    Geometries MiddleLeft = new Geometries(middle11, middle21, middle31, middle41, middle51, middle61, middle71, middle81, middle91);
 
     // ****************** Sword *******************
 
-    double startSward = 4*Math.sqrt(10);
-    Geometry right = new Polygon(new Point3D(64+startSward,50,13),new Point3D(170,50,13),new Point3D(170,57,10),new Point3D(60+startSward,57,10))
+    double startSward = 4 * Math.sqrt(10);
+    Geometry right = new Polygon(new Point3D(64 + startSward, 50, 13), new Point3D(170, 50, 13), new Point3D(170, 57, 10), new Point3D(60 + startSward, 57, 10))
             .setEmission(swordColor)//
             .setMaterial(swordMaterial);
-    Geometry left = new Polygon(new Point3D(64+startSward,50,13),new Point3D(170,50,13),new Point3D(170,43,10),new Point3D(60+startSward,43,10))
+    Geometry left = new Polygon(new Point3D(64 + startSward, 50, 13), new Point3D(170, 50, 13), new Point3D(170, 43, 10), new Point3D(60 + startSward, 43, 10))
             .setEmission(swordColor)//
             .setMaterial(swordMaterial);
-    Geometry topRight = new Triangle(new Point3D(170,50,13),new Point3D(190,50,10),new Point3D(170,57,10))
+    Geometry topRight = new Triangle(new Point3D(170, 50, 13), new Point3D(190, 50, 10), new Point3D(170, 57, 10))
             .setEmission(swordColor)//
             .setMaterial(swordMaterial);
-    Geometry topLeft = new Triangle(new Point3D(170,50,13),new Point3D(190,50,10),new Point3D(170,43,10))
+    Geometry topLeft = new Triangle(new Point3D(170, 50, 13), new Point3D(190, 50, 10), new Point3D(170, 43, 10))
             .setEmission(swordColor)//
             .setMaterial(swordMaterial);
-    double startSine = 13-(12d/7d)+0.01;
-    Geometry swordSineRight = new Polygon(new Point3D(64+startSward,54,startSine),new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(64+startSward,55.5,startSine-(4.5d/7d)))
+    double startSine = 13 - (12d / 7d) + 0.01;
+    Geometry swordSineRight = new Polygon(new Point3D(64 + startSward, 54, startSine), new Point3D(170, 54, startSine), new Point3D(170, 55.5, startSine - (4.5d / 7d)), new Point3D(64 + startSward, 55.5, startSine - (4.5d / 7d)))
             .setEmission(white)//
             .setMaterial(swordMaterial);
-    Geometry swordSineRightTop = new Polygon(new Point3D(170,54,startSine),new Point3D(170,55.5,startSine-(4.5d/7d)),new Point3D(175,54,10.5))
+    Geometry swordSineRightTop = new Polygon(new Point3D(170, 54, startSine), new Point3D(170, 55.5, startSine - (4.5d / 7d)), new Point3D(175, 54, 10.5))
             .setEmission(white)//
             .setMaterial(swordMaterial);
 
-    Geometries sword = new Geometries(right,topRight,swordSineRight,swordSineRightTop,left,topLeft);
+    Geometries sword = new Geometries(right, topRight, swordSineRight, swordSineRightTop, left, topLeft);
 
     @Test
     public void FunSwordTest() {
 
-       // double distance = Math.sqrt(500);
+        // double distance = Math.sqrt(500);
         camera2.changeDirection(new Point3D(-350, -100, 120), new Point3D(100, 50, 10));
         camera2.rotate(-270);
-        scene2.geometries.add(swordBox,HandHeld,Middle,MiddleRight,MiddleLeft,sword);
-        scene2.lights.add(leftLight);scene2.lights.add(rightLight);scene2.lights.add(centerLight);
+        scene2.geometries.add(swordBox, HandHeld, Middle, MiddleRight, MiddleLeft, sword);
+        scene2.lights.add(leftLight);
+        scene2.lights.add(rightLight);
+        scene2.lights.add(centerLight);
         boolean AdvancedRun = false;
 
         ImageWriter imageWriter = new ImageWriter("Test3", 1000, 1000);
         Render render;
-        if(AdvancedRun) {
+        if (AdvancedRun) {
             render = new Render()//
                     .setImageWriter(imageWriter) //
                     .setCamera(camera2) //
-                    .setRayTracer(new RayTracerAdvanced(scene2).setVBH())
+                    .setRayTracer(new RayTracerAdvanced(scene2))
                     .setMultithreading(3).setDebugPrint();
 
             render.renderImageAdvanced();
-        }else{
+        } else {
             render = new Render()//
                     .setImageWriter(imageWriter) //
                     .setCamera(camera2) //
-                    .setRayTracer(new RayTracerBasic(scene2).setVBH());
+                    .setRayTracer(new RayTracerBasic(scene2));
 
             render.renderImage();
         }
 
+        render.writeToImage();
+    }
+
+    @Test
+    public void TrianglesTest() {
+
+        Scene scene1 = new Scene("Test scene").setBackground(new Color(0, 0, 0));
+        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Point3D(0, 0, 0))//
+                .setViewPlaneCenter(1000) //
+                .setViewPlaneSize(150, 150);
+        ImageWriter imageWriter = new ImageWriter("Triangle-Time-Test", 1000, 1000);
+
+        Vector moveVecX= new Vector(-20,0,0);
+        Vector moveVecY= new Vector(0,-20,0);
+        Point3D p1 = new Point3D(60, 55, 0);
+        Point3D p2 = new Point3D(80, 55, 0);
+        Point3D p3 = new Point3D(80, 75, 0);
+        for(int j=0;j<8;j++){
+            for(int i=0;i<8;i++){
+                Geometry adding = new Triangle(p1, p2, p3)
+                        .setEmission(new Color(java.awt.Color.BLUE));
+                scene1.geometries.add(adding);
+                p1 = p1.add(moveVecX);
+                p2 = p2.add(moveVecX);
+                p3 = p3.add(moveVecX);
+            }
+            p1 = p1.add(moveVecX,-8).add(moveVecY);
+            p2 = p2.add(moveVecX,-8).add(moveVecY);
+            p3 = p3.add(moveVecX,-8).add(moveVecY);
+        }
+        Render render = new Render()//
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new RayTracerBasic(scene1));
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    @Test
+    public void PolygonsTest() {
+
+        Scene scene1 = new Scene("Test scene").setBackground(new Color(0, 0, 0));
+        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Point3D(0, 0, 0))//
+                .setViewPlaneCenter(1000) //
+                .setViewPlaneSize(150, 150);
+        ImageWriter imageWriter = new ImageWriter("TPolygon-Time-Test", 1000, 1000);
+
+        Vector moveVecX= new Vector(-20,0,0);
+        Vector moveVecY= new Vector(0,-20,0);
+        Point3D p1 = new Point3D(55, 55, 0);
+        Point3D p2 = new Point3D(65, 55, 0);
+        Point3D p3 = new Point3D(75, 75, 0);
+        Point3D p4 = new Point3D(60,75,0);
+        Point3D p5 = new Point3D(70,60,0);
+
+        for(int j=0;j<8;j++){
+            for(int i=0;i<8;i++){
+                Geometry adding = new Polygon(p1, p2,p5, p3,p4)
+                        .setEmission(new Color(java.awt.Color.BLUE));
+                scene1.geometries.add(adding);
+                p1 = p1.add(moveVecX);
+                p2 = p2.add(moveVecX);
+                p3 = p3.add(moveVecX);
+                p4 = p4.add(moveVecX);
+                p5 = p5.add(moveVecX);
+            }
+            p1 = p1.add(moveVecX,-8).add(moveVecY);
+            p2 = p2.add(moveVecX,-8).add(moveVecY);
+            p3 = p3.add(moveVecX,-8).add(moveVecY);
+            p4 = p4.add(moveVecX,-8).add(moveVecY);
+            p5 = p5.add(moveVecX,-8).add(moveVecY);
+        }
+        Render render = new Render()//
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new RayTracerBasic(scene1));
+
+        render.renderImage();
         render.writeToImage();
     }
 }

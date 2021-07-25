@@ -12,6 +12,7 @@ public abstract class Util {
      */
     private static final int ACCURACY = -40;
 
+    public static final double epsilon = 0.0001;
     /**
      * Empty private constructor to hide the public one
      */

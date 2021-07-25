@@ -27,11 +27,6 @@ public abstract class RayTracerBase {
         this.scene = scene;
     }
 
-    public RayTracerBase setVBH() {
-        Borderable.setEnabled();
-        return this;
-    }
-
     /***
      * this function calculate the color of the pixel
      * the ray cross

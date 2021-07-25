@@ -199,4 +199,5 @@ public class Polygon extends Geometry {
         planeIntersections.get(0).geometry = this;
         return planeIntersections;
     }
+
 }

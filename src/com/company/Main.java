@@ -18,8 +18,6 @@ import static primitives.Util.*;
 public final class Main {
 
 
-    public static int radius = 3;
-
     /**
      * Main program to tests initial functionality of the 1st stage
      *
@@ -29,29 +27,37 @@ public final class Main {
 
 
         double V = 0.26;
-        Point3D p0 = new Point3D(1.74,-0.5,1.5);
-        Point3D p1 = new Point3D(0,0,1);
-        Point3D p2 = new Point3D(1.5,0,1);
-        Point3D p3 = new Point3D(2,-1,2);
-        Point3D p4 = new Point3D(0,1,0);
-        Point3D p5 = new Point3D(0.5,-1,2);
+        Point3D p0 = new Point3D(-1.4, 1.9, 1.5);
+        Point3D p1 = new Point3D(1, -1, 2);
+        Point3D p2 = new Point3D(-2, -1, 5);
+        Point3D p3 = new Point3D(1, -2, 3);
+        Point3D p4 = new Point3D(-3, 3, 2);
+        Point3D p5 = new Point3D(0, 1, 1);
+
+        //check
+        Polygon poly = new Polygon(p1, p3, p2, p4, p5);
+
         Vector u = p1.subtract(p0).normalize();
-        Vector v = p2.subtract(p0).normalize();
-        Vector w = p3.subtract(p0).normalize();
+        Vector v = p3.subtract(p0).normalize();
+        Vector w = p2.subtract(p0).normalize();
         Vector e = p4.subtract(p0).normalize();
         Vector f = p5.subtract(p0).normalize();
 
-        //check
-        Polygon poly = new Polygon(p3,p2,p4,p1,p5);
+        double uValue = u.dotProduct(v);
+        double vValue = v.dotProduct(w);
+        double wValue = w.dotProduct(e);
+        double eValue = e.dotProduct(f);
+        double fValue = f.dotProduct(u);
 
-        out.println("uv = "+u.dotProduct(v));
-        out.println("vw = "+v.dotProduct(w));
-        out.println("wa = "+w.dotProduct(e));
-        out.println("ef = "+e.dotProduct(f));
-        out.println("fu = "+f.dotProduct(u));
-        out.println("sum = "+(u.dotProduct(v)+v.dotProduct(w)+w.dotProduct(e)+e.dotProduct(f)+f.dotProduct(u)));
+        out.println("uv = " + uValue);
+        out.println("vw = " + vValue);
+        out.println("wa = " + wValue);
+        out.println("ef = " + eValue);
+        out.println("fu = " + fValue);
+        out.println("sum = " + Math.acos(uValue + vValue + wValue + eValue + fValue));
 
-       // out.println(new Vector(1,1,2).dotProduct(Vector.Z));
+        if(uValue + vValue + wValue + eValue + fValue > Math.PI*2)
+            out.println("yes");
 
     }
 

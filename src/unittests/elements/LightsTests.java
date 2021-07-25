@@ -137,12 +137,13 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("Border2", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
-                .setCamera(camera1.setNumOfRaysDOF(50).setFocalDistance(1030).setApertureSize(40,40)) //
-                .setRayTracer(new RayTracerAdvanced(scene1).setVBH()) //
+                .setCamera(camera1.setNumOfRaysDOF(50).setNumOfRaysAA(50).setFocalDistance(1030).setApertureSize(40,40)) //
+                .setRayTracer(new RayTracerAdvanced(scene1)) //
                 .setMultithreading(3).setDebugPrint();
 
         render.renderImageAdvanced();
         render.writeToImage();
+        System.out.println(Render.stop);
     }
 
     /**
@@ -306,7 +307,7 @@ public class LightsTests {
                 .setEmission(new Color(java.awt.Color.BLUE)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100));
 
-        camera1.setFocalDistance(1050).setApertureSize(30, 30).setNumOfRaysDOF(50);
+        camera1.setFocalDistance(1050).setApertureSize(30, 30).setNumOfRaysAA(3000);
 
         Geometry sphere2 = new Sphere(new Point3D(0, 0, -200), 40)
                 .setEmission(new Color(100, 100, 100))
@@ -325,6 +326,7 @@ public class LightsTests {
         render.renderImageAdvanced();
         //render.printGrid(100,new Color(256,256,256));
         render.writeToImage();
+        System.out.println(Render.stop);
     }
 
     /**

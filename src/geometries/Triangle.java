@@ -92,6 +92,46 @@ public class Triangle extends Polygon {
         return planeIntersections;
     }
     */
+
+    /**
+     * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
+     * In case there are none or pass the max distance, null will be returned.
+     *
+     * @param ray         The ray which we find the intersections to the object.
+     * @param maxDistance the maximum distance for the ray to go
+     * @return A list of the intersection points in form of GeoPoint. In case there are no intersections, null will be returned.
+     */
+    @Override
+    public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
+
+        Vector dir = ray.getDir();
+        Point3D v0 = vertices.get(0);
+        Vector v0v1 = vertices.get(1).subtract(v0);
+        Vector v0v2 = vertices.get(2).subtract(v0);
+        Vector pvec = dir.crossProduct(v0v2);
+        double det = v0v1.dotProduct(pvec);
+
+        if (det < Util.epsilon)
+            return null;
+
+        double invertDet = 1 / det;
+
+        Vector tvec = ray.getP0().subtract(v0);
+        double u = tvec.dotProduct(pvec) * invertDet;
+        if (Util.alignZero(u) < 0 || u > 1)
+            return null;
+
+        Vector qvec = tvec.crossProduct(v0v1);
+        double v = dir.dotProduct(qvec) * invertDet;
+        if (Util.alignZero(v) < 0 || u + v > 1)
+            return null;
+
+        return List.of(new GeoPoint(this, ray.getPoint(v0v2.dotProduct(qvec) * invertDet)));
+
+    }
+/*
+
+    MY THINKING:
     @Override
     public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
         List<GeoPoint> planeIntersections = plane.findGeoIntersectionsParticular(ray, maxDistance);
@@ -121,10 +161,10 @@ public class Triangle extends Polygon {
         if (Util.alignZero(dotProUV) >= 0 && Util.alignZero(dotProVW) >= 0)
             return null;
 
-        if (u.dotProduct(w)+dotProUV+dotProVW <= -1) {
+        if (u.dotProduct(w) + dotProUV + dotProVW <= -1) {
             planeIntersections.get(0).geometry = this;
             return planeIntersections;
         } else
             return null;
-    }
+    }*/
 }

@@ -5,6 +5,7 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -16,6 +17,9 @@ import static primitives.Util.isZero;
  * @author Dan
  */
 public class Polygon extends Geometry {
+
+
+    protected List<Vector> checkLines = new ArrayList<Vector>();
 
     /**
      * List of polygon's vertices
@@ -86,6 +90,14 @@ public class Polygon extends Geometry {
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
+
+        checkLines.add(vertices[vertices.length - 1].subtract(vertices[0]));
+        //the length is 4 and above..
+        for (int i = 0; i < vertices.length - 1; i++) {
+            checkLines.add(vertices[i].subtract(vertices[i + 1]));
+        }
+
+
     }
 
     /**
@@ -171,33 +183,23 @@ public class Polygon extends Geometry {
             //it mean the p0 on the plane => null
             return null;
 
-        Vector rayDir = ray.getDir();
-        Point3D point0 = ray.getP0();
-        Vector vec1 = vertices.get(0).subtract(point0);
-        Vector vec2 = vertices.get(1).subtract(point0);
+        GeoPoint geo = planeIntersections.get(0);
+        try {
+            double sign1 = geo.point.subtract(vertices.get(0)).crossProductValue(checkLines.get(0));
+            double sign2;
+            for (int i = 1; i < verticesSize; i++) {
+                sign2 = geo.point.subtract(vertices.get(i)).crossProductValue(checkLines.get(i));
+                if (Util.alignZero(sign1 * sign2) <= 0)
+                    return null;
+                sign1 = sign2;
+            }
 
-        Vector N1 = vec1.crossProduct(vec2);
-        double sign = Util.alignZero(N1.dotProduct(rayDir));
-        Vector Ni;
-        double signI;
-        for (int i = 2; i < verticesSize; i++) {
-            vec1 = vertices.get(i).subtract(point0);
-            Ni = vec2.crossProduct(vec1);
-            //vec2 = vec1.scale(1);
-            vec2 = new Vector(vec1.getHead());
-            signI = Util.alignZero(rayDir.dotProduct(Ni));
-            if (sign * signI <= 0)
-                //its mean the sign is different or zero
-                return null;
-        }
-        Ni = vec2.crossProduct(vertices.get(0).subtract(point0));
-        signI = Util.alignZero(Ni.dotProduct(rayDir));
-        if (sign * signI <= 0)
-            //its mean the sign is different or zero
+            geo.geometry = this;
+            return planeIntersections;
+        } catch (IllegalArgumentException e) {
             return null;
+        }
 
-        planeIntersections.get(0).geometry = this;
-        return planeIntersections;
+
     }
-
 }

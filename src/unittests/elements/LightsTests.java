@@ -137,7 +137,7 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("Border2", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
-                .setCamera(camera1.setNumOfRaysDOF(50).setNumOfRaysAA(50).setFocalDistance(1030).setApertureSize(40,40)) //
+                .setCamera(camera1.setNumOfRaysAA(50).setFocalDistance(1030).setApertureSize(40,40)) //
                 .setRayTracer(new RayTracerAdvanced(scene1)) //
                 .setMultithreading(3).setDebugPrint();
 

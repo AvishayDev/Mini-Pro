@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +20,9 @@ public class Triangle extends Polygon {
      */
     public Triangle(Point3D point1, Point3D point2, Point3D point3) {
         super(point1, point2, point3);
+        checkLines.add(point3.subtract(point1));
+        checkLines.add(point1.subtract(point2));
+        checkLines.add(point2.subtract(point3));
     }
 
     /***
@@ -42,6 +46,7 @@ public class Triangle extends Polygon {
     }
 
     /**
+     * DAN THINKING:
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.
      *
@@ -59,41 +64,31 @@ public class Triangle extends Polygon {
         if (planeIntersections == null)
             return null;
 
-       //create vectors
-        Point3D point0 = ray.getP0();
-        Vector rayDir = ray.getDir();
-        Vector vec1 = vertices.get(0).subtract(point0);
-        Vector vec2 = vertices.get(1).subtract(point0);
-        Vector normal1 = vec1.crossProduct(vec2).normalize();
+        try {
+            GeoPoint p = planeIntersections.get(0);
 
-        //calc signs
-        double checkSign1 = Util.alignZero(normal1.dotProduct(rayDir));
-        if (checkSign1 == 0)
-            //if zero => outside triangle
+            Vector v1 = vertices.get(0).subtract(p.point);
+            Vector v2 = vertices.get(1).subtract(p.point);
+            Vector v3 = vertices.get(2).subtract(p.point);
+
+            Vector v1t = v1.crossProduct(v2);
+            Vector v2t = v2.crossProduct(v3);
+            if (v1t.dotProduct(v2t) < 0)
+                return null;
+            Vector v3t = v3.crossProduct(v1);
+            if (v1t.dotProduct(v3t) < 0)
+                return null;
+
+            p.geometry = this;
+            return planeIntersections;
+
+        } catch (IllegalArgumentException ignore) {
             return null;
-
-          Vector vec3 = vertices.get(2).subtract(point0);
-        Vector normal2 = vec2.crossProduct(vec3).normalize();
-        double checkSign2 = Util.alignZero(normal2.dotProduct(rayDir));
-        if (checkSign1 * checkSign2 <= 0)
-            //if less than zero => not equal signs
-            //if zero => outside triangle
-            return null;
-
-        Vector normal3 = vec3.crossProduct(vec1).normalize();
-        //so use N1 sign to calc the N3 sign (don't care because N2 same sign)
-        checkSign1 = Util.alignZero(normal3.dotProduct(rayDir));
-        if (checkSign1 * checkSign2 <= 0)
-            //if less than zero => not equal signs
-            //if zero => outside triangle
-            return null;
-
-        planeIntersections.get(0).geometry = this;
-        return planeIntersections;
-    }
-    */
-
+        }
+    }*/
     /**
+     * MY THINKING:
+     *
      * This method receives a ray and his max distance and returns a list of all the intersections points in objects of GeoPoint.
      * In case there are none or pass the max distance, null will be returned.
      *
@@ -104,67 +99,25 @@ public class Triangle extends Polygon {
     @Override
     public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
 
-        Vector dir = ray.getDir();
-        Point3D v0 = vertices.get(0);
-        Vector v0v1 = vertices.get(1).subtract(v0);
-        Vector v0v2 = vertices.get(2).subtract(v0);
-        Vector pvec = dir.crossProduct(v0v2);
-        double det = v0v1.dotProduct(pvec);
-
-        if (det < Util.epsilon)
-            return null;
-
-        double invertDet = 1 / det;
-
-        Vector tvec = ray.getP0().subtract(v0);
-        double u = tvec.dotProduct(pvec) * invertDet;
-        if (Util.alignZero(u) < 0 || u > 1)
-            return null;
-
-        Vector qvec = tvec.crossProduct(v0v1);
-        double v = dir.dotProduct(qvec) * invertDet;
-        if (Util.alignZero(v) < 0 || u + v > 1)
-            return null;
-
-        return List.of(new GeoPoint(this, ray.getPoint(v0v2.dotProduct(qvec) * invertDet)));
-
-    }
-/*
-
-    MY THINKING:
-    @Override
-    public List<GeoPoint> findGeoIntersectionsParticular(Ray ray, double maxDistance) {
         List<GeoPoint> planeIntersections = plane.findGeoIntersectionsParticular(ray, maxDistance);
         //because we care about the distance in the plane we
         //don't need to care about it here
 
         if (planeIntersections == null)
             return null;
-
-        Vector u;
-        Vector v;
-        Vector w;
+        GeoPoint geo = planeIntersections.get(0);
         try {
-            //make vectors from the cross point to the Triangle points
-            Point3D p0 = planeIntersections.get(0).point;
-            u = vertices.get(0).subtract(p0).normalize();
-            v = vertices.get(1).subtract(p0).normalize();
-            w = vertices.get(2).subtract(p0).normalize();
+            double sign = geo.point.subtract(vertices.get(1)).crossProductValue(checkLines.get(1));
+            if (Util.alignZero(sign * geo.point.subtract(vertices.get(0)).crossProductValue(checkLines.get(0))) <= 0)
+                return null;
+            if (Util.alignZero(sign * geo.point.subtract(vertices.get(2)).crossProductValue(checkLines.get(2))) <= 0)
+                return null;
+            geo.geometry = this;
+            return planeIntersections;
         } catch (IllegalArgumentException e) {
-            //if catch so the cross point is in the same of the Triangle points
             return null;
         }
 
-        //
-        double dotProUV = u.dotProduct(v);
-        double dotProVW = v.dotProduct(w);
-        if (Util.alignZero(dotProUV) >= 0 && Util.alignZero(dotProVW) >= 0)
-            return null;
+    }
 
-        if (u.dotProduct(w) + dotProUV + dotProVW <= -1) {
-            planeIntersections.get(0).geometry = this;
-            return planeIntersections;
-        } else
-            return null;
-    }*/
 }

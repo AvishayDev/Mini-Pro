@@ -140,7 +140,7 @@ public class Cylinder extends Tube {
         // (Va,p) + (Va,-p1) = -(Va,v)*t1 ,
         // (Va,p) + (Va,-p2) = -(Va,v)*t2 => equations for bases intersections
         // calc -(Va,v)
-        double dotProV = -1 * va.dotProduct(v);
+        double dotProV = -va.dotProduct(v);
         if (Util.isZero(dotProV))
             //its mean we doesn't have t so ray doesn't intersect bases!
             return nullCheck || points.isEmpty() ? null : points;

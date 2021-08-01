@@ -18,6 +18,9 @@ import static primitives.Util.*;
 public final class Main {
 
 
+    public static double V = 0.6;
+    public static Point3D p = new Point3D(0.46, -0.5, 0.9);
+
     /**
      * Main program to tests initial functionality of the 1st stage
      *
@@ -25,42 +28,17 @@ public final class Main {
      */
     public static void main(String[] args) {
 
-
-        double V = 0.26;
-        Point3D p0 = new Point3D(-1.4, 1.9, 1.5);
-        Point3D p1 = new Point3D(1, -1, 2);
-        Point3D p2 = new Point3D(-2, -1, 5);
-        Point3D p3 = new Point3D(1, -2, 3);
-        Point3D p4 = new Point3D(-3, 3, 2);
-        Point3D p5 = new Point3D(0, 1, 1);
-
-        //check
-        Polygon poly = new Polygon(p1, p3, p2, p4, p5);
-
-        Vector u = p1.subtract(p0).normalize();
-        Vector v = p3.subtract(p0).normalize();
-        Vector w = p2.subtract(p0).normalize();
-        Vector e = p4.subtract(p0).normalize();
-        Vector f = p5.subtract(p0).normalize();
-
-        double uValue = u.dotProduct(v);
-        double vValue = v.dotProduct(w);
-        double wValue = w.dotProduct(e);
-        double eValue = e.dotProduct(f);
-        double fValue = f.dotProduct(u);
-
-        out.println("uv = " + uValue);
-        out.println("vw = " + vValue);
-        out.println("wa = " + wValue);
-        out.println("ef = " + eValue);
-        out.println("fu = " + fValue);
-        out.println("sum = " + Math.acos(uValue + vValue + wValue + eValue + fValue));
-
-        if(uValue + vValue + wValue + eValue + fValue > Math.PI*2)
-            out.println("yes");
+        Point3D p1 = new Point3D(0.1, -0.5, 0);
+        Point3D p2 = new Point3D(0, 0, 2);
+        Point3D p3 = new Point3D(1, -1, 0);
+        Triangle triangle = new Triangle(p1, p2, p3);
+        Vector temp12 = p1.subtract(p2);
+        Vector temp23 = p2.subtract(p3);
+        Vector temp31 = p3.subtract(p1);
+        Vector temp = p.subtract(p1);
+        out.println(0.46+1.8*-0.5+0.9*-0.4);
 
     }
-
 
 }
 

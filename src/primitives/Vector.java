@@ -185,6 +185,15 @@ public class Vector {
         return new Vector(this.head).normalize();
     }
 
+    public double crossProductValue(Vector vec){
+        return (this.head.y.coord * vec.head.z.coord) - (this.head.z.coord * vec.head.y.coord)+
+        (this.head.z.coord * vec.head.x.coord) - (this.head.x.coord * vec.head.z.coord)+
+                (this.head.x.coord * vec.head.y.coord) - (this.head.y.coord * vec.head.x.coord);
+    }
+
+    public Vector getOpposite(){
+        return new Vector(-head.x.coord,-head.y.coord, -head.z.coord);
+    }
     /***
      * Equals function, which returns whether the current object and the received objects are equal
      * @param obj The received object

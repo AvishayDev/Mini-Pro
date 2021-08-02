@@ -19,7 +19,7 @@ import static primitives.Util.isZero;
 public class Polygon extends Geometry {
 
 
-    protected List<Vector> checkLines = new ArrayList<Vector>();
+    private List<Vector> checkLines = new ArrayList<Vector>();
 
     /**
      * List of polygon's vertices

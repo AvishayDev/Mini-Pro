@@ -12,7 +12,7 @@ import java.util.List;
 public class Geometries extends Borderable {
 
 
-    //public static int counter = 0;
+    public static int counter = 0;
     /**
      * List that have all the geometries
      */
@@ -55,6 +55,9 @@ public class Geometries extends Borderable {
         List<GeoPoint> returnList = null;
         for (Borderable g : geometries) {
             saveList = g.findGeoIntersections(ray, maxDistance);
+            counter++;
+            if(counter==7)
+                counter++;
             if (saveList != null)
                 if (returnList == null){
                     returnList = new LinkedList<>(saveList);}

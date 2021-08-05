@@ -33,10 +33,7 @@ public class Vector {
      * @param z Coordinate z
      */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        Point3D point = new Point3D(x, y, z);
-        if (point.equals(Point3D.ZERO))
-            throw new IllegalArgumentException("Please Don't Choose The 0 Vector!");
-        head = point;
+        this(x.coord, y.coord, z.coord);
     }
 
     /***
@@ -57,9 +54,7 @@ public class Vector {
      * @param point The vector's head
      */
     public Vector(Point3D point) {
-        if (point.equals(Point3D.ZERO))
-            throw new IllegalArgumentException("Please Don't Choose The 0 Vector!");
-        head = new Point3D(point.x, point.y, point.z);
+        this(point.x, point.y, point.z);
     }
 
     /**
@@ -142,6 +137,8 @@ public class Vector {
 
     /***
      * This function performs a dot product between the current vector and a received point
+     * @uses 1) if the vector and the point are normalized, can represent the cos(angle)
+     * between them. 2) if the point and the vector are equal represent the lengthSquared of the vector
      * @param point The received vector
      * @return The result of the dot product action.
      */
@@ -185,12 +182,23 @@ public class Vector {
         return new Vector(this.head).normalize();
     }
 
+    /**
+     * This method sum the values of cross-product between two vectors
+     * @uses 1) can represent the sign of sin(angle) between the vectors
+     * 2) can help do determine if the vector "vec" is on the right or on the left from the vector
+     * @param vec the vector to cross-product with
+     * @return the sum value of cross-product
+     */
     public double crossProductValue(Vector vec){
         return (this.head.y.coord * vec.head.z.coord) - (this.head.z.coord * vec.head.y.coord)+
         (this.head.z.coord * vec.head.x.coord) - (this.head.x.coord * vec.head.z.coord)+
                 (this.head.x.coord * vec.head.y.coord) - (this.head.y.coord * vec.head.x.coord);
     }
 
+    /**
+     * this method create new vector with opposite direction by this vector
+     * @return the opposite direction vector
+     */
     public Vector getOpposite(){
         return new Vector(-head.x.coord,-head.y.coord, -head.z.coord);
     }

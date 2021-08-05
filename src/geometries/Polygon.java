@@ -18,9 +18,6 @@ import static primitives.Util.isZero;
  */
 public class Polygon extends Geometry {
 
-
-    private List<Vector> checkLines = new ArrayList<Vector>();
-
     /**
      * List of polygon's vertices
      */
@@ -89,12 +86,6 @@ public class Polygon extends Geometry {
             edge2 = vertices[i].subtract(vertices[i - 1]);
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
-        }
-
-        checkLines.add(vertices[vertices.length - 1].subtract(vertices[0]));
-        //the length is 4 and above..
-        for (int i = 0; i < vertices.length - 1; i++) {
-            checkLines.add(vertices[i].subtract(vertices[i + 1]));
         }
 
 
@@ -185,21 +176,26 @@ public class Polygon extends Geometry {
 
         GeoPoint geo = planeIntersections.get(0);
         try {
-            double sign1 = geo.point.subtract(vertices.get(0)).crossProductValue(checkLines.get(0));
+            Vector vec = vertices.get(0).subtract(geo.point);
+            Vector vec0;
+            Vector vec1 = vertices.get(1).subtract(geo.point);
+            double sign1 = vec.crossProductValue(vec1);
             double sign2;
-            for (int i = 1; i < verticesSize; i++) {
-                sign2 = geo.point.subtract(vertices.get(i)).crossProductValue(checkLines.get(i));
+            for (int i = 2; i < verticesSize; i++) {
+                vec0 = vertices.get(i).subtract(geo.point);
+                sign2 = vec1.crossProductValue(vec0);
                 if (Util.alignZero(sign1 * sign2) <= 0)
                     return null;
+                vec1 = vec0;
                 sign1 = sign2;
             }
+            if (Util.alignZero(sign1 * vec1.crossProductValue(vec)) <= 0)
+                return null;
 
             geo.geometry = this;
             return planeIntersections;
         } catch (IllegalArgumentException e) {
             return null;
         }
-
-
     }
 }

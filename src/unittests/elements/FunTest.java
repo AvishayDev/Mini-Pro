@@ -363,6 +363,7 @@ public class FunTest {
                 .setRayTracer(new RayTracerBasic(scene1));
 
         render.renderImage();
+        //render.printGrid(40,new Color(100,100,100));
         render.writeToImage();
     }
 }

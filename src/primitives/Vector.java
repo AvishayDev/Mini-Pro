@@ -190,9 +190,9 @@ public class Vector {
      * @return the sum value of cross-product
      */
     public double crossProductValue(Vector vec){
-        return (this.head.y.coord * vec.head.z.coord) - (this.head.z.coord * vec.head.y.coord)+
-        (this.head.z.coord * vec.head.x.coord) - (this.head.x.coord * vec.head.z.coord)+
-                (this.head.x.coord * vec.head.y.coord) - (this.head.y.coord * vec.head.x.coord);
+        return ((this.head.y.coord * vec.head.z.coord) - (this.head.z.coord * vec.head.y.coord))-
+                ((this.head.z.coord * vec.head.x.coord) - (this.head.x.coord * vec.head.z.coord))+
+                ((this.head.x.coord * vec.head.y.coord) - (this.head.y.coord * vec.head.x.coord));
     }
 
     /**

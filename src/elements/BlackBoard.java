@@ -54,11 +54,9 @@ public class BlackBoard {
         double radiusSquared = radius * radius;
 
         for (int i = 1; i < numOfPoints; i++) {
-            double x, y;
-            do {
-                x = Util.random(-radius, radius);
-                y = Util.random(-radius, radius);
-            } while (x * x + y * y >= radiusSquared);
+            double x = Util.random(-radius, radius);
+            double yChoose = Math.sqrt(radiusSquared-(x*x));
+            double y = Util.random(-yChoose, yChoose);
 
             Point3D pCenter = centerPlate;
             if (!Util.isZero(x))

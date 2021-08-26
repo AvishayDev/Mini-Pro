@@ -29,7 +29,7 @@ public class ReflectionRefractionTests {
 
         scene.geometries.add( //
                 new Sphere(new Point3D(0, 0, -50), 50) //
-                        .setEmission(new Color(java.awt.Color.BLUE),new Color(200,100,12),new Color(140,130,10),new Color(137,275,12)) //
+                        .setEmission(new Color(100,50,70),new Color(105,55,75),new Color(110,60,80),new Color(115,65,85),new Color(120,70,90)) //
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3).setRadiusDG(5)),
                 new Sphere(new Point3D(0, 0, -50), 25) //
                         .setEmission(new Color(java.awt.Color.RED)) //
@@ -41,7 +41,7 @@ public class ReflectionRefractionTests {
 		Render render = new Render() //
 				.setImageWriter(new ImageWriter("refractionTwoSpheres4", 500, 500)) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysSoftShadows(70))
+				.setRayTracer(new RayTracerAdvanced(scene).setNumOfRaysSoftShadows(10))
 				.setMultithreading(3).setDebugPrint();
 
 		render.renderImageAdvanced();

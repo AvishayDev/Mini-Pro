@@ -149,19 +149,11 @@ public class Vector {
     }
 
     /***
-     * This function returns the length squared of the current vector
-     * @return The length squared value, type of double
-     */
-    public double lengthSquared() {
-        return head.distanceSquared(Point3D.ZERO);
-    }
-
-    /***
      * This function returns the length of the current vector
      * @return The length value, type of double
      */
     public double length() {
-        return Math.sqrt(lengthSquared());
+        return Math.sqrt(dotProduct(this));
     }
 
     /***

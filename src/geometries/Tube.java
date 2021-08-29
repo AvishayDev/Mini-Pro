@@ -119,7 +119,7 @@ public class Tube extends Geometry {
             // so we take only the vector of the ray
             vecA = v;
         }
-        a = vecA.lengthSquared(); //vecA^2
+        a = vecA.dotProduct(vecA); //vecA^2
 
         // ------ Calc of C --------
 

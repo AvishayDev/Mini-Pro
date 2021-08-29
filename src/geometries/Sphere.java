@@ -54,6 +54,7 @@ public class Sphere extends Geometry {
         this(center, radius);
     }
 
+
     /**
      * find the minimum and the maximum of the geometry border
      */
@@ -132,7 +133,7 @@ public class Sphere extends Geometry {
         }
 
         double tm = u.dotProduct(ray.getDir());
-        double d2 = u.lengthSquared() - (tm * tm);
+        double d2 = u.dotProduct(u) - (tm * tm);
         double checkValue = (radius * radius) - d2;
 
         if (Util.alignZero(checkValue) <= 0)
@@ -179,7 +180,16 @@ public class Sphere extends Geometry {
      * @return The emission
      */
     public Color getEmission(Point3D point) {
-        return colorList == null ? emission : colorList.get((int) ((point.getZ() - bottomBall) /sizeOfColor));
+        return colorList == null ? emission : colorList.get((int) ((point.getZ() - bottomBall) / sizeOfColor));
     }
+
+    /**
+     * -- faded colors --
+     * work but need more research
+     */
+   /* public Color getEmission(Point3D point) {
+        return colorList == null ? emission : colorList.get(0).scale((sizeOfColor-((point.getZ() - bottomBall)/2))/sizeOfColor).add(colorList.get(1).scale((point.getZ() - bottomBall)/(2*sizeOfColor)));
+    }*/
+
 
 }

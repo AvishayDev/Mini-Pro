@@ -63,8 +63,9 @@ public class Point3D {
 
     /**
      * Add the values of a point to the current point and returns it.
+     *
      * @param point Received point, which we take its coordinates to sum them up with the current point ones
-     * @return  The calculated new point
+     * @return The calculated new point
      */
     public Point3D add(Point3D point) {
         return new Point3D(this.x.coord + point.x.coord, this.y.coord + point.y.coord, this.z.coord + point.z.coord);
@@ -166,9 +167,9 @@ public class Point3D {
     @Override
     public String toString() {
         return "Point3D( " +
-                 x +" , "+
-                 y +" , "+
-                 z +
+                x + " , " +
+                y + " , " +
+                z +
                 " )";
     }
 

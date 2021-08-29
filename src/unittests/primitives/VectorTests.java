@@ -181,17 +181,6 @@ public class VectorTests {
     }
 
     /**
-     * Test method for {@link Vector#lengthSquared()}
-     */
-    @Test
-    public void testLengthSquared() {
-        Vector v1 = new Vector(1, 2, 3);
-
-        // test lengthSquared returns accurate value
-        assertTrue("ERROR: lengthSquared() wrong value", isZero(v1.lengthSquared() - 14));
-    }
-
-    /**
      * Test method for {@link Vector#length()}.
      */
     @Test

@@ -25,8 +25,8 @@ public final class Main {
      * @param args irrelevant here
      */
     public static void main(String[] args) {
-        //printPoints(new Vector(1,2,3),new Point3D(1,-1,2));
-        out.println(System.currentTimeMillis());
+        printPoints(new Vector(1,2,3).normalize(),new Point3D(1,-1,2));
+        //out.println(System.currentTimeMillis());
     }
 
 
@@ -39,7 +39,6 @@ public final class Main {
      * @param point the center point of the cyrcle creation
      */
     public static void printPoints(Vector vec, Point3D point) {
-
         Point3D startPoint = point.add(vec);
         Vector orthoVec = vec.getOrthogonal().normalize();
         Vector crossVec = vec.crossProduct(orthoVec).normalize();
@@ -47,7 +46,7 @@ public final class Main {
         Point3D tempPoint;
         for (double i = -1.0; i <= 1.0; i += 0.1) {
             tempPoint = point.add(orthoVec, i).add(crossVec, Math.sqrt(1 - (i * i)));
-            checkVec = tempPoint.subtract(startPoint);
+            checkVec = tempPoint.subtract(startPoint).normalize();
             out.println(vec.crossProductValue(checkVec));
         }
     }
